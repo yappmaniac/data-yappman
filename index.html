@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yappman Data — UK and Australian retail price data</title>
+<meta name="description" content="Weekly supermarket price data for the UK (Tesco, Sainsbury's, Asda, Aldi, Morrisons) and Australia (Coles, Woolworths, Aldi), EAN-matched, with a daily fixed basket. Provided by Abley-Yapp Consulting Limited.">
+<style>
+  :root { --ink:#16202b; --muted:#5b6b7a; --line:#dde3e9; --accent:#1f5fa8; --bg:#ffffff; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+  main { max-width:900px; margin:0 auto; padding:40px 24px 64px; }
+  header { border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:28px; }
+  h1 { font-size:28px; margin:0 0 6px; }
+  .sub { color:var(--muted); margin:0; }
+  h2 { font-size:20px; margin:32px 0 10px; }
+  p { margin:0 0 12px; }
+  table { border-collapse:collapse; width:100%; margin:12px 0 4px; font-size:15px; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  ul { padding-left:22px; margin:6px 0 12px; }
+  li { margin:4px 0; }
+  a { color:var(--accent); }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px 32px; }
+  @media (max-width:640px) { .grid { grid-template-columns:1fr; } table { font-size:14px; } }
+  footer { border-top:1px solid var(--line); margin-top:40px; padding-top:16px; color:var(--muted); font-size:14px; }
+  .box { border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:12px 0; }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Yappman Data</h1>
+  <p class="sub">UK and Australian retail price data, collected weekly and daily, on one schema. Abley-Yapp Consulting Limited, United Kingdom.</p>
+</header>
+
+<h2>What we provide</h2>
+<p>Shelf prices, loyalty prices and promotions for every product the major supermarkets list online, joined across retailers by EAN barcode where the retailer publishes one. A weekly full-catalogue series for the UK and Australia, and a daily fixed basket of 212 UK staples for consistent day-to-day tracking. Retail-level price data with this structure is a nowcast of food inflation weeks ahead of official statistics, and a competitor-price series for CPG and retail analytics.</p>
+
+<table>
+  <thead><tr><th>Series</th><th>Coverage</th><th>Frequency</th><th>Rows per period</th><th>History from</th></tr></thead>
+  <tbody>
+    <tr><td>UK weekly catalogue</td><td>Tesco, Sainsbury's, Asda, Aldi; Morrisons from November 2026</td><td>Weekly, Sunday</td><td>~72,000</td><td>27 Sep 2026</td></tr>
+    <tr><td>UK daily basket</td><td>212 staple products at all four retailers, the same items every day</td><td>Daily</td><td>848</td><td>24 Sep 2026</td></tr>
+    <tr><td>Australia weekly catalogue</td><td>Coles, Woolworths, Aldi Australia</td><td>Weekly</td><td>~65,000</td><td>October 2026</td></tr>
+    <tr><td>UK property listings (planned)</td><td>Listing counts, asking prices and days on market by area from Rightmove, Zoopla and OnTheMarket</td><td>Weekly</td><td>—</td><td>Q4 2026</td></tr>
+  </tbody>
+</table>
+<p class="sub">History accumulates weekly from the dates shown and is never revised. Trials are offered from three months of history.</p>
+
+<h2>Fields</h2>
+<p>One row per product per retailer per period: retailer, retailer product id, EAN, name, brand, pack size, shelf price, was-price, unit price and measure, loyalty price (Clubcard, Nectar, Asda Rewards, More Card, Flybuys, Everyday Rewards), promotion text and end date, stock flag, category path, URL, image URL, rating and review count, timestamp, currency, market, and store id where pricing is store-specific. Shelf price is always the price a non-member pays; loyalty pricing is never folded into it.</p>
+
+<h2>How it is collected</h2>
+<div class="grid">
+  <div>
+    <p><strong>Source.</strong> The retailers' own public websites, read logged out. No accounts, no baskets, no personal data of any kind.</p>
+    <p><strong>Method.</strong> Automated reads of the pages and JSON any visitor receives, paced at one to two requests a second per retailer, with every path checked against the retailer's robots.txt. Nothing a retailer has disallowed is fetched.</p>
+  </div>
+  <div>
+    <p><strong>Quality.</strong> Nightly canary runs per retailer with alerts; weekly reconciliation of product counts against the previous week and the retailer's own category counts; parsers that fail loudly rather than emit partial rows; missed periods recorded as gaps, never interpolated.</p>
+    <p><strong>Change control.</strong> A change log ships with every delivery; schema and coverage changes are announced 30 days ahead.</p>
+  </div>
+</div>
+
+<h2>Delivery</h2>
+<p>Weekly (and daily, for the basket) CSV or Parquet files, one per retailer per period, pushed to your S3 bucket or SFTP, or pulled from a signed URL. A REST endpoint on the Apify platform is available for programmatic pulls, and a basket-pricing endpoint prices a list of barcodes across all retailers in one call. Weekly data is available by 08:00 UTC on Sunday; the daily basket by 07:00 UTC.</p>
+
+<h2>Due diligence</h2>
+<div class="box">
+  <p>A methodology and due-diligence document is available on request. It covers provenance, collection method, robots.txt compliance, the terms-of-service position, database-right and copyright treatment, personal data (none), anti-bot handling, audit fields, coverage limits, accuracy checks, retention and corporate details. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
+</div>
+
+<h2>Sample and live tools</h2>
+<ul>
+  <li>Free sample: the daily basket on Kaggle — <a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket">UK Supermarket Prices: Daily 212-Item Basket</a> (CC BY 4.0).</li>
+  <li>Live UK data: <a href="https://apify.com/yappman/uk-supermarket-price-scraper">UK Supermarket Price Scraper</a> on the Apify Store.</li>
+  <li>Live Australian data: <a href="https://apify.com/yappman/au-supermarket-price-scraper">Australia Supermarket Price Scraper</a> on the Apify Store.</li>
+  <li>How the collection works: <a href="https://dev.to/yappman/how-to-get-tesco-prices-with-an-api-in-2026-4n20">a worked example</a>.</li>
+</ul>
+
+<h2>Pricing</h2>
+<p>Annual licence per series, per buyer entity; indicative from £2,400 a year for the daily basket and £6,000 a year for a weekly catalogue, with bundles available. One-month free trial in the full delivery format. Academic and journalist use of the daily basket is free through the Kaggle dataset.</p>
+
+<h2>Contact</h2>
+<p>Russell Yapp, Abley-Yapp Consulting Limited — <a href="mailto:info@yappman.com">info@yappman.com</a>. Email support with a one-business-day response.</p>
+
+<footer>
+  <p>Abley-Yapp Consulting Limited, registered in England and Wales. Data collected from public retailer websites; prices are national online shelf prices as published on the day shown and are not store-specific except where a store id is recorded. Not affiliated with, endorsed by, or partnered with any retailer named.</p>
+</footer>
+</main>
+</body>
+</html>
