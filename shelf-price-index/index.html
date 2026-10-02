@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UK Online Shelf-Price Index — Yappman Data</title>
+<meta name="description" content="A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time. CC BY 4.0.">
+<style>
+  :root { --ink:#16202b; --muted:#5b6b7a; --line:#dde3e9; --accent:#1f5fa8; --bg:#fff; --up:#b42318; --down:#027a48; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+  main { max-width:900px; margin:0 auto; padding:40px 24px 64px; }
+  header { border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:28px; }
+  h1 { font-size:28px; margin:0 0 6px; }
+  h2 { font-size:20px; margin:32px 0 10px; }
+  .sub { color:var(--muted); margin:0; }
+  .headline { display:flex; gap:32px; flex-wrap:wrap; align-items:flex-end; margin:16px 0 8px; }
+  .big { font-size:48px; font-weight:700; line-height:1; }
+  .delta { font-size:20px; font-weight:600; }
+  .up { color:var(--up); } .down { color:var(--down); } .flat { color:var(--muted); }
+  .meta { color:var(--muted); font-size:14px; }
+  table { border-collapse:collapse; width:100%; margin:12px 0 4px; font-size:15px; }
+  th, td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  a { color:var(--accent); }
+  .box { border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:12px 0; }
+  .notice { background:#f6f8fa; }
+  svg { width:100%; height:auto; display:block; }
+  footer { border-top:1px solid var(--line); margin-top:40px; padding-top:16px; color:var(--muted); font-size:14px; }
+  #status { color:var(--muted); font-style:italic; }
+  @media (max-width:640px) { .big { font-size:36px; } table { font-size:13px; } }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>UK Online Shelf-Price Index</h1>
+  <p class="sub">Posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time.</p>
+</header>
+
+<p id="status">Loading the latest week…</p>
+
+<section id="latest" hidden>
+  <div class="headline">
+    <div><div class="meta">Index, all four retailers</div><div class="big" id="level">—</div></div>
+    <div><div class="meta">Week on week</div><div class="delta" id="wow">—</div></div>
+    <div><div class="meta">Four weeks</div><div class="delta" id="w4">—</div></div>
+  </div>
+  <p class="meta" id="weekmeta"></p>
+  <div id="chart"></div>
+</section>
+
+<section id="retailers" hidden>
+  <h2>By retailer</h2>
+  <table><thead><tr><th>Retailer</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="retailer-rows"></tbody></table>
+</section>
+
+<section id="categories" hidden>
+  <h2>By category</h2>
+  <table><thead><tr><th>Category</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="category-rows"></tbody></table>
+</section>
+
+<section id="archive" hidden>
+  <h2>Every published week</h2>
+  <p>Each week's values are published once and never revised. The full series as <a id="csv-link" href="#">CSV</a> or <a id="json-link" href="#">JSON</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — cite as "Yappman Data, UK Online Shelf-Price Index".</p>
+  <table><thead><tr><th>Week</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="archive-rows"></tbody></table>
+</section>
+
+<h2 id="method">What this measures, and what it doesn't</h2>
+<div class="box notice">
+  <p><strong>It measures posted online prices.</strong> Each week the full online catalogue of four UK supermarkets — Tesco, Sainsbury's, Asda and Aldi — is read as any visitor sees it. Products present in both this week and last week are matched by the retailer's own product id, and the index is the weighted mean of their price ratios, chained week on week from a base of 100 at ISO week 2026-W39. Shelf price only: loyalty-card prices and multibuy promotions are recorded separately and excluded here.</p>
+  <p><strong>It is not CPI, and it is not a measure of prices paid.</strong> The ONS consumer prices index uses scanner data with transaction quantities and includes discounts actually taken; this index has no quantities and no transactions. Treat it as a fast, product-level indicator of what the four retailers are asking online, published days after the week it describes.</p>
+  <p><strong>Known limits.</strong> Online catalogues only, so in-store-only lines are absent; prices are national online shelf prices except where a retailer exposes a default store; Aldi publishes no barcodes, so cross-retailer joins there use name and pack size. Category rows can rest on fewer than four retailers where one retailer's cell is too thin. The four-week figure is empty until four weeks exist. There is no year-on-year figure until a year exists. Suspect moves (over 200% in a week) are excluded and listed in the weekly note.</p>
+  <p><strong>Coverage.</strong> About 70,000 products a week across the four retailers; matched counts are shown on every row. Weeks with a missing retailer are published with a coverage warning in the metadata and never backfilled or interpolated. Morrisons joins from November 2026, and the index continues on the four-retailer basis with Morrisons reported separately until a full year of five-retailer data exists.</p>
+  <p>Methodology and due diligence for the underlying data: <a href="https://data.yappman.com/">data.yappman.com</a>. Weekly "what moved" notes: <a href="https://ukgrocerypricemoves.substack.com/">UK Grocery Price Moves</a>. The product-level data behind the index is licensed separately.</p>
+</div>
+
+<footer>
+  <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0.</p>
+</footer>
+</main>
+
+<script>
+// ---- configuration: set once, when the public dataset exists ----
+const DATASET_ID = "REPLACE_WITH_DATASET_ID"; // Apify dataset id of uk-shelf-price-index (read-by-id)
+// -----------------------------------------------------------------
+const BASE = `https://api.apify.com/v2/datasets/${DATASET_ID}/items`;
+const RETAILER_NAMES = { tesco:"Tesco", sainsburys:"Sainsbury's", asda:"Asda", aldi:"Aldi", morrisons:"Morrisons" };
+
+const fmtLevel = v => (v === null || v === undefined || v === "") ? "—" : Number(v).toFixed(1);
+function fmtDelta(v) {
+  if (v === null || v === undefined || v === "") return { text:"—", cls:"flat" };
+  const n = Number(v); const s = (n > 0 ? "+" : "") + n.toFixed(2) + "%";
+  return { text:s, cls: n > 0.05 ? "up" : n < -0.05 ? "down" : "flat" };
+}
+function cell(v, cls) { const t = fmtDelta(v); return `<td class="num ${t.cls}">${t.text}</td>`; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function row(label, r) {
+  return `<tr><td>${esc(label)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}${cell(r.w4Pct)}<td class="num">${r.matched ?? "—"}</td></tr>`;
+}
+
+function chart(series) {
+  // series: [{week, level}] ascending; simple SVG line, scaled to the data
+  if (series.length < 2) return "";
+  const W = 880, H = 220, pl = 48, pr = 16, pt = 16, pb = 36;
+  const xs = series.map((_, i) => pl + i * (W - pl - pr) / (series.length - 1));
+  const lv = series.map(s => Number(s.level));
+  const lo = Math.floor(Math.min(...lv) - 1), hi = Math.ceil(Math.max(...lv) + 1);
+  const y = v => pt + (hi - v) * (H - pt - pb) / (hi - lo);
+  const path = series.map((s, i) => `${i ? "L" : "M"}${xs[i].toFixed(1)},${y(lv[i]).toFixed(1)}`).join(" ");
+  const ticks = [lo, (lo + hi) / 2, hi].map(v => `<text x="${pl - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="#5b6b7a">${v.toFixed(0)}</text><line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="#dde3e9"/>`).join("");
+  const labels = series.map((s, i) => (i === 0 || i === series.length - 1 || series.length <= 8) ? `<text x="${xs[i]}" y="${H - 12}" text-anchor="middle" font-size="11" fill="#5b6b7a">${esc(s.week)}</text>` : "").join("");
+  const dots = series.map((s, i) => `<circle cx="${xs[i]}" cy="${y(lv[i])}" r="3" fill="#1f5fa8"/>`).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Index level by week">${ticks}<path d="${path}" fill="none" stroke="#1f5fa8" stroke-width="2"/>${dots}${labels}</svg>`;
+}
+
+async function load() {
+  const status = document.getElementById("status");
+  if (DATASET_ID.startsWith("REPLACE")) { status.textContent = "The first weekly vintage is published on Monday 5 October 2026."; return; }
+  let rows;
+  try {
+    const r = await fetch(`${BASE}?format=json&clean=true`);
+    if (!r.ok) throw new Error(r.status);
+    rows = await r.json();
+  } catch (e) { status.textContent = "The index data could not be loaded right now. The CSV and JSON links below still work."; return; }
+
+  // Expected row shape (per week): { week, scope: "headline"|"retailer"|"category"|"retailer_category", retailer?, category?, level, wowPct, w4Pct, matched, share } plus one { week, scope:"meta", ... } row.
+  const weeks = [...new Set(rows.filter(r => r.scope !== "meta").map(r => r.week))].sort();
+  const latest = weeks[weeks.length - 1];
+  const of = (scope, wk) => rows.filter(r => r.scope === scope && r.week === wk);
+  const head = of("headline", latest)[0];
+  const meta = rows.find(r => r.scope === "meta" && r.week === latest) || {};
+
+  if (!head) { status.textContent = "No headline row found for the latest week."; return; }
+  status.hidden = true;
+
+  document.getElementById("level").textContent = fmtLevel(head.level);
+  const w = fmtDelta(head.wowPct), f = fmtDelta(head.w4Pct);
+  const wow = document.getElementById("wow"); wow.textContent = w.text; wow.className = "delta " + w.cls;
+  const w4 = document.getElementById("w4"); w4.textContent = f.text; w4.className = "delta " + f.cls;
+  const warn = meta.coverageWarnings && meta.coverageWarnings.length ? ` Coverage note: ${esc([].concat(meta.coverageWarnings).join("; "))}.` : "";
+  document.getElementById("weekmeta").innerHTML = `Week ${esc(latest)} · ${head.matched ?? "—"} matched products · shelf prices only, not CPI.${warn}`;
+
+  const series = weeks.map(wk => ({ week: wk, level: (of("headline", wk)[0] || {}).level })).filter(s => s.level !== undefined && s.level !== null);
+  document.getElementById("chart").innerHTML = chart(series);
+  document.getElementById("latest").hidden = false;
+
+  const rr = of("retailer", latest).sort((a, b) => String(a.retailer).localeCompare(String(b.retailer)));
+  if (rr.length) { document.getElementById("retailer-rows").innerHTML = rr.map(r => row(RETAILER_NAMES[r.retailer] || r.retailer, r)).join(""); document.getElementById("retailers").hidden = false; }
+
+  const cr = of("category", latest).sort((a, b) => String(a.category).localeCompare(String(b.category)));
+  if (cr.length) { document.getElementById("category-rows").innerHTML = cr.map(r => row(r.category, r)).join(""); document.getElementById("categories").hidden = false; }
+
+  document.getElementById("archive-rows").innerHTML = [...weeks].reverse().map(wk => { const h = of("headline", wk)[0] || {}; return row(wk, h); }).join("");
+  document.getElementById("csv-link").href = `${BASE}?format=csv&clean=true&attachment=true`;
+  document.getElementById("json-link").href = `${BASE}?format=json&clean=true`;
+  document.getElementById("archive").hidden = false;
+}
+load();
+</script>
+</body>
+</html>
