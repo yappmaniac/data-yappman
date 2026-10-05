@@ -40,8 +40,8 @@
 <table>
   <thead><tr><th>Series</th><th>Coverage</th><th>Frequency</th><th>Rows per period</th><th>History from</th></tr></thead>
   <tbody>
-    <tr><td>UK weekly catalogue</td><td>Tesco, Sainsbury's, Asda, Aldi; Morrisons from November 2026</td><td>Weekly, Sunday</td><td>~72,000</td><td>27 Sep 2026</td></tr>
-    <tr><td>UK daily basket</td><td>212 staple products at all four retailers, the same items every day</td><td>Daily</td><td>848</td><td>24 Sep 2026</td></tr>
+    <tr><td>UK weekly catalogue</td><td>Tesco, Sainsbury's, Asda, Aldi; Morrisons in the live Actor now (opt-in), and in the weekly series from November 2026</td><td>Weekly, Sunday</td><td>~73,000</td><td>27 Sep 2026</td></tr>
+    <tr><td>UK daily basket</td><td>212 staple products across the four retailers (up to three per retailer for each of 20 staples), the same items every day.</td><td>Daily</td><td>212</td><td>24 Sep 2026</td></tr>
     <tr><td>Australia weekly catalogue</td><td>Coles, Woolworths, Aldi Australia</td><td>Weekly</td><td>~65,000</td><td>October 2026</td></tr>
     <tr><td>UK property listings (planned)</td><td>Listing counts, asking prices and days on market by area from Rightmove, Zoopla and OnTheMarket</td><td>Weekly</td><td>—</td><td>Q4 2026</td></tr>
   </tbody>
@@ -55,22 +55,22 @@
 <p class="sub"><a href="/notices/">All notices</a></p>
 
 <h2>Fields</h2>
-<p>One row per product per retailer per period: retailer, retailer product id, EAN, name, brand, pack size, shelf price, was-price, unit price and measure, loyalty price (Clubcard, Nectar, Asda Rewards, More Card, Flybuys, Everyday Rewards), promotion text and end date, stock flag, category path, URL, image URL, rating and review count, timestamp, currency, market, and store id where pricing is store-specific. Shelf price is always the price a non-member pays; loyalty pricing is never folded into it.</p>
+<p>One row per product per retailer per period: retailer, retailer product id, EAN, name, brand, pack size, shelf price, was-price, unit price and measure, loyalty price, promotion text and end date, stock flag, category path, URL, image URL; rating and review count where the retailer shows them; timestamp; and, in the Australian series, currency, market and store id. Loyalty price where the retailer publishes one: Tesco Clubcard, Sainsbury's Nectar and Morrisons More Card. Asda, Aldi, Coles, Woolworths and Aldi Australia publish no loyalty price, so the field is empty for them. Shelf price is always the price a non-member pays; loyalty pricing is never folded into it.</p>
 
 <h2>How it is collected</h2>
 <div class="grid">
   <div>
     <p><strong>Source.</strong> The retailers' own public websites, read logged out. No accounts, no baskets, no personal data of any kind.</p>
-    <p><strong>Method.</strong> Automated reads of the pages and JSON any visitor receives, paced at one to two requests a second per retailer, with every path checked against the retailer's robots.txt. Nothing a retailer has disallowed is fetched.</p>
+    <p><strong>Method.</strong> Automated reads of the pages and JSON any visitor receives, paced at one to two requests a second per retailer. Nothing a retailer's published robots.txt disallows is ever requested; paths were checked against each source's robots.txt where one could be read.</p>
   </div>
   <div>
-    <p><strong>Quality.</strong> Nightly canary runs per retailer with alerts; weekly reconciliation of product counts against the previous week and the retailer's own category counts; parsers that fail loudly rather than emit partial rows; missed periods recorded as gaps, never interpolated.</p>
+    <p><strong>Quality.</strong> Daily canary runs for every retailer, an automated weekly health review of every canary, snapshot and index build, and email alerts on failed runs. Weekly reconciliation of each retailer's product count against the previous week and the first full week; a drop of more than 10% is flagged. Parsers that fail loudly rather than emit partial rows; missed periods recorded as gaps, never interpolated.</p>
     <p><strong>Change control.</strong> A change log ships with every delivery; schema and coverage changes are announced 30 days ahead, under <a href="/notices/">Notices</a>.</p>
   </div>
 </div>
 
 <h2>Delivery</h2>
-<p>Weekly (and daily, for the basket) CSV or Parquet files, one per retailer per period, pushed to your S3 bucket or SFTP, or pulled from a signed URL. A REST endpoint on the Apify platform is available for programmatic pulls, and a basket-pricing endpoint prices a list of barcodes across all retailers in one call. Weekly data is available by 08:00 UTC on Sunday; the daily basket by 07:00 UTC.</p>
+<p>Weekly (and, for the basket, daily) CSV files, one per retailer per period, as a download. Parquet, and delivery to your S3 bucket, SFTP or a signed download link, are available on request. The live data is also available programmatically through the Apify API. A basket-pricing endpoint (price a list of barcodes across all retailers in one call) is in preparation. Weekly data is available by 08:00 UTC on Sunday; the daily basket by 07:00 UTC.</p>
 
 <h2>Due diligence</h2>
 <div class="box">
