@@ -59,6 +59,7 @@
 <section id="categories" hidden>
   <h2>By category</h2>
   <table><thead><tr><th>Category</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="category-rows"></tbody></table>
+  <p class="meta" id="subtotal-line" hidden></p>
 </section>
 
 <section id="archive" hidden>
@@ -152,8 +153,17 @@ async function load() {
   const rr = of("retailer", latest).sort((a, b) => String(a.retailer).localeCompare(String(b.retailer)));
   if (rr.length) { document.getElementById("retailer-rows").innerHTML = rr.map(r => row(RETAILER_NAMES[r.retailer] || r.retailer, r)).join(""); document.getElementById("retailers").hidden = false; }
 
-  const cr = of("category", latest).sort((a, b) => String(a.category).localeCompare(String(b.category)));
-  if (cr.length) { document.getElementById("category-rows").innerHTML = cr.map(r => row(String(r.category).replace(/-/g, " ").replace(/^./, c => c.toUpperCase()), r)).join(""); document.getElementById("categories").hidden = false; }
+  // W39 and W40 published the food/soft-drinks rollup as a class; it is a subtotal, so keep it out of the category table.
+  const cr = of("category", latest).filter(r => !(latest < "2026-W41" && r.category === "food-soft-drinks")).sort((a, b) => String(a.category).localeCompare(String(b.category)));
+  const pretty = v => String(v).replace(/-/g, " ").replace(/^./, c => c.toUpperCase());
+  if (cr.length) document.getElementById("category-rows").innerHTML = cr.map(r => row(pretty(r.category), r)).join("");
+
+  // From W41: "subtotal" (all retailers) and "retailer_subtotal" rows, shown as one line under the category table.
+  const part = (name, r) => { const t = fmtDelta(r.wowPct); return `${esc(name)} ${fmtLevel(r.level)} (${t.text} w/w)`; };
+  const subs = of("subtotal", latest).map(r => part(pretty(r.category || "Subtotal"), r));
+  const rsubs = of("retailer_subtotal", latest).sort((a, b) => String(a.retailer).localeCompare(String(b.retailer))).map(r => part(RETAILER_NAMES[r.retailer] || r.retailer, r));
+  if (subs.length || rsubs.length) { const el = document.getElementById("subtotal-line"); el.innerHTML = "<strong>Subtotals:</strong> " + subs.concat(rsubs).join(" · "); el.hidden = false; }
+  if (cr.length || subs.length || rsubs.length) document.getElementById("categories").hidden = false;
 
   document.getElementById("archive-rows").innerHTML = [...weeks].reverse().map(wk => { const h = of("headline", wk)[0] || {}; return row(wk, h); }).join("");
   document.getElementById("csv-link").href = `${BASE}?format=csv&clean=true&attachment=true`;
