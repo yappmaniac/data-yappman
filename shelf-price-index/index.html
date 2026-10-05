@@ -124,6 +124,8 @@ async function load() {
     const r = await fetch(`${BASE}?format=json&clean=true`);
     if (!r.ok) throw new Error(r.status);
     rows = await r.json();
+    // Map the published schema (vintage/recordType/class/weekOnWeekPct/fourWeekPct) onto the names used below.
+    rows = rows.map(x => ({ ...x, week:x.vintage, scope:{ class:"category", retailer_class:"retailer_category" }[x.recordType] || x.recordType, category:x.class, wowPct:x.weekOnWeekPct, w4Pct:x.fourWeekPct }));
   } catch (e) { status.textContent = "The index data could not be loaded right now. The CSV and JSON links below still work."; return; }
 
   // Expected row shape (per week): { week, scope: "headline"|"retailer"|"category"|"retailer_category", retailer?, category?, level, wowPct, w4Pct, matched, share } plus one { week, scope:"meta", ... } row.
@@ -151,7 +153,7 @@ async function load() {
   if (rr.length) { document.getElementById("retailer-rows").innerHTML = rr.map(r => row(RETAILER_NAMES[r.retailer] || r.retailer, r)).join(""); document.getElementById("retailers").hidden = false; }
 
   const cr = of("category", latest).sort((a, b) => String(a.category).localeCompare(String(b.category)));
-  if (cr.length) { document.getElementById("category-rows").innerHTML = cr.map(r => row(r.category, r)).join(""); document.getElementById("categories").hidden = false; }
+  if (cr.length) { document.getElementById("category-rows").innerHTML = cr.map(r => row(String(r.category).replace(/-/g, " ").replace(/^./, c => c.toUpperCase()), r)).join(""); document.getElementById("categories").hidden = false; }
 
   document.getElementById("archive-rows").innerHTML = [...weeks].reverse().map(wk => { const h = of("headline", wk)[0] || {}; return row(wk, h); }).join("");
   document.getElementById("csv-link").href = `${BASE}?format=csv&clean=true&attachment=true`;
