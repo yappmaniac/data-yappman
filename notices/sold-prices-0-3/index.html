@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notice: sold-prices mode changes in version 0.3 — UK Property Listings</title>
+<meta name="description" content="From version 0.3 (not before 5 November 2026), UK Property Listings' sold-prices mode reads our own monthly copy of HM Land Registry's Price Paid Data. What changes and what to check.">
+<style>
+  :root { --ink:#16202b; --muted:#5b6b7a; --line:#dde3e9; --accent:#1f5fa8; --bg:#ffffff; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+  main { max-width:900px; margin:0 auto; padding:40px 24px 64px; }
+  header { border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:28px; }
+  h1 { font-size:28px; margin:0 0 6px; }
+  .sub { color:var(--muted); margin:0; }
+  h2 { font-size:20px; margin:32px 0 10px; }
+  p { margin:0 0 12px; }
+  table { border-collapse:collapse; width:100%; margin:12px 0 4px; font-size:15px; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  ul { padding-left:22px; margin:6px 0 12px; }
+  li { margin:4px 0; }
+  a { color:var(--accent); }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px 32px; }
+  @media (max-width:640px) { .grid { grid-template-columns:1fr; } table { font-size:14px; } }
+  footer { border-top:1px solid var(--line); margin-top:40px; padding-top:16px; color:var(--muted); font-size:14px; }
+  .box { border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:12px 0; }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Notice: sold-prices mode changes in version 0.3</h1>
+  <p class="sub">UK Property Listings on the Apify Store. Posted 5 October 2026. Version 0.3 will not be released before <strong>5 November 2026</strong>.</p>
+</header>
+
+<p>From version 0.3 of <a href="https://apify.com/yappman/uk-property-listings">UK Property Listings</a>, <code>mode: "sold-prices"</code> will read sold prices from our own monthly copy of HM Land Registry's Price Paid Data instead of Rightmove's sold-price pages. If you use sold-prices mode, your inputs and the rows you get back will change. Listings mode (search and listing) does not change.</p>
+
+<h2>What changes</h2>
+<ul>
+  <li><strong>One row per sale, not per property.</strong> Each row is one registered sale, with HM Land Registry's own <code>transactionId</code>, <code>price</code> and <code>date</code>. The <code>propertyId</code>, <code>sales</code>, <code>lastSoldPrice</code>, <code>lastSoldDate</code>, <code>area</code> and <code>landRegistryUpdatedAt</code> fields go. New on every row: <code>tenure</code>, <code>newBuild</code>, <code>category</code> and <code>localAuthority</code>.</li>
+  <li><strong><code>portal</code> becomes <code>"landregistry"</code></strong> on sold-price rows.</li>
+  <li><strong>History: the last 10 years.</strong> Today's rows go back to 1995. <code>soldWithinYears</code> accepts up to 10.</li>
+  <li><strong>Every registered sale.</strong> The 1,000-rows-per-area limit goes. The 1,000-rows-per-run ceiling and <code>maxItems</code> stay.</li>
+  <li><strong>Inputs.</strong> Full postcodes, postcode sectors, outcodes and local authority names. Rightmove <code>/house-prices/</code> URLs are no longer accepted; a run that gives one is told which input to use instead.</li>
+  <li><strong>Filters.</strong> Any date range, price, property type, tenure, new build and category.</li>
+  <li><strong>Bedrooms and bathrooms are opt-in</strong> (<code>includeBedsBaths</code>, off by default). When on, they are filled only where a sale matches Rightmove's sold record exactly, so they are often empty for older sales.</li>
+  <li><strong>Freshness.</strong> Updated within days of each monthly HM Land Registry release. HM Land Registry registers sales weeks to months after completion, so the newest months are always incomplete.</li>
+</ul>
+
+<h2>What does not change</h2>
+<ul>
+  <li>Postcode level only: no street address, and coordinates are the postcode's centroid.</li>
+  <li>England and Wales only.</li>
+  <li>The price: $3.00 per 1,000 sold-price rows, plus the per-run start event, only when rows are returned. A run is not charged if our copy is out of date.</li>
+  <li>The data is HM Land Registry's, under the Open Government Licence.</li>
+</ul>
+
+<h2>What to do</h2>
+<p>If you call sold-prices mode from code or a scheduled task, check your inputs and the fields you read against the list above before 5 November 2026. The full details will be in the Actor's README and CHANGELOG with the release.</p>
+
+<footer>
+  <p>Contains HM Land Registry data © Crown copyright and database right 2026, licensed under the Open Government Licence v3.0. Abley-Yapp Consulting Limited, registered in England and Wales. Not affiliated with, endorsed by, or partnered with Rightmove. <a href="/">Yappman Data</a></p>
+</footer>
+</main>
+</body>
+</html>
