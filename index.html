@@ -35,7 +35,7 @@
 </header>
 
 <h2>What we provide</h2>
-<p>Shelf prices, loyalty prices and promotions for every product the major supermarkets list online, joined across retailers by EAN barcode where the retailer publishes one. A weekly full-catalogue series for the UK and Australia, and a daily fixed basket of 212 UK staples for consistent day-to-day tracking. Retail-level price data with this structure is a nowcast of food inflation weeks ahead of official statistics, and a competitor-price series for CPG and retail analytics.</p>
+<p>Shelf prices, promotions and, where a retailer publishes one, loyalty prices for every product the major supermarkets list online, joined across retailers by EAN barcode where the retailer publishes one. A weekly full-catalogue series for the UK and Australia, and a daily fixed basket of 212 UK staples for consistent day-to-day tracking. Retail-level price data with this structure is a nowcast of food inflation weeks ahead of official statistics, and a competitor-price series for CPG and retail analytics.</p>
 
 <table>
   <thead><tr><th>Series</th><th>Coverage</th><th>Frequency</th><th>Rows per period</th><th>History from</th></tr></thead>
@@ -61,7 +61,7 @@
 <div class="grid">
   <div>
     <p><strong>Source.</strong> The retailers' own public websites, read logged out. No accounts, no baskets, no personal data of any kind.</p>
-    <p><strong>Method.</strong> Automated reads of the pages and JSON any visitor receives, paced at one to two requests a second per retailer. Nothing a retailer's published robots.txt disallows is ever requested; paths were checked against each source's robots.txt where one could be read.</p>
+    <p><strong>Method.</strong> Automated reads of the pages and JSON any visitor receives. Requests are made one at a time, at no more than two a second per retailer (one a second for Morrisons); in practice about 0.6 to 1.5 a second on average. Nothing a retailer's published robots.txt disallows is ever requested; paths were checked against each source's robots.txt where one could be read.</p>
   </div>
   <div>
     <p><strong>Quality.</strong> Daily canary runs for every retailer, an automated weekly health review of every canary, snapshot and index build, and email alerts on failed runs. Weekly reconciliation of each retailer's product count against the previous week and the first full week; a drop of more than 10% is flagged. Parsers that fail loudly rather than emit partial rows; missed periods recorded as gaps, never interpolated.</p>
@@ -86,7 +86,7 @@
 </ul>
 
 <h2>Pricing</h2>
-<p>Annual licence per series, per buyer entity; indicative from £2,400 a year for the daily basket and £6,000 a year for a weekly catalogue, with bundles available. One-month free trial in the full delivery format. Academic and journalist use of the daily basket is free through the Kaggle dataset. Available on <a href="https://yappman.gumroad.com/l/uk-supermarket-price-data">Gumroad</a>.</p>
+<p>Annual licence per series, per buyer entity; indicative from £2,400 a year for the daily basket and £6,000 a year for a weekly catalogue, with bundles available. One-month free trial in the same files as the paid product. Academic and journalist use of the daily basket is free through the Kaggle dataset. Available on <a href="https://yappman.gumroad.com/l/uk-supermarket-price-data">Gumroad</a>.</p>
 
 <h2>Contact</h2>
 <p>Russell Yapp, Abley-Yapp Consulting Limited — <a href="mailto:info@yappman.com">info@yappman.com</a>. Email support with a one-business-day response.</p>
