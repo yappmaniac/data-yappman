@@ -49,6 +49,9 @@
 <p>Weekly UK Online Shelf-Price Index: <a href="https://data.yappman.com/shelf-price-index">https://data.yappman.com/shelf-price-index</a></p>
 <p class="sub">History accumulates weekly from the dates shown and is never revised. Trials are offered from three months of history.</p>
 
+<h2>Notices</h2>
+<p>Announced change to matchKey (UK Supermarket Price Scraper), 5 October 2026. Ships no earlier than 4 November 2026. Unit words in product names are written in the singular, so "2 Pints" and "2 Pint" give the same key. Pint-sized volumes are written in pints: a pack within 0.5% of a whole number of UK pints becomes &lt;n&gt;pt, so "2.272L", "2.27L", "2272ml" and "4 pint" all become 4pt; other sizes stay in ml and g. For one release, rows also carry matchKeyV1, the key exactly as built today, so existing joins keep working while you switch; matchKeyV1 is removed in the release after that, with its own notice. UK edition only; no other field, price or event changes.</p>
+
 <h2>Fields</h2>
 <p>One row per product per retailer per period: retailer, retailer product id, EAN, name, brand, pack size, shelf price, was-price, unit price and measure, loyalty price (Clubcard, Nectar, Asda Rewards, More Card, Flybuys, Everyday Rewards), promotion text and end date, stock flag, category path, URL, image URL, rating and review count, timestamp, currency, market, and store id where pricing is store-specific. Shelf price is always the price a non-member pays; loyalty pricing is never folded into it.</p>
 
