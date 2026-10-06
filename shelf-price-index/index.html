@@ -30,10 +30,20 @@
   footer { border-top:1px solid var(--line); margin-top:40px; padding-top:16px; color:var(--muted); font-size:14px; }
   #status { color:var(--muted); font-style:italic; }
   @media (max-width:640px) { .big { font-size:36px; } table { font-size:13px; } }
+  nav { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:6px 20px; margin-bottom:22px; font-size:15px; }
+  nav a { color:var(--ink); text-decoration:none; }
+  nav a:hover { color:var(--accent); }
+  nav .brand { font-weight:700; }
+  nav .links { display:flex; flex-wrap:wrap; gap:6px 18px; }
+  nav a[aria-current="page"] { color:var(--accent); font-weight:600; text-decoration:underline; text-underline-offset:4px; }
 </style>
 </head>
 <body>
 <main>
+<nav aria-label="Main">
+  <a class="brand" href="/">Yappman Data</a>
+  <span class="links"><a href="/shelf-price-index/" aria-current="page">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
+</nav>
 <header>
   <h1>UK Online Shelf-Price Index</h1>
   <p class="sub">Posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time.</p>

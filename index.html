@@ -25,10 +25,20 @@
   @media (max-width:640px) { .grid { grid-template-columns:1fr; } table { font-size:14px; } }
   footer { border-top:1px solid var(--line); margin-top:40px; padding-top:16px; color:var(--muted); font-size:14px; }
   .box { border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:12px 0; }
+  nav { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:6px 20px; margin-bottom:22px; font-size:15px; }
+  nav a { color:var(--ink); text-decoration:none; }
+  nav a:hover { color:var(--accent); }
+  nav .brand { font-weight:700; }
+  nav .links { display:flex; flex-wrap:wrap; gap:6px 18px; }
+  nav a[aria-current="page"] { color:var(--accent); font-weight:600; text-decoration:underline; text-underline-offset:4px; }
 </style>
 </head>
 <body>
 <main>
+<nav aria-label="Main">
+  <a class="brand" href="/" aria-current="page">Yappman Data</a>
+  <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
+</nav>
 <header>
   <h1>Yappman Data</h1>
   <p class="sub">UK and Australian retail price data, collected weekly and daily, on one schema. Abley-Yapp Consulting Limited, United Kingdom.</p>
@@ -85,10 +95,10 @@
   <li>How the collection works: <a href="https://dev.to/yappman/how-to-get-tesco-prices-with-an-api-in-2026-4n20">a worked example</a>.</li>
 </ul>
 
-<h2>Pricing</h2>
+<h2 id="pricing">Pricing</h2>
 <p>Annual licence per series, per buyer entity; indicative from £2,400 a year for the daily basket and £6,000 a year for a weekly catalogue, with bundles available. One-month free trial in the same files as the paid product. Academic and journalist use of the daily basket is free through the Kaggle dataset. Available on <a href="https://yappman.gumroad.com/l/uk-supermarket-price-data">Gumroad</a>. Listings with samples and data dictionaries are on our Datarade storefront: <a href="https://abley-yapp-consulting-limited.mydatastorefront.com">https://abley-yapp-consulting-limited.mydatastorefront.com</a>.</p>
 
-<h2>Contact</h2>
+<h2 id="contact">Contact</h2>
 <p>Russell Yapp, Abley-Yapp Consulting Limited — <a href="mailto:info@yappman.com">info@yappman.com</a>. Email support with a one-business-day response.</p>
 
 <footer>
