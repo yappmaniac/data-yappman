@@ -33,6 +33,7 @@
   <p class="sub"><a href="/">Yappman Data</a> · <a href="/notices/">Notices</a></p>
   <h1>Notice: sold-prices mode changes in version 0.3</h1>
   <p class="sub">UK Property Listings on the Apify Store. Posted 5 October 2026. Version 0.3 will not be released before <strong>5 November 2026</strong>.</p>
+  <p class="sub">Clarified 6 October 2026.</p>
 </header>
 
 <p>From version 0.3 of <a href="https://apify.com/yappman/uk-property-listings">UK Property Listings</a>, <code>mode: "sold-prices"</code> will read sold prices from our own monthly copy of HM Land Registry's Price Paid Data instead of Rightmove's sold-price pages. If you use sold-prices mode, your inputs and the rows you get back will change. Listings mode (search and listing) does not change.</p>
@@ -45,6 +46,7 @@
   <li><strong>Every registered sale.</strong> The 1,000-rows-per-area limit goes. The 1,000-rows-per-run ceiling and <code>maxItems</code> stay.</li>
   <li><strong>Inputs.</strong> Full postcodes, postcode sectors, outcodes and local authority names. Rightmove <code>/house-prices/</code> URLs are no longer accepted; a run that gives one is told which input to use instead.</li>
   <li><strong>Filters.</strong> Any date range, price, property type, tenure, new build and category.</li>
+  <li><strong>Which sales.</strong> By default, rows are HM Land Registry's standard (category A) sales, the ones Rightmove's sold pages show; <code>saleCategory</code> <code>"additional"</code> (repossessions, buy-to-let and company purchases, transfers not at market value) or <code>"any"</code> widens it.</li>
   <li><strong>Bedrooms and bathrooms are opt-in</strong> (<code>includeBedsBaths</code>, off by default). When on, they are filled only where a sale matches Rightmove's sold record exactly, so they are often empty for older sales.</li>
   <li><strong>Freshness.</strong> Updated within days of each monthly HM Land Registry release. HM Land Registry registers sales weeks to months after completion, so the newest months are always incomplete.</li>
 </ul>
