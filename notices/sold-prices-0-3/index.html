@@ -56,6 +56,7 @@
   <li><strong>Inputs.</strong> Full postcodes, postcode sectors, outcodes and local authority names. Rightmove <code>/house-prices/</code> URLs are no longer accepted; a run that gives one is told which input to use instead.</li>
   <li><strong>Filters.</strong> Any date range, price, property type, tenure, new build and category.</li>
   <li><strong>Which sales.</strong> By default, rows are HM Land Registry's standard (category A) sales, the ones Rightmove's sold pages show; <code>saleCategory</code> <code>"additional"</code> (repossessions, buy-to-let and company purchases, transfers not at market value) or <code>"any"</code> widens it.</li>
+  <li><strong>Price.</strong> <code>sold-price</code> falls from $3.00 to $2.00 per 1,000 rows (higher plans $1.80, $1.60 and $1.40), plus the per-run start event, only when rows are returned; a run is not charged if our copy is out of date. (Changed 7 October 2026.)</li>
   <li><strong>Bedrooms and bathrooms are opt-in</strong> (<code>includeBedsBaths</code>, off by default). When on, they are filled only where a sale matches Rightmove's sold record exactly, so they are often empty for older sales.</li>
   <li><strong>Freshness.</strong> Updated within days of each monthly HM Land Registry release. HM Land Registry registers sales weeks to months after completion, so the newest months are always incomplete.</li>
 </ul>
@@ -64,7 +65,6 @@
 <ul>
   <li>Postcode level only: no street address, and coordinates are the postcode's centroid.</li>
   <li>England and Wales only.</li>
-  <li>The price: $3.00 per 1,000 sold-price rows, plus the per-run start event, only when rows are returned. A run is not charged if our copy is out of date.</li>
   <li>The data is HM Land Registry's, under the Open Government Licence.</li>
 </ul>
 
