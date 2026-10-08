@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Notices — Yappman Data</title>
-<meta name="description" content="Announced changes to Yappman Data products, posted at least 30 days before they ship.">
+<title>Notice: default retailers change — UK Supermarket Price Scraper</title>
+<meta name="description" content="Announced 8 October 2026; ships no earlier than 7 November 2026. A UK Supermarket Price Scraper run that does not set retailers will search all five retailers instead of Aldi and Sainsbury's.">
 <style>
   :root { --ink:#16202b; --muted:#5b6b7a; --line:#dde3e9; --accent:#1f5fa8; --bg:#ffffff; }
   * { box-sizing:border-box; }
@@ -40,18 +40,11 @@
   <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/" aria-current="page">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
 </nav>
 <header>
-  <h1>Notices</h1>
-  <p class="sub">Announced changes to Yappman Data products and Actors. Schema and coverage changes are announced 30 days ahead.</p>
+  <h1>Notice: default retailers change</h1>
+  <p class="sub">UK Supermarket Price Scraper on the Apify Store. Posted 8 October 2026. Ships no earlier than <strong>7 November 2026</strong>.</p>
 </header>
 
-<table>
-  <thead><tr><th>Posted</th><th>Product</th><th>Ships no earlier than</th><th>Change</th></tr></thead>
-  <tbody>
-    <tr><td>8 October 2026</td><td>UK Supermarket Price Scraper</td><td>7 November 2026</td><td><a href="/notices/default-retailers/">Default retailers change</a></td></tr>
-    <tr><td>5 October 2026</td><td>UK Property Listings</td><td>5 November 2026</td><td><a href="/notices/sold-prices-0-3/">Sold-prices mode changes in version 0.3</a></td></tr>
-    <tr><td>5 October 2026</td><td>UK Supermarket Price Scraper</td><td>4 November 2026</td><td><a href="/notices/matchkey/">matchKey changes</a></td></tr>
-  </tbody>
-</table>
+<p>Announced change to the default retailers (UK Supermarket Price Scraper), 8 October 2026. Ships no earlier than 7 November 2026, in the same build as the matchKey change. Morrisons stays opt-in until then. A run that does not set retailers will search all five retailers (Tesco, Sainsbury's, Asda, Aldi and Morrisons) instead of Aldi and Sainsbury's. maxItems is shared equally between the shops that run, so a default call (100 items) returns up to 20 rows from each of five shops instead of up to 50 from each of two. It is still at most 100 rows, so what it costs is unchanged ($0.255 on the Free plan: $0.005 to start and $0.0025 for each of up to 100 products). A run with maxItems set to 0 (no limit) is different: it returns, and charges for, rows from all five shops instead of two. To keep today's behaviour, set retailers to ["aldi", "sainsburys"]; runs that name their retailers are not affected. UK edition only; no field, price or event changes.</p>
 
 <footer>
   <p>Abley-Yapp Consulting Limited, registered in England and Wales. <a href="/">Yappman Data</a> · <a href="/privacy/">Privacy</a></p>
