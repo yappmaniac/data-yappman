@@ -37,6 +37,48 @@
   nav .links { display:flex; flex-wrap:wrap; gap:6px 18px; }
   nav a[aria-current="page"] { color:var(--accent); font-weight:600; text-decoration:underline; text-underline-offset:4px; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "UK Online Shelf-Price Index",
+  "description": "A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week and chained from a base of 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time with headline, retailer and category series. Shelf prices only; it is not CPI and not a measure of prices paid.",
+  "url": "https://data.yappman.com/shelf-price-index/",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Organization",
+    "name": "Abley-Yapp Consulting Limited",
+    "url": "https://data.yappman.com/"
+  },
+  "keywords": [
+    "UK",
+    "supermarket",
+    "grocery",
+    "shelf prices",
+    "price index",
+    "inflation",
+    "Tesco",
+    "Sainsbury's",
+    "Asda",
+    "Aldi"
+  ],
+  "spatialCoverage": "United Kingdom",
+  "temporalCoverage": "2026-09-21/..",
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=json&clean=true"
+    },
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "text/csv",
+      "contentUrl": "https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=csv&clean=true&attachment=true"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <main>
