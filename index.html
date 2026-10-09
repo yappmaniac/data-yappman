@@ -7,6 +7,8 @@
 <meta name="description" content="Point-in-time price data read from public websites: UK and Australian supermarkets, UK property listings with planning data, Google Hotels rates, and UK open-data lookups — never revised, no personal data.">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
 <meta property="og:title" content="Yappman Data — point-in-time price data from public websites">
@@ -16,13 +18,15 @@
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="strip">Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></div>
 <div class="topbar"><div class="wrap">
 <nav aria-label="Main">
   <a class="brand" href="/" aria-current="page"><span class="mark">Y</span>Yappman Data</a>
   <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
 </nav>
 </div></div>
-<main class="home">
+<main id="main" tabindex="-1" class="home">
 
 <section class="hero"><div class="wrap">
   <p class="eyebrow">Abley-Yapp Consulting Limited, United Kingdom.</p>
@@ -40,6 +44,8 @@
   </div>
 </div></section>
 
+<div class="onpage" role="navigation" aria-label="On this page"><div class="wrap"><span>On this page:</span><a href="#demos">Demos</a><a href="#series">Series</a><a href="#sample">Sample rows</a><a href="#notices">Notices</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a></div></div>
+
 <section class="band" id="live-band" hidden><div class="wrap">
   <div class="card live-card">
     <div>
@@ -53,7 +59,7 @@
   </div>
 </div></section>
 
-<section class="band tint"><div class="wrap">
+<section class="band tint" id="demos"><div class="wrap">
   <h2>See it in action</h2>
   <p class="section-sub">Short screen recordings of the live Actors on the Apify Store. More demos: <a href="https://www.youtube.com/@yappmandata">youtube.com/@yappmandata</a>.</p>
   <div class="demo-grid">
@@ -84,7 +90,7 @@
   </div>
 </div></section>
 
-<section class="band"><div class="wrap">
+<section class="band" id="series"><div class="wrap">
   <h2>What we provide</h2>
   <p>Shelf prices, promotions and, where a retailer publishes one, loyalty prices for every product the major supermarkets list online, joined across retailers by EAN barcode where the retailer publishes one. A weekly full-catalogue series for the UK and Australia, and a daily fixed basket of 212 UK staples for consistent day-to-day tracking. Retail-level price data with this structure is a nowcast of food inflation weeks ahead of official statistics, and a competitor-price series for CPG and retail analytics.</p>
   <div class="grid2" style="margin-top:18px">
@@ -133,6 +139,18 @@
   </details>
   <p style="margin-top:14px">Weekly UK Online Shelf-Price Index: <a href="https://data.yappman.com/shelf-price-index">https://data.yappman.com/shelf-price-index</a></p>
   <p class="sub">History accumulates weekly from the dates shown and is never revised. Trials are offered from three months of history.</p>
+  <h3 class="sample-h" id="sample">What a row looks like</h3>
+  <p class="section-sub">One row per product per retailer per period. Four real rows from the free daily-basket sample, scraped on 8 October 2026.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Retailer</th><th>Product</th><th>EAN</th><th class="num">Shelf price</th><th class="num">Was price</th><th class="num">Loyalty price</th></tr></thead>
+    <tbody>
+      <tr><td>Tesco</td><td>Wildfarmed Sliced Seeded Bread 550g</td><td class="ean">5065009224302</td><td class="num">£2.25</td><td class="num">—</td><td class="num">£1.95</td></tr>
+      <tr><td>Sainsbury's</td><td>Hovis Soft Medium Sliced White Bread 800g</td><td class="ean">5010003000131</td><td class="num">£1.25</td><td class="num">—</td><td class="num">£1.10</td></tr>
+      <tr><td>Asda</td><td>High Protein Half Fat Mature Cheddar Cheese 300g</td><td class="ean">5000295163522</td><td class="num">£2.00</td><td class="num">£3.42</td><td class="num">—</td></tr>
+      <tr><td>Aldi</td><td>Medium Sliced White Bread</td><td class="ean">—</td><td class="num">£0.55</td><td class="num">—</td><td class="num">—</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Shelf price is always the price a non-member pays. Aldi publishes no barcodes. <a href="#fields">See all fields</a> · <a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket">Free sample on Kaggle</a></p>
 </div></section>
 
 <section class="band tint"><div class="wrap">
@@ -146,7 +164,7 @@
   </div>
 </div></section>
 
-<section class="band"><div class="wrap">
+<section class="band" id="notices"><div class="wrap">
   <h2>Notices</h2>
   <p class="section-sub">Announced changes, posted ahead of release. <a href="/notices/">All notices</a></p>
   <div class="card notice-card">
@@ -167,7 +185,7 @@
 </div></section>
 
 <section class="band tint"><div class="wrap">
-  <h2>Fields <span class="badge plan">Supermarket data</span></h2>
+  <h2 id="fields">Fields <span class="badge plan">Supermarket data</span></h2>
   <p>One row per product per retailer per period: retailer, retailer product id, EAN, name, brand, pack size, shelf price, was-price, unit price and measure, loyalty price, promotion text and end date, stock flag, category path, URL, image URL; rating and review count where the retailer shows them; timestamp; and, in the Australian series, currency, market and store id. Loyalty price where the retailer publishes one: Tesco Clubcard, Sainsbury's Nectar and Morrisons More Card. Asda, Aldi, Coles, Woolworths and Aldi Australia publish no loyalty price, so the field is empty for them. Shelf price is always the price a non-member pays; loyalty pricing is never folded into it.</p>
 </div></section>
 
@@ -210,12 +228,21 @@
   <p>Russell Yapp, Abley-Yapp Consulting Limited — <a href="mailto:info@yappman.com">info@yappman.com</a>. Email support with a one-business-day response.</p>
 </div></section>
 
-<div class="wrap site-foot">
-<footer>
-  <p>Abley-Yapp Consulting Limited, registered in England and Wales. Data collected from public retailer websites; prices are national online shelf prices as published on the day shown and are not store-specific except where a store id is recorded. Not affiliated with, endorsed by, or partnered with any retailer named. <a href="/privacy/">Privacy</a> · <a href="#top">Back to top &uarr;</a></p>
-</footer>
-</div>
 </main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/#series">Series</a><a href="/#sample">Sample rows</a><a href="/#demos">Demos</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a></div>
+  </div>
+  <div class="foot-legal">
+    <p>Abley-Yapp Consulting Limited, registered in England and Wales. Data collected from public retailer websites; prices are national online shelf prices as published on the day shown and are not store-specific except where a store id is recorded. Not affiliated with, endorsed by, or partnered with any retailer named.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
 <script>
 (function () {
   var BASE = "https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=json&clean=true";
@@ -234,7 +261,7 @@
     var path = series.map(function (s, i) { return (i ? "L" : "M") + xs[i].toFixed(1) + "," + y(lv[i]).toFixed(1); }).join(" ");
     var grid = [lo, (lo + hi) / 2, hi].map(function (v) { return '<line class="gridline" x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(v) + '" y2="' + y(v) + '"/><text class="axis" x="' + (pl - 6) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + v.toFixed(0) + '</text>'; }).join("");
     var dots = series.map(function (s, i) { return '<g class="pt"><circle r="12" cx="' + xs[i] + '" cy="' + y(lv[i]) + '" fill="transparent"/><circle class="dot" r="4" cx="' + xs[i] + '" cy="' + y(lv[i]) + '"/><title>' + s.week + ": " + lv[i].toFixed(1) + '</title></g>'; }).join("");
-    var labels = series.map(function (s, i) { return (i === 0 || i === series.length - 1 || series.length <= 6) ? '<text class="axis" x="' + xs[i] + '" y="' + (H - 10) + '" text-anchor="middle">' + s.week + '</text>' : ""; }).join("");
+    var labels = series.map(function (s, i) { return (i === 0 || i === series.length - 1 || series.length <= 6) ? '<text class="axis" x="' + xs[i] + '" y="' + (H - 10) + '" text-anchor="' + (i === 0 ? "start" : i === series.length - 1 ? "end" : "middle") + '">' + s.week + '</text>' : ""; }).join("");
     return '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Index level by week">' + grid + '<path class="series-line" d="' + path + '"/>' + dots + labels + '</svg>';
   }
   fetch(BASE).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (rows) {

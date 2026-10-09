@@ -7,6 +7,8 @@
 <meta name="description" content="Announced 5 October 2026; ships no earlier than 4 November 2026. How the UK Supermarket Price Scraper matchKey changes and how matchKeyV1 keeps existing joins working.">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
 <meta property="og:title" content="Notice: matchKey changes — UK Supermarket Price Scraper">
@@ -16,13 +18,15 @@
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="strip">Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></div>
 <div class="topbar"><div class="wrap">
 <nav aria-label="Main">
   <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
   <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/" aria-current="page">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
 </nav>
 </div></div>
-<main>
+<main id="main" tabindex="-1">
 <header>
   <h1>Notice: matchKey changes</h1>
   <p class="sub">UK Supermarket Price Scraper on the Apify Store. Posted 5 October 2026. Ships no earlier than <strong>4 November 2026</strong>.</p>
@@ -30,10 +34,21 @@
 
 <p>Announced change to matchKey (UK Supermarket Price Scraper), 5 October 2026. Ships no earlier than 4 November 2026. Unit words in product names are written in the singular, so "2 Pints" and "2 Pint" give the same key. Pint-sized volumes are written in pints: a pack within 0.5% of a whole number of UK pints becomes &lt;n&gt;pt, so "2.272L", "2.27L", "2272ml" and "4 pint" all become 4pt; other sizes stay in ml and g. For one release, rows also carry matchKeyV1, the key exactly as built today, so existing joins keep working while you switch; matchKeyV1 is removed in the release after that, with its own notice. UK edition only; no other field, price or event changes.</p>
 
-<footer>
-  <p>Abley-Yapp Consulting Limited, registered in England and Wales. <a href="/">Yappman Data</a> · <a href="/privacy/">Privacy</a> · <a href="#top">Back to top &uarr;</a></p>
-</footer>
 </main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/#series">Series</a><a href="/#sample">Sample rows</a><a href="/#demos">Demos</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a></div>
+  </div>
+  <div class="foot-legal">
+    <p>Abley-Yapp Consulting Limited, registered in England and Wales.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
 <script src="/analytics.js" defer></script>
 </body>
 </html>

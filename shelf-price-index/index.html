@@ -7,6 +7,8 @@
 <meta name="description" content="A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time. CC BY 4.0.">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
 <meta property="og:title" content="UK Online Shelf-Price Index — Yappman Data">
@@ -58,13 +60,15 @@
 </script>
 </head>
 <body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="strip">Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></div>
 <div class="topbar"><div class="wrap">
 <nav aria-label="Main">
   <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
   <span class="links"><a href="/shelf-price-index/" aria-current="page">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
 </nav>
 </div></div>
-<main>
+<main id="main" tabindex="-1">
 <header>
   <h1>UK Online Shelf-Price Index</h1>
   <p class="sub">Posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time.</p>
@@ -84,19 +88,21 @@
 
 <section id="retailers" hidden>
   <h2>By retailer</h2>
-  <table><thead><tr><th>Retailer</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="retailer-rows"></tbody></table>
+  <div class="table-wrap"><table><thead><tr><th>Retailer</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="retailer-rows"></tbody></table></div>
 </section>
 
 <section id="categories" hidden>
   <h2>By category</h2>
-  <table><thead><tr><th>Category</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="category-rows"></tbody></table>
+  <div class="table-wrap"><table><thead><tr><th>Category</th><th class="num">Index</th><th class="num">Week on week</th><th>Move</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="category-rows"></tbody></table></div>
   <p class="meta" id="subtotal-line" hidden></p>
 </section>
 
 <section id="archive" hidden>
   <h2>Every published week</h2>
   <p>Each week's values are published once and never revised. The full series as <a id="csv-link" href="#">CSV</a> or <a id="json-link" href="#">JSON</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — cite as "Yappman Data, UK Online Shelf-Price Index".</p>
-  <table><thead><tr><th>Week</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="archive-rows"></tbody></table>
+  <div class="dl-row"><a class="btn btn-solid" id="csv-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download CSV</a><a class="btn btn-outline" id="json-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download JSON</a></div>
+  <div class="cite"><div><div class="meta">Cite this (CC BY 4.0)</div><div id="cite-text">Yappman Data, UK Online Shelf-Price Index.</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
+  <div class="table-wrap"><table><thead><tr><th>Week</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="archive-rows"></tbody></table></div>
 </section>
 
 <h2 id="method">What this measures, and what it doesn't</h2>
@@ -108,10 +114,21 @@
   <p>Methodology and due diligence for the underlying data: <a href="https://data.yappman.com/">data.yappman.com</a>. Weekly "what moved" notes: <a href="https://yappman.substack.com/">UK Grocery Price Moves</a>. The product-level data behind the index is licensed separately.</p>
 </div>
 
-<footer>
-  <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0. <a href="/privacy/">Privacy</a> · <a href="#top">Back to top &uarr;</a></p>
-</footer>
 </main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/#series">Series</a><a href="/#sample">Sample rows</a><a href="/#demos">Demos</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a></div>
+  </div>
+  <div class="foot-legal">
+    <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
 
 <script>
 // ---- configuration: set once, when the public dataset exists ----
@@ -143,10 +160,19 @@ function chart(series) {
   const y = v => pt + (hi - v) * (H - pt - pb) / (hi - lo);
   const path = series.map((s, i) => `${i ? "L" : "M"}${xs[i].toFixed(1)},${y(lv[i]).toFixed(1)}`).join(" ");
   const ticks = [lo, (lo + hi) / 2, hi].map(v => `<text class="axis" x="${pl - 8}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(0)}</text><line class="gridline" x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}"/>`).join("");
-  const labels = series.map((s, i) => (i === 0 || i === series.length - 1 || series.length <= 8) ? `<text class="axis" x="${xs[i]}" y="${H - 18}" text-anchor="middle">${esc(s.week)}</text>` : "").join("");
+  const labels = series.map((s, i) => (i === 0 || i === series.length - 1 || series.length <= 8) ? `<text class="axis" x="${xs[i]}" y="${H - 18}" text-anchor="${i === 0 ? "start" : i === series.length - 1 ? "end" : "middle"}">${esc(s.week)}</text>` : "").join("");
   const dots = series.map((s, i) => `<g class="pt"><circle r="14" cx="${xs[i]}" cy="${y(lv[i])}" fill="transparent"/><circle class="dot" r="4" cx="${xs[i]}" cy="${y(lv[i])}"/><title>${esc(s.week)}: ${lv[i].toFixed(1)}</title></g>`).join("");
   const axisTitle = `<text class="axis" x="${pl}" y="${H - 2}">Index level, base 100 at 2026-W39</text>`;
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Index level by week">${ticks}<path class="series-line" d="${path}"/>${dots}${labels}${axisTitle}</svg>`;
+}
+
+function catRow(label, r, maxAbs) {
+  const v = Number(r.wowPct); let bar = "";
+  if (r.wowPct !== null && r.wowPct !== undefined && r.wowPct !== "" && isFinite(v)) {
+    const w = Math.min(100, Math.abs(v) / maxAbs * 100).toFixed(0);
+    bar = `<div class="dbar" aria-hidden="true"><div class="neg">${v < 0 ? `<span class="bar-down" style="width:${w}%"></span>` : ""}</div><div class="pos">${v > 0 ? `<span class="bar-up" style="width:${w}%"></span>` : ""}</div></div>`;
+  }
+  return `<tr><td>${esc(label)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}<td>${bar}</td>${cell(r.w4Pct)}<td class="num">${r.matched ?? "—"}</td></tr>`;
 }
 
 async function load() {
@@ -188,7 +214,7 @@ async function load() {
   // W39 and W40 published the food/soft-drinks rollup as a class; it is a subtotal, so keep it out of the category table.
   const cr = of("category", latest).filter(r => !(latest < "2026-W41" && r.category === "food-soft-drinks")).sort((a, b) => String(a.category).localeCompare(String(b.category)));
   const pretty = v => String(v).replace(/-/g, " ").replace(/^./, c => c.toUpperCase());
-  if (cr.length) document.getElementById("category-rows").innerHTML = cr.map(r => row(pretty(r.category), r)).join("");
+  if (cr.length) { const maxAbs = Math.max(0.01, ...cr.map(r => Math.abs(Number(r.wowPct)) || 0)); document.getElementById("category-rows").innerHTML = cr.map(r => catRow(pretty(r.category), r, maxAbs)).join(""); }
 
   // From W41: "subtotal" (all retailers) and "retailer_subtotal" rows, shown as one line under the category table.
   const part = (name, r) => { const t = fmtDelta(r.wowPct); return `${esc(name)} ${fmtLevel(r.level)} (${t.text} w/w)`; };
@@ -200,6 +226,13 @@ async function load() {
   document.getElementById("archive-rows").innerHTML = [...weeks].reverse().map(wk => { const h = of("headline", wk)[0] || {}; return row(wk, h); }).join("");
   document.getElementById("csv-link").href = `${BASE}?format=csv&clean=true&attachment=true`;
   document.getElementById("json-link").href = `${BASE}?format=json&clean=true`;
+  document.getElementById("csv-btn").href = `${BASE}?format=csv&clean=true&attachment=true`;
+  document.getElementById("json-btn").href = `${BASE}?format=json&clean=true`;
+  document.getElementById("cite-text").textContent = `Yappman Data, UK Online Shelf-Price Index, ${latest}.`;
+  document.getElementById("cite-copy").addEventListener("click", function () {
+    const b = this, t = document.getElementById("cite-text").textContent;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { b.lastChild.textContent = " Copied"; setTimeout(() => { b.lastChild.textContent = " Copy"; }, 1800); }).catch(() => {});
+  });
   document.getElementById("archive").hidden = false;
 }
 load();
