@@ -52,7 +52,7 @@
 <ul>
   <li><strong>One row per sale, not per property.</strong> Each row is one registered sale, with HM Land Registry's own <code>transactionId</code>, <code>price</code> and <code>date</code>. The <code>propertyId</code>, <code>sales</code>, <code>lastSoldPrice</code>, <code>lastSoldDate</code>, <code>area</code> and <code>landRegistryUpdatedAt</code> fields go. New on every row: <code>tenure</code>, <code>newBuild</code>, <code>category</code> and <code>localAuthority</code>.</li>
   <li><strong><code>portal</code> becomes <code>"landregistry"</code></strong> on sold-price rows.</li>
-  <li><strong>History: the last 10 years.</strong> Today's rows go back to 1995. <code>soldWithinYears</code> accepts up to 10.</li>
+  <li><strong>History: back to 1995.</strong> A run with no dates set looks back 10 years; <code>soldWithinYears</code> (up to 40) or <code>soldFrom</code> reaches back to 1 January 1995, the first year of HM Land Registry's data. (Updated 8 October 2026.)</li>
   <li><strong>Every registered sale.</strong> The 1,000-rows-per-area limit goes. The 1,000-rows-per-run ceiling and <code>maxItems</code> stay.</li>
   <li><strong>Inputs.</strong> Full postcodes, postcode sectors, outcodes and local authority names. Rightmove <code>/house-prices/</code> URLs are no longer accepted; a run that gives one is told which input to use instead.</li>
   <li><strong>Filters.</strong> Any date range, price, property type, tenure, new build and category.</li>
