@@ -5,38 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UK Online Shelf-Price Index — Yappman Data</title>
 <meta name="description" content="A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time. CC BY 4.0.">
-<style>
-  :root { --ink:#16202b; --muted:#5b6b7a; --line:#dde3e9; --accent:#1f5fa8; --bg:#fff; --up:#b42318; --down:#027a48; }
-  * { box-sizing:border-box; }
-  body { margin:0; font:16px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); }
-  main { max-width:900px; margin:0 auto; padding:40px 24px 64px; }
-  header { border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:28px; }
-  h1 { font-size:28px; margin:0 0 6px; }
-  h2 { font-size:20px; margin:32px 0 10px; }
-  .sub { color:var(--muted); margin:0; }
-  .headline { display:flex; gap:32px; flex-wrap:wrap; align-items:flex-end; margin:16px 0 8px; }
-  .big { font-size:48px; font-weight:700; line-height:1; }
-  .delta { font-size:20px; font-weight:600; }
-  .up { color:var(--up); } .down { color:var(--down); } .flat { color:var(--muted); }
-  .meta { color:var(--muted); font-size:14px; }
-  table { border-collapse:collapse; width:100%; margin:12px 0 4px; font-size:15px; }
-  th, td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
-  th { color:var(--muted); font-weight:600; }
-  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
-  a { color:var(--accent); }
-  .box { border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:12px 0; }
-  .notice { background:#f6f8fa; }
-  svg { width:100%; height:auto; display:block; }
-  footer { border-top:1px solid var(--line); margin-top:40px; padding-top:16px; color:var(--muted); font-size:14px; }
-  #status { color:var(--muted); font-style:italic; }
-  @media (max-width:640px) { .big { font-size:36px; } table { font-size:13px; } }
-  nav { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:6px 20px; margin-bottom:22px; font-size:15px; }
-  nav a { color:var(--ink); text-decoration:none; }
-  nav a:hover { color:var(--accent); }
-  nav .brand { font-weight:700; }
-  nav .links { display:flex; flex-wrap:wrap; gap:6px 18px; }
-  nav a[aria-current="page"] { color:var(--accent); font-weight:600; text-decoration:underline; text-underline-offset:4px; }
-</style>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="UK Online Shelf-Price Index — Yappman Data">
+<meta property="og:description" content="A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time. CC BY 4.0.">
+<meta property="og:url" content="https://data.yappman.com/shelf-price-index/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -80,12 +57,14 @@
 }
 </script>
 </head>
-<body>
-<main>
+<body id="top">
+<div class="topbar"><div class="wrap">
 <nav aria-label="Main">
-  <a class="brand" href="/">Yappman Data</a>
+  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
   <span class="links"><a href="/shelf-price-index/" aria-current="page">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
 </nav>
+</div></div>
+<main>
 <header>
   <h1>UK Online Shelf-Price Index</h1>
   <p class="sub">Posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time.</p>
@@ -130,7 +109,7 @@
 </div>
 
 <footer>
-  <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0. <a href="/privacy/">Privacy</a></p>
+  <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0. <a href="/privacy/">Privacy</a> · <a href="#top">Back to top &uarr;</a></p>
 </footer>
 </main>
 
@@ -147,7 +126,7 @@ function fmtDelta(v) {
   const n = Number(v); const s = (n > 0 ? "+" : "") + n.toFixed(2) + "%";
   return { text:s, cls: n > 0.05 ? "up" : n < -0.05 ? "down" : "flat" };
 }
-function cell(v, cls) { const t = fmtDelta(v); return `<td class="num ${t.cls}">${t.text}</td>`; }
+function cell(v, cls) { const t = fmtDelta(v); return `<td class="num"><span class="chip-delta ${t.cls}">${t.text}</span></td>`; }
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function row(label, r) {
@@ -155,18 +134,19 @@ function row(label, r) {
 }
 
 function chart(series) {
-  // series: [{week, level}] ascending; simple SVG line, scaled to the data
+  // series: [{week, level}] ascending; SVG line scaled to the data, with native hover tooltips on each point
   if (series.length < 2) return "";
-  const W = 880, H = 220, pl = 48, pr = 16, pt = 16, pb = 36;
+  const W = 880, H = 240, pl = 52, pr = 16, pt = 18, pb = 40;
   const xs = series.map((_, i) => pl + i * (W - pl - pr) / (series.length - 1));
   const lv = series.map(s => Number(s.level));
   const lo = Math.floor(Math.min(...lv) - 1), hi = Math.ceil(Math.max(...lv) + 1);
   const y = v => pt + (hi - v) * (H - pt - pb) / (hi - lo);
   const path = series.map((s, i) => `${i ? "L" : "M"}${xs[i].toFixed(1)},${y(lv[i]).toFixed(1)}`).join(" ");
-  const ticks = [lo, (lo + hi) / 2, hi].map(v => `<text x="${pl - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="#5b6b7a">${v.toFixed(0)}</text><line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="#dde3e9"/>`).join("");
-  const labels = series.map((s, i) => (i === 0 || i === series.length - 1 || series.length <= 8) ? `<text x="${xs[i]}" y="${H - 12}" text-anchor="middle" font-size="11" fill="#5b6b7a">${esc(s.week)}</text>` : "").join("");
-  const dots = series.map((s, i) => `<circle cx="${xs[i]}" cy="${y(lv[i])}" r="3" fill="#1f5fa8"/>`).join("");
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Index level by week">${ticks}<path d="${path}" fill="none" stroke="#1f5fa8" stroke-width="2"/>${dots}${labels}</svg>`;
+  const ticks = [lo, (lo + hi) / 2, hi].map(v => `<text class="axis" x="${pl - 8}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(0)}</text><line class="gridline" x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}"/>`).join("");
+  const labels = series.map((s, i) => (i === 0 || i === series.length - 1 || series.length <= 8) ? `<text class="axis" x="${xs[i]}" y="${H - 18}" text-anchor="middle">${esc(s.week)}</text>` : "").join("");
+  const dots = series.map((s, i) => `<g class="pt"><circle r="14" cx="${xs[i]}" cy="${y(lv[i])}" fill="transparent"/><circle class="dot" r="4" cx="${xs[i]}" cy="${y(lv[i])}"/><title>${esc(s.week)}: ${lv[i].toFixed(1)}</title></g>`).join("");
+  const axisTitle = `<text class="axis" x="${pl}" y="${H - 2}">Index level, base 100 at 2026-W39</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Index level by week">${ticks}<path class="series-line" d="${path}"/>${dots}${labels}${axisTitle}</svg>`;
 }
 
 async function load() {

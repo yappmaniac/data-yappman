@@ -5,40 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Notice: sold-prices mode changes in version 0.3 — UK Property Listings</title>
 <meta name="description" content="From version 0.3 (not before 5 November 2026), UK Property Listings' sold-prices mode reads our own monthly copy of HM Land Registry's Price Paid Data. What changes and what to check.">
-<style>
-  :root { --ink:#16202b; --muted:#5b6b7a; --line:#dde3e9; --accent:#1f5fa8; --bg:#ffffff; }
-  * { box-sizing:border-box; }
-  body { margin:0; font:16px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); }
-  main { max-width:900px; margin:0 auto; padding:40px 24px 64px; }
-  header { border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:28px; }
-  h1 { font-size:28px; margin:0 0 6px; }
-  .sub { color:var(--muted); margin:0; }
-  h2 { font-size:20px; margin:32px 0 10px; }
-  p { margin:0 0 12px; }
-  table { border-collapse:collapse; width:100%; margin:12px 0 4px; font-size:15px; }
-  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
-  th { color:var(--muted); font-weight:600; }
-  ul { padding-left:22px; margin:6px 0 12px; }
-  li { margin:4px 0; }
-  a { color:var(--accent); }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px 32px; }
-  @media (max-width:640px) { .grid { grid-template-columns:1fr; } table { font-size:14px; } }
-  footer { border-top:1px solid var(--line); margin-top:40px; padding-top:16px; color:var(--muted); font-size:14px; }
-  .box { border:1px solid var(--line); border-radius:6px; padding:14px 16px; margin:12px 0; }
-  nav { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:6px 20px; margin-bottom:22px; font-size:15px; }
-  nav a { color:var(--ink); text-decoration:none; }
-  nav a:hover { color:var(--accent); }
-  nav .brand { font-weight:700; }
-  nav .links { display:flex; flex-wrap:wrap; gap:6px 18px; }
-  nav a[aria-current="page"] { color:var(--accent); font-weight:600; text-decoration:underline; text-underline-offset:4px; }
-</style>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="Notice: sold-prices mode changes in version 0.3 — UK Property Listings">
+<meta property="og:description" content="From version 0.3 (not before 5 November 2026), UK Property Listings' sold-prices mode reads our own monthly copy of HM Land Registry's Price Paid Data. What changes and what to check.">
+<meta property="og:url" content="https://data.yappman.com/notices/sold-prices-0-3/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
 </head>
-<body>
-<main>
+<body id="top">
+<div class="topbar"><div class="wrap">
 <nav aria-label="Main">
-  <a class="brand" href="/">Yappman Data</a>
+  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
   <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/" aria-current="page">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
 </nav>
+</div></div>
+<main>
 <header>
   <h1>Notice: sold-prices mode changes in version 0.3</h1>
   <p class="sub">UK Property Listings on the Apify Store. Posted 5 October 2026. Version 0.3 will not be released before <strong>5 November 2026</strong>.</p>
@@ -74,7 +58,7 @@
 <p>If you call sold-prices mode from code or a scheduled task, check your inputs and the fields you read against the list above before 5 November 2026. The full details will be in the Actor's README and CHANGELOG with the release.</p>
 
 <footer>
-  <p>Contains HM Land Registry data © Crown copyright and database right 2026, licensed under the Open Government Licence v3.0. Abley-Yapp Consulting Limited, registered in England and Wales. Not affiliated with, endorsed by, or partnered with Rightmove. <a href="/">Yappman Data</a> · <a href="/privacy/">Privacy</a></p>
+  <p>Contains HM Land Registry data © Crown copyright and database right 2026, licensed under the Open Government Licence v3.0. Abley-Yapp Consulting Limited, registered in England and Wales. Not affiliated with, endorsed by, or partnered with Rightmove. <a href="/">Yappman Data</a> · <a href="/privacy/">Privacy</a> · <a href="#top">Back to top &uarr;</a></p>
 </footer>
 </main>
 <script src="/analytics.js" defer></script>
