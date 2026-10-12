@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UK Online Shelf-Price Index — Yappman Data</title>
-<meta name="description" content="A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time. CC BY 4.0.">
+<meta name="description" content="A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39 for the closed series (weeks 39 and 40) and at 2026-W42 for the series that restarts after the skipped week 41. Published every Monday at 07:00 UK time. CC BY 4.0.">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
 <meta property="og:title" content="UK Online Shelf-Price Index — Yappman Data">
-<meta property="og:description" content="A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time. CC BY 4.0.">
+<meta property="og:description" content="A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39 for the closed series (weeks 39 and 40) and at 2026-W42 for the series that restarts after the skipped week 41. Published every Monday at 07:00 UK time. CC BY 4.0.">
 <meta property="og:url" content="https://data.yappman.com/shelf-price-index/">
 <meta property="og:image" content="https://data.yappman.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -21,7 +21,7 @@
   "@context": "https://schema.org",
   "@type": "Dataset",
   "name": "UK Online Shelf-Price Index",
-  "description": "A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week and chained from a base of 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time with headline, retailer and category series. Shelf prices only; it is not CPI and not a measure of prices paid.",
+  "description": "A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week and chained from a base of 100 at ISO week 2026-W39 (the closed series, weeks 39 and 40) and, after the skipped week 41, from a new base of 100 at ISO week 2026-W42; week 2026-W41 has no data. Published every Monday at 07:00 UK time with headline, retailer and category series. Shelf prices only; it is not CPI and not a measure of prices paid.",
   "url": "https://data.yappman.com/shelf-price-index/",
   "license": "https://creativecommons.org/licenses/by/4.0/",
   "isAccessibleForFree": true,
@@ -71,7 +71,7 @@
 <main id="main" tabindex="-1">
 <header>
   <h1>UK Online Shelf-Price Index</h1>
-  <p class="sub">Posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. Base 100 at ISO week 2026-W39. Published every Monday at 07:00 UK time.</p>
+  <p class="sub">Posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. The index restarts at week 42 after a skipped week 41 (<a href="/notices/w41-skipped/">see the notice</a>): base 100 at ISO week 2026-W39 for the closed series (weeks 39 and 40), and at 2026-W42 for the new series. Published every Monday at 07:00 UK time.</p>
 </header>
 
 <p id="status">Loading the latest week…</p>
@@ -107,7 +107,7 @@
 
 <h2 id="method">What this measures, and what it doesn't</h2>
 <div class="box notice">
-  <p><strong>It measures posted online prices.</strong> Each week the full online catalogue of four UK supermarkets — Tesco, Sainsbury's, Asda and Aldi — is read as any visitor sees it. Products present in both this week and last week are matched by the retailer's own product id, and the index is the weighted mean of their price ratios, chained week on week from a base of 100 at ISO week 2026-W39. Shelf price only: loyalty-card prices and multibuy promotions are recorded separately and excluded here.</p>
+  <p><strong>It measures posted online prices.</strong> Each week the full online catalogue of four UK supermarkets — Tesco, Sainsbury's, Asda and Aldi — is read as any visitor sees it. Products present in both this week and last week are matched by the retailer's own product id, and the index is the weighted mean of their price ratios, chained week on week from a base of 100 at ISO week 2026-W39 (the closed series, weeks 39 and 40) and, after the skipped week 41, from a new base of 100 at ISO week 2026-W42. Four-week changes are empty across the gap (<a href="/notices/w41-skipped/">see the notice</a>). Shelf price only: loyalty-card prices and multibuy promotions are recorded separately and excluded here.</p>
   <p><strong>It is not CPI, and it is not a measure of prices paid.</strong> The ONS consumer prices index uses scanner data with transaction quantities and includes discounts actually taken; this index has no quantities and no transactions. Treat it as a fast, product-level indicator of what the four retailers are asking online, published days after the week it describes.</p>
   <p><strong>Known limits.</strong> Online catalogues only, so in-store-only lines are absent; prices are national online shelf prices except where a retailer exposes a default store; Aldi publishes no barcodes, so cross-retailer joins there use name and pack size. Category rows can rest on fewer than four retailers where one retailer's cell is too thin. The four-week figure is empty until four weeks exist. There is no year-on-year figure until a year exists. Suspect moves (over 200% in a week) are excluded and listed in the weekly note.</p>
   <p><strong>Coverage.</strong> About 70,000 products a week across the four retailers; matched counts are shown on every row. Weeks with a missing retailer are published with a coverage warning in the metadata and never backfilled or interpolated. Morrisons joins from November 2026, and the index continues on the four-retailer basis with Morrisons reported separately until a full year of five-retailer data exists.</p>
@@ -150,20 +150,37 @@ function row(label, r) {
   return `<tr><td>${esc(label)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}${cell(r.w4Pct)}<td class="num">${r.matched ?? "—"}</td></tr>`;
 }
 
+const CLOSED_LAST = "2026-W40", SKIPPED_WEEK = "2026-W41", NEW_BASE = "2026-W42";
+function weekIdx(wk) { const m = /^(\d{4})-W(\d{2})$/.exec(String(wk)); return m ? Number(m[1]) * 53 + Number(m[2]) : NaN; }
 function chart(series) {
-  // series: [{week, level}] ascending; SVG line scaled to the data, with native hover tooltips on each point
-  if (series.length < 2) return "";
-  const W = 880, H = 240, pl = 52, pr = 16, pt = 18, pb = 40;
-  const xs = series.map((_, i) => pl + i * (W - pl - pr) / (series.length - 1));
-  const lv = series.map(s => Number(s.level));
+  // Two series: the closed one (weeks 39 and 40, base 100 at W39) and the new one (from week 42, base 100 at W42).
+  // Week 41 is skipped, so the line breaks there and each series is drawn on its own. Points sit at their ISO-week position.
+  const closed = series.filter(s => s.week <= CLOSED_LAST);
+  const fresh = series.filter(s => s.week >= NEW_BASE);
+  const all = closed.concat(fresh);
+  if (all.length < 2) return "";
+  const W = 880, H = 270, pl = 52, pr = 24, pt = 20, pb = 58;
+  const i0 = Math.min(...all.map(s => weekIdx(s.week))), i1 = Math.max(...all.map(s => weekIdx(s.week)));
+  const x = wk => pl + (i1 === i0 ? 0 : (weekIdx(wk) - i0) * (W - pl - pr) / (i1 - i0));
+  const lv = all.map(s => Number(s.level));
   const lo = Math.floor(Math.min(...lv) - 1), hi = Math.ceil(Math.max(...lv) + 1);
   const y = v => pt + (hi - v) * (H - pt - pb) / (hi - lo);
-  const path = series.map((s, i) => `${i ? "L" : "M"}${xs[i].toFixed(1)},${y(lv[i]).toFixed(1)}`).join(" ");
   const ticks = [lo, (lo + hi) / 2, hi].map(v => `<text class="axis" x="${pl - 8}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(0)}</text><line class="gridline" x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}"/>`).join("");
-  const labels = series.map((s, i) => (i === 0 || i === series.length - 1 || series.length <= 8) ? `<text class="axis" x="${xs[i]}" y="${H - 18}" text-anchor="${i === 0 ? "start" : i === series.length - 1 ? "end" : "middle"}">${esc(s.week)}</text>` : "").join("");
-  const dots = series.map((s, i) => `<g class="pt"><circle r="14" cx="${xs[i]}" cy="${y(lv[i])}" fill="transparent"/><circle class="dot" r="4" cx="${xs[i]}" cy="${y(lv[i])}"/><title>${esc(s.week)}: ${lv[i].toFixed(1)}</title></g>`).join("");
-  const axisTitle = `<text class="axis" x="${pl}" y="${H - 2}">Index level, base 100 at 2026-W39</text>`;
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Index level by week">${ticks}<path class="series-line" d="${path}"/>${dots}${labels}${axisTitle}</svg>`;
+  const seg = (arr, cls) => {
+    if (!arr.length) return "";
+    const path = arr.length > 1 ? `<path class="series-line ${cls}" d="${arr.map((s, i) => `${i ? "L" : "M"}${x(s.week).toFixed(1)},${y(Number(s.level)).toFixed(1)}`).join(" ")}"/>` : "";
+    const dots = arr.map(s => `<g class="pt ${cls}"><circle r="14" cx="${x(s.week)}" cy="${y(Number(s.level))}" fill="transparent"/><circle class="dot" r="4" cx="${x(s.week)}" cy="${y(Number(s.level))}"/><title>${esc(s.week)}: ${Number(s.level).toFixed(1)}</title></g>`).join("");
+    return path + dots;
+  };
+  const gap = (closed.length && fresh.length)
+    ? `<line class="gap-line" x1="${x(SKIPPED_WEEK)}" x2="${x(SKIPPED_WEEK)}" y1="${pt}" y2="${H - pb}"/><text class="axis" x="${x(SKIPPED_WEEK)}" y="${pt + 12}" text-anchor="middle">W41 skipped</text>`
+    : "";
+  const firstWk = all[0].week, lastWk = all[all.length - 1].week;
+  const labelWeeks = all.length <= 8 ? all.map(s => s.week) : [closed[0], closed[closed.length - 1], fresh[0], fresh[fresh.length - 1]].filter(Boolean).map(s => s.week).filter((w, i, a) => a.indexOf(w) === i);
+  const labels = labelWeeks.map(wk => `<text class="axis" x="${x(wk)}" y="${H - pb + 18}" text-anchor="${wk === firstWk ? "start" : wk === lastWk ? "end" : "middle"}">${esc(wk)}</text>`).join("");
+  const axisTitle = `<text class="axis" x="${pl}" y="${H - 4}">Index level. Closed series: base 100 at 2026-W39. New series: base 100 at 2026-W42.</text>`;
+  const legend = `<p class="meta legend"><span><i class="sw closed"></i>Closed series (weeks 39 and 40, base 100 at 2026-W39)</span><span><i class="sw fresh"></i>New series (from week 42, base 100 at 2026-W42)</span></p>`;
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Index level by week: closed series for weeks 39 and 40, new series from week 42, week 41 skipped">${ticks}${gap}${seg(closed, "closed")}${seg(fresh, "fresh")}${labels}${axisTitle}</svg>${legend}`;
 }
 
 function catRow(label, r, maxAbs) {
@@ -202,7 +219,7 @@ async function load() {
   const wow = document.getElementById("wow"); wow.textContent = w.text; wow.className = "delta " + w.cls;
   const w4 = document.getElementById("w4"); w4.textContent = f.text; w4.className = "delta " + f.cls;
   const warn = meta.coverageWarnings && meta.coverageWarnings.length ? ` Coverage note: ${esc([].concat(meta.coverageWarnings).join("; "))}.` : "";
-  document.getElementById("weekmeta").innerHTML = `Week ${esc(latest)} · ${head.matched ?? "—"} matched products · shelf prices only, not CPI.${warn}`;
+  document.getElementById("weekmeta").innerHTML = `Week ${esc(latest)} · ${head.matched ?? "—"} matched products · shelf prices only, not CPI. Base 100 at ${latest >= NEW_BASE ? NEW_BASE : "2026-W39"}.${warn}`;
 
   const series = weeks.map(wk => ({ week: wk, level: (of("headline", wk)[0] || {}).level })).filter(s => s.level !== undefined && s.level !== null);
   document.getElementById("chart").innerHTML = chart(series);
@@ -223,7 +240,16 @@ async function load() {
   if (subs.length || rsubs.length) { const el = document.getElementById("subtotal-line"); el.innerHTML = "<strong>Subtotals:</strong> " + subs.concat(rsubs).join(" · "); el.hidden = false; }
   if (cr.length || subs.length || rsubs.length) document.getElementById("categories").hidden = false;
 
-  document.getElementById("archive-rows").innerHTML = [...weeks].reverse().map(wk => { const h = of("headline", wk)[0] || {}; return row(wk, h); }).join("");
+  const grp = t => `<tr class="grp"><td colspan="5">${t}</td></tr>`;
+  const freshWeeks = weeks.filter(wk => wk >= NEW_BASE).reverse();
+  const closedWeeks = weeks.filter(wk => wk <= CLOSED_LAST).reverse();
+  const archiveHtml = [grp("New series (week 42 onward): base 100 at 2026-W42")];
+  if (freshWeeks.length) freshWeeks.forEach(wk => archiveHtml.push(row(wk, of("headline", wk)[0] || {})));
+  else archiveHtml.push(`<tr><td colspan="5" class="meta">No weeks published yet. The series restarts with week 42 (base 100); the first weekly change is published for week 43.</td></tr>`);
+  archiveHtml.push(`<tr class="skipped"><td>${SKIPPED_WEEK}</td><td colspan="4">Skipped: no complete data. <a href="/notices/w41-skipped/">See the notice</a>.</td></tr>`);
+  archiveHtml.push(grp("Closed series (weeks 39 and 40): base 100 at 2026-W39"));
+  closedWeeks.forEach(wk => archiveHtml.push(row(wk, of("headline", wk)[0] || {})));
+  document.getElementById("archive-rows").innerHTML = archiveHtml.join("");
   document.getElementById("csv-link").href = `${BASE}?format=csv&clean=true&attachment=true`;
   document.getElementById("json-link").href = `${BASE}?format=json&clean=true`;
   document.getElementById("csv-btn").href = `${BASE}?format=csv&clean=true&attachment=true`;

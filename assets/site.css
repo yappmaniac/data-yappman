@@ -162,6 +162,15 @@ svg{width:100%;height:auto;display:block}
 .axis{fill:var(--muted);font-size:11px}
 .gridline{stroke:var(--line)}
 .series-line{fill:none;stroke:var(--chart);stroke-width:2.5}
+.series-line.closed{stroke:var(--muted)}
+.pt.closed circle.dot{fill:var(--muted)}
+.gap-line{stroke:var(--line);stroke-dasharray:4 4}
+.legend{display:flex;gap:6px 22px;flex-wrap:wrap;margin:8px 0 0}
+.legend .sw{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.sw.closed{background:var(--muted)}
+.sw.fresh{background:var(--chart)}
+tbody tr.grp td{background:var(--tint);color:var(--muted);font-weight:600}
+tbody tr.skipped td{color:var(--muted);font-style:italic}
 #status{color:var(--muted);font-style:italic}
 .live-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:24px;align-items:center}
 
