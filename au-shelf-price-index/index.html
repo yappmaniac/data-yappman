@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AU Online Shelf-Price Index — Yappman Data</title>
+<meta name="description" content="A weekly index of posted online shelf prices at Coles, Woolworths and Aldi Australia, matched product by product week on week, in AUD. Like-for-like headline over the classes Coles reaches; base 100 at ISO week 2026-W41. Published every Monday from 19 October 2026. CC BY 4.0.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="AU Online Shelf-Price Index — Yappman Data">
+<meta property="og:description" content="A weekly index of posted online shelf prices at Coles, Woolworths and Aldi Australia, matched product by product week on week, in AUD. Like-for-like headline over the classes Coles reaches; base 100 at ISO week 2026-W41. Published every Monday from 19 October 2026. CC BY 4.0.">
+<meta property="og:url" content="https://data.yappman.com/au-shelf-price-index/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="strip">Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></div>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main">
+  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
+  <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
+</nav>
+</div></div>
+<main id="main" tabindex="-1">
+<header>
+  <h1>AU Online Shelf-Price Index</h1>
+  <p class="sub">Posted online shelf prices at Coles, Woolworths and Aldi Australia, matched product by product week on week, in Australian dollars (AUD). The headline is like-for-like over the classes Coles reaches. Base 100 at ISO week 2026-W41. Published every Monday from 19 October 2026.</p>
+</header>
+
+<p id="status">Loading the latest week…</p>
+
+<section id="latest" hidden>
+  <div class="headline">
+    <div><div class="meta">Like-for-like headline, three retailers</div><div class="big" id="level">—</div></div>
+    <div><div class="meta">Week on week</div><div class="delta" id="wow">—</div></div>
+    <div><div class="meta">Four weeks</div><div class="delta" id="w4">—</div></div>
+  </div>
+  <p class="meta" id="weekmeta"></p>
+  <p class="meta" id="headline-def"></p>
+  <p class="meta" id="headline-classes"></p>
+  <p class="meta" id="coles-line"></p>
+  <div id="chart"></div>
+</section>
+
+<section id="retailers-lfl" hidden>
+  <h2>By retailer, like-for-like</h2>
+  <div class="table-wrap"><table><thead><tr><th>Retailer</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="lfl-rows"></tbody></table></div>
+</section>
+
+<section id="retailers" hidden>
+  <h2>By retailer, all matched products</h2>
+  <div class="table-wrap"><table><thead><tr><th>Retailer</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="retailer-rows"></tbody></table></div>
+</section>
+
+<section id="categories" hidden>
+  <h2>By class</h2>
+  <div class="table-wrap"><table><thead><tr><th>Class</th><th class="num">Index</th><th class="num">Week on week</th><th>Move</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="category-rows"></tbody></table></div>
+  <p class="meta" id="subtotal-line" hidden></p>
+</section>
+
+<section id="archive" hidden>
+  <h2>Every published week</h2>
+  <p>Each week's values are published once and never revised. The full series as <a id="csv-link" href="#">CSV</a> or <a id="json-link" href="#">JSON</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — cite as "Yappman Data, AU Online Shelf-Price Index".</p>
+  <div class="dl-row"><a class="btn btn-solid" id="csv-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download CSV</a><a class="btn btn-outline" id="json-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download JSON</a></div>
+  <div class="cite"><div><div class="meta">Cite this (CC BY 4.0)</div><div id="cite-text">Yappman Data, AU Online Shelf-Price Index.</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
+  <div class="table-wrap"><table><thead><tr><th>Week</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="archive-rows"></tbody></table></div>
+</section>
+
+<h2 id="method">What it measures</h2>
+<div class="box notice">
+  <p>The index follows the posted online shelf prices of the same products at Coles, Woolworths and Aldi Australia from one week to the next. Prices are in Australian dollars (AUD). It is not what shoppers paid, it is not the ABS Consumer Price Index (CPI), it is not weighted by market share, and it is not a forecast. The price used is the shelf price shown to every visitor, including promotions that need no card.</p>
+  <p>Coles is a partial slice, not the whole Coles range. Read "Coverage and limits" before quoting a figure.</p>
+</div>
+
+<h2>Method</h2>
+<p>Each week's snapshots are compared with the week before. Snapshots are taken on Wednesdays, and weeks are ISO weeks. A product is matched by the retailer's own product id, and only products present in both weeks with a price in both are used. For each retailer and each broad product class, the weekly change is the geometric mean (a Jevons index) of the products' price ratios, so every product counts equally. There are no spending weights.</p>
+<p>The weekly changes are chained from a base of 100 in 2026-W41. A price that multiplies by 3 or more in one week (a rise of 200% or more), or falls to a third or less (a fall of 66.7% or more), is treated as a probable pricing error, or the correction of one, and left out of the index. When a product's pack size changes, the change in its price per unit is used, and if that cannot be worked out the product is left out that week. A cell (one retailer and class) with fewer than 20 used products that week keeps last week's level. Its status is <code>carried</code>, or <code>insufficient</code> when it has no used products at all.</p>
+<p>Classes come from keyword rules on the retailer's category names and product names, so they are approximate. There are 16 classes, the same as in the UK index. Products that match no rule fall in the class <code>other</code>, and the share of each retailer's products in <code>other</code> is checked every week. The rules are identified in each vintage's meta by <code>classRulesVersion</code>.</p>
+
+<h3>The headline</h3>
+<p>The headline is like-for-like, so that Coles, which is a partial slice, is compared with Woolworths and Aldi over the same kinds of product.</p>
+<ol>
+  <li>Each week, the headline covers only the classes where Coles has at least 20 used products that week. The class <code>other</code> is never one of them.</li>
+  <li>Each retailer gets a like-for-like figure over its own products in those classes.</li>
+  <li>The headline is the equal-weight geometric mean of the three retailers' like-for-like figures.</li>
+</ol>
+<p>The classes used are listed in each vintage's meta (<code>headlineClasses</code>) and can differ from week to week. Each retailer's figure over all its matched products is published beside the like-for-like figure. The all-retailer figure over all products is not published.</p>
+<p>A vintage is published only if Coles, Woolworths and Aldi all have valid snapshots in both weeks, and the headline covers at least 4 classes. A Woolworths or Aldi snapshot part must hold at least 80% of the same part's products the week before. If any of this fails, the vintage is not published. It waits for a rerun or for the next Monday. Nothing is ever imputed.</p>
+
+<h2>What is published</h2>
+<p>For the headline, each retailer (like-for-like and all matched products), each class, and each retailer within a class: the level, the change on the previous week, and the change over four weeks (this week's level against the level four weeks earlier). The four-week change is empty until 2026-W45, and empty wherever the earlier level is missing. No year-on-year figure is published. Each row also gives the number of matched products and their share of last week's products.</p>
+<p>A combined "food and soft drinks" figure, covering the ten food and soft-drink classes together, is published alongside the classes as a subtotal (record types <code>subtotal</code> and <code>retailer_subtotal</code>). It is not one of the 16 classes.</p>
+<p>The 2026-W41 rows are the base: every level is 100 (status <code>base</code>) and they carry no matched count, because the base week has no earlier week to match against. Matched counts and shares start at 2026-W42.</p>
+<p>Each row has these fields: <code>vintage</code>, <code>publishedAt</code>, <code>revision</code>, <code>recordType</code>, <code>retailer</code>, <code>class</code>, <code>level</code>, <code>weekOnWeekPct</code>, <code>fourWeekPct</code>, <code>matched</code>, <code>matchedShare</code> and <code>status</code> (<code>ok</code>, <code>insufficient</code>, <code>carried</code> or <code>base</code>). The record types are:</p>
+<ul>
+  <li><code>headline</code>: the like-for-like headline.</li>
+  <li><code>retailer_like_for_like</code>: one retailer over the headline's classes.</li>
+  <li><code>retailer</code>: one retailer over all its matched products.</li>
+  <li><code>class</code> and <code>retailer_class</code>: a class across retailers, and a retailer within a class.</li>
+  <li><code>subtotal</code> and <code>retailer_subtotal</code>: food and soft drinks.</li>
+</ul>
+<p>Each vintage also has one <code>meta</code> item with the title, base week, weighting, retailers, classes, matched total, coverage warnings, number of retailers in the headline, method page URL, licence, and these fields for the AU index: <code>currency</code>, <code>headlineDefinition</code>, <code>headlineClasses</code>, <code>colesStatus</code> (<code>partial</code>), <code>colesProducts</code>, <code>colesRangeSharePct</code>, <code>colesRequests</code>, <code>woolworthsStore</code> and <code>classRulesVersion</code>. The meta of the base vintage has <code>headlineClasses</code> and the Coles figures empty.</p>
+<p>Only aggregates are published: no product names, ids, URLs or prices.</p>
+
+<h2>Coverage and limits</h2>
+<p>Only what the retailers show online is covered. A product relaunched under a new identifier drops out of the match, so its price change is missed. When a retailer's snapshot covers far fewer products than the week before, the release says so.</p>
+<ul>
+  <li><strong>Coles is a staples-first partial.</strong> Coles is read from its listing pages only, in priority order (dairy, eggs and fridge; bakery; meat and seafood; fruit and vegetables; pantry; then the rest), until Coles' per-session limit of about 80 requests. In 2026-W41 that was about 21% of the products in the Coles lists. The Coles figure is a figure for those staples, not for Coles overall. A Coles run counts only if it stopped at that limit (60 or more requests) and holds at least 90% of the products its plan expects (3,513 and 3,506 for the two runs). The Coles coverage of each week is in the meta (<code>colesProducts</code>, <code>colesRangeSharePct</code>, <code>colesRequests</code>).</li>
+  <li><strong>The Coles slice is promotion-heavy.</strong> In 2026-W41, 18% of its rows had a was-price and 24% had promotion text. The Coles figure therefore moves with weekly specials.</li>
+  <li><strong>Woolworths and Aldi</strong> are measured on their whole collected range.</li>
+  <li><strong>Woolworths</strong> is read for store 1101. A part of its snapshot counts only if every row is from that store; otherwise the part, and with it Woolworths for that week, is left out.</li>
+  <li><strong>Aldi</strong> is its regular range only. Special Buys are never in the index, and neither are Aldi's promotional and curated groups.</li>
+  <li>Class rows can rest on fewer than three retailers, because Coles has cells only in the classes its slice reaches. The row's matched count and status show it.</li>
+  <li>The index is not a CPI, not prices paid, not market-share weighted and not a forecast.</li>
+</ul>
+
+<h2>Release</h2>
+<p>The index is published weekly on Mondays, after the Wednesday snapshot and the days in which a failed snapshot part can be rerun. The first publication is Monday 19 October 2026. It adds the base vintage 2026-W41 (level 100) and the first change week 2026-W42 together. Each week is added to the public dataset <code>au-shelf-price-index</code> as a vintage and is never revised afterwards. A correction, if ever needed, would be a new revision that is clearly marked. The dataset's general access is "Anyone with ID can read". The licence is <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/city-hotel-prices/">City Hotel Prices</a><a href="/#series">Series</a><a href="/#sample">Sample rows</a><a href="/#demos">Demos</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a></div>
+  </div>
+  <div class="foot-legal">
+    <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script>
+// AU Online Shelf-Price Index: reads the public Apify dataset `au-shelf-price-index` (anyone with the id can read).
+// Placeholder until the first publish run (Monday 19 October 2026) creates the dataset and the owner shares its id.
+const DATASET_ID = "REPLACE_WITH_AU_DATASET_ID";
+const BASE = `https://api.apify.com/v2/datasets/${DATASET_ID}/items`;
+const RETAILER_NAMES = { coles: "Coles", woolworths: "Woolworths", aldi_au: "Aldi Australia" };
+
+const fmtLevel = v => (v === null || v === undefined || v === "") ? "—" : Number(v).toFixed(1);
+function fmtDelta(v) {
+  if (v === null || v === undefined || v === "") return { text: "—", cls: "flat" };
+  const n = Number(v); const s = (n > 0 ? "+" : "") + n.toFixed(2) + "%";
+  return { text: s, cls: n > 0.05 ? "up" : n < -0.05 ? "down" : "flat" };
+}
+function cell(v) { const t = fmtDelta(v); return `<td class="num"><span class="chip-delta ${t.cls}">${t.text}</span></td>`; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pretty = v => String(v).replace(/-/g, " ").replace(/^./, c => c.toUpperCase());
+const num = v => (v === null || v === undefined || v === "") ? "—" : Number(v).toLocaleString("en-GB");
+const withStatus = (label, r) => esc(label) + ((r.status && r.status !== "ok" && r.status !== "base") ? ` <span class="meta">(${esc(r.status)})</span>` : "");
+
+function row(label, r) {
+  return `<tr><td>${withStatus(label, r)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}${cell(r.w4Pct)}<td class="num">${num(r.matched)}</td></tr>`;
+}
+function catRow(label, r, maxAbs) {
+  const v = Number(r.wowPct); let bar = "";
+  if (r.wowPct !== null && r.wowPct !== undefined && r.wowPct !== "" && isFinite(v)) {
+    const w = Math.min(100, Math.abs(v) / maxAbs * 100).toFixed(0);
+    bar = `<div class="dbar" aria-hidden="true"><div class="neg">${v < 0 ? `<span class="bar-down" style="width:${w}%"></span>` : ""}</div><div class="pos">${v > 0 ? `<span class="bar-up" style="width:${w}%"></span>` : ""}</div></div>`;
+  }
+  return `<tr><td>${withStatus(label, r)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}<td>${bar}</td>${cell(r.w4Pct)}<td class="num">${num(r.matched)}</td></tr>`;
+}
+
+function weekIdx(wk) { const m = /^(\d{4})-W(\d{2})$/.exec(String(wk)); return m ? Number(m[1]) * 53 + Number(m[2]) : NaN; }
+// A series is every vintage that shares the same `base` (from that vintage's meta item). A series is closed once a later base exists.
+function groupByBase(items) {
+  const map = new Map();
+  items.forEach(it => { if (!map.has(it.base)) map.set(it.base, []); map.get(it.base).push(it); });
+  return [...map.entries()].sort((a, b) => String(a[0]).localeCompare(String(b[0]))).map(([base, arr]) => ({ base, items: arr.sort((p, q) => String(p.week).localeCompare(String(q.week))) }));
+}
+const rangeLabel = items => items.length > 1 ? `${items[0].week} to ${items[items.length - 1].week}` : items[0].week;
+
+function chart(series) {
+  const groups = groupByBase(series);
+  const all = series.slice().sort((a, b) => String(a.week).localeCompare(String(b.week)));
+  if (all.length < 2) return "";
+  const W = 880, H = 270, pl = 52, pr = 24, pt = 20, pb = 58;
+  const i0 = Math.min(...all.map(s => weekIdx(s.week))), i1 = Math.max(...all.map(s => weekIdx(s.week)));
+  const x = wk => pl + (i1 === i0 ? 0 : (weekIdx(wk) - i0) * (W - pl - pr) / (i1 - i0));
+  const lv = all.map(s => Number(s.level));
+  const lo = Math.floor(Math.min(...lv) - 1), hi = Math.ceil(Math.max(...lv) + 1);
+  const y = v => pt + (hi - v) * (H - pt - pb) / (hi - lo);
+  const ticks = [lo, (lo + hi) / 2, hi].map(v => `<text class="axis" x="${pl - 8}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(0)}</text><line class="gridline" x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}"/>`).join("");
+  const seg = (g, i) => {
+    const cls = i < groups.length - 1 ? "closed" : "fresh";
+    const path = g.items.length > 1 ? `<path class="series-line ${cls}" d="${g.items.map((s, k) => `${k ? "L" : "M"}${x(s.week).toFixed(1)},${y(Number(s.level)).toFixed(1)}`).join(" ")}"/>` : "";
+    const dots = g.items.map(s => `<g class="pt ${cls}"><circle r="14" cx="${x(s.week)}" cy="${y(Number(s.level))}" fill="transparent"/><circle class="dot" r="4" cx="${x(s.week)}" cy="${y(Number(s.level))}"/><title>${esc(s.week)}: ${Number(s.level).toFixed(1)} (base 100 at ${esc(s.base)})</title></g>`).join("");
+    return path + dots;
+  };
+  const firstWk = all[0].week, lastWk = all[all.length - 1].week;
+  const labelWeeks = all.length <= 8 ? all.map(s => s.week) : groups.flatMap(g => [g.items[0], g.items[g.items.length - 1]]).map(s => s.week).filter((w, i, a) => a.indexOf(w) === i);
+  const labels = labelWeeks.map(wk => `<text class="axis" x="${x(wk)}" y="${H - pb + 18}" text-anchor="${wk === firstWk ? "start" : wk === lastWk ? "end" : "middle"}">${esc(wk)}</text>`).join("");
+  const axisTitle = `<text class="axis" x="${pl}" y="${H - 4}">Index level (like-for-like headline). ${groups.map(g => "Base 100 at " + esc(g.base)).join("; ")}.</text>`;
+  const legend = groups.map((g, i) => `<span><i class="sw ${i < groups.length - 1 ? "closed" : "fresh"}"></i>${i < groups.length - 1 ? "Closed series" : "Series"} (${esc(rangeLabel(g.items))}, base 100 at ${esc(g.base)})</span>`).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="AU index level by week, one line per base">${ticks}${groups.map(seg).join("")}${labels}${axisTitle}</svg><p class="meta legend">${legend}</p>`;
+}
+
+async function load() {
+  const status = document.getElementById("status");
+  if (DATASET_ID.startsWith("REPLACE")) { status.textContent = "The first weekly vintages (the base week 2026-W41 and 2026-W42) are published on Monday 19 October 2026."; return; }
+  let rows;
+  try {
+    const r = await fetch(`${BASE}?format=json&clean=true`);
+    if (!r.ok) throw new Error(r.status);
+    rows = await r.json();
+  } catch (e) { status.textContent = "The index data could not be loaded right now. The CSV and JSON links below still work."; return; }
+
+  // Rows carry: vintage, publishedAt, revision, recordType, retailer, class, level, weekOnWeekPct, fourWeekPct, matched, matchedShare, status.
+  rows = rows.map(x => ({ ...x, week: x.vintage, scope: x.recordType, category: x.class, wowPct: x.weekOnWeekPct, w4Pct: x.fourWeekPct }));
+  const weeks = [...new Set(rows.filter(r => r.scope !== "meta").map(r => r.week))].sort();
+  const latest = weeks[weeks.length - 1];
+  const of = (scope, wk) => rows.filter(r => r.scope === scope && r.week === wk);
+  const head = of("headline", latest)[0];
+  const meta = rows.find(r => r.scope === "meta" && r.week === latest) || {};
+  // Series key: each vintage's meta item carries `base`; data rows have none, so join on week.
+  const metaBase = {};
+  rows.filter(r => r.scope === "meta" && r.base).forEach(r => { metaBase[r.week] = r.base; });
+  const baseOf = wk => metaBase[wk] || "2026-W41";
+  if (!head) { status.textContent = "No headline row found for the latest week."; return; }
+  status.hidden = true;
+
+  document.getElementById("level").textContent = fmtLevel(head.level);
+  const w = fmtDelta(head.wowPct), f = fmtDelta(head.w4Pct);
+  const wow = document.getElementById("wow"); wow.textContent = w.text; wow.className = "delta " + w.cls;
+  const w4 = document.getElementById("w4"); w4.textContent = f.text; w4.className = "delta " + f.cls;
+  const warn = meta.coverageWarnings && meta.coverageWarnings.length ? ` Coverage note: ${esc([].concat(meta.coverageWarnings).join("; "))}.` : "";
+  document.getElementById("weekmeta").innerHTML = `Week ${esc(latest)} · ${num(head.matched)} matched products · AUD · shelf prices only, not CPI. Base 100 at ${esc(baseOf(latest))}.${warn}`;
+  if (meta.headlineDefinition) document.getElementById("headline-def").textContent = meta.headlineDefinition;
+  const classes = Array.isArray(meta.headlineClasses) ? meta.headlineClasses : null;
+  document.getElementById("headline-classes").textContent = classes ? "Headline classes this week: " + classes.map(pretty).join(", ") + "." : "";
+  document.getElementById("coles-line").innerHTML = meta.colesProducts == null
+    ? `<strong>Coverage.</strong> Coles is a partial slice. Its coverage figures start with the first change week. Woolworths is read for store ${esc(meta.woolworthsStore || "1101")}.`
+    : `<strong>Coverage this week.</strong> Coles is a partial slice: ${num(meta.colesProducts)} products used (${meta.colesRangeSharePct == null ? "—" : Number(meta.colesRangeSharePct).toFixed(1) + "%"} of the Coles lists), ${num(meta.colesRequests)} requests. Woolworths is read for store ${esc(meta.woolworthsStore || "1101")}.`;
+
+  const series = weeks.map(wk => ({ week: wk, level: (of("headline", wk)[0] || {}).level, base: baseOf(wk) })).filter(s => s.level !== undefined && s.level !== null);
+  document.getElementById("chart").innerHTML = chart(series);
+  document.getElementById("latest").hidden = false;
+
+  const byRetailer = (scope) => of(scope, latest).sort((a, b) => String(a.retailer).localeCompare(String(b.retailer)));
+  const fill = (rowsId, sectionId, scope) => { const rr = byRetailer(scope); if (rr.length) { document.getElementById(rowsId).innerHTML = rr.map(r => row(RETAILER_NAMES[r.retailer] || r.retailer, r)).join(""); document.getElementById(sectionId).hidden = false; } };
+  fill("lfl-rows", "retailers-lfl", "retailer_like_for_like");
+  fill("retailer-rows", "retailers", "retailer");
+
+  const cr = of("class", latest).sort((a, b) => String(a.category).localeCompare(String(b.category)));
+  if (cr.length) { const maxAbs = Math.max(0.01, ...cr.map(r => Math.abs(Number(r.wowPct)) || 0)); document.getElementById("category-rows").innerHTML = cr.map(r => catRow(pretty(r.category), r, maxAbs)).join(""); }
+  const part = (name, r) => { const t = fmtDelta(r.wowPct); return `${esc(name)} ${fmtLevel(r.level)} (${t.text} w/w)`; };
+  const subs = of("subtotal", latest).map(r => part("Food and soft drinks", r));
+  const rsubs = of("retailer_subtotal", latest).sort((a, b) => String(a.retailer).localeCompare(String(b.retailer))).map(r => part(RETAILER_NAMES[r.retailer] || r.retailer, r));
+  if (subs.length || rsubs.length) { const el = document.getElementById("subtotal-line"); el.innerHTML = "<strong>Food and soft drinks subtotal:</strong> " + subs.concat(rsubs).join(" · "); el.hidden = false; }
+  if (cr.length || subs.length || rsubs.length) document.getElementById("categories").hidden = false;
+
+  const byBase = groupByBase(weeks.map(wk => ({ week: wk, base: baseOf(wk) })));
+  const archiveHtml = [];
+  byBase.slice().reverse().forEach((g, i, arr) => {
+    const closed = byBase.indexOf(g) < byBase.length - 1;
+    archiveHtml.push(`<tr class="grp"><td colspan="5">${closed ? "Closed series" : "Series"} (${esc(rangeLabel(g.items))}): base 100 at ${esc(g.base)}</td></tr>`);
+    g.items.slice().reverse().forEach(it => archiveHtml.push(row(it.week, of("headline", it.week)[0] || {})));
+  });
+  document.getElementById("archive-rows").innerHTML = archiveHtml.join("");
+  const csv = `${BASE}?format=csv&clean=true&attachment=true`, json = `${BASE}?format=json&clean=true`;
+  ["csv-link", "csv-btn"].forEach(id => { document.getElementById(id).href = csv; });
+  ["json-link", "json-btn"].forEach(id => { document.getElementById(id).href = json; });
+  document.getElementById("cite-text").textContent = `Yappman Data, AU Online Shelf-Price Index, ${latest}.`;
+  document.getElementById("cite-copy").addEventListener("click", function () {
+    const b = this, t = document.getElementById("cite-text").textContent;
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { b.lastChild.textContent = " Copied"; setTimeout(() => { b.lastChild.textContent = " Copy"; }, 1800); }).catch(() => {});
+  });
+  document.getElementById("archive").hidden = false;
+}
+load();
+</script>
+<script src="/analytics.js" defer></script>
+</body>
+</html>
