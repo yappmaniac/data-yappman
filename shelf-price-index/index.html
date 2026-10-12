@@ -150,14 +150,24 @@ function row(label, r) {
   return `<tr><td>${esc(label)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}${cell(r.w4Pct)}<td class="num">${r.matched ?? "—"}</td></tr>`;
 }
 
-const CLOSED_LAST = "2026-W40", SKIPPED_WEEK = "2026-W41", NEW_BASE = "2026-W42";
+const SKIPPED_WEEK = "2026-W41", NEW_BASE = "2026-W42";
 function weekIdx(wk) { const m = /^(\d{4})-W(\d{2})$/.exec(String(wk)); return m ? Number(m[1]) * 53 + Number(m[2]) : NaN; }
+// A series is every vintage that shares the same `base` (from that vintage's meta item). Bases before the announced
+// restart (2026-W42) are closed series; the restart base and later are the new series.
+const isClosedBase = base => String(base) < NEW_BASE;
+function groupByBase(items) {
+  const map = new Map();
+  items.forEach(it => { if (!map.has(it.base)) map.set(it.base, []); map.get(it.base).push(it); });
+  return [...map.entries()].sort((a, b) => String(a[0]).localeCompare(String(b[0]))).map(([base, arr]) => ({ base, items: arr.sort((p, q) => String(p.week).localeCompare(String(q.week))) }));
+}
+// Closed = a later base exists, or the base is before the announced restart (2026-W42).
+function closedBaseSet(groups) { return new Set(groups.filter((g, i) => i < groups.length - 1 || isClosedBase(g.base)).map(g => g.base)); }
+const rangeLabel = items => items.length > 1 ? `${items[0].week} to ${items[items.length - 1].week}` : items[0].week;
 function chart(series) {
-  // Two series: the closed one (weeks 39 and 40, base 100 at W39) and the new one (from week 42, base 100 at W42).
-  // Week 41 is skipped, so the line breaks there and each series is drawn on its own. Points sit at their ISO-week position.
-  const closed = series.filter(s => s.week <= CLOSED_LAST);
-  const fresh = series.filter(s => s.week >= NEW_BASE);
-  const all = closed.concat(fresh);
+  // series: [{week, level, base}] ascending. One line per base; points sit at their ISO-week position, so a skipped week leaves a visible gap.
+  const groups = groupByBase(series);
+  const closedSet = closedBaseSet(groups);
+  const all = series.slice().sort((a, b) => String(a.week).localeCompare(String(b.week)));
   if (all.length < 2) return "";
   const W = 880, H = 270, pl = 52, pr = 24, pt = 20, pb = 58;
   const i0 = Math.min(...all.map(s => weekIdx(s.week))), i1 = Math.max(...all.map(s => weekIdx(s.week)));
@@ -166,21 +176,29 @@ function chart(series) {
   const lo = Math.floor(Math.min(...lv) - 1), hi = Math.ceil(Math.max(...lv) + 1);
   const y = v => pt + (hi - v) * (H - pt - pb) / (hi - lo);
   const ticks = [lo, (lo + hi) / 2, hi].map(v => `<text class="axis" x="${pl - 8}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(0)}</text><line class="gridline" x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}"/>`).join("");
-  const seg = (arr, cls) => {
-    if (!arr.length) return "";
-    const path = arr.length > 1 ? `<path class="series-line ${cls}" d="${arr.map((s, i) => `${i ? "L" : "M"}${x(s.week).toFixed(1)},${y(Number(s.level)).toFixed(1)}`).join(" ")}"/>` : "";
-    const dots = arr.map(s => `<g class="pt ${cls}"><circle r="14" cx="${x(s.week)}" cy="${y(Number(s.level))}" fill="transparent"/><circle class="dot" r="4" cx="${x(s.week)}" cy="${y(Number(s.level))}"/><title>${esc(s.week)}: ${Number(s.level).toFixed(1)}</title></g>`).join("");
+  const seg = g => {
+    const cls = closedSet.has(g.base) ? "closed" : "fresh";
+    const path = g.items.length > 1 ? `<path class="series-line ${cls}" d="${g.items.map((s, i) => `${i ? "L" : "M"}${x(s.week).toFixed(1)},${y(Number(s.level)).toFixed(1)}`).join(" ")}"/>` : "";
+    const dots = g.items.map(s => `<g class="pt ${cls}"><circle r="14" cx="${x(s.week)}" cy="${y(Number(s.level))}" fill="transparent"/><circle class="dot" r="4" cx="${x(s.week)}" cy="${y(Number(s.level))}"/><title>${esc(s.week)}: ${Number(s.level).toFixed(1)} (base 100 at ${esc(s.base)})</title></g>`).join("");
     return path + dots;
   };
-  const gap = (closed.length && fresh.length)
+  const hasClosed = groups.some(g => closedSet.has(g.base)), hasFresh = groups.some(g => !closedSet.has(g.base));
+  const gap = (hasClosed && hasFresh)
     ? `<line class="gap-line" x1="${x(SKIPPED_WEEK)}" x2="${x(SKIPPED_WEEK)}" y1="${pt}" y2="${H - pb}"/><text class="axis" x="${x(SKIPPED_WEEK)}" y="${pt + 12}" text-anchor="middle">W41 skipped</text>`
     : "";
   const firstWk = all[0].week, lastWk = all[all.length - 1].week;
-  const labelWeeks = all.length <= 8 ? all.map(s => s.week) : [closed[0], closed[closed.length - 1], fresh[0], fresh[fresh.length - 1]].filter(Boolean).map(s => s.week).filter((w, i, a) => a.indexOf(w) === i);
+  const labelWeeks = all.length <= 8 ? all.map(s => s.week) : groups.flatMap(g => [g.items[0], g.items[g.items.length - 1]]).map(s => s.week).filter((w, i, a) => a.indexOf(w) === i);
   const labels = labelWeeks.map(wk => `<text class="axis" x="${x(wk)}" y="${H - pb + 18}" text-anchor="${wk === firstWk ? "start" : wk === lastWk ? "end" : "middle"}">${esc(wk)}</text>`).join("");
-  const axisTitle = `<text class="axis" x="${pl}" y="${H - 4}">Index level. Closed series: base 100 at 2026-W39. New series: base 100 at 2026-W42.</text>`;
-  const legend = `<p class="meta legend"><span><i class="sw closed"></i>Closed series (weeks 39 and 40, base 100 at 2026-W39)</span><span><i class="sw fresh"></i>New series (from week 42, base 100 at 2026-W42)</span></p>`;
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Index level by week: closed series for weeks 39 and 40, new series from week 42, week 41 skipped">${ticks}${gap}${seg(closed, "closed")}${seg(fresh, "fresh")}${labels}${axisTitle}</svg>${legend}`;
+  const closedBases = groups.filter(g => closedSet.has(g.base)).map(g => g.base);
+  const freshBases = groups.filter(g => !closedSet.has(g.base)).map(g => g.base);
+  const closedText = closedBases.length ? closedBases.join(", ") : "none";
+  const freshText = freshBases.length ? freshBases.join(", ") : NEW_BASE;
+  const axisTitle = `<text class="axis" x="${pl}" y="${H - 4}">Index level. Closed series: base 100 at ${esc(closedText)}. New series: base 100 at ${esc(freshText)}.</text>`;
+  const legendItems = [];
+  groups.filter(g => closedSet.has(g.base)).forEach(g => legendItems.push(`<span><i class="sw closed"></i>Closed series (${esc(rangeLabel(g.items))}, base 100 at ${esc(g.base)})</span>`));
+  if (hasFresh) groups.filter(g => !closedSet.has(g.base)).forEach(g => legendItems.push(`<span><i class="sw fresh"></i>New series (from ${esc(g.items[0].week)}, base 100 at ${esc(g.base)})</span>`));
+  else legendItems.push(`<span><i class="sw fresh"></i>New series (from week 42, base 100 at ${NEW_BASE}): not published yet</span>`);
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Index level by week, one line per base: closed series, then the new series; week 41 is skipped">${ticks}${gap}${groups.map(seg).join("")}${labels}${axisTitle}</svg><p class="meta legend">${legendItems.join("")}</p>`;
 }
 
 function catRow(label, r, maxAbs) {
@@ -206,6 +224,10 @@ async function load() {
 
   // Expected row shape (per week): { week, scope: "headline"|"retailer"|"category"|"retailer_category", retailer?, category?, level, wowPct, w4Pct, matched, share } plus one { week, scope:"meta", ... } row.
   const weeks = [...new Set(rows.filter(r => r.scope !== "meta").map(r => r.week))].sort();
+  // Series key: each vintage's meta item carries `base` (ISO week at which that series = 100); data rows have none, so join on week.
+  const metaBase = {};
+  rows.filter(r => r.scope === "meta" && r.base).forEach(r => { metaBase[r.week] = r.base; });
+  const baseOf = wk => metaBase[wk] || (wk < "2026-W41" ? "2026-W39" : NEW_BASE); // fallback only if a vintage has no meta item
   const latest = weeks[weeks.length - 1];
   const of = (scope, wk) => rows.filter(r => r.scope === scope && r.week === wk);
   const head = of("headline", latest)[0];
@@ -219,9 +241,9 @@ async function load() {
   const wow = document.getElementById("wow"); wow.textContent = w.text; wow.className = "delta " + w.cls;
   const w4 = document.getElementById("w4"); w4.textContent = f.text; w4.className = "delta " + f.cls;
   const warn = meta.coverageWarnings && meta.coverageWarnings.length ? ` Coverage note: ${esc([].concat(meta.coverageWarnings).join("; "))}.` : "";
-  document.getElementById("weekmeta").innerHTML = `Week ${esc(latest)} · ${head.matched ?? "—"} matched products · shelf prices only, not CPI. Base 100 at ${latest >= NEW_BASE ? NEW_BASE : "2026-W39"}.${warn}`;
+  document.getElementById("weekmeta").innerHTML = `Week ${esc(latest)} · ${head.matched ?? "—"} matched products · shelf prices only, not CPI. Base 100 at ${esc(baseOf(latest))}.${warn}`;
 
-  const series = weeks.map(wk => ({ week: wk, level: (of("headline", wk)[0] || {}).level })).filter(s => s.level !== undefined && s.level !== null);
+  const series = weeks.map(wk => ({ week: wk, level: (of("headline", wk)[0] || {}).level, base: baseOf(wk) })).filter(s => s.level !== undefined && s.level !== null);
   document.getElementById("chart").innerHTML = chart(series);
   document.getElementById("latest").hidden = false;
 
@@ -241,14 +263,23 @@ async function load() {
   if (cr.length || subs.length || rsubs.length) document.getElementById("categories").hidden = false;
 
   const grp = t => `<tr class="grp"><td colspan="5">${t}</td></tr>`;
-  const freshWeeks = weeks.filter(wk => wk >= NEW_BASE).reverse();
-  const closedWeeks = weeks.filter(wk => wk <= CLOSED_LAST).reverse();
-  const archiveHtml = [grp("New series (week 42 onward): base 100 at 2026-W42")];
-  if (freshWeeks.length) freshWeeks.forEach(wk => archiveHtml.push(row(wk, of("headline", wk)[0] || {})));
-  else archiveHtml.push(`<tr><td colspan="5" class="meta">No weeks published yet. The series restarts with week 42 (base 100); the first weekly change is published for week 43.</td></tr>`);
-  archiveHtml.push(`<tr class="skipped"><td>${SKIPPED_WEEK}</td><td colspan="4">Skipped: no complete data. <a href="/notices/w41-skipped/">See the notice</a>.</td></tr>`);
-  archiveHtml.push(grp("Closed series (weeks 39 and 40): base 100 at 2026-W39"));
-  closedWeeks.forEach(wk => archiveHtml.push(row(wk, of("headline", wk)[0] || {})));
+  const weekItems = weeks.map(wk => ({ week: wk, base: baseOf(wk) }));
+  const byBase = groupByBase(weekItems);
+  const closedSet = closedBaseSet(byBase);
+  const archiveHtml = [];
+  const addGroup = (g, label) => { archiveHtml.push(grp(label)); g.items.slice().reverse().forEach(it => archiveHtml.push(row(it.week, of("headline", it.week)[0] || {}))); };
+  const ordered = byBase.slice().reverse(); // newest base first
+  let skippedDone = false;
+  const addSkipped = () => { if (skippedDone) return; skippedDone = true; archiveHtml.push(`<tr class="skipped"><td>${SKIPPED_WEEK}</td><td colspan="4">Skipped: no complete data. <a href="/notices/w41-skipped/">See the notice</a>.</td></tr>`); };
+  if (!ordered.some(g => !closedSet.has(g.base))) {
+    archiveHtml.push(grp(`New series (week 42 onward): base 100 at ${NEW_BASE}`));
+    archiveHtml.push(`<tr><td colspan="5" class="meta">No weeks published yet. The series restarts with week 42 (base 100); the first weekly change is published for week 43.</td></tr>`);
+  }
+  ordered.forEach(g => {
+    if (g.items[g.items.length - 1].week < SKIPPED_WEEK) addSkipped(); // week 41 sits between the series before it and those after it
+    addGroup(g, closedSet.has(g.base) ? `Closed series (${esc(rangeLabel(g.items))}): base 100 at ${esc(g.base)}` : `New series (from ${esc(g.items[0].week)}): base 100 at ${esc(g.base)}`);
+  });
+  addSkipped();
   document.getElementById("archive-rows").innerHTML = archiveHtml.join("");
   document.getElementById("csv-link").href = `${BASE}?format=csv&clean=true&attachment=true`;
   document.getElementById("json-link").href = `${BASE}?format=json&clean=true`;
