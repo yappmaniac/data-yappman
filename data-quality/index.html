@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data quality — Yappman Data</title>
+<meta name="description" content="How complete and accurate our Actors' data is: barcode coverage, match accuracy, run success rate and field completeness for UK grocery, AU grocery, hotels and property, with known gaps stated plainly.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="Data quality — Yappman Data">
+<meta property="og:description" content="How complete and accurate our Actors' data is: barcode coverage, match accuracy, run success rate and field completeness for UK grocery, AU grocery, hotels and property, with known gaps stated plainly.">
+<meta property="og:url" content="https://data.yappman.com/data-quality/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="strip">Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></div>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main">
+  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
+  <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
+</nav>
+</div></div>
+<main id="main" tabindex="-1" class="home">
+<div class="wrap" style="padding-top:32px">
+<header>
+  <h1>Data quality</h1>
+  <p class="sub">How complete and accurate our data is, one section per Actor, with known gaps stated plainly. Last updated: 13 October 2026.</p>
+</header>
+
+<h2>How we measure</h2>
+<p>For UK grocery, barcode coverage, completeness and match accuracy are counted from the latest complete weekly snapshot (one row per product per retailer; week and date stated with each figure); run success is read from the canary runs' metadata. For the other Actors, barcode coverage is the share of rows in the sample stated with each figure that carry a barcode (EAN/GTIN), and completeness is the share of those rows that have a value for the field. Run success rate is the share of scheduled canary runs that succeeded over the stated number of days; a canary is a small smoke test, so it shows that a run can reach its sources, not that every field is complete. Where we checked matches by hand, the sample size and method are stated with the figure. Every figure comes from the Actor's own run metadata, canaries or hand checks and is dated; none is estimated, and where we have no measurement the row is left out.</p>
+</div>
+
+<section class="band" id="uk-grocery"><div class="wrap">
+  <h2>UK grocery</h2>
+  <p class="section-sub">UK Supermarket Price Scraper: Tesco, Sainsbury's, Asda and Aldi, with Morrisons opt-in.</p>
+
+  <h3>Barcode (EAN/GTIN) coverage</h3>
+  <p class="meta">Week 40 weekly snapshot of 4 October 2026: share of each retailer's rows with a non-empty barcode.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Retailer</th><th>Rows with a barcode</th></tr></thead>
+  <tbody>
+    <tr><td>Tesco</td><td>99.1% (of 23,352 rows)</td></tr>
+    <tr><td>Sainsbury's</td><td>100.0% (of 26,511 rows)</td></tr>
+    <tr><td>Asda</td><td>98.9% (of 20,196 rows)</td></tr>
+    <tr><td>Morrisons (opt-in)</td><td>None: Morrisons publishes no barcodes</td></tr>
+    <tr><td>Aldi</td><td>None: Aldi publishes no barcodes</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Cross-retailer match accuracy</h3>
+  <p class="meta">Scored against barcodes, with the pairs a barcode cannot settle read by hand.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>Sample size</td><td>4,251 pairs</td></tr>
+    <tr><td>Method</td><td>Every cross-retailer pair with an identical matchKey in the 4 October 2026 weekly snapshot (4,251 pairs). Pairs where both rows carry a barcode (4,225) are scored by whether the barcodes match: 4,124 agree (97.6%; a product listed under a second barcode counts as wrong). The 127 pairs a barcode cannot settle were read by hand on brand, name, pack size and price; counting those, 4,228 of 4,251 (99.5%). This measures exact-matchKey joins only, which find about 14.8% of the pairs a barcode proves are the same product.</td></tr>
+    <tr><td>Share correctly matched</td><td>97.6%</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Run success rate</h3>
+  <p class="meta">25 September to 13 October 2026: 36 scheduled canary runs (canary-daily, 19, one a day from 25 September to 13 October; canary-category, 17, one a day from 26 September to 12 October). A run counts as succeeded when the platform marks it SUCCEEDED; warnings inside a succeeded run are not counted as failures.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>Window (days)</td><td>19</td></tr>
+    <tr><td>Canary runs in the window</td><td>36</td></tr>
+    <tr><td>Share of runs that succeeded</td><td>100%</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Completeness per field</h3>
+  <p class="meta">Week 40 weekly snapshot of 4 October 2026, 73,745 rows across Tesco, Sainsbury's, Asda and Aldi.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Field</th><th>Share of rows</th></tr></thead>
+  <tbody>
+    <tr><td>Shelf price</td><td>100.0%</td></tr>
+    <tr><td>Unit price</td><td>99.6% (Tesco 100.0%, Sainsbury's 100.0%, Asda 99.6%, Aldi 94.1%)</td></tr>
+    <tr><td>Pack size</td><td>89.9% (Tesco 84.1%, Sainsbury's 86.9%, Asda 100.0%, Aldi 92.6%)</td></tr>
+    <tr><td>Stock status</td><td>100.0% for Tesco, Sainsbury's and Asda; Aldi publishes none</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Known gaps</h3>
+  <ul>
+    <li>Aldi publishes no barcodes and no stock status, and its products rarely share an exact name with another retailer's, so most Aldi rows can't be joined to other retailers automatically; compare them by unit price.</li>
+    <li>Morrisons publishes no barcodes.</li>
+    <li>Asda stock status is for Asda's default store only.</li>
+  </ul>
+</div></section>
+<section class="band tint" id="au-grocery"><div class="wrap">
+  <h2>AU grocery</h2>
+  <p class="section-sub">Australia Supermarket Price Scraper: Coles, Woolworths and Aldi Australia.</p>
+
+  <h3>Barcode (EAN/GTIN) coverage</h3>
+  <p class="meta">Woolworths: week 41 snapshot part 1 of 7 October 2026, store 1101; barcodes are check-digit-valid GTIN-13.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Retailer</th><th>Rows with a barcode</th></tr></thead>
+  <tbody>
+    <tr><td>Woolworths</td><td>98.2% (7,066 of 7,194 rows)</td></tr>
+    <tr><td>Coles</td><td>Empty by default; nearly every row with <code>colesProductDetails</code> on</td></tr>
+    <tr><td>Aldi Australia</td><td>None: Aldi publishes no barcode</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Run success rate</h3>
+  <p class="meta">26 September to 13 October 2026. Each canary is a 60-row smoke test, so it measures reachability, not completeness. On 6 and 9 October Woolworths was served from regional store 3221; those runs still counted.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>Window (days)</td><td>18</td></tr>
+    <tr><td>Canary runs in the window</td><td>18</td></tr>
+    <tr><td>Share of runs that succeeded</td><td>100%</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Completeness per field</h3>
+  <p class="meta">Woolworths only, the same 7,194 rows as above.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Field</th><th>Share of rows</th></tr></thead>
+  <tbody>
+    <tr><td>Shelf price</td><td>100%</td></tr>
+    <tr><td>Unit price</td><td>99.9% (7,190 of 7,194)</td></tr>
+    <tr><td>Pack size</td><td>100%</td></tr>
+    <tr><td>Stock status</td><td>100% present, but every value is true: the listing shows only available products</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Known gaps</h3>
+  <ul>
+    <li>Aldi publishes no stock status (<code>inStock</code> is null).</li>
+    <li>Coles answers about 80 requests per run, so a run returns at most a few thousand Coles products (about 75 with barcode lookup on), not the whole range; the weekly Coles snapshot behind the AU index reads staples first.</li>
+    <li>Woolworths prices are for the store Woolworths assigns to a logged-out session: usually 1101, sometimes a regional store, which changes the range (2 of 8 scheduled canary runs on 5–12 October 2026). Every row records its store in <code>storeId</code>; the weekly snapshot and the AU index use store 1101 only.</li>
+    <li>Special Buys are returned by their own mode; the weekly Aldi snapshot behind the AU index covers the regular range only.</li>
+  </ul>
+</div></section>
+<section class="band" id="hotels"><div class="wrap">
+  <h2>Hotels</h2>
+  <p class="section-sub">Google Hotels Price Scraper: hotel search results and per-booking-site vendor rates.</p>
+
+  <h3>Barcode (EAN/GTIN) coverage</h3>
+  <p class="meta">Not applicable: hotels have no barcode. Every row carries a Google hotel id by construction, so that is not a measured figure.</p>
+
+  <h3>Matched on Google's hotel id</h3>
+  <p>A hotel is matched across searches and weeks by Google's own hotel id: an exact match on the id, with no fuzzy matching.</p>
+
+  <h3>Run success rate</h3>
+  <p class="meta">30 September to 13 October 2026. The run of 1 October failed on a place lookup; this was fixed that week.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>Window (days)</td><td>14</td></tr>
+    <tr><td>Canary runs in the window</td><td>14</td></tr>
+    <tr><td>Share of runs that succeeded</td><td>92.9% (13 of 14)</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Completeness per field</h3>
+  <p class="meta">Lisbon 10-hotel canary search: 130 rows over 13 runs, 30 September to 13 October 2026.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Field</th><th>Share of rows</th></tr></thead>
+  <tbody>
+    <tr><td>Price</td><td>100% (130 of 130 rows)</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Known gaps</h3>
+  <ul>
+    <li><code>bookingUrl</code> is null by design.</li>
+    <li>Rate history covers only the tracked set: the top 20 hotels in each of 50 cities, two-night stays 2 and 6 weeks out.</li>
+    <li>Street address is filled only in hotel lookups, not in search results.</li>
+  </ul>
+</div></section>
+<section class="band tint" id="property"><div class="wrap">
+  <h2>Property</h2>
+  <p class="section-sub">UK Property Listings: Rightmove, Zoopla and OnTheMarket.</p>
+
+  <h3>Barcode (EAN/GTIN) coverage</h3>
+  <p class="meta">Not applicable: properties have no barcode. Identifier coverage (UPRN) is shown instead. UPRN on Zoopla rows with details on: 47% (71 of 150) in a London for-sale sample of 24 Sep 2026 that included new-homes listings (67 of the 150); 70% (7 of 10) in a separate 10-listing sample the same day with new homes excluded. Both are small, dated samples.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Portal</th><th>Rows with a UPRN</th></tr></thead>
+  <tbody>
+    <tr><td>Zoopla (with details)</td><td>47% (71 of 150)</td></tr>
+    <tr><td>Rightmove</td><td>None: the portal gives none</td></tr>
+    <tr><td>OnTheMarket</td><td>None: the portal gives none</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Sold-price matching</h3>
+  <p>Land Registry sale matched to Rightmove's sold record (exact postcode, date and price): 143 of 149 (96%), June–July 2026 sales.</p>
+
+  <h3>Run success rate</h3>
+  <p class="meta">26 September to 13 October 2026: 60 scheduled runs of four tasks, and all 60 succeeded. Counting a run as successful only if every source returned results, 59 of 60 succeeded: on 9 October Zoopla was blocked. The OnTheMarket canary runs from 6 October. Rightmove's own canary alternates days from 13 to 23 October, while the daily 03:15 run covers it.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>Window (days)</td><td>18</td></tr>
+    <tr><td>Canary runs in the window</td><td>60</td></tr>
+    <tr><td>Share of runs that succeeded</td><td>100% (60 of 60)</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Completeness per field</h3>
+  <p class="meta">Latest scheduled run, 13 October 2026, 40 rows (20 per portal), search results without detail pages; a single sample, so it moves from run to run.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Field</th><th>Share of rows</th></tr></thead>
+  <tbody>
+    <tr><td>Price</td><td>100% (40 of 40)</td></tr>
+    <tr><td>Bedrooms</td><td>98% (39 of 40; Rightmove 20 of 20, Zoopla 19 of 20)</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Known gaps</h3>
+  <ul>
+    <li>Each portal limits a search to about 1,000 results, so a broad search returns a capped sample.</li>
+    <li>On Zoopla, UPRN and EPC rating are often missing on new-homes listings.</li>
+  </ul>
+</div></section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/#series">Series</a><a href="/#sample">Sample rows</a><a href="/#demos">Demos</a><a href="/data-quality/">Data quality</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a></div>
+  </div>
+  <div class="foot-legal">
+    <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/analytics.js" defer></script>
+</body>
+</html>
