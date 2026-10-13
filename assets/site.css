@@ -241,12 +241,12 @@ tbody tr.skipped td{color:var(--muted);font-style:italic}
 
 /* demo posters */
 .demo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:24px}
-.poster{position:relative;display:flex;flex-direction:column;justify-content:space-between;aspect-ratio:16/9;background:var(--navy);color:#fff;border-radius:12px;padding:24px 26px;text-decoration:none;overflow:hidden}
+.poster{position:relative;display:flex;flex-direction:column;justify-content:flex-start;aspect-ratio:3/2;background:var(--navy);color:#fff;border-radius:12px;padding:24px 26px;text-decoration:none;overflow:hidden}
 .poster:hover{background:var(--navy-2)}
 .poster-title{font-size:15px;font-weight:600;color:var(--on-navy-muted)}
 .poster-num b{display:block;font-size:46px;line-height:1.05;font-weight:700;color:var(--mint)}
 .poster-num small{font-size:14px;color:var(--on-navy-muted)}
-.poster-play{position:absolute;right:22px;bottom:20px;width:56px;height:56px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center}
+.poster-play{flex:none;width:56px;height:56px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center}
 .poster-play svg{width:26px;height:26px;margin-left:3px}
 .demo p{font-size:15px}
 .demo .poster{margin-bottom:12px}
@@ -276,3 +276,8 @@ tbody tr.skipped td{color:var(--muted);font-style:italic}
   .pcard.wide .pnum,.pcard.wide .plabel{text-align:left}
   .poster-num b{font-size:38px}
 }
+
+.poster-title,.poster-mid{position:relative;z-index:1}
+.poster-mid{margin:auto 0;display:flex;align-items:center;gap:22px}
+.poster .spark{position:absolute;left:0;bottom:0;width:100%;height:58%;opacity:.16;color:var(--mint);pointer-events:none}
+.trust-text{margin:0;font-size:17px;max-width:760px}

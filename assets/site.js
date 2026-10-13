@@ -1,4 +1,4 @@
-// Yappman Data: small vanilla helpers. No cookies, no analytics, no third-party requests.
+// Yappman Data: small vanilla helpers. No cookies.
 (function () {
   // Menu toggle below 768px
   var nav = document.querySelector('nav[aria-label="Main"]');
@@ -29,4 +29,5 @@
     var moved = { '#demos': '/demos/', '#notices': '/notices/', '#sample': '/methodology/#sample', '#fields': '/methodology/#fields', '#series': '/methodology/#series' };
     if (moved[location.hash]) location.replace(moved[location.hash]);
   }
+
 })();

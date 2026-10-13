@@ -5,9 +5,9 @@ Branch `design/home-and-chrome`. Local preview captures, for review only (not pu
 | File | Shows |
 | --- | --- |
 | home-desktop-1-top.jpg | Home: announcement bar, nav, hero, four product cards and the open-data card |
-| home-desktop-2-index-trust-pricing.jpg | Home: index teaser, "Last successful run" trust strip (placeholders), pricing |
+| home-desktop-2-index-trust-pricing.jpg | Home: index teaser, "Checked on a schedule" strip, pricing |
 | methodology-desktop.jpg | /methodology/ (moved from the home page) |
-| demos-desktop.jpg | /demos/ with poster frames |
+| demos-desktop.jpg | /demos/: 3:2 poster frames, number and play button centred, faint sparkline on the UK and AU frames |
 | data-quality-desktop.jpg | /data-quality/ UK section with the four-number scorecard |
 | home-phone-1-top.jpg | Home at 375px, with the dismissible bar and the Menu button |
 | home-phone-2-menu-open.jpg | Home at 375px with the menu open |
