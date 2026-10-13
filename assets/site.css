@@ -281,3 +281,58 @@ tbody tr.skipped td{color:var(--muted);font-style:italic}
 .poster-mid{margin:auto 0;display:flex;align-items:center;gap:22px}
 .poster .spark{position:absolute;left:0;bottom:0;width:100%;height:58%;opacity:.16;color:var(--mint);pointer-events:none}
 .trust-text{margin:0;font-size:17px;max-width:760px}
+
+/* mega-menu navigation */
+nav.mainnav{position:relative}
+.nav-list{display:flex;align-items:center;gap:2px;list-style:none;margin:0;padding:0}
+.nav-list>li{margin:0}
+.nav-top,.nav-plain a{display:inline-flex;align-items:center;gap:7px;background:none;border:0;color:var(--on-navy-muted);font:inherit;font-size:15px;line-height:1.4;padding:8px 12px;border-radius:8px;cursor:pointer;text-decoration:none}
+.nav-top:hover,.nav-plain a:hover,.nav-group.open>.nav-top{color:#fff;background:var(--navy-2)}
+.nav-top.active,.nav-plain a.active{color:#fff;text-decoration:underline;text-decoration-color:var(--mint);text-decoration-thickness:2px;text-underline-offset:8px}
+.caret{width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-1px,-2px);transition:transform .15s}
+.nav-group.open .caret{transform:rotate(-135deg) translate(-1px,-1px)}
+.nav-cta{margin-left:10px}
+.nav-cta .btn{padding:8px 16px;font-size:14px}
+.nav-group{position:relative}
+.nav-group.mega{position:static}
+.panel{display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:250px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 36px rgba(8,20,36,.30);padding:8px;z-index:60}
+.panel::before{content:"";position:absolute;left:0;right:0;top:-8px;height:8px}
+.panel-mega{left:0;right:0;padding:18px}
+.panel ul{list-style:none;margin:0;padding:0}
+.panel-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px}
+.panel-h{font-size:13px;font-weight:700;color:var(--muted);margin:0 0 6px 12px}
+.panel a.mi{display:block;padding:9px 12px;border-radius:8px;color:var(--ink);text-decoration:none}
+.panel a.mi:hover,.panel a.mi:focus-visible{background:var(--tint);color:var(--ink)}
+.mi-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mi-name{font-weight:600}
+.mi-desc{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.panel-foot{display:flex;gap:6px 22px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:12px;padding:12px 12px 0}
+.panel .panel-foot a{font-size:14px;font-weight:600;color:var(--accent);text-decoration:none}
+.panel .panel-foot a:hover{color:var(--accent);text-decoration:underline}
+.js .nav-group.open>.panel{display:block}
+html:not(.js) .nav-group:hover>.panel,html:not(.js) .nav-group:focus-within>.panel{display:block}
+
+@media (max-width:768px){
+  .menu-btn{display:inline-flex}
+  .nav-list{display:none;flex-direction:column;align-items:stretch;width:100%;gap:0;padding:6px 0 14px}
+  nav.open .nav-list{display:flex}
+  .nav-list>li{border-top:1px solid var(--navy-2)}
+  .nav-top,.nav-plain a{width:100%;justify-content:space-between;padding:14px 4px;font-size:16px;border-radius:0;color:#fff}
+  .nav-top:hover,.nav-plain a:hover,.nav-group.open>.nav-top{background:none}
+  .nav-top.active,.nav-plain a.active{text-underline-offset:6px}
+  .panel,.panel-mega{position:static;display:none;min-width:0;background:transparent;border:0;border-radius:0;box-shadow:none;padding:0 0 8px 10px;color:#fff}
+  .panel::before{display:none}
+  .js .nav-group.open>.panel{display:block}
+  .panel-cols{grid-template-columns:minmax(0,1fr);gap:4px}
+  .panel-h{color:var(--on-navy-muted);margin-left:4px}
+  .panel a.mi{color:#fff;padding:10px 4px}
+  .panel a.mi:hover,.panel a.mi:focus-visible{background:var(--navy-2);color:#fff}
+  .mi-desc{color:var(--on-navy-muted)}
+  .panel-foot{border-top-color:var(--navy-2);padding:10px 4px 0}
+  .panel .panel-foot a,.panel .panel-foot a:hover{color:var(--mint)}
+  .nav-list>li.nav-cta{border-top:0;margin:14px 0 0}
+  .nav-cta .btn{display:block;width:100%;text-align:center;padding:12px}
+  html:not(.js) .menu-btn{display:none}
+  html:not(.js) .nav-list{display:flex}
+  html:not(.js) .panel{display:block}
+}
