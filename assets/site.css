@@ -336,3 +336,15 @@ html:not(.js) .nav-group:hover>.panel,html:not(.js) .nav-group:focus-within>.pan
   html:not(.js) .nav-list{display:flex}
   html:not(.js) .panel{display:block}
 }
+
+/* unlinked menu entries (pages not live yet) and open-data lists */
+.panel .mi-off{display:block;padding:9px 12px;color:var(--muted);cursor:default}
+.panel .mi-off .mi-name{font-weight:600}
+.od-list{list-style:none;margin:10px 0 0;padding:0}
+.od-list li{padding:8px 0;border-top:1px solid var(--line)}
+.od-list li:first-child{border-top:0}
+.od-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.od-list .meta{display:block;font-size:13px}
+.od-inline{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 22px}
+.od-inline li{display:flex;align-items:center;gap:8px;font-weight:600}
+@media (max-width:768px){ .panel .mi-off{color:var(--on-navy-muted);padding:10px 4px} }
