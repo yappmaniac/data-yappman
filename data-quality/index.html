@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Data quality — Yappman Data</title>
 <meta name="description" content="How complete and accurate our Actors' data is: barcode coverage, match accuracy, run success rate and field completeness for UK grocery, AU grocery, hotels and property, with known gaps stated plainly.">
-<meta name="robots" content="noindex">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -17,14 +16,15 @@
 <meta property="og:url" content="https://data.yappman.com/data-quality/">
 <meta property="og:image" content="https://data.yappman.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
-<div class="strip">Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></div>
 <div class="topbar"><div class="wrap">
 <nav aria-label="Main">
   <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
-  <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <span class="links" id="site-menu"><a href="/#data">Data</a><a href="/shelf-price-index/">Index</a><a href="/data-quality/" aria-current="page">Data quality</a><a href="/#pricing">Pricing</a><a href="/notices/">Notices</a><a href="/#contact">Contact</a></span>
 </nav>
 </div></div>
 <main id="main" tabindex="-1" class="home">
@@ -33,15 +33,20 @@
   <h1>Data quality</h1>
   <p class="sub">How complete and accurate our data is, one section per Actor, with known gaps stated plainly. Last updated: 13 October 2026.</p>
 </header>
-<div class="box notice"><p><strong>Draft.</strong> Figures shown as {{ }} are being collected from run metadata and canaries.</p></div>
 
 <h2>How we measure</h2>
-<p>For UK grocery, barcode coverage, completeness and match accuracy are counted from the latest complete weekly snapshot (one row per product per retailer; week and date stated with each figure); run success is read from the canary runs' metadata. For the other Actors, barcode coverage is the share of rows in the sample stated with each figure that carry a barcode (EAN/GTIN), and completeness is the share of those rows that have a value for the field. Run success rate is the share of scheduled canary runs that succeeded over the stated number of days; a canary is a small smoke test, so it shows that a run can reach its sources, not that every field is complete. Where we checked matches by hand, the sample size and method are stated with the figure. Every figure comes from the Actor's own run metadata, canaries or hand checks and is dated; none is estimated, and where we have no measurement the row is left out.</p>
+<p>For UK grocery, barcode coverage, completeness and match accuracy are counted from the latest complete weekly snapshot (one row per product per retailer; week and date stated with each figure); run success is read from the canary runs' metadata. For the other Actors, barcode coverage is the share of rows in the sample stated with each figure that carry a barcode (EAN/GTIN), and completeness is the share of those rows that have a value for the field. Run success rate is the share of scheduled canary runs that succeeded over the stated number of days; a canary is a small smoke test, so it shows that a run can reach its sources, not that every field is complete. Where we checked matches by hand, the sample size and method are stated with the figure. Every figure comes from the snapshot files, run metadata, canaries or hand checks and is dated. None is estimated, and where we have no measurement the row is left out.</p>
 </div>
 
 <section class="band" id="uk-grocery"><div class="wrap">
   <h2>UK grocery</h2>
   <p class="section-sub">UK Supermarket Price Scraper: Tesco, Sainsbury's, Asda and Aldi, with Morrisons opt-in.</p>
+  <div class="scorecard" aria-label="Summary">
+    <div class="score"><div class="l">Coverage</div><div class="v">98.9–100.0%</div><div class="s">barcodes: Tesco, Sainsbury's, Asda</div></div>
+    <div class="score"><div class="l">Match accuracy</div><div class="v">97.6%</div><div class="s">4,251 cross-retailer pairs</div></div>
+    <div class="score"><div class="l">Run success</div><div class="v">100%</div><div class="s">36 canary runs over 19 days</div></div>
+    <div class="score"><div class="l">Completeness</div><div class="v">89.9–100.0%</div><div class="s">price, unit price, pack size, stock</div></div>
+  </div>
 
   <h3>Barcode (EAN/GTIN) coverage</h3>
   <p class="meta">Week 40 weekly snapshot of 4 October 2026: share of each retailer's rows with a non-empty barcode.</p>
@@ -100,6 +105,11 @@
 <section class="band tint" id="au-grocery"><div class="wrap">
   <h2>AU grocery</h2>
   <p class="section-sub">Australia Supermarket Price Scraper: Coles, Woolworths and Aldi Australia.</p>
+  <div class="scorecard" aria-label="Summary">
+    <div class="score"><div class="l">Coverage</div><div class="v">98.2%</div><div class="s">barcodes: Woolworths</div></div>
+    <div class="score"><div class="l">Run success</div><div class="v">100%</div><div class="s">18 canary runs over 18 days</div></div>
+    <div class="score"><div class="l">Completeness</div><div class="v">99.9–100%</div><div class="s">Woolworths: price, unit price, pack size</div></div>
+  </div>
 
   <h3>Barcode (EAN/GTIN) coverage</h3>
   <p class="meta">Woolworths: week 41 snapshot part 1 of 7 October 2026, store 1101; barcodes are check-digit-valid GTIN-13.</p>
@@ -146,6 +156,10 @@
 <section class="band" id="hotels"><div class="wrap">
   <h2>Hotels</h2>
   <p class="section-sub">Google Hotels Price Scraper: hotel search results and per-booking-site vendor rates.</p>
+  <div class="scorecard" aria-label="Summary">
+    <div class="score"><div class="l">Run success</div><div class="v">92.9%</div><div class="s">13 of 14 canary runs</div></div>
+    <div class="score"><div class="l">Completeness</div><div class="v">100%</div><div class="s">price, Lisbon canary search</div></div>
+  </div>
 
   <h3>Barcode (EAN/GTIN) coverage</h3>
   <p class="meta">Not applicable: hotels have no barcode. Every row carries a Google hotel id by construction, so that is not a measured figure.</p>
@@ -183,6 +197,12 @@
 <section class="band tint" id="property"><div class="wrap">
   <h2>Property</h2>
   <p class="section-sub">UK Property Listings: Rightmove, Zoopla and OnTheMarket.</p>
+  <div class="scorecard" aria-label="Summary">
+    <div class="score"><div class="l">Coverage</div><div class="v">47%</div><div class="s">Zoopla UPRN, with details</div></div>
+    <div class="score"><div class="l">Match accuracy</div><div class="v">96%</div><div class="s">sold-price matching: 143 of 149</div></div>
+    <div class="score"><div class="l">Run success</div><div class="v">100%</div><div class="s">60 of 60 scheduled runs</div></div>
+    <div class="score"><div class="l">Completeness</div><div class="v">98–100%</div><div class="s">price, bedrooms</div></div>
+  </div>
 
   <h3>Barcode (EAN/GTIN) coverage</h3>
   <p class="meta">Not applicable: properties have no barcode. Identifier coverage (UPRN) is shown instead. UPRN on Zoopla rows with details on: 47% (71 of 150) in a London for-sale sample of 24 Sep 2026 that included new-homes listings (67 of the 150); 70% (7 of 10) in a separate 10-listing sample the same day with new homes excluded. Both are small, dated samples.</p>
@@ -230,16 +250,17 @@
 <div class="wrap">
   <div class="foot-grid">
     <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
-    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/city-hotel-prices/">City Hotel Prices</a><a href="/#series">Series</a><a href="/#sample">Sample rows</a><a href="/#demos">Demos</a></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/city-hotel-prices/">City Hotel Prices</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a></div>
     <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
     <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a></div>
   </div>
   <div class="foot-legal">
-    <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p>Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
     <p><a href="#top">Back to top &uarr;</a></p>
   </div>
 </div>
 </footer>
-<script src="/analytics.js" defer></script>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>

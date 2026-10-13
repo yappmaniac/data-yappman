@@ -16,6 +16,7 @@
 <meta property="og:url" content="https://data.yappman.com/">
 <meta property="og:image" content="https://data.yappman.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -29,7 +30,6 @@
   "creator": {
     "@type": "Organization",
     "name": "Yappman Data",
-    "legalName": "Abley-Yapp Consulting Limited",
     "url": "https://data.yappman.com/"
   },
   "keywords": [
@@ -58,17 +58,18 @@
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
-<div class="strip">Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></div>
+<div class="strip" id="strip" role="region" aria-label="Announcement"><span>Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></span><button type="button" class="strip-x" aria-label="Dismiss announcement">&times;</button></div>
 <div class="topbar"><div class="wrap">
 <nav aria-label="Main">
   <a class="brand" href="/" aria-current="page"><span class="mark">Y</span>Yappman Data</a>
-  <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <span class="links" id="site-menu"><a href="/#data">Data</a><a href="/shelf-price-index/">Index</a><a href="/data-quality/">Data quality</a><a href="/#pricing">Pricing</a><a href="/notices/">Notices</a><a href="/#contact">Contact</a></span>
 </nav>
 </div></div>
 <main id="main" tabindex="-1" class="home">
 
 <section class="hero"><div class="wrap">
-  <p class="eyebrow">Abley-Yapp Consulting Limited, United Kingdom.</p>
+  <p class="eyebrow">Price data for analysts, brands and developers</p>
   <h1>Prices from public websites, never revised</h1>
   <p class="lead">Point-in-time price data read from public websites: UK and Australian supermarkets, UK property listings with planning data, Google Hotels rates, and UK open-data lookups — never revised, no personal data.</p>
   <div class="actions">
@@ -83,9 +84,51 @@
   </div>
 </div></section>
 
-<div class="onpage" role="navigation" aria-label="On this page"><div class="wrap"><span>On this page:</span><a href="#demos">Demos</a><a href="#series">Series</a><a href="#sample">Sample rows</a><a href="#notices">Notices</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a></div></div>
+<section class="band" id="data"><div class="wrap">
+  <h2>Our data</h2>
+  <p class="section-sub">Four products, each dated and never revised. <a href="/methodology/">How it works</a>.</p>
+  <div class="pgrid">
+    <div class="card pcard">
+      <div class="card-top"><h3>UK grocery</h3><span class="badge live">Live</span></div>
+      <p>Weekly catalogue and a daily 212-item basket from four UK supermarkets.</p>
+      <div class="pnum">~73,000</div>
+      <div class="plabel">rows a week</div>
+      <a class="plink" href="https://apify.com/yappman/uk-supermarket-price-scraper">On the Apify Store &rarr;</a>
+    </div>
+    <div class="card pcard">
+      <div class="card-top"><h3>AU grocery</h3><span class="badge soon">Oct 2026</span></div>
+      <p>Weekly catalogue from Coles, Woolworths and Aldi Australia.</p>
+      <div class="pnum">~65,000</div>
+      <div class="plabel">rows a week</div>
+      <a class="plink" href="https://apify.com/yappman/au-supermarket-price-scraper">On the Apify Store &rarr;</a>
+    </div>
+    <div class="card pcard">
+      <div class="card-top"><h3>Hotels</h3><span class="badge live">Live</span></div>
+      <p>Google Hotels results and per-booking-site rates, by city or hotel.</p>
+      <div class="pnum">$0.002</div>
+      <div class="plabel">per hotel, pay per event</div>
+      <a class="plink" href="https://apify.com/yappman/google-hotels-prices">On the Apify Store &rarr;</a>
+    </div>
+    <div class="card pcard">
+      <div class="card-top"><h3>Property</h3><span class="badge live">Actor live</span></div>
+      <p>UK listings from three portals, with planning data.</p>
+      <div class="pnum">3</div>
+      <div class="plabel">portals</div>
+      <a class="plink" href="https://apify.com/yappman/uk-property-listings">On the Apify Store &rarr;</a>
+    </div>
+    <div class="card pcard wide">
+      <div class="pbody">
+        <div class="card-top"><h3>Open data: contracts, address intelligence, LEI — from 15 Oct</h3><span class="badge soon">From 15 October</span></div>
+        <p>Three lookup Actors for UK public contracts, addresses and legal-entity identifiers.</p>
+      </div>
+      <div><div class="pnum">3</div><div class="plabel">Actors</div></div>
+    </div>
+  </div>
+</div></section>
 
-<section class="band" id="live-band" hidden><div class="wrap">
+<section class="band tint" id="live-band" hidden><div class="wrap">
+  <h2>The index</h2>
+  <p class="section-sub">Weekly, point-in-time and never revised.</p>
   <div class="card live-card">
     <div>
       <div class="meta">UK Online Shelf-Price Index, <span id="live-week"></span></div>
@@ -98,163 +141,10 @@
   </div>
 </div></section>
 
-<section class="band tint" id="demos"><div class="wrap">
-  <h2>See it in action</h2>
-  <p class="section-sub">Short screen recordings of the live Actors on the Apify Store. More demos: <a href="https://www.youtube.com/@yappmandata">youtube.com/@yappmandata</a>.</p>
-  <div class="demo-grid">
-    <div class="card demo">
-      <a href="https://youtu.be/SYVBAlSUBHY" target="_blank" rel="noopener" aria-label="Watch the UK supermarket prices demo on YouTube"><img src="/assets/uk-grocery-demo.gif" alt="Screen recording of the UK Supermarket Price Scraper comparing milk prices at Aldi and Sainsbury's" width="1200" height="877" loading="lazy" decoding="async"></a>
-      <h3>UK supermarket prices</h3>
-      <p>Comparing milk prices at Aldi and Sainsbury's with the <a href="https://apify.com/yappman/uk-supermarket-price-scraper">UK Supermarket Price Scraper</a>.</p>
-      <p><a href="https://youtu.be/SYVBAlSUBHY" target="_blank" rel="noopener">Watch with sound on YouTube</a></p>
-    </div>
-    <div class="card demo">
-      <a href="https://youtu.be/IrLdJdF8pBY" target="_blank" rel="noopener" aria-label="Watch the Australian supermarket prices demo on YouTube"><img src="/assets/au-grocery-demo.gif" alt="Screen recording of the Australia Supermarket Price Scraper comparing milk prices at Coles, Woolworths and Aldi" width="1200" height="877" loading="lazy" decoding="async"></a>
-      <h3>Australian supermarket prices</h3>
-      <p>Comparing milk prices at Coles, Woolworths and Aldi with the <a href="https://apify.com/yappman/au-supermarket-price-scraper">Australia Supermarket Price Scraper</a>.</p>
-      <p><a href="https://youtu.be/IrLdJdF8pBY" target="_blank" rel="noopener">Watch with sound on YouTube</a></p>
-    </div>
-    <div class="card demo">
-      <a href="https://youtu.be/XumDImDl4kE" target="_blank" rel="noopener" aria-label="Watch the UK property listings demo on YouTube"><img src="/assets/leeds-property-demo.gif" alt="Screen recording of the UK Property Listings Actor collecting homes for sale in Leeds from Rightmove and Zoopla" width="1200" height="877" loading="lazy" decoding="async"></a>
-      <h3>UK property listings</h3>
-      <p>Homes for sale in Leeds from Rightmove and Zoopla, with the <a href="https://apify.com/yappman/uk-property-listings">UK Property Listings</a> Actor on Apify. The weekly property series is planned for Q4 2026.</p>
-      <p><a href="https://youtu.be/XumDImDl4kE" target="_blank" rel="noopener">Watch with sound on YouTube</a></p>
-    </div>
-    <div class="card demo">
-      <a href="https://youtu.be/sURf-8czh8g" target="_blank" rel="noopener" aria-label="Watch the Hotel prices demo on YouTube"><img src="/assets/lisbon-hotels-demo.gif" alt="Screen recording of the Google Hotels Price Scraper searching Lisbon hotels for a 2-night stay" width="1200" height="877" loading="lazy" decoding="async"></a>
-      <h3>Hotel prices</h3>
-      <p>Lisbon hotels for a 2-night stay, 5 results, with the <a href="https://apify.com/yappman/google-hotels-prices">Google Hotels Price Scraper</a> on Apify.</p>
-      <p><a href="https://youtu.be/sURf-8czh8g" target="_blank" rel="noopener">Watch with sound on YouTube</a></p>
-    </div>
-  </div>
-</div></section>
-
-<section class="band" id="series"><div class="wrap">
-  <h2>What we provide</h2>
-  <p>Shelf prices, promotions and, where a retailer publishes one, loyalty prices for every product the major supermarkets list online, joined across retailers by EAN barcode where the retailer publishes one. A weekly full-catalogue series for the UK and Australia, and a daily fixed basket of 212 UK staples for consistent day-to-day tracking. Retail-level price data with this structure is a nowcast of food inflation weeks ahead of official statistics, and a competitor-price series for CPG and retail analytics.</p>
-  <div class="grid2" style="margin-top:18px">
-    <div class="card">
-      <div class="card-top"><h3>UK weekly catalogue</h3><span class="badge live">Live</span></div>
-      <p class="meta">Tesco, Sainsbury's, Asda, Aldi; Morrisons in the live Actor now (opt-in), and in the weekly series from November 2026</p>
-      <div class="big-num">~73,000 <small>rows per period</small></div>
-      <p class="meta">Weekly, Sunday. History from 27 Sep 2026</p>
-    </div>
-    <div class="card">
-      <div class="card-top"><h3>UK daily basket</h3><span class="badge live">Live</span></div>
-      <p class="meta">212 staple products across the four retailers (up to three per retailer for each of 20 staples), the same items every day.</p>
-      <div class="big-num">212 <small>rows per period</small></div>
-      <p class="meta">Daily. History from 24 Sep 2026</p>
-    </div>
-    <div class="card">
-      <div class="card-top"><h3>Australia weekly catalogue</h3><span class="badge soon">October 2026</span></div>
-      <p class="meta">Coles, Woolworths, Aldi Australia</p>
-      <div class="big-num">~65,000 <small>rows per period</small></div>
-      <p class="meta">Weekly. History from October 2026</p>
-    </div>
-    <div class="card">
-      <div class="card-top"><h3>UK property listings</h3><span class="badge live">Actor live</span></div>
-      <p class="meta">Listing counts, asking prices and days on market by area from Rightmove, Zoopla and OnTheMarket, with planning data. Live now as the <a href="https://apify.com/yappman/uk-property-listings">UK Property Listings</a> Actor; the weekly series is planned for Q4 2026 and has no price yet.</p>
-      <p class="meta">Sold prices come from our own HM Land Registry copy (1995 onward, England and Wales) from version 0.3, no earlier than 5 November 2026. Actor only for now.</p>
-    </div>
-    <div class="card">
-      <div class="card-top"><h3>Google Hotels rates</h3><span class="badge live">Live</span></div>
-      <p class="meta">Any destination Google Hotels covers, by city search or hotel id. Sources are Google Hotels' search results and its per-booking-site vendor rates (Booking, Expedia, Agoda and the rest as shown on Google). On the <a href="https://apify.com/yappman/google-hotels-prices">Apify Store</a> since September 2026.</p>
-      <div class="big-num">Pay per event <small>$0.002 per hotel</small></div>
-      <p class="meta">$0.0025 per vendor-rates row, $0.01 per price-history row, $0.005 per run start. What a buyer gets today is the Actor; there is no licensed dataset or feed yet. A 50-city weekly tracker exists privately and is available on request.</p>
-    </div>
-    <div class="card">
-      <div class="card-top"><h3>UK open-data lookups</h3><span class="badge live">Live</span></div>
-      <p class="meta">Three Actors on the Apify Store, pay per event: UK Public Contracts Lookup, Address Intelligence and LEI Lookup.</p>
-      <p class="meta"><a href="https://apify.com/yappman/contracts-lookup">UK Public Contracts Lookup</a>: $5 per 1,000 contracts, plus $0.005 per run start.<br><a href="https://apify.com/yappman/address-intelligence">Address Intelligence</a>: $0.01 per location.<br><a href="https://apify.com/yappman/lei-lookup">LEI Lookup</a>: $0.004 per entity, no start fee.</p>
-    </div>
-  </div>
-  <details>
-    <summary>Compare the series in a table</summary>
-    <div class="table-wrap"><table>
-      <thead><tr><th>Series</th><th>Coverage</th><th>Frequency</th><th>Rows per period</th><th>History from</th></tr></thead>
-      <tbody>
-        <tr><td>UK weekly catalogue</td><td>Tesco, Sainsbury's, Asda, Aldi; Morrisons in the live Actor now (opt-in), and in the weekly series from November 2026</td><td>Weekly, Sunday</td><td>~73,000</td><td>27 Sep 2026</td></tr>
-        <tr><td>UK daily basket</td><td>212 staple products across the four retailers (up to three per retailer for each of 20 staples), the same items every day.</td><td>Daily</td><td>212</td><td>24 Sep 2026</td></tr>
-        <tr><td>Australia weekly catalogue</td><td>Coles, Woolworths, Aldi Australia</td><td>Weekly</td><td>~65,000</td><td>October 2026</td></tr>
-        <tr><td>UK property listings (Actor live; weekly series planned)</td><td>Listing counts, asking prices and days on market by area from Rightmove, Zoopla and OnTheMarket, with planning data</td><td>Weekly (planned)</td><td>—</td><td>Q4 2026</td></tr>
-        <tr><td>UK open-data lookups (Actors)</td><td>UK Public Contracts Lookup, Address Intelligence, LEI Lookup</td><td>On demand</td><td>—</td><td>October 2026</td></tr>
-        <tr><td>Google Hotels rates (Actor)</td><td>Any destination Google Hotels covers, by city search or hotel id; search results and per-booking-site vendor rates</td><td>On demand</td><td>—</td><td>September 2026</td></tr>
-      </tbody>
-    </table></div>
-  </details>
-  <p style="margin-top:14px">Weekly UK Online Shelf-Price Index: <a href="https://data.yappman.com/shelf-price-index">https://data.yappman.com/shelf-price-index</a></p>
-  <p>Weekly AU Online Shelf-Price Index: <a href="/au-shelf-price-index/">https://data.yappman.com/au-shelf-price-index</a>. City hotel price index: <a href="/city-hotel-prices/">https://data.yappman.com/city-hotel-prices</a>.</p>
-  <p class="sub">History accumulates weekly from the dates shown and is never revised. Trials are offered from three months of history.</p>
-  <h3 class="sample-h" id="sample">What a row looks like</h3>
-  <p class="section-sub">One row per product per retailer per period. Four real rows from the free daily-basket sample, scraped on 8 October 2026.</p>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Retailer</th><th>Product</th><th>EAN</th><th class="num">Shelf price</th><th class="num">Was price</th><th class="num">Loyalty price</th></tr></thead>
-    <tbody>
-      <tr><td>Tesco</td><td>Wildfarmed Sliced Seeded Bread 550g</td><td class="ean">5065009224302</td><td class="num">£2.25</td><td class="num">—</td><td class="num">£1.95</td></tr>
-      <tr><td>Sainsbury's</td><td>Hovis Soft Medium Sliced White Bread 800g</td><td class="ean">5010003000131</td><td class="num">£1.25</td><td class="num">—</td><td class="num">£1.10</td></tr>
-      <tr><td>Asda</td><td>High Protein Half Fat Mature Cheddar Cheese 300g</td><td class="ean">5000295163522</td><td class="num">£2.00</td><td class="num">£3.42</td><td class="num">—</td></tr>
-      <tr><td>Aldi</td><td>Medium Sliced White Bread</td><td class="ean">—</td><td class="num">£0.55</td><td class="num">—</td><td class="num">—</td></tr>
-    </tbody>
-  </table></div>
-  <p class="meta">Shelf price is always the price a non-member pays. Aldi publishes no barcodes. <a href="#fields">See all fields</a> · <a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket">Free sample on Kaggle</a></p>
-</div></section>
-
-<section class="band tint"><div class="wrap">
-  <h2>Sample and live tools</h2>
-  <p class="section-sub">Try the data before you buy.</p>
-  <div class="grid2">
-    <div class="card"><h3>Free sample</h3><p>The daily basket on Kaggle — <a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket">UK Supermarket Prices: Daily 212-Item Basket</a> (CC BY 4.0).</p></div>
-    <div class="card"><h3>Live UK data</h3><p><a href="https://apify.com/yappman/uk-supermarket-price-scraper">UK Supermarket Price Scraper</a> on the Apify Store.</p></div>
-    <div class="card"><h3>Live Australian data</h3><p><a href="https://apify.com/yappman/au-supermarket-price-scraper">Australia Supermarket Price Scraper</a> on the Apify Store.</p></div>
-    <div class="card"><h3>How the collection works</h3><p><a href="https://dev.to/yappman/how-to-get-tesco-prices-with-an-api-in-2026-4n20">A worked example</a>.</p></div>
-  </div>
-</div></section>
-
-<section class="band" id="notices"><div class="wrap">
-  <h2>Notices</h2>
-  <p class="section-sub">Announced changes, posted ahead of release. <a href="/notices/">All notices</a></p>
-  <div class="card notice-card">
-    <div class="notice-top"><span class="tag sm">UK Supermarket Price Scraper</span><span class="pill">Ships no earlier than 7 November 2026</span></div>
-    <h3>Default retailers change</h3>
-    <p>Announced change to the default retailers (UK Supermarket Price Scraper), 8 October 2026. Ships no earlier than 7 November 2026. A run that does not set retailers will search all five retailers (Tesco, Sainsbury's, Asda, Aldi, Morrisons) instead of Aldi and Sainsbury's, so a default 100-row call returns up to 20 rows per shop instead of up to 50 (cost unchanged); runs that name their retailers are unaffected. <a href="/notices/default-retailers/">Full notice</a>.</p>
-  </div>
-  <div class="card notice-card">
-    <div class="notice-top"><span class="tag sm">UK Supermarket Price Scraper</span><span class="pill">Ships no earlier than 4 November 2026</span></div>
-    <h3>matchKey changes</h3>
-    <p>Announced change to matchKey (UK Supermarket Price Scraper), 5 October 2026. Ships no earlier than 4 November 2026. Unit words are written in the singular and pint-sized volumes in pints; rows also carry matchKeyV1, today's key, for one release so existing joins keep working. <a href="/notices/matchkey/">Full notice</a>.</p>
-  </div>
-  <div class="card notice-card">
-    <div class="notice-top"><span class="tag pl">UK Property Listings</span><span class="pill">Ships no earlier than 5 November 2026</span></div>
-    <h3>Sold-prices mode changes in version 0.3</h3>
-    <p>Announced change to sold-prices mode (UK Property Listings), 5 October 2026. Ships no earlier than 5 November 2026. Sold prices will come from our own monthly copy of HM Land Registry's Price Paid Data instead of Rightmove's pages, one row per sale; the sold-price rate falls from $3.00 to $2.00 per 1,000 rows, and listings mode is unchanged. <a href="/notices/sold-prices-0-3/">Full notice</a>.</p>
-  </div>
-</div></section>
-
-<section class="band tint"><div class="wrap">
-  <h2 id="fields">Fields <span class="badge plan">Supermarket data</span></h2>
-  <p>One row per product per retailer per period: retailer, retailer product id, EAN, name, brand, pack size, shelf price, was-price, unit price and measure, loyalty price, promotion text and end date, stock flag, category path, URL, image URL; rating and review count where the retailer shows them; timestamp; and, in the Australian series, currency, market and store id. Loyalty price where the retailer publishes one: Tesco Clubcard, Sainsbury's Nectar and Morrisons More Card. Asda, Aldi, Coles, Woolworths and Aldi Australia publish no loyalty price, so the field is empty for them. Shelf price is always the price a non-member pays; loyalty pricing is never folded into it.</p>
-</div></section>
-
-<section class="band"><div class="wrap">
-  <h2>How it is collected <span class="badge plan">Supermarket data</span></h2>
-  <div class="grid4 steps" style="margin-top:14px">
-    <div class="card"><span class="num">1</span><p><strong>Source.</strong> The retailers' own public websites, read logged out. No accounts, no baskets, no personal data of any kind.</p></div>
-    <div class="card"><span class="num">2</span><p><strong>Method.</strong> Automated reads of the pages and JSON any visitor receives. Requests are made one at a time, at no more than two a second per retailer (one a second for Morrisons); in practice about 0.6 to 1.5 a second on average. Nothing a retailer's published robots.txt disallows is ever requested; paths were checked against each source's robots.txt where one could be read.</p></div>
-    <div class="card"><span class="num">3</span><p><strong>Quality.</strong> Daily canary runs for every retailer, an automated weekly health review of every canary, snapshot and index build, and email alerts on failed runs. Weekly reconciliation of each retailer's product count against the previous week and the first full week; a drop of more than 10% is flagged. Parsers that fail loudly rather than emit partial rows; missed periods recorded as gaps, never interpolated.</p></div>
-    <div class="card"><span class="num">4</span><p><strong>Change control.</strong> A change log ships with every delivery; schema and coverage changes are announced 30 days ahead, under <a href="/notices/">Notices</a>.</p></div>
-  </div>
-</div></section>
-
-<section class="band tint"><div class="wrap">
-  <h2>Delivery <span class="badge plan">Supermarket data</span></h2>
-  <p>Weekly (and, for the basket, daily) CSV files, one per retailer per period, as a download. Parquet, and delivery to your S3 bucket, SFTP or a signed download link, are available on request. The live data is also available programmatically through the Apify API. A basket-pricing endpoint (price a list of barcodes across all retailers in one call) is in preparation. Weekly data is available by 08:00 UTC on Sunday; the daily basket by 07:00 UTC.</p>
-</div></section>
-
-<section class="band"><div class="wrap">
-  <h2>Due diligence <span class="badge plan">Supermarket data</span></h2>
-  <div class="box">
-    <p>A methodology and due-diligence document is available on request. It covers provenance, collection method, robots.txt compliance, the terms-of-service position, database-right and copyright treatment, personal data (none), anti-bot handling, audit fields, coverage limits, accuracy checks, retention and corporate details. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
-  </div>
+<section class="trust" id="trust"><div class="wrap">
+  <h2>Checked on a schedule</h2>
+  <p class="trust-text">Checks run daily: UK 05:30 UTC, Property 03:15 London; weekly: AU Wednesday, Hotels Sunday — measured results on the <a href="/data-quality/">Data quality</a> page.</p>
+  <div class="trust-links"><a href="/data-quality/">Data quality</a><a href="/notices/">Notices</a><a href="https://creativecommons.org/licenses/by/4.0/">Licence: CC BY 4.0</a></div>
 </div></section>
 
 <section class="band tint" id="pricing"><div class="wrap">
@@ -271,7 +161,7 @@
 
 <section class="band" id="contact"><div class="wrap">
   <h2>Contact</h2>
-  <p>Russell Yapp, Abley-Yapp Consulting Limited — <a href="mailto:info@yappman.com">info@yappman.com</a>. Email support with a one-business-day response.</p>
+  <p>Russell Yapp, Yappman Data — <a href="mailto:info@yappman.com">info@yappman.com</a>. Email support with a one-business-day response.</p>
 </div></section>
 
 </main>
@@ -279,12 +169,13 @@
 <div class="wrap">
   <div class="foot-grid">
     <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
-    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/city-hotel-prices/">City Hotel Prices</a><a href="/#series">Series</a><a href="/#sample">Sample rows</a><a href="/#demos">Demos</a></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/city-hotel-prices/">City Hotel Prices</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a></div>
     <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
     <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a></div>
   </div>
   <div class="foot-legal">
-    <p>Abley-Yapp Consulting Limited, registered in England and Wales. Data collected from public retailer websites; prices are national online shelf prices as published on the day shown and are not store-specific except where a store id is recorded. Not affiliated with, endorsed by, or partnered with any retailer named.</p>
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p>Data collected from public retailer websites; prices are national online shelf prices as published on the day shown and are not store-specific except where a store id is recorded. Not affiliated with, endorsed by, or partnered with any retailer named.</p>
     <p><a href="#top">Back to top &uarr;</a></p>
   </div>
 </div>
@@ -323,6 +214,6 @@
   }).catch(function () {});
 })();
 </script>
-<script src="/analytics.js" defer></script>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
