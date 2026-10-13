@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data quality — Yappman Data</title>
+<meta name="description" content="How complete and accurate our Actors' data is: barcode coverage, cross-retailer match accuracy, run success rate and field completeness for UK grocery, AU grocery, hotels and property, with known gaps stated plainly.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="Data quality — Yappman Data">
+<meta property="og:description" content="How complete and accurate our Actors' data is: barcode coverage, cross-retailer match accuracy, run success rate and field completeness for UK grocery, AU grocery, hotels and property, with known gaps stated plainly.">
+<meta property="og:url" content="https://data.yappman.com/data-quality/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="strip">Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></div>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main">
+  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
+  <span class="links"><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
+</nav>
+</div></div>
+<main id="main" tabindex="-1" class="home">
+<div class="wrap" style="padding-top:32px">
+<header>
+  <h1>Data quality</h1>
+  <p class="sub">How complete and accurate our data is, one section per Actor, with known gaps stated plainly. Last updated: {{last_updated_date}}.</p>
+</header>
+<div class="box notice"><p><strong>Draft.</strong> Figures shown as {{ }} are being collected from run metadata and canaries.</p></div>
+
+<h2>How we measure</h2>
+<p>Barcode coverage is the share of rows in the latest full run that carry a barcode (EAN/GTIN). Match accuracy is the share of a hand-checked sample of cross-retailer matches that were correct; the sample size and how it was drawn are stated with each figure. Run success rate is the share of scheduled canary runs that succeeded over the stated number of days. Completeness is the share of rows in the latest full run that have a value for the field. Every figure is read from the Actor's own run metadata and canaries, not estimated, and is dated above.</p>
+</div>
+
+<section class="band" id="uk-grocery"><div class="wrap">
+  <h2>UK grocery</h2>
+  <p class="section-sub">UK Supermarket Price Scraper: Tesco, Sainsbury's, Asda and Aldi, with Morrisons opt-in.</p>
+
+  <h3>Barcode (EAN/GTIN) coverage</h3>
+  <p class="meta">Share of each retailer's rows that carry a barcode.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Retailer</th><th class="num">Rows with a barcode</th></tr></thead>
+  <tbody>
+    <tr><td>Tesco</td><td class="num">{{uk_ean_tesco_pct}}</td></tr>
+    <tr><td>Sainsbury's</td><td class="num">{{uk_ean_sainsburys_pct}}</td></tr>
+    <tr><td>Asda</td><td class="num">{{uk_ean_asda_pct}}</td></tr>
+    <tr><td>Morrisons (opt-in)</td><td class="num">{{uk_ean_morrisons_pct}}</td></tr>
+    <tr><td>Aldi</td><td class="num">None: Aldi publishes no barcodes</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Cross-retailer match accuracy</h3>
+  <p class="meta">Checked by hand on a sample.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th class="num">Result</th></tr></thead>
+  <tbody>
+    <tr><td>Sample size</td><td class="num">{{uk_match_sample_size}}</td></tr>
+    <tr><td>Method</td><td class="num">{{uk_match_method}}</td></tr>
+    <tr><td>Share correctly matched</td><td class="num">{{uk_match_accuracy_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Run success rate</h3>
+  <p class="meta">From the scheduled canary runs.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th class="num">Result</th></tr></thead>
+  <tbody>
+    <tr><td>Window (days)</td><td class="num">{{uk_canary_days}}</td></tr>
+    <tr><td>Canary runs in the window</td><td class="num">{{uk_canary_runs}}</td></tr>
+    <tr><td>Share of runs that succeeded</td><td class="num">{{uk_canary_success_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Completeness per field</h3>
+  <p class="meta">Share of rows in the latest full run that have a value.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Field</th><th class="num">Share of rows</th></tr></thead>
+  <tbody>
+    <tr><td>Shelf price</td><td class="num">{{uk_comp_price_pct}}</td></tr>
+    <tr><td>Unit price</td><td class="num">{{uk_comp_unitprice_pct}}</td></tr>
+    <tr><td>Pack size</td><td class="num">{{uk_comp_packsize_pct}}</td></tr>
+    <tr><td>Stock status</td><td class="num">{{uk_comp_stock_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Known gaps</h3>
+  <ul>
+    <li>Aldi publishes no barcodes and no stock status, so Aldi rows are matched to other retailers by name and pack size.</li>
+    <li>Asda stock status is for Asda's default store only.</li>
+  </ul>
+</div></section>
+<section class="band tint" id="au-grocery"><div class="wrap">
+  <h2>AU grocery</h2>
+  <p class="section-sub">Australia Supermarket Price Scraper: Coles, Woolworths and Aldi Australia.</p>
+
+  <h3>Barcode (EAN/GTIN) coverage</h3>
+  <p class="meta">Share of each retailer's rows that carry a barcode.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Retailer</th><th class="num">Rows with a barcode</th></tr></thead>
+  <tbody>
+    <tr><td>Coles</td><td class="num">{{au_ean_coles_pct}}</td></tr>
+    <tr><td>Woolworths</td><td class="num">{{au_ean_woolworths_pct}}</td></tr>
+    <tr><td>Aldi Australia</td><td class="num">{{au_ean_aldi_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Cross-retailer match accuracy</h3>
+  <p class="meta">Checked by hand on a sample.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th class="num">Result</th></tr></thead>
+  <tbody>
+    <tr><td>Sample size</td><td class="num">{{au_match_sample_size}}</td></tr>
+    <tr><td>Method</td><td class="num">{{au_match_method}}</td></tr>
+    <tr><td>Share correctly matched</td><td class="num">{{au_match_accuracy_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Run success rate</h3>
+  <p class="meta">From the scheduled canary runs.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th class="num">Result</th></tr></thead>
+  <tbody>
+    <tr><td>Window (days)</td><td class="num">{{au_canary_days}}</td></tr>
+    <tr><td>Canary runs in the window</td><td class="num">{{au_canary_runs}}</td></tr>
+    <tr><td>Share of runs that succeeded</td><td class="num">{{au_canary_success_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Completeness per field</h3>
+  <p class="meta">Share of rows in the latest full run that have a value.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Field</th><th class="num">Share of rows</th></tr></thead>
+  <tbody>
+    <tr><td>Shelf price</td><td class="num">{{au_comp_price_pct}}</td></tr>
+    <tr><td>Unit price</td><td class="num">{{au_comp_unitprice_pct}}</td></tr>
+    <tr><td>Pack size</td><td class="num">{{au_comp_packsize_pct}}</td></tr>
+    <tr><td>Stock status</td><td class="num">{{au_comp_stock_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Known gaps</h3>
+  <ul>
+    <li>Aldi publishes no stock status.</li>
+    <li>Coles is a staples-first partial slice, read within a limit of about 80 requests, not the whole Coles range (see the <a href="/au-shelf-price-index/">AU index method</a>).</li>
+    <li>Woolworths is read for store 1101 only.</li>
+    <li>Aldi is its regular range only: Special Buys are never included.</li>
+  </ul>
+</div></section>
+<section class="band" id="hotels"><div class="wrap">
+  <h2>Hotels</h2>
+  <p class="section-sub">Google Hotels Price Scraper: hotel search results and per-booking-site vendor rates.</p>
+
+  <h3>Barcode (EAN/GTIN) coverage</h3>
+  <p class="meta">Not applicable: hotels have no barcode. Identifier coverage is shown instead.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Identifier</th><th class="num">Rows with the identifier</th></tr></thead>
+  <tbody>
+    <tr><td>Hotel id</td><td class="num">{{hotels_id_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Cross-retailer match accuracy (matching a hotel across weeks)</h3>
+  <p class="meta">Checked by hand on a sample.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th class="num">Result</th></tr></thead>
+  <tbody>
+    <tr><td>Sample size</td><td class="num">{{hotels_match_sample_size}}</td></tr>
+    <tr><td>Method</td><td class="num">{{hotels_match_method}}</td></tr>
+    <tr><td>Share correctly matched</td><td class="num">{{hotels_match_accuracy_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Run success rate</h3>
+  <p class="meta">From the scheduled canary runs.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th class="num">Result</th></tr></thead>
+  <tbody>
+    <tr><td>Window (days)</td><td class="num">{{hotels_canary_days}}</td></tr>
+    <tr><td>Canary runs in the window</td><td class="num">{{hotels_canary_runs}}</td></tr>
+    <tr><td>Share of runs that succeeded</td><td class="num">{{hotels_canary_success_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Completeness per field</h3>
+  <p class="meta">Share of rows in the latest full run that have a value.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Field</th><th class="num">Share of rows</th></tr></thead>
+  <tbody>
+    <tr><td>Price</td><td class="num">{{hotels_comp_price_pct}}</td></tr>
+    <tr><td>Rating</td><td class="num">{{hotels_comp_rating_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Known gaps</h3>
+  <ul>
+    <li>bookingUrl is null by design.</li>
+  </ul>
+</div></section>
+<section class="band tint" id="property"><div class="wrap">
+  <h2>Property</h2>
+  <p class="section-sub">UK Property Listings: Rightmove, Zoopla and OnTheMarket.</p>
+
+  <h3>Barcode (EAN/GTIN) coverage</h3>
+  <p class="meta">Not applicable: properties have no barcode. Identifier coverage (UPRN) is shown instead.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Portal</th><th class="num">Rows with a UPRN</th></tr></thead>
+  <tbody>
+    <tr><td>Zoopla (with details)</td><td class="num">{{property_uprn_zoopla_pct}}</td></tr>
+    <tr><td>Rightmove</td><td class="num">None: the portal gives none</td></tr>
+    <tr><td>OnTheMarket</td><td class="num">None: the portal gives none</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Cross-retailer match accuracy (matching a listing across portals)</h3>
+  <p class="meta">Checked by hand on a sample.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th class="num">Result</th></tr></thead>
+  <tbody>
+    <tr><td>Sample size</td><td class="num">{{property_match_sample_size}}</td></tr>
+    <tr><td>Method</td><td class="num">{{property_match_method}}</td></tr>
+    <tr><td>Share correctly matched</td><td class="num">{{property_match_accuracy_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Run success rate</h3>
+  <p class="meta">From the scheduled canary runs.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Measure</th><th class="num">Result</th></tr></thead>
+  <tbody>
+    <tr><td>Window (days)</td><td class="num">{{property_canary_days}}</td></tr>
+    <tr><td>Canary runs in the window</td><td class="num">{{property_canary_runs}}</td></tr>
+    <tr><td>Share of runs that succeeded</td><td class="num">{{property_canary_success_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Completeness per field</h3>
+  <p class="meta">Share of rows in the latest full run that have a value.</p>
+  <div class="table-wrap"><table>
+  <thead><tr><th>Field</th><th class="num">Share of rows</th></tr></thead>
+  <tbody>
+    <tr><td>Price</td><td class="num">{{property_comp_price_pct}}</td></tr>
+    <tr><td>Bedrooms</td><td class="num">{{property_comp_beds_pct}}</td></tr>
+  </tbody>
+</table></div>
+
+  <h3>Known gaps</h3>
+  <ul>
+    <li>Each portal limits a search to about 1,000 results, so a broad search returns a capped sample.</li>
+  </ul>
+</div></section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/city-hotel-prices/">City Hotel Prices</a><a href="/#series">Series</a><a href="/#sample">Sample rows</a><a href="/#demos">Demos</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a></div>
+  </div>
+  <div class="foot-legal">
+    <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/analytics.js" defer></script>
+</body>
+</html>
