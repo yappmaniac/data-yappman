@@ -27,7 +27,7 @@
   "isAccessibleForFree": true,
   "creator": {
     "@type": "Organization",
-    "name": "Abley-Yapp Consulting Limited",
+    "name": "Yappman Data",
     "url": "https://data.yappman.com/"
   },
   "keywords": [
@@ -61,11 +61,11 @@
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
-<div class="strip">Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 4 November 2026. <a href="/notices/matchkey/">Read the notice</a></div>
 <div class="topbar"><div class="wrap">
 <nav aria-label="Main">
   <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
-  <span class="links"><a href="/shelf-price-index/" aria-current="page">Shelf-Price Index</a><a href="/notices/">Notices</a><a href="/#pricing">Pricing</a><a href="/#contact">Contact</a></span>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <span class="links" id="site-menu"><a href="/#data">Data</a><a href="/shelf-price-index/" aria-current="page">Index</a><a href="/data-quality/">Data quality</a><a href="/#pricing">Pricing</a><a href="/notices/">Notices</a><a href="/#contact">Contact</a></span>
 </nav>
 </div></div>
 <main id="main" tabindex="-1">
@@ -80,7 +80,7 @@
   <div class="headline">
     <div><div class="meta">Index, all four retailers</div><div class="big" id="level">—</div></div>
     <div><div class="meta">Week on week</div><div class="delta" id="wow">—</div></div>
-    <div><div class="meta">Four weeks</div><div class="delta" id="w4">—</div></div>
+    <div class="col-w4"><div class="meta">Four weeks</div><div class="delta" id="w4">—</div></div>
   </div>
   <p class="meta" id="weekmeta"></p>
   <div id="chart"></div>
@@ -88,12 +88,12 @@
 
 <section id="retailers" hidden>
   <h2>By retailer</h2>
-  <div class="table-wrap"><table><thead><tr><th>Retailer</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="retailer-rows"></tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>Retailer</th><th class="num">Index</th><th class="num">Week on week</th><th class="num col-w4">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="retailer-rows"></tbody></table></div>
 </section>
 
 <section id="categories" hidden>
   <h2>By category</h2>
-  <div class="table-wrap"><table><thead><tr><th>Category</th><th class="num">Index</th><th class="num">Week on week</th><th>Move</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="category-rows"></tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>Category</th><th class="num">Index</th><th class="num">Week on week</th><th>Move</th><th class="num col-w4">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="category-rows"></tbody></table></div>
   <p class="meta" id="subtotal-line" hidden></p>
 </section>
 
@@ -102,7 +102,7 @@
   <p>Each week's values are published once and never revised. The full series as <a id="csv-link" href="#">CSV</a> or <a id="json-link" href="#">JSON</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — cite as "Yappman Data, UK Online Shelf-Price Index".</p>
   <div class="dl-row"><a class="btn btn-solid" id="csv-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download CSV</a><a class="btn btn-outline" id="json-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download JSON</a></div>
   <div class="cite"><div><div class="meta">Cite this (CC BY 4.0)</div><div id="cite-text">Yappman Data, UK Online Shelf-Price Index.</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
-  <div class="table-wrap"><table><thead><tr><th>Week</th><th class="num">Index</th><th class="num">Week on week</th><th class="num">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="archive-rows"></tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>Week</th><th class="num">Index</th><th class="num">Week on week</th><th class="num col-w4">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="archive-rows"></tbody></table></div>
 </section>
 
 <h2 id="method">What this measures, and what it doesn't</h2>
@@ -119,12 +119,13 @@
 <div class="wrap">
   <div class="foot-grid">
     <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
-    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/#series">Series</a><a href="/#sample">Sample rows</a><a href="/#demos">Demos</a><a href="/data-quality/">Data quality</a></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a></div>
     <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
     <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a></div>
   </div>
   <div class="foot-legal">
-    <p>Abley-Yapp Consulting Limited, registered in England and Wales. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0.</p>
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p>Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0.</p>
     <p><a href="#top">Back to top &uarr;</a></p>
   </div>
 </div>
@@ -143,11 +144,11 @@ function fmtDelta(v) {
   const n = Number(v); const s = (n > 0 ? "+" : "") + n.toFixed(2) + "%";
   return { text:s, cls: n > 0.05 ? "up" : n < -0.05 ? "down" : "flat" };
 }
-function cell(v, cls) { const t = fmtDelta(v); return `<td class="num"><span class="chip-delta ${t.cls}">${t.text}</span></td>`; }
+function cell(v, cls) { const t = fmtDelta(v); return `<td class="num${cls ? " " + cls : ""}"><span class="chip-delta ${t.cls}">${t.text}</span></td>`; }
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function row(label, r) {
-  return `<tr><td>${esc(label)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}${cell(r.w4Pct)}<td class="num">${r.matched ?? "—"}</td></tr>`;
+  return `<tr><td>${esc(label)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}${cell(r.w4Pct, "col-w4")}<td class="num">${r.matched ?? "—"}</td></tr>`;
 }
 
 const SKIPPED_WEEK = "2026-W41", NEW_BASE = "2026-W42";
@@ -207,7 +208,7 @@ function catRow(label, r, maxAbs) {
     const w = Math.min(100, Math.abs(v) / maxAbs * 100).toFixed(0);
     bar = `<div class="dbar" aria-hidden="true"><div class="neg">${v < 0 ? `<span class="bar-down" style="width:${w}%"></span>` : ""}</div><div class="pos">${v > 0 ? `<span class="bar-up" style="width:${w}%"></span>` : ""}</div></div>`;
   }
-  return `<tr><td>${esc(label)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}<td>${bar}</td>${cell(r.w4Pct)}<td class="num">${r.matched ?? "—"}</td></tr>`;
+  return `<tr><td>${esc(label)}</td><td class="num">${fmtLevel(r.level)}</td>${cell(r.wowPct)}<td>${bar}</td>${cell(r.w4Pct, "col-w4")}<td class="num">${r.matched ?? "—"}</td></tr>`;
 }
 
 async function load() {
@@ -224,6 +225,8 @@ async function load() {
 
   // Expected row shape (per week): { week, scope: "headline"|"retailer"|"category"|"retailer_category", retailer?, category?, level, wowPct, w4Pct, matched, share } plus one { week, scope:"meta", ... } row.
   const weeks = [...new Set(rows.filter(r => r.scope !== "meta").map(r => r.week))].sort();
+  // Hide the "Four weeks" column until the dataset has a four-week figure.
+  document.querySelector("main").classList.toggle("no-w4", !rows.some(r => r.w4Pct !== null && r.w4Pct !== undefined && r.w4Pct !== ""));
   // Series key: each vintage's meta item carries `base` (ISO week at which that series = 100); data rows have none, so join on week.
   const metaBase = {};
   rows.filter(r => r.scope === "meta" && r.base).forEach(r => { metaBase[r.week] = r.base; });
@@ -294,6 +297,6 @@ async function load() {
 }
 load();
 </script>
-<script src="/analytics.js" defer></script>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
