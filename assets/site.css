@@ -348,3 +348,7 @@ html:not(.js) .nav-group:hover>.panel,html:not(.js) .nav-group:focus-within>.pan
 .od-inline{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 22px}
 .od-inline li{display:flex;align-items:center;gap:8px;font-weight:600}
 @media (max-width:768px){ .panel .mi-off{color:var(--on-navy-muted);padding:10px 4px} }
+.od-inline .od-price{font-weight:400;font-size:13px;color:var(--muted)}
+.od-inline a{color:inherit}
+.od-inline li{flex-wrap:wrap}
+@media (max-width:600px){.od-inline{flex-direction:column;gap:12px}.od-inline .od-price{flex-basis:100%}}
