@@ -6,27 +6,31 @@
   </url>
   <url>
     <loc>https://data.yappman.com/shelf-price-index/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://data.yappman.com/au-shelf-price-index/</loc>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/notices/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/notices/w41-skipped/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/notices/default-retailers/</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/notices/matchkey/</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/notices/sold-prices-0-3/</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/data-quality/</loc>
@@ -38,14 +42,14 @@
   </url>
   <url>
     <loc>https://data.yappman.com/demos/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/press/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/privacy/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-15</lastmod>
   </url>
 </urlset>
