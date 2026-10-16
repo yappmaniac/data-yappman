@@ -116,7 +116,7 @@
   <p class="section-sub">Australia Supermarket Price Scraper: Coles, Woolworths and Aldi Australia.</p>
   <div class="scorecard" aria-label="Summary">
     <div class="score"><div class="l">Coverage</div><div class="v">98.2%</div><div class="s">barcodes: Woolworths</div></div>
-    <div class="score"><div class="l">Run success</div><div class="v">100%</div><div class="s">18 canary runs over 18 days</div></div>
+    <div class="score"><div class="l">Run success</div><div class="v">100%</div><div class="s">21 canary runs over 21 days</div></div>
     <div class="score"><div class="l">Completeness</div><div class="v">99.9–100%</div><div class="s">Woolworths: price, unit price, pack size</div></div>
   </div>
 
@@ -132,12 +132,12 @@
 </table></div>
 
   <h3>Run success rate</h3>
-  <p class="meta">26 September to 13 October 2026. Each canary is a 60-row smoke test, so it measures reachability, not completeness. On 26 September and 6, 9 and 13 October Woolworths was served from regional store 3221; those runs still counted.</p>
+  <p class="meta">26 September to 16 October 2026. Each canary is a 60-row smoke test, so it measures reachability, not completeness. On 26 September and 6, 9 and 13 October Woolworths was served from regional store 3221; those runs still counted.</p>
   <div class="table-wrap"><table>
   <thead><tr><th>Measure</th><th>Result</th></tr></thead>
   <tbody>
-    <tr><td>Window (days)</td><td>18</td></tr>
-    <tr><td>Canary runs in the window</td><td>18</td></tr>
+    <tr><td>Window (days)</td><td>21</td></tr>
+    <tr><td>Canary runs in the window</td><td>21</td></tr>
     <tr><td>Share of runs that succeeded</td><td>100%</td></tr>
   </tbody>
 </table></div>
@@ -158,7 +158,7 @@
   <ul>
     <li>Aldi publishes no stock status (<code>inStock</code> is null).</li>
     <li>Coles answers about 80 requests per run, so a run returns at most a few thousand Coles products (about 75 with barcode lookup on), not the whole range; the weekly Coles snapshot behind the AU index reads staples first.</li>
-    <li>Woolworths prices are for the store Woolworths assigns to a logged-out session: usually 1101, sometimes a regional store, which changes the range (2 of 8 scheduled canary runs on 5–12 October 2026). Every row records its store in <code>storeId</code>; the weekly snapshot and the AU index use store 1101 only.</li>
+    <li>Woolworths prices are for the store Woolworths assigns to a logged-out session: usually 1101, sometimes a regional store, which changes the range (4 of 21 scheduled canary runs from 26 September to 16 October 2026, all before AU 0.1.13, which retries for the national store). Every row records its store in <code>storeId</code>; the weekly snapshot and the AU index use store 1101 only.</li>
     <li>Special Buys are returned by their own mode; the weekly Aldi snapshot behind the AU index covers the regular range only.</li>
   </ul>
 </div></section>
