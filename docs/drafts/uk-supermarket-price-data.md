@@ -34,18 +34,24 @@ individual products.
 ## Research datasets
 
 **University of Warwick, "Price dynamics in food retailing in Great Britain".** Weekly prices for 370
-products, from 1 October 2009 to 31 March 2012, collected by hand, with the supermarkets anonymised.
-It is held by the UK Data Service, where it is a safeguarded dataset you download after registering,
-under the UK Data Service End User Licence. [CHECK: the Warwick repository page says "Creative
-Commons open licence" while the UK Data Service page says safeguarded; and the pages give both three
-and four supermarket chains. Quote only the UK Data Service terms.]
+products, from 1 October 2009 to 31 March 2012, with the supermarkets anonymised. [CHECK: "collected
+by hand" is the research note's wording; confirm it on the UK Data Service page before using it.]
+The UK Data Service lists it as a safeguarded dataset you download after registering, under the UK
+Data Service End User Licence.
+[CHECK, unresolved conflict: the Warwick repository page (wrap.warwick.ac.uk/134726) says "Creative
+Commons open licence" and also "safeguarded", while the UK Data Service page (reshare.ukdataservice.ac.uk/850626)
+says safeguarded under its End User Licence. Do not call it openly licensed. Quote only the UK Data
+Service terms, or ask the depositor before publishing. The pages also give both three and four
+supermarket chains, and "five" and "seven years" for a 2009 to 2012 span: state neither.]
 
 **LSE (Davies, Hellings and Mcevoy).** A seminar listing at LSE (6 February 2024) describes about 19
 million online grocery prices collected daily since July 2023 from retailers covering over 70% of UK
 grocery spending. We found no public release of the data or terms of use, so we do not list it as
 available.
 
-**Kaggle, "Time Series UK Supermarket Data".** Daily web-scraped prices from Aldi, Asda, Morrisons,
+**Kaggle, "Time Series UK Supermarket Data".** Web-scraped prices, collected daily on the days its
+creator ran the scraper [CHECK: confirm this wording, and any "gaps" wording, against the creator's own
+note on the Kaggle page; the Kaggle HTML page itself was not readable, only its API record], from Aldi, Asda, Morrisons,
 Tesco and Sainsbury's, from 9 January 2024, licensed Apache 2.0. Its metadata shows the last update
 on 13 April 2024, and its creator notes the scraper is not perfectly reliable, that Morrisons counts
 were unstable until 27 January 2024, and that loyalty prices and multibuys are not included.
@@ -53,20 +59,24 @@ were unstable until 27 January 2024, and that loyalty prices and multibuys are n
 ## Trackers you can read but not download
 
 **Which? supermarket food and drink inflation tracker.** Annual inflation for eight supermarkets
-(Aldi, Asda, Lidl, Morrisons, Ocado, Sainsbury's, Tesco and Waitrose) across 20 categories and 23,000
-to 28,000 products a month, weighted by market share and category sales, including discounts but not
-multibuys or loyalty-card offers. Published every three months. The page offers no data download.
+(Aldi, Asda, Lidl, Morrisons, Ocado, Sainsbury's, Tesco and Waitrose) across 20 categories. Which? says
+it covers 23,000 to 28,000 products a month [CHECK], weighted by market share and category sales
+[CHECK], including discounts but not multibuys or loyalty-card offers. Which? says it moved to once
+every three months from December 2023 [CHECK: the current schedule is not stated]. We found no data
+download on the page [CHECK].
 
-**Trolley.co.uk Grocery Price Index.** An index built from Trolley's price database and the activity of
-more than 850,000 shoppers, over 47,711 products typically bought at least once a month, running from
-May 2020. The page offers no download or API; data enquiries go through its contact page.
+**Trolley.co.uk Grocery Price Index.** Trolley says the index is built from its price database and the
+activity of more than 850,000 shoppers, over 47,711 products typically bought at least once a month,
+and runs from May 2020 [CHECK all three figures on the page on the day]. We found no download or API
+on the page [CHECK]; it points data enquiries to its contact page.
 
 ## Our data: Yappman Data
 
 **UK Online Shelf-Price Index (free, CC BY 4.0).** A weekly index of posted online shelf prices at
 Tesco, Sainsbury's, Asda and Aldi: the same products matched week on week by the retailer's own
-product id, an equal-weight geometric mean (Jevons) of their price ratios, by retailer and by 16
-product classes, with matched counts on every row. About 70,000 products a week. Published every
+product id, a geometric mean (Jevons) of their price ratios (equal weight to each product within a
+retailer-class cell, equal weight to each retailer, no spending weights), by retailer and by 16
+product classes, with matched counts on every row. About 73,000 products a week in the weekly snapshots (73,745 in the week 40 snapshot of 4 October 2026). Published every
 Monday at 07:00 UK time since 5 October 2026, each week added once and never revised. The whole series
 downloads as one CSV or JSON file with no account. It measures asking prices online, not prices paid,
 and it is not a CPI. Method: https://data.yappman.com/shelf-price-index/method/ . Fields:
@@ -89,9 +99,9 @@ publishing; do not restate them from memory.]
 | ONS Shopping prices tool | Average prices, 650+ items | From Jan 2020 | Monthly | Yes | OGL v3.0 |
 | Warwick (UK Data Service) | Weekly prices, 370 products, anonymised stores | Oct 2009 to Mar 2012 | Weekly | After registration | UK Data Service End User Licence |
 | LSE (Davies et al.) | Online prices, 19m | From Jul 2023 | Daily | Not found | Not found |
-| Kaggle time series | Daily scraped prices, 5 retailers | Jan to Apr 2024 | Daily (with gaps) | Kaggle | Apache 2.0 |
-| Which? tracker | Weighted inflation, 8 supermarkets | Ongoing | Every three months | No | Not stated |
-| Trolley index | Index from its own database | From May 2020 | Continuous | No | Not stated |
+| Kaggle time series | Scraped prices, 5 retailers | Jan to Apr 2024 | Daily, on days the scraper ran [CHECK] | Kaggle | Apache 2.0 |
+| Which? tracker | Weighted inflation, 8 supermarkets | Ongoing | Every three months since Dec 2023 [CHECK] | None found [CHECK] | Not stated |
+| Trolley index | Index from its own database | From May 2020 [CHECK] | Continuous | None found [CHECK] | Not stated |
 | Yappman UK Shelf-Price Index | Matched-product shelf-price change, 4 retailers | From Sep 2026 | Weekly | CSV, JSON | CC BY 4.0 |
 
 ## Which to use
@@ -102,6 +112,9 @@ publishing; do not restate them from memory.]
 - Historical research on 2009 to 2012: the Warwick data through the UK Data Service.
 - A headline on which supermarket's prices rose most, with weights: Which?'s tracker (read, not
   downloaded).
+
+Yappman Data is not affiliated with, endorsed by or sponsored by any of the organisations or companies
+named on this page, including the supermarkets.
 
 ## Sources (read 19 Oct 2026)
 

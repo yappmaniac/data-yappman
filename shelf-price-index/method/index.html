@@ -47,7 +47,7 @@
 
 <h2 id="method">Method</h2>
 <p>Each week the online catalogue of each retailer is read as any visitor sees it, and each week's snapshot is compared with the week before. A product is matched by the retailer's own product id, and only products present in both weeks with a price in both are used.</p>
-<p>For each retailer and each broad product class, the weekly change is the geometric mean (a Jevons index) of the products' price ratios, so every product counts equally. There are no spending weights, and the four retailers count equally in the headline.</p>
+<p>For each retailer and each broad product class, the weekly change is the geometric mean (a Jevons index) of the products' price ratios: equal weight to each product within a retailer-class cell, equal weight to each retailer, no spending weights.</p>
 <ul>
   <li><strong>Suspect moves.</strong> A price that multiplies by 3 or more in one week (a rise of 200% or more), or falls to a third or less (a fall of 66.7% or more), is treated as a probable pricing error, or the correction of one, and left out of the index. It is listed in the weekly report.</li>
   <li><strong>Pack-size changes.</strong> When a product's pack size changes, the change in its price per unit is used. If that cannot be worked out, the product is left out that week.</li>
@@ -62,10 +62,10 @@
 
 <h2 id="coverage">Coverage and limits</h2>
 <ul>
-  <li>About 70,000 products a week across the four retailers. Matched counts are shown on every row.</li>
-  <li>Only what the retailers show online is covered: no in-store or regional prices, and Aldi's online range is smaller than its shops.</li>
+  <li>About 73,000 products a week in the weekly snapshots (73,745 in the week 40 snapshot of 4 October 2026). Matched counts are shown on every row.</li>
+  <li>Only what the retailers show online is covered: no in-store or regional prices.</li>
   <li>A product relaunched under a new identifier drops out of the match, so its price change is missed.</li>
-  <li>When a retailer's snapshot covers far fewer products than the week before, the release says so in the meta (<code>coverageWarnings</code>). Weeks are never backfilled or interpolated.</li>
+  <li>When a retailer's snapshot covers far fewer products than the week before, the meta names it (<code>coverageWarnings</code>); the week is still published only if all four retailers contribute to the headline. Weeks are never backfilled or interpolated.</li>
   <li>Barcode coverage, completeness and run success for the weekly snapshots behind the index are on the <a href="/data-quality/#uk-grocery">data quality page</a>; how the snapshots are collected is in the <a href="/methodology/">methodology</a>, and a short recording of the scraper is on the <a href="/demos/">demos page</a>.</li>
   <li>Morrisons joins from November 2026. The index continues on the four-retailer basis, with Morrisons reported separately until a full year of five-retailer data exists.</li>
 </ul>
