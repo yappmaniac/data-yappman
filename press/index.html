@@ -45,7 +45,7 @@
 <p>The <a href="/shelf-price-index/">UK Online Shelf-Price Index</a> follows about 71,000 online prices a week at Tesco, Sainsbury's, Asda and Aldi, matching the same products from one week to the next. It is point-in-time data, published once a week and never revised, and it measures posted shelf prices, not prices paid, so it is not CPI. The series started with a base of 100 at ISO week 2026-W39; week 2026-W41 was skipped after an incomplete collection, so the index restarts with a new base at week 42 (<a href="/notices/w41-skipped/">see the notice</a>).</p>
 
 <h2>Cite as</h2>
-<div class="cite"><div><div class="meta">Citation (CC BY 4.0)</div><div id="cite-text">Yappman Data, UK Online Shelf-Price Index, data.yappman.com, CC BY 4.0, week [week].</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
+<div class="cite"><div><div class="meta">Citation (CC BY 4.0)</div><div id="cite-text">Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage [week], https://data.yappman.com/shelf-price-index/</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
 <p class="meta">Use the week you are quoting. Please link to <a href="/shelf-price-index/">data.yappman.com/shelf-price-index</a>.</p>
 
 <h2 id="licence">Using the figures</h2>
@@ -90,7 +90,7 @@
   var el = document.getElementById("cite-text");
   fetch(BASE).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (rows) {
     var weeks = rows.filter(function (r) { return r.recordType === "headline"; }).map(function (r) { return r.vintage; }).sort();
-    if (weeks.length) el.textContent = "Yappman Data, UK Online Shelf-Price Index, data.yappman.com, CC BY 4.0, week " + weeks[weeks.length - 1] + ".";
+    if (weeks.length) el.textContent = "Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage " + weeks[weeks.length - 1] + ", https://data.yappman.com/shelf-price-index/";
   }).catch(function () {});
   document.getElementById("cite-copy").addEventListener("click", function () {
     var b = this, t = el.textContent;

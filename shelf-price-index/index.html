@@ -56,7 +56,35 @@
       "encodingFormat": "text/csv",
       "contentUrl": "https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=csv&clean=true&attachment=true"
     }
-  ]
+  ],
+  "variableMeasured": [
+    {
+      "@type": "PropertyValue",
+      "name": "level",
+      "description": "Index level; the base week equals 100"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weekOnWeekPct",
+      "description": "Change on the previous week, in percent"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "fourWeekPct",
+      "description": "Change on the level four weeks earlier, in percent"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "matched",
+      "description": "Products matched in both weeks and used"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "matchedShare",
+      "description": "Matched products as a share of the previous week's products"
+    }
+  ],
+  "measurementTechnique": "Matched-product Jevons index (geometric mean of price ratios, equal product and retailer weights), chained week on week; prices that multiply by 3 or more, or fall to a third or less, in one week are left out."
 }
 </script>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
@@ -110,7 +138,7 @@
   <h2>Every published week</h2>
   <p>Each week's values are published once and never revised. The full series as <a id="csv-link" href="#">CSV</a> or <a id="json-link" href="#">JSON</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — cite as "Yappman Data, UK Online Shelf-Price Index".</p>
   <div class="dl-row"><a class="btn btn-solid" id="csv-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download CSV</a><a class="btn btn-outline" id="json-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download JSON</a></div>
-  <div class="cite"><div><div class="meta">Cite this (CC BY 4.0)</div><div id="cite-text">Yappman Data, UK Online Shelf-Price Index.</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
+  <div class="cite"><div><div class="meta">Cite this (CC BY 4.0)</div><div id="cite-text">Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, https://data.yappman.com/shelf-price-index/</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
   <div class="table-wrap"><table><thead><tr><th>Week</th><th class="num">Index</th><th class="num">Week on week</th><th class="num col-w4">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="archive-rows"></tbody></table></div>
 </section>
 
@@ -123,6 +151,11 @@
   <p>Methodology and due diligence for the underlying data: <a href="https://data.yappman.com/">data.yappman.com</a>. Weekly "what moved" notes: <a href="https://yappman.substack.com/">UK Grocery Price Moves</a>. The product-level data behind the index is licensed separately.</p>
 </div>
 
+<h2 id="docs">Method, fields and citation</h2>
+<ul>
+  <li><a href="/shelf-price-index/method/">How it is measured</a>: matching, the Jevons index, the ratio-3 rule, base weeks and the week-42 restart, coverage, cadence and changelog.</li>
+  <li><a href="/shelf-price-index/data-dictionary/">Data dictionary</a>: every field, record type and meta field, and the CSV and JSON downloads.</li>
+</ul>
 </main>
 <footer class="site-footer">
 <div class="wrap">
@@ -297,7 +330,7 @@ async function load() {
   document.getElementById("json-link").href = `${BASE}?format=json&clean=true`;
   document.getElementById("csv-btn").href = `${BASE}?format=csv&clean=true&attachment=true`;
   document.getElementById("json-btn").href = `${BASE}?format=json&clean=true`;
-  document.getElementById("cite-text").textContent = `Yappman Data, UK Online Shelf-Price Index, ${latest}.`;
+  document.getElementById("cite-text").textContent = `Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage ${latest}, https://data.yappman.com/shelf-price-index/`;
   document.getElementById("cite-copy").addEventListener("click", function () {
     const b = this, t = document.getElementById("cite-text").textContent;
     (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { b.lastChild.textContent = " Copied"; setTimeout(() => { b.lastChild.textContent = " Copy"; }, 1800); }).catch(() => {});

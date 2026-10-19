@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UK Online Shelf-Price Index: data dictionary — Yappman Data</title>
+<meta name="description" content="Fields, record types, statuses and meta of the UK Online Shelf-Price Index dataset (uk-shelf-price-index), with the CSV and JSON download links. Licensed CC BY 4.0.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="UK Online Shelf-Price Index: data dictionary — Yappman Data">
+<meta property="og:description" content="Fields, record types, statuses and meta of the UK Online Shelf-Price Index dataset (uk-shelf-price-index), with the CSV and JSON download links. Licensed CC BY 4.0.">
+<meta property="og:url" content="https://data.yappman.com/shelf-price-index/data-dictionary/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main" class="mainnav">
+  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <ul class="nav-list" id="site-menu">
+    <li class="nav-group mega"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-data" aria-haspopup="true">Data<span class="caret" aria-hidden="true"></span></button><div class="panel panel-mega" id="panel-data"><div class="panel-cols"><div class="panel-col"><h3 class="panel-h">Price data</h3><ul><li><a class="mi" href="https://apify.com/yappman/uk-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK supermarket prices</span><span class="badge live">Live</span></span><span class="mi-desc">Weekly catalogue and a daily 212-item basket.</span></a></li><li><a class="mi" href="https://apify.com/yappman/au-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">AU supermarket prices</span><span class="badge soon">Oct 2026</span></span><span class="mi-desc">Weekly catalogue from Coles, Woolworths and Aldi Australia.</span></a></li><li><a class="mi" href="https://apify.com/yappman/google-hotels-prices" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Google Hotels prices</span><span class="badge live">Live</span></span><span class="mi-desc">Search results and per-booking-site rates.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-property-listings" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK property listings</span><span class="badge live">Actor live</span></span><span class="mi-desc">Rightmove, Zoopla and OnTheMarket, with planning data.</span></a></li></ul></div><div class="panel-col"><h3 class="panel-h">Open data</h3><ul><li><a class="mi" href="https://apify.com/yappman/contracts-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Public contracts</span><span class="badge live">Live</span></span><span class="mi-desc">Search UK public procurement notices. $0.005 a notice ($5.00 per 1,000) plus $0.005 a run.</span></a></li><li><a class="mi" href="https://apify.com/yappman/lei-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">LEI lookup</span><span class="badge live">Live</span></span><span class="mi-desc">Legal Entity Identifier records by LEI, name or registration status. $0.004 an entity ($4.00 per 1,000), no start fee.</span></a></li></ul></div></div><div class="panel-foot"><a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener">Free daily basket (Kaggle)</a><a href="/methodology/#delivery">Delivery &amp; formats</a></div></div></li>
+    <li class="nav-group"><button type="button" class="nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-indices" aria-haspopup="true">Indices<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-indices"><ul><li><a class="mi" href="/shelf-price-index/"><span class="mi-top"><span class="mi-name">UK Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/au-shelf-price-index/"><span class="mi-top"><span class="mi-name">AU Online Shelf-Price Index</span></span></a></li><li><span class="mi mi-off"><span class="mi-top"><span class="mi-name">City Hotel Prices</span><span class="badge soon">After week 42</span></span></span></li><li><a class="mi" href="/methodology/#indices"><span class="mi-top"><span class="mi-name">How the indices are built</span></span></a></li></ul></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-trust" aria-haspopup="true">Trust<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-trust"><ul><li><a class="mi" href="/data-quality/"><span class="mi-top"><span class="mi-name">Data quality</span></span></a></li><li><a class="mi" href="/methodology/"><span class="mi-top"><span class="mi-name">Methodology</span></span></a></li><li><a class="mi" href="/notices/"><span class="mi-top"><span class="mi-name">Notices (change log)</span></span></a></li><li><a class="mi" href="/press/#licence"><span class="mi-top"><span class="mi-name">Licence &amp; reuse</span></span></a></li><li><a class="mi" href="/#trust"><span class="mi-top"><span class="mi-name">Check schedule</span></span></a></li></ul></div></li>
+    <li class="nav-plain"><a href="/#pricing">Pricing</a></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-resources" aria-haspopup="true">Resources<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-resources"><ul><li><a class="mi" href="/demos/"><span class="mi-top"><span class="mi-name">Demos</span></span></a></li><li><a class="mi" href="https://github.com/yappmaniac/yappman-examples" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Examples (GitHub)</span></span></a></li><li><a class="mi" href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Kaggle dataset</span></span></a></li><li><a class="mi" href="https://yappman.substack.com/" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Newsletter (Substack)</span></span></a></li><li><a class="mi" href="https://dev.to/yappman" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Articles (dev.to)</span></span></a></li><li><a class="mi" href="/press/"><span class="mi-top"><span class="mi-name">Press</span></span></a></li></ul></div></li>
+    <li class="nav-cta"><a class="btn btn-primary" href="/#contact">Request a sample</a></li>
+  </ul>
+</nav>
+</div></div>
+<main id="main" tabindex="-1">
+<header>
+  <h1>UK Online Shelf-Price Index: data dictionary</h1>
+  <p class="sub">The fields of the public dataset <code>uk-shelf-price-index</code>. How the figures are computed is on the <a href="/shelf-price-index/method/">method page</a>.</p>
+</header>
+<h2 id="download">Download</h2>
+<p>The whole series in one file, every vintage: <a href="https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=csv&amp;clean=true&amp;attachment=true">CSV</a> or <a href="https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=json&amp;clean=true">JSON</a> (dataset id <code>AvRCWqFinCiNjx3sP</code>, readable by anyone with the id, no account needed). Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The data is in long format: one row per vintage, record type, retailer and class.</p>
+
+<h2 id="fields">Row fields</h2>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead>
+<tbody>
+  <tr><td><code>vintage</code></td><td>text</td><td>The ISO week the row describes, e.g. <code>2026-W42</code>. One vintage per week, never revised.</td></tr>
+  <tr><td><code>publishedAt</code></td><td>text</td><td>When the vintage was published (UTC timestamp).</td></tr>
+  <tr><td><code>revision</code></td><td>number</td><td>1 for every row so far. A correction would be a new, clearly marked revision.</td></tr>
+  <tr><td><code>recordType</code></td><td>text</td><td>What the row aggregates; see the record types below.</td></tr>
+  <tr><td><code>retailer</code></td><td>text</td><td>Retailer id, or empty for an all-retailer row.</td></tr>
+  <tr><td><code>class</code></td><td>text</td><td>Class id, or empty for a row over all classes.</td></tr>
+  <tr><td><code>level</code></td><td>number</td><td>Index level; the base week is 100.</td></tr>
+  <tr><td><code>weekOnWeekPct</code></td><td>number or empty</td><td>Change on the previous week, in percent.</td></tr>
+  <tr><td><code>fourWeekPct</code></td><td>number or empty</td><td>This week's level against the level four weeks earlier, in percent. Empty wherever that earlier level is missing.</td></tr>
+  <tr><td><code>matched</code></td><td>number or empty</td><td>Products matched in both weeks and used. Empty in the base week.</td></tr>
+  <tr><td><code>matchedShare</code></td><td>number or empty</td><td>Matched products as a share of last week's products (0 to 1). Empty in the base week.</td></tr>
+  <tr><td><code>status</code></td><td>text</td><td><code>ok</code>; <code>carried</code> (fewer than 20 used products, so last week's level is kept); <code>insufficient</code> (no used products, level kept); <code>base</code> (the base week).</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="record-types">Record types</h2>
+<ul>
+  <li><code>headline</code>: all four retailers, all classes.</li>
+  <li><code>retailer</code>: one retailer over all its matched products.</li>
+  <li><code>class</code> and <code>retailer_class</code>: a class across retailers, and a retailer within a class.</li>
+  <li><code>subtotal</code> and <code>retailer_subtotal</code>: food and soft drinks, the ten classes from <code>bread-cereals</code> to <code>soft-drinks</code> together. Not one of the 16 classes. In 2026-W39 and 2026-W40 this figure was published as <code>class</code> and <code>retailer_class</code> rows named <code>food-soft-drinks</code>.</li>
+  <li><code>meta</code>: one per vintage; see below.</li>
+</ul>
+
+<h2 id="values">Values</h2>
+<ul>
+  <li>Retailers: <code>tesco</code>, <code>sainsburys</code>, <code>asda</code>, <code>aldi</code>.</li>
+  <li>Classes (16): <code>bread-cereals</code>, <code>meat</code>, <code>fish</code>, <code>dairy-eggs</code>, <code>oils-fats</code>, <code>fruit</code>, <code>vegetables</code>, <code>sugar-confectionery</code>, <code>food-other</code>, <code>soft-drinks</code>, <code>alcohol</code>, <code>household</code>, <code>personal-care</code>, <code>baby</code>, <code>pet</code>, <code>other</code>.</li>
+</ul>
+
+<h2 id="meta">Meta item</h2>
+<p>Each vintage has one item with <code>recordType</code> <code>meta</code>, with these fields besides <code>vintage</code>, <code>publishedAt</code> and <code>revision</code>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+<tbody>
+  <tr><td><code>title</code></td><td>UK Online Shelf-Price Index</td></tr>
+  <tr><td><code>base</code></td><td>The ISO week at which this vintage's series equals 100 (<code>2026-W39</code> or <code>2026-W42</code>).</td></tr>
+  <tr><td><code>weighting</code></td><td>"equal retailer weights; equal product weights within a cell"</td></tr>
+  <tr><td><code>retailers</code></td><td>The retailers in the vintage.</td></tr>
+  <tr><td><code>classes</code></td><td>The classes in the vintage.</td></tr>
+  <tr><td><code>matchedTotal</code></td><td>Matched products across the retailers. Empty in the base week.</td></tr>
+  <tr><td><code>coverageWarnings</code></td><td>Retailers whose snapshot covered far fewer products than the week before.</td></tr>
+  <tr><td><code>headlineRetailers</code></td><td>Number of retailers in the headline.</td></tr>
+  <tr><td><code>methodologyUrl</code></td><td>The method page.</td></tr>
+  <tr><td><code>notCpi</code></td><td>Always true: this is not a consumer prices index.</td></tr>
+  <tr><td><code>measures</code></td><td>"posted online shelf prices at the named retailers, not prices paid"</td></tr>
+  <tr><td><code>license</code></td><td>CC BY 4.0</td></tr>
+  <tr><td><code>subtotals</code></td><td>The subtotal published with the vintage (<code>food-soft-drinks</code>).</td></tr>
+</tbody>
+</table></div>
+<p>Only aggregates are published: no product names, ids, URLs or prices.</p>
+
+<h2 id="cite">Cite</h2>
+<p>Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage [week], https://data.yappman.com/shelf-price-index/.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a></div>
+  </div>
+  <div class="foot-legal">
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p>Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

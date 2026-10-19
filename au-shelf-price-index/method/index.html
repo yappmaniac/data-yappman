@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AU Online Shelf-Price Index: how it is measured — Yappman Data</title>
+<meta name="description" content="How the AU Online Shelf-Price Index is built: matched products at Coles, Woolworths and Aldi Australia, a like-for-like Jevons headline, the ratio-3 rule, Coles coverage, cadence and changelog.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="AU Online Shelf-Price Index: how it is measured — Yappman Data">
+<meta property="og:description" content="How the AU Online Shelf-Price Index is built: matched products at Coles, Woolworths and Aldi Australia, a like-for-like Jevons headline, the ratio-3 rule, Coles coverage, cadence and changelog.">
+<meta property="og:url" content="https://data.yappman.com/au-shelf-price-index/method/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main" class="mainnav">
+  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <ul class="nav-list" id="site-menu">
+    <li class="nav-group mega"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-data" aria-haspopup="true">Data<span class="caret" aria-hidden="true"></span></button><div class="panel panel-mega" id="panel-data"><div class="panel-cols"><div class="panel-col"><h3 class="panel-h">Price data</h3><ul><li><a class="mi" href="https://apify.com/yappman/uk-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK supermarket prices</span><span class="badge live">Live</span></span><span class="mi-desc">Weekly catalogue and a daily 212-item basket.</span></a></li><li><a class="mi" href="https://apify.com/yappman/au-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">AU supermarket prices</span><span class="badge soon">Oct 2026</span></span><span class="mi-desc">Weekly catalogue from Coles, Woolworths and Aldi Australia.</span></a></li><li><a class="mi" href="https://apify.com/yappman/google-hotels-prices" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Google Hotels prices</span><span class="badge live">Live</span></span><span class="mi-desc">Search results and per-booking-site rates.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-property-listings" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK property listings</span><span class="badge live">Actor live</span></span><span class="mi-desc">Rightmove, Zoopla and OnTheMarket, with planning data.</span></a></li></ul></div><div class="panel-col"><h3 class="panel-h">Open data</h3><ul><li><a class="mi" href="https://apify.com/yappman/contracts-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Public contracts</span><span class="badge live">Live</span></span><span class="mi-desc">Search UK public procurement notices. $0.005 a notice ($5.00 per 1,000) plus $0.005 a run.</span></a></li><li><a class="mi" href="https://apify.com/yappman/lei-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">LEI lookup</span><span class="badge live">Live</span></span><span class="mi-desc">Legal Entity Identifier records by LEI, name or registration status. $0.004 an entity ($4.00 per 1,000), no start fee.</span></a></li></ul></div></div><div class="panel-foot"><a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener">Free daily basket (Kaggle)</a><a href="/methodology/#delivery">Delivery &amp; formats</a></div></div></li>
+    <li class="nav-group"><button type="button" class="nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-indices" aria-haspopup="true">Indices<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-indices"><ul><li><a class="mi" href="/shelf-price-index/"><span class="mi-top"><span class="mi-name">UK Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/au-shelf-price-index/"><span class="mi-top"><span class="mi-name">AU Online Shelf-Price Index</span></span></a></li><li><span class="mi mi-off"><span class="mi-top"><span class="mi-name">City Hotel Prices</span><span class="badge soon">After week 42</span></span></span></li><li><a class="mi" href="/methodology/#indices"><span class="mi-top"><span class="mi-name">How the indices are built</span></span></a></li></ul></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-trust" aria-haspopup="true">Trust<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-trust"><ul><li><a class="mi" href="/data-quality/"><span class="mi-top"><span class="mi-name">Data quality</span></span></a></li><li><a class="mi" href="/methodology/"><span class="mi-top"><span class="mi-name">Methodology</span></span></a></li><li><a class="mi" href="/notices/"><span class="mi-top"><span class="mi-name">Notices (change log)</span></span></a></li><li><a class="mi" href="/press/#licence"><span class="mi-top"><span class="mi-name">Licence &amp; reuse</span></span></a></li><li><a class="mi" href="/#trust"><span class="mi-top"><span class="mi-name">Check schedule</span></span></a></li></ul></div></li>
+    <li class="nav-plain"><a href="/#pricing">Pricing</a></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-resources" aria-haspopup="true">Resources<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-resources"><ul><li><a class="mi" href="/demos/"><span class="mi-top"><span class="mi-name">Demos</span></span></a></li><li><a class="mi" href="https://github.com/yappmaniac/yappman-examples" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Examples (GitHub)</span></span></a></li><li><a class="mi" href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Kaggle dataset</span></span></a></li><li><a class="mi" href="https://yappman.substack.com/" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Newsletter (Substack)</span></span></a></li><li><a class="mi" href="https://dev.to/yappman" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Articles (dev.to)</span></span></a></li><li><a class="mi" href="/press/"><span class="mi-top"><span class="mi-name">Press</span></span></a></li></ul></div></li>
+    <li class="nav-cta"><a class="btn btn-primary" href="/#contact">Request a sample</a></li>
+  </ul>
+</nav>
+</div></div>
+<main id="main" tabindex="-1">
+<header>
+  <h1>AU Online Shelf-Price Index: how it is measured</h1>
+  <p class="sub">The method behind the <a href="/au-shelf-price-index/">AU Online Shelf-Price Index</a>. Field definitions are in the <a href="/au-shelf-price-index/data-dictionary/">data dictionary</a>.</p>
+</header>
+<h2 id="measures">What it measures</h2>
+<div class="box notice">
+  <p>The index follows the posted online shelf prices of the same products at Coles, Woolworths and Aldi Australia from one week to the next. Prices are in Australian dollars (AUD). It is not what shoppers paid, it is not the ABS Consumer Price Index (CPI), it is not weighted by market share, and it is not a forecast. The price used is the shelf price shown to every visitor, including promotions that need no card.</p>
+  <p>Coles is a partial slice, not the whole Coles range. Read <a href="#coverage">Coverage and limits</a> before quoting a figure.</p>
+</div>
+
+
+<h2 id="method">Method</h2>
+<p>Each week's snapshots are compared with the week before. Snapshots are taken on Wednesdays, and weeks are ISO weeks. A product is matched by the retailer's own product id, and only products present in both weeks with a price in both are used. For each retailer and each broad product class, the weekly change is the geometric mean (a Jevons index) of the products' price ratios, so every product counts equally. There are no spending weights.</p>
+<p>The weekly changes are chained from a base of 100 in 2026-W41. A price that multiplies by 3 or more in one week (a rise of 200% or more), or falls to a third or less (a fall of 66.7% or more), is treated as a probable pricing error, or the correction of one, and left out of the index. When a product's pack size changes, the change in its price per unit is used, and if that cannot be worked out the product is left out that week. A cell (one retailer and class) with fewer than 20 used products that week keeps last week's level. Its status is <code>carried</code>, or <code>insufficient</code> when it has no used products at all.</p>
+<p>Classes come from keyword rules on the retailer's category names and product names, so they are approximate. There are 16 classes, the same as in the UK index. Products that match no rule fall in the class <code>other</code>, and the share of each retailer's products in <code>other</code> is checked every week. The rules are identified in each vintage's meta by <code>classRulesVersion</code>.</p>
+
+<h3>The headline</h3>
+<p>The headline is like-for-like, so that Coles, which is a partial slice, is compared with Woolworths and Aldi over the same kinds of product.</p>
+<ol>
+  <li>Each week, the headline covers only the classes where Coles has at least 20 used products that week. The class <code>other</code> is never one of them.</li>
+  <li>Each retailer gets a like-for-like figure over its own products in those classes.</li>
+  <li>The headline is the equal-weight geometric mean of the three retailers' like-for-like figures.</li>
+</ol>
+<p>The classes used are listed in each vintage's meta (<code>headlineClasses</code>) and can differ from week to week. Each retailer's figure over all its matched products is published beside the like-for-like figure. The all-retailer figure over all products is not published.</p>
+<p>A vintage is published only if Coles, Woolworths and Aldi all have valid snapshots in both weeks, and the headline covers at least 4 classes. A Woolworths or Aldi snapshot part must hold at least 80% of the same part's products the week before. If any of this fails, the vintage is not published. It waits for a rerun or for the next Monday. Nothing is ever imputed.</p>
+
+
+<h2 id="coverage">Coverage and limits</h2>
+<p>Only what the retailers show online is covered. A product relaunched under a new identifier drops out of the match, so its price change is missed. When a retailer's snapshot covers far fewer products than the week before, the release says so.</p>
+<ul>
+  <li><strong>Coles is a staples-first partial.</strong> Coles is read from its listing pages only, in priority order (dairy, eggs and fridge; bakery; meat and seafood; fruit and vegetables; pantry; then the rest), until Coles' per-session limit of about 80 requests. In 2026-W41 that was about 21% of the products in the Coles lists. The Coles figure is a figure for those staples, not for Coles overall. A Coles run counts only if it stopped at that limit (60 or more requests) and holds at least 90% of the products its plan expects (3,513 and 3,506 for the two runs). The Coles coverage of each week is in the meta (<code>colesProducts</code>, <code>colesRangeSharePct</code>, <code>colesRequests</code>).</li>
+  <li><strong>The Coles slice is promotion-heavy.</strong> In 2026-W41, 18% of its rows had a was-price and 24% had promotion text. The Coles figure therefore moves with weekly specials.</li>
+  <li><strong>Woolworths and Aldi</strong> are measured on their whole collected range.</li>
+  <li><strong>Woolworths</strong> is read for store 1101. A part of its snapshot counts only if every row is from that store; otherwise the part, and with it Woolworths for that week, is left out.</li>
+  <li><strong>Aldi</strong> is its regular range only. Special Buys are never in the index, and neither are Aldi's promotional and curated groups.</li>
+  <li>In 2026-W42 the share of products in the class <code>other</code> was 0.1% at Coles and 0.0% at Woolworths and Aldi.</li>
+  <li>Class rows can rest on fewer than three retailers, because Coles has cells only in the classes its slice reaches. The row's matched count and status show it.</li>
+  <li>The index is not a CPI, not prices paid, not market-share weighted and not a forecast.</li>
+</ul>
+
+
+<h2 id="release">Release and cadence</h2>
+<p>The index is published weekly on Mondays, after the Wednesday snapshot and the days in which a failed snapshot part can be rerun. The first vintage was published on 15 October 2026: it added the base vintage 2026-W41 (level 100) and the first change week 2026-W42 together. Each week is added to the public dataset <code>au-shelf-price-index</code> as a vintage and is never revised afterwards. A correction, if ever needed, would be a new revision that is clearly marked. The dataset's general access is "Anyone with ID can read". The licence is <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+<p>Download the full series: <a href="https://api.apify.com/v2/datasets/FvrQZaMOARuesHgPp/items?format=csv&amp;clean=true&amp;attachment=true">CSV</a> or <a href="https://api.apify.com/v2/datasets/FvrQZaMOARuesHgPp/items?format=json&amp;clean=true">JSON</a>.</p>
+
+<h2 id="changelog">Changelog</h2>
+<ul>
+  <li><strong>15 October 2026:</strong> first vintage: the base 2026-W41 (every level 100, status <code>base</code>) and the first change week 2026-W42, published together.</li>
+  <li><strong>2026-W42:</strong> a dated note on Personal care and promotions is on the <a href="/au-shelf-price-index/#note-w42">index page</a>. The published values stay.</li>
+</ul>
+<p>Announced changes are posted on the <a href="/notices/">notices page</a> before they ship.</p>
+
+<h2 id="cite">Cite</h2>
+<p>Yappman Data, AU Online Shelf-Price Index, CC BY 4.0, vintage [week], https://data.yappman.com/au-shelf-price-index/. The <a href="/au-shelf-price-index/">index page</a> fills in the latest vintage.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a></div>
+  </div>
+  <div class="foot-legal">
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p>Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>
