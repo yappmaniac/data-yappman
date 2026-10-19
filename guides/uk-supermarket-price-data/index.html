@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where to get UK supermarket price data: free and paid, compared — Yappman Data</title>
+<meta name="description" content="UK supermarket price data compared: ONS statistics, the Warwick and LSE research data, a Kaggle time series, the Which? and Trolley trackers, and our weekly CC BY 4.0 index. What each covers and whether you can download it.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="Where to get UK supermarket price data: free and paid, compared — Yappman Data">
+<meta property="og:description" content="UK supermarket price data compared: ONS statistics, the Warwick and LSE research data, a Kaggle time series, the Which? and Trolley trackers, and our weekly CC BY 4.0 index. What each covers and whether you can download it.">
+<meta property="og:url" content="https://data.yappman.com/guides/uk-supermarket-price-data/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://data.yappman.com/guides/uk-supermarket-price-data/">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main" class="mainnav">
+  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <ul class="nav-list" id="site-menu">
+    <li class="nav-group mega"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-data" aria-haspopup="true">Data<span class="caret" aria-hidden="true"></span></button><div class="panel panel-mega" id="panel-data"><div class="panel-cols"><div class="panel-col"><h3 class="panel-h">Price data</h3><ul><li><a class="mi" href="https://apify.com/yappman/uk-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK supermarket prices</span><span class="badge live">Live</span></span><span class="mi-desc">Weekly catalogue and a daily 212-item basket.</span></a></li><li><a class="mi" href="https://apify.com/yappman/au-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">AU supermarket prices</span><span class="badge soon">Oct 2026</span></span><span class="mi-desc">Weekly catalogue from Coles, Woolworths and Aldi Australia.</span></a></li><li><a class="mi" href="https://apify.com/yappman/google-hotels-prices" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Google Hotels prices</span><span class="badge live">Live</span></span><span class="mi-desc">Search results and per-booking-site rates.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-property-listings" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK property listings</span><span class="badge live">Actor live</span></span><span class="mi-desc">Rightmove, Zoopla and OnTheMarket, with planning data.</span></a></li></ul></div><div class="panel-col"><h3 class="panel-h">Open data</h3><ul><li><a class="mi" href="https://apify.com/yappman/contracts-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Public contracts</span><span class="badge live">Live</span></span><span class="mi-desc">Search UK public procurement notices. $0.005 a notice ($5.00 per 1,000) plus $0.005 a run.</span></a></li><li><a class="mi" href="https://apify.com/yappman/lei-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">LEI lookup</span><span class="badge live">Live</span></span><span class="mi-desc">Legal Entity Identifier records by LEI, name or registration status. $0.004 an entity ($4.00 per 1,000), no start fee.</span></a></li></ul></div></div><div class="panel-foot"><a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener">Free basket snapshot, monthly (Kaggle)</a><a href="/methodology/#delivery">Delivery &amp; formats</a></div></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-indices" aria-haspopup="true">Indices<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-indices"><ul><li><a class="mi" href="/shelf-price-index/"><span class="mi-top"><span class="mi-name">UK Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/au-shelf-price-index/"><span class="mi-top"><span class="mi-name">AU Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/methodology/#indices"><span class="mi-top"><span class="mi-name">How the indices are built</span></span></a></li></ul></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-trust" aria-haspopup="true">Trust<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-trust"><ul><li><a class="mi" href="/data-quality/"><span class="mi-top"><span class="mi-name">Data quality</span></span></a></li><li><a class="mi" href="/methodology/"><span class="mi-top"><span class="mi-name">Methodology</span></span></a></li><li><a class="mi" href="/notices/"><span class="mi-top"><span class="mi-name">Notices (change log)</span></span></a></li><li><a class="mi" href="/press/#licence"><span class="mi-top"><span class="mi-name">Licence &amp; reuse</span></span></a></li><li><a class="mi" href="/#trust"><span class="mi-top"><span class="mi-name">Check schedule</span></span></a></li></ul></div></li>
+    <li class="nav-plain"><a href="/#pricing">Pricing</a></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-resources" aria-haspopup="true">Resources<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-resources"><ul><li><a class="mi" href="/demos/"><span class="mi-top"><span class="mi-name">Demos</span></span></a></li><li><a class="mi" href="https://github.com/yappmaniac/yappman-examples" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Examples (GitHub)</span></span></a></li><li><a class="mi" href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Kaggle dataset</span></span></a></li><li><a class="mi" href="https://yappman.substack.com/" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Newsletter (Substack)</span></span></a></li><li><a class="mi" href="https://dev.to/yappman" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Articles (dev.to)</span></span></a></li><li><a class="mi" href="/press/"><span class="mi-top"><span class="mi-name">Press</span></span></a></li></ul></div></li>
+    <li class="nav-cta"><a class="btn btn-primary" href="/#contact">Request a sample</a></li>
+  </ul>
+</nav>
+</div></div>
+<main id="main" tabindex="-1">
+<header>
+  <h1>Where to get UK supermarket price data: free and paid, compared</h1>
+  <p class="sub">What each source measures, how fresh it is, and whether you can download and reuse it, as stated on each publisher's page. Checked on 19 October 2026.</p>
+</header>
+
+<p>If you need UK grocery prices for research, a story or a product, the options split into official statistics, research datasets, trackers with no download on their pages, and commercial data. They differ in what they measure (price change or price levels, shelf prices or prices paid), how fresh they are, and whether you can download and reuse them.</p>
+
+<h2 id="ons">Official statistics: ONS</h2>
+<p>The Office for National Statistics publishes the consumer prices index, including the annual rate for food and non-alcoholic beverages (<a href="https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7g8/mm23">series D7G8</a>), monthly, with CSV and XLS downloads. Its <a href="https://www.ons.gov.uk/economy/inflationandpriceindices/articles/shoppingpricescomparisontool/latest">Shopping prices comparison tool</a> gives average prices for more than 650 items from the CPI basket, from January 2020, with a "download all data" button in the tool; ONS describes those averages as official statistics in development. Both are published under the Open Government Licence v3.0.</p>
+<p><strong>Best for:</strong> the official measure of food inflation, monthly. <strong>Not for:</strong> individual supermarkets or individual products.</p>
+
+<h2 id="research">Research datasets</h2>
+<p><strong>University of Warwick, "Price dynamics in food retailing in Great Britain".</strong> Weekly prices for 370 products from 1 October 2009 to 31 March 2012, with the data collection method recorded as manual collection from weekly website entries, and the supermarkets anonymised. The <a href="https://reshare.ukdataservice.ac.uk/850626">UK Data Service record</a> lists it for registered users only (safeguarded data) under the UK Data Service End User Licence; the <a href="https://wrap.warwick.ac.uk/134726">Warwick repository record</a> describes it as open access under a Creative Commons licence. Check the terms of the copy you use.</p>
+<p><strong>LSE (Richard Davies, Josh Hellings and Finn McEvoy).</strong> A <a href="https://sticerd.lse.ac.uk/_new/events/event/?index=9306">February 2024 seminar listing</a> describes 19 million online grocery prices collected daily since July 2023 from retailers covering over 70% of UK grocery spending, and a later <a href="https://richarddavies.io/autocpi/">page by the same authors (Richard Davies, Josh Hellings and Finn McEvoy)</a> describes 25 million prices from seven supermarkets, July 2023 to April 2024. We found no public release of the underlying prices.</p>
+<p><strong>Kaggle, <a href="https://www.kaggle.com/datasets/declanmcalinden/time-series-uk-supermarket-data">&ldquo;Time Series UK Supermarket Data&rdquo;</a>.</strong> Web-scraped prices from Aldi, Asda, Morrisons, Tesco and Sainsbury's from 9 January 2024, licensed Apache 2.0. Its creator says the scraper is not perfectly reliable, that the data is only available for days on which it was run, that Morrisons data quality was variable until 27 January 2024, and that products show "the lowest price (Nectar, Clubcard etc)" with multi-buy discounts excluded.</p>
+
+<h2 id="trackers">Trackers with no download on their pages</h2>
+<p><strong><a href="https://www.which.co.uk/reviews/supermarkets/article/food-price-inflation-tracker-aU2oV0A46tu3">Which? supermarket food and drink inflation tracker</a>.</strong> Annual inflation at eight supermarkets (Aldi, Asda, Lidl, Morrisons, Ocado, Sainsbury's, Tesco and Waitrose) across 20 categories. Which? says it covers between 23,000 and 28,000 products a month, weighted by supermarket market share and the sales volume of each category, including discounts but not multibuys or loyalty-card offers, and says it moved to once every three months from December 2023. The page offers no data download.</p>
+<p><strong><a href="https://www.trolley.co.uk/grocery-price-index/">Trolley.co.uk Grocery Price Index</a>.</strong> Trolley says its index connects the activity of 850,000+ UK shoppers with its grocery price database, monitoring 47,711 products that are typically purchased at least once a month, and runs from May 2020. The page offers no download or API; it points data enquiries to a contact form.</p>
+
+<h2 id="ours">Our data: Yappman Data</h2>
+<p><strong><a href="/shelf-price-index/">UK Online Shelf-Price Index</a> (free, CC BY 4.0).</strong> A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi: the same products matched week on week by the retailer's own product id, a geometric mean (Jevons) of their price ratios with equal weight to each product within a retailer-class cell, equal weight to each retailer and no spending weights, by retailer and by 16 product classes, with matched counts on every row. The weekly snapshots behind it (kept private; only the aggregates are published) hold about 73,000 UK rows a week from the four retailers, one row per product per retailer; that is a snapshot size, not a fixed figure. The index has been published weekly since 5 October 2026, when the base week and the first changing week were published together. Published weeks are not revised, and a missing week restarts the index at 100 with a notice: week 41 was skipped (see the <a href="/notices/w41-skipped/">notice</a>). The whole series downloads as one CSV or JSON file. It measures asking prices online, not prices paid, and it is not a CPI. See the <a href="/shelf-price-index/method/">method</a> and the <a href="/shelf-price-index/data-dictionary/">data dictionary</a>.</p>
+<p><strong><a href="/au-shelf-price-index/">AU Online Shelf-Price Index</a> (free, CC BY 4.0).</strong> The same approach for Coles, Woolworths and Aldi Australia, weekly since 15 October 2026 (<a href="/au-shelf-price-index/method/">method</a>).</p>
+<p><strong>Product-level data.</strong> The rows behind the index come from our UK Supermarket Price Scraper on the Apify Store, and are also available as an annual licence; see <a href="/#pricing">pricing</a>. A free monthly snapshot of the daily 212-item basket is on Kaggle (a sample, not the full series).</p>
+
+<h2 id="compare">Comparison</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Source</th><th>Measures</th><th>Period</th><th>Frequency</th><th>Download</th><th>Licence</th></tr></thead>
+<tbody>
+  <tr><td>ONS CPI food (D7G8)</td><td>Official price change</td><td>Ongoing</td><td>Monthly</td><td>CSV, XLS</td><td>OGL v3.0</td></tr>
+  <tr><td>ONS Shopping prices tool</td><td>Average prices, 650+ items</td><td>From Jan 2020</td><td>Monthly</td><td>In the tool</td><td>OGL v3.0</td></tr>
+  <tr><td>Warwick</td><td>Weekly prices, 370 products, anonymised stores</td><td>Oct 2009 to Mar 2012</td><td>Weekly</td><td>UK Data Service, after registration</td><td>Check the copy (see above)</td></tr>
+  <tr><td>LSE (Davies et al.)</td><td>Online prices, 19m to 25m (per LSE and the authors)</td><td>From Jul 2023</td><td>Daily (per LSE listing)</td><td>None found</td><td>None found</td></tr>
+  <tr><td>Kaggle time series</td><td>Scraped prices, 5 retailers</td><td>From Jan 2024</td><td>Daily, most days (per its creator)</td><td>Kaggle</td><td>Apache 2.0</td></tr>
+  <tr><td>Which? tracker</td><td>Weighted inflation, 8 supermarkets</td><td>Ongoing</td><td>Every three months (per Which?)</td><td>None found on its page</td><td>Not stated</td></tr>
+  <tr><td>Trolley index</td><td>Index from its own database</td><td>From May 2020</td><td>Not stated</td><td>None found on its page</td><td>Not stated</td></tr>
+  <tr><td>Yappman UK Shelf-Price Index</td><td>Matched-product shelf-price change, 4 retailers</td><td>Data from late Sep 2026; published since 5 Oct 2026</td><td>Weekly</td><td>CSV, JSON</td><td>CC BY 4.0</td></tr>
+</tbody>
+</table></div>
+
+<h2 id="which">Which to use</h2>
+<ul>
+  <li>The official rate of food inflation: ONS.</li>
+  <li>Supermarket by supermarket, week by week, in a file you can reuse and cite: the Yappman Data index, with its method page to check what it does and does not measure.</li>
+  <li>Historical research on 2009 to 2012: the Warwick data.</li>
+  <li>A weighted headline on supermarket inflation: the Which? tracker (to read; no download on its page).</li>
+</ul>
+
+<p class="meta">The third-party facts on this page are taken from each publisher's own page, as read on 19 October 2026; pages change, so check them before relying on a figure. Yappman Data is not affiliated with, endorsed by or sponsored by any of the organisations or companies named on this page, including the supermarkets.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Prices from public websites, never revised.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a></div>
+  </div>
+  <div class="foot-legal">
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p>Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>
