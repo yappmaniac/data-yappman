@@ -57,7 +57,7 @@
 </ul>
 
 <h2 id="base">Base weeks and the restart</h2>
-<p>The weekly changes are chained from a base of 100. The first series has its base at ISO week 2026-W39 and covers weeks 39 and 40. The collection of week 41 (11 October 2026) did not complete, so week 41 is skipped and the index restarts with a new base of 100 at 2026-W42; the first weekly change of the new series is for week 43 (<a href="/notices/w41-skipped/">notice</a>). The earlier levels stay in the dataset as a closed series, there is no level for week 41, and four-week changes are empty across the gap. Each vintage's meta item names its <code>base</code>.</p>
+<p>The weekly changes are chained from a base of 100. The first series has its base at ISO week 2026-W39 and covers weeks 39 and 40. The collection of week 41 (11 October 2026) did not complete, so week 41 is skipped and the index will restart with a new base of 100 at 2026-W42, which has not been published yet (the latest published week is 2026-W40); the first weekly change of the new series is for week 43 (<a href="/notices/w41-skipped/">notice</a>). The earlier levels stay in the dataset as a closed series, there is no level for week 41, and four-week changes are empty across the gap. Each vintage's meta item names its <code>base</code>.</p>
 <p>There is no year-on-year figure, because the series starts in 2026.</p>
 
 <h2 id="coverage">Coverage and limits</h2>
@@ -71,13 +71,13 @@
 </ul>
 
 <h2 id="release">Release and cadence</h2>
-<p>Published every Monday at 07:00 UK time. The first vintage was published on Monday 5 October 2026 (the 2026-W40 figures, with 2026-W39 as the base). Each week is added to the public dataset <code>uk-shelf-price-index</code> as a vintage and is never revised afterwards; a correction, if ever needed, would be a new revision that is clearly marked. The licence is <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+<p>Updated weekly, normally on Monday. The first vintage was published on Monday 5 October 2026 (the 2026-W40 figures, with 2026-W39 as the base). Each week is added to the public dataset <code>uk-shelf-price-index</code> as a vintage and is never revised afterwards; a correction, if ever needed, would be a new revision that is clearly marked. The licence is <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 <p>Download the full series: <a href="https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=csv&amp;clean=true&amp;attachment=true">CSV</a> or <a href="https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=json&amp;clean=true">JSON</a>. Only aggregates are published: no product names, ids, URLs or prices.</p>
 
 <h2 id="changelog">Changelog</h2>
 <ul>
   <li><strong>5 October 2026:</strong> first vintage, 2026-W40, with the 2026-W39 base rows (every level 100, status <code>base</code>).</li>
-  <li><strong>12 October 2026:</strong> week 41 skipped; the index restarts with a new base at 2026-W42 (<a href="/notices/w41-skipped/">notice</a>).</li>
+  <li><strong>12 October 2026:</strong> week 41 skipped; the index will restart with a new base at 2026-W42, not yet published (<a href="/notices/w41-skipped/">notice</a>).</li>
   <li><strong>After 2026-W40:</strong> the combined "food and soft drinks" figure, which appeared among the class rows as <code>food-soft-drinks</code> in 2026-W39 and 2026-W40, is published as a subtotal (record types <code>subtotal</code> and <code>retailer_subtotal</code>). The 16 classes and their rules are unchanged, and W39 and W40 stay as published.</li>
 </ul>
 <p>Announced changes are posted on the <a href="/notices/">notices page</a> before they ship. Announced changes to the UK Supermarket Price Scraper, which collects the snapshots: <a href="/notices/matchkey/">matchKey changes</a> and the <a href="/notices/default-retailers/">default retailers change</a>.</p>
