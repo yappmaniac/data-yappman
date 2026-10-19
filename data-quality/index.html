@@ -44,6 +44,7 @@
 
 <h2>How we measure</h2>
 <p>For UK grocery, barcode coverage, completeness and match accuracy are counted from the latest complete weekly snapshot (one row per product per retailer; week and date stated with each figure); run success is read from the canary runs' metadata. For the other Actors, barcode coverage is the share of rows in the sample stated with each figure that carry a barcode (EAN/GTIN), and completeness is the share of those rows that have a value for the field. Run success rate is the share of scheduled canary runs that succeeded over the stated number of days; a canary is a small smoke test, so it shows that a run can reach its sources, not that every field is complete. Where we checked matches by hand, the sample size and method are stated with the figure. Every figure comes from the snapshot files, run metadata, canaries or hand checks and is dated. None is estimated, and where we have no measurement the row is left out.</p>
+<p>The weekly indices built from the grocery snapshots have their own method pages: <a href="/shelf-price-index/method/">UK</a> and <a href="/au-shelf-price-index/method/">AU</a>. How the data is collected is in the <a href="/methodology/">methodology</a>.</p>
 <p>Freshness is not measured: run success is the platform status, and each run reads the source's live pages at its start time (scrapedAt); a source serving a stale page to everyone would not be detected.</p>
 </div>
 
@@ -225,7 +226,7 @@
 </table></div>
 
   <h3>Sold-price matching</h3>
-  <p>Land Registry sale matched to Rightmove's sold record (exact postcode, date and price): 143 of 149 (96%), June–July 2026 sales.</p>
+  <p>Land Registry sale matched to Rightmove's sold record (exact postcode, date and price): 143 of 149 (96%), June–July 2026 sales. Sold-prices mode changes in version 0.3: see the <a href="/notices/sold-prices-0-3/">notice</a>.</p>
 
   <h3>Run success rate</h3>
   <p class="meta">26 September to 13 October 2026: 60 scheduled runs of four tasks, and all 60 succeeded. Counting a run as successful only if every source returned results, 59 of 60 succeeded: on 9 October Zoopla was blocked. The OnTheMarket canary runs from 6 October. Rightmove's own canary alternates days from 13 to 23 October, while the daily 03:15 run covers it.</p>
