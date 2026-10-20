@@ -130,16 +130,22 @@ function stamp(opts) {
 // Writes after validation: temporary files first, then renames; rolls back the renamed files if a rename fails.
 function commit(out, orig) {
   const tmp = [];
+  const cleanup = () => { const left = []; for (const [, t] of tmp) { try { if (fs.existsSync(t)) fs.unlinkSync(t); } catch { left.push(t); } } return left; };
   try {
-    for (const [p, s] of out) { const t = p + ".stamp-tmp"; fs.writeFileSync(t, s); tmp.push([p, t]); }
-  } catch (e) { for (const [, t] of tmp) { try { fs.unlinkSync(t); } catch {} } throw new Error("could not write temporary files; nothing was changed (" + e.message + ")"); }
+    for (const [p, s] of out) { const t = p + ".stamp-tmp"; tmp.push([p, t]); fs.writeFileSync(t, s); }
+  } catch (e) {
+    const left = cleanup();
+    throw new Error("could not write temporary files; nothing was changed (" + e.message + ")" + (left.length ? "; could not remove: " + left.join(", ") : "") + "; run git status and delete any *.stamp-tmp file before git add");
+  }
   const done = [];
   try {
     for (const [p, t] of tmp) { fs.renameSync(t, p); done.push(p); }
   } catch (e) {
-    for (const p of done) { try { fs.writeFileSync(p, orig.get(p)); } catch {} }
-    for (const [, t] of tmp) { try { fs.unlinkSync(t); } catch {} }
-    throw new Error("could not replace a file; the earlier ones were restored (" + e.message + "); check git status");
+    const notRestored = [];
+    for (const p of done) { try { fs.writeFileSync(p, orig.get(p)); } catch { notRestored.push(p); } }
+    const left = cleanup();
+    throw new Error("could not replace a file (" + e.message + "); " + (done.length ? (notRestored.length ? "COULD NOT RESTORE: " + notRestored.join(", ") + "; the others were restored" : "the " + done.length + " earlier file(s) were restored") : "no file had been replaced")
+      + (left.length ? "; could not remove: " + left.join(", ") : "") + "; run git status and delete any *.stamp-tmp file before git add");
   }
 }
 

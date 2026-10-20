@@ -68,9 +68,19 @@ After each publish, once the public dataset holds the vintage and the files are 
     node docs/release/stamp-latest.js --uk <public vintage file> --confirm-uk <vintage> --au <file> --confirm-au <vintage>
     node docs/release/stamp-latest.js --check
 
+(The FIRST run needs both halves. After that the AU half, or the UK half, is optional: stamp only the index that was published.)
+
 The file is the {"meta", "rows"} public vintage file the publish tool writes; --confirm-* is your assertion that the dataset holds it (the publish tool also writes these files in a dry run, so the file alone proves nothing). The percent fields in the file are already in percent (core.py: "(relative - 1) * 100") and are printed as the page script does (level one decimal, changes two decimals). The script refuses unless the vintage is W01-W53 and matches, is not older than the stamped one, has a meta item and exactly one ok or base headline, and the page has exactly one JSON-LD block that is the Dataset object. It writes nothing unless everything checks (it writes temporary files and renames them, restoring the renamed ones if a rename fails; tests: node --test docs/release/stamp-latest.test.js). It sets the block text, the JSON-LD dateModified (the vintage's publishedAt date) and the sitemap lastmod (the --date, default today) of the stamped page(s) only; a re-run bumps lastmod, which is harmless. Run it AFTER uk-w42-revert.js in the W42 push, and commit the result in the same push. Never stamp a week that is held, skipped or not yet in the dataset.
 
 Behaviour to know about:
 - The page script removes the stamped block when live data renders. If load() fails before that line (a fetch error), the stamped block stays next to the error message: intended fallback.
 - The <noscript> rule that hides the "Loading the latest week…" line is in the <head> (valid HTML). Text-only crawlers that ignore noscript styling still see "Loading the latest week…" followed by the stamped sentence.
 - The first stamp re-serialises the JSON-LD block with two-space indentation and adds dateModified; on the real pages that was exactly one added comma and the dateModified line.
+
+Conservative differences from the page: for a value that rounds to zero the stamp prints "0.00%" where the page prints "+0.00%" or "-0.00%"; and the stamp refuses an ok week whose weekOnWeekPct is null (the page would show a dash). If a restore or a temporary-file removal fails the script names the files and tells you to run git status and delete any *.stamp-tmp file before git add (a stray one would be committed by git add -A).
+
+PRECONDITION before the real run (record the result in the push report): a dry run on a scratch COPY of the repo, using the real vintage files (UK W43 and AU W42 or whatever is being published), no dataset reads:
+
+    cp -r <repo> /scratch/copy ; node docs/release/stamp-latest.js --root /scratch/copy --uk <UK file> --confirm-uk <vintage> --au <AU file> --confirm-au <vintage> --date <today>
+
+It must succeed (the AU file must have exactly one recordType "headline" row per vintage, else it fails "found N"; the real meta.title, meta.license, meta.revision and publishedAt formats must pass the strict checks), and git diff in the copy must show on each page only the stamped sentence, one added comma on the measurementTechnique line and the added dateModified line, plus the sitemap lastmod. As of 20 Oct this dry run has NOT been done: the real vintage files were not available to the Data Website session.

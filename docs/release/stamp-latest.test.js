@@ -142,16 +142,44 @@ test("atomic: if the second market fails, nothing is written for the first", () 
   assert.strictEqual(read(root, "sitemap.xml"), SM);
 });
 
-test("a failing rename restores the files already replaced and leaves no temporary file", () => {
-  const root = setup(); const uk = file(root, "uk.json", ukData("2026-W43"));
-  const r = run(root, { uk, "confirm-uk": "2026-W43" });
+function renameFailsOn(failOn, mutateRestore) {
+  const root = setup(); const uk = file(root, "uk.json", ukData("2026-W43")); const au = file(root, "au.json", auData("2026-W42"));
+  const r = run(root, { uk, "confirm-uk": "2026-W43", au, "confirm-au": "2026-W42" });
   const files = [...r.out.keys()];
   const before = files.map(p => fs.readFileSync(p, "utf8"));
-  const real = fs.renameSync; let n = 0;
-  fs.renameSync = (a, b) => { if (++n === 2) throw new Error("simulated rename failure"); return real(a, b); };
-  try { assert.throws(() => commit(r.out, r.orig), /earlier ones were restored/); } finally { fs.renameSync = real; }
-  assert.deepStrictEqual(files.map(p => fs.readFileSync(p, "utf8")), before);
-  assert.deepStrictEqual(fs.readdirSync(path.join(root, "shelf-price-index")).filter(x => x.endsWith(".stamp-tmp")), []);
+  const real = fs.renameSync, realWrite = fs.writeFileSync; let n = 0, err;
+  fs.renameSync = (a, b) => { if (++n === failOn) throw new Error("simulated rename failure"); return real(a, b); };
+  if (mutateRestore) fs.writeFileSync = (p, ...rest) => { if (String(p).endsWith(mutateRestore) && !String(p).endsWith(".stamp-tmp")) throw new Error("simulated restore failure"); return realWrite(p, ...rest); };
+  try { commit(r.out, r.orig); } catch (e) { err = e; } finally { fs.renameSync = real; fs.writeFileSync = realWrite; }
+  const leftovers = files.map(p => p + ".stamp-tmp").filter(t => fs.existsSync(t));
+  return { err, files, before, after: files.map(p => fs.readFileSync(p, "utf8")), leftovers };
+}
+
+test("a failing rename on the FIRST file changes nothing and leaves no temporary file", () => {
+  const x = renameFailsOn(1);
+  assert.match(x.err.message, /no file had been replaced/);
+  assert.match(x.err.message, /git status/);
+  assert.deepStrictEqual(x.after, x.before); assert.deepStrictEqual(x.leftovers, []);
+});
+
+test("a failing rename on a LATER file restores the earlier ones and leaves no temporary file", () => {
+  const x = renameFailsOn(2);
+  assert.match(x.err.message, /earlier file.s. were restored/);
+  assert.deepStrictEqual(x.after, x.before); assert.deepStrictEqual(x.leftovers, []);
+});
+
+test("a restore that fails is named, not hidden", () => {
+  const x = renameFailsOn(3, "shelf-price-index" + path.sep + "index.html");
+  assert.match(x.err.message, /COULD NOT RESTORE: .*shelf-price-index/);
+});
+
+test("a temporary-write failure removes the partial temporary file and says to check git status", () => {
+  const root = setup(); const r = run(root, { uk: file(root, "uk.json", ukData("2026-W43")), "confirm-uk": "2026-W43" });
+  const files = [...r.out.keys()]; const realWrite = fs.writeFileSync; let n = 0; let err;
+  fs.writeFileSync = (p, ...rest) => { if (String(p).endsWith(".stamp-tmp")) { realWrite(p, "partial"); if (++n === 2) throw new Error("simulated disk error"); return; } return realWrite(p, ...rest); };
+  try { commit(r.out, r.orig); } catch (e) { err = e; } finally { fs.writeFileSync = realWrite; }
+  assert.match(err.message, /nothing was changed/); assert.match(err.message, /git status/);
+  assert.deepStrictEqual(files.map(p => p + ".stamp-tmp").filter(t => fs.existsSync(t)), []);
 });
 
 test("CRLF input is accepted and a stamped file is written with LF", () => {
