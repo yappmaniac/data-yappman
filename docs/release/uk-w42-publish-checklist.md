@@ -49,9 +49,9 @@ A case-insensitive search of the non-docs HTML must return no hits for: "not pub
 "has not been published", "will restart", "will therefore restart", "latest published week", "latest week 2026-W40",
 "restart at W42 pending", "restarts at", "restarts with", except the two code strings in the page script named above.
 
-    grep -rniE "not published yet|not yet published|has not been published|will restart|will therefore restart|latest published week|latest week 2026-W40|restart at W42 pending|restarts at|restarts with" --include=*.html --exclude-dir=_held --exclude-dir=docs . | grep -v "static-latest"
+    grep -rniE "not published yet|not yet published|has not been published|will restart|will therefore restart|latest published week|latest week 2026-W40|restart at W42 pending|restarts at|restarts with" --include=*.html --exclude-dir=_held --exclude-dir=docs . | grep -v 'data-vintage='
 
-(The stamped block of the weekly figures says "Latest published week: <week>" and is excluded by the last grep; check its week by eye instead.)
+(The stamped block says "<index>: latest published week <week>" and carries data-vintage, so the last grep hides only that line; check its week by eye. In a pipeline grep -v exits 1 when nothing remains, which here means success.)
 
 ## After the publish
 
@@ -59,11 +59,18 @@ A case-insensitive search of the non-docs HTML must return no hits for: "not pub
 - Anonymous download of the UK and AU CSV and JSON links works. The setting "anyone with the id can read" is as reported by the UK and AU sessions; it has not been tested without an account, and the site wording ("readable by anyone with the id") describes the setting.
 - The next AU vintage: the dated AU W42 sentences stay accurate; add a dated note for that vintage only if the promotion-swing warning fires, rather than editing them.
 
-## Weekly stamp of the latest figures (when feat/static-latest has shipped)
+## Weekly stamp of the latest figures (feat/static-latest)
 
-After each publish, once the public dataset holds the vintage and the files are verified, run (bash, repo root):
+Ship order. The branch puts a placeholder ("The latest published figures are added here when each week is published.") on the UK and AU index pages. Do NOT merge it to main on its own: ship it TOGETHER with the first stamp in the W42 push, so the placeholder is never live. `--check` fails until BOTH pages are stamped, so the FIRST run must pass both --uk and --au (UK: the newest vintage file, W43; AU: its newest vintage file). Run `--check` only on the push branch, as a gate before pushing (nothing runs it automatically). After that, each publish stamps whichever index was published (one or both).
 
-    node docs/release/stamp-latest.js --uk <public vintage file> --confirm-uk <vintage> [--au <file> --confirm-au <vintage>]
+After each publish, once the public dataset holds the vintage and the files are verified, run in bash from the repo root:
+
+    node docs/release/stamp-latest.js --uk <public vintage file> --confirm-uk <vintage> --au <file> --confirm-au <vintage>
     node docs/release/stamp-latest.js --check
 
-The file is the {"meta", "rows"} public vintage file the publish tool writes; --confirm-* is your assertion that the dataset holds it (the publish tool also writes these files in a dry run, so the file alone proves nothing). The script refuses unless the vintage matches, is not older than the stamped one, has a meta item and an ok or base headline, and writes nothing unless everything checks (tests: node --test docs/release/stamp-latest.test.js). It sets the block text, the JSON-LD dateModified and the sitemap lastmod of the stamped page(s) only. Run it after uk-w42-revert.js in the W42 push, with the newest vintage file (W43), and commit the result in the same push. Never stamp a week that is held, skipped or not yet in the dataset.
+The file is the {"meta", "rows"} public vintage file the publish tool writes; --confirm-* is your assertion that the dataset holds it (the publish tool also writes these files in a dry run, so the file alone proves nothing). The percent fields in the file are already in percent (core.py: "(relative - 1) * 100") and are printed as the page script does (level one decimal, changes two decimals). The script refuses unless the vintage is W01-W53 and matches, is not older than the stamped one, has a meta item and exactly one ok or base headline, and the page has exactly one JSON-LD block that is the Dataset object. It writes nothing unless everything checks (it writes temporary files and renames them, restoring the renamed ones if a rename fails; tests: node --test docs/release/stamp-latest.test.js). It sets the block text, the JSON-LD dateModified (the vintage's publishedAt date) and the sitemap lastmod (the --date, default today) of the stamped page(s) only; a re-run bumps lastmod, which is harmless. Run it AFTER uk-w42-revert.js in the W42 push, and commit the result in the same push. Never stamp a week that is held, skipped or not yet in the dataset.
+
+Behaviour to know about:
+- The page script removes the stamped block when live data renders. If load() fails before that line (a fetch error), the stamped block stays next to the error message: intended fallback.
+- The <noscript> rule that hides the "Loading the latest week…" line is in the <head> (valid HTML). Text-only crawlers that ignore noscript styling still see "Loading the latest week…" followed by the stamped sentence.
+- The first stamp re-serialises the JSON-LD block with two-space indentation and adds dateModified; on the real pages that was exactly one added comma and the dateModified line.
