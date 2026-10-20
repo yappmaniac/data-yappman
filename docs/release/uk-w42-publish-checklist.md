@@ -49,10 +49,21 @@ A case-insensitive search of the non-docs HTML must return no hits for: "not pub
 "has not been published", "will restart", "will therefore restart", "latest published week", "latest week 2026-W40",
 "restart at W42 pending", "restarts at", "restarts with", except the two code strings in the page script named above.
 
-    grep -rniE "not published yet|not yet published|has not been published|will restart|will therefore restart|latest published week|latest week 2026-W40|restart at W42 pending|restarts at|restarts with" --include=*.html --exclude-dir=_held --exclude-dir=docs .
+    grep -rniE "not published yet|not yet published|has not been published|will restart|will therefore restart|latest published week|latest week 2026-W40|restart at W42 pending|restarts at|restarts with" --include=*.html --exclude-dir=_held --exclude-dir=docs . | grep -v "static-latest"
+
+(The stamped block of the weekly figures says "Latest published week: <week>" and is excluded by the last grep; check its week by eye instead.)
 
 ## After the publish
 
 - The UK cite box shows vintage 2026-W42 or later (read at load time from the dataset).
 - Anonymous download of the UK and AU CSV and JSON links works. The setting "anyone with the id can read" is as reported by the UK and AU sessions; it has not been tested without an account, and the site wording ("readable by anyone with the id") describes the setting.
 - The next AU vintage: the dated AU W42 sentences stay accurate; add a dated note for that vintage only if the promotion-swing warning fires, rather than editing them.
+
+## Weekly stamp of the latest figures (when feat/static-latest has shipped)
+
+After each publish, once the public dataset holds the vintage and the files are verified, run (bash, repo root):
+
+    node docs/release/stamp-latest.js --uk <public vintage file> --confirm-uk <vintage> [--au <file> --confirm-au <vintage>]
+    node docs/release/stamp-latest.js --check
+
+The file is the {"meta", "rows"} public vintage file the publish tool writes; --confirm-* is your assertion that the dataset holds it (the publish tool also writes these files in a dry run, so the file alone proves nothing). The script refuses unless the vintage matches, is not older than the stamped one, has a meta item and an ok or base headline, and writes nothing unless everything checks (tests: node --test docs/release/stamp-latest.test.js). It sets the block text, the JSON-LD dateModified and the sitemap lastmod of the stamped page(s) only. Run it after uk-w42-revert.js in the W42 push, with the newest vintage file (W43), and commit the result in the same push. Never stamp a week that is held, skipped or not yet in the dataset.

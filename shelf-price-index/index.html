@@ -112,6 +112,10 @@
 </header>
 
 <p id="status">Loading the latest week…</p>
+<noscript><style>#status{display:none}</style></noscript>
+<!--static-latest:start-->
+<p id="static-latest" class="meta" data-vintage="">The latest published figures are added here when each week is published.</p>
+<!--static-latest:end-->
 
 <section id="latest" hidden>
   <div class="headline">
@@ -292,6 +296,7 @@ async function load() {
   const series = weeks.map(wk => ({ week: wk, level: (of("headline", wk)[0] || {}).level, base: baseOf(wk) })).filter(s => s.level !== undefined && s.level !== null);
   document.getElementById("chart").innerHTML = chart(series);
   document.getElementById("latest").hidden = false;
+  const staticLatest = document.getElementById("static-latest"); if (staticLatest) staticLatest.remove(); // live figures replace the stamped text
 
   const rr = of("retailer", latest).sort((a, b) => String(a.retailer).localeCompare(String(b.retailer)));
   if (rr.length) { document.getElementById("retailer-rows").innerHTML = rr.map(r => row(RETAILER_NAMES[r.retailer] || r.retailer, r)).join(""); document.getElementById("retailers").hidden = false; }
