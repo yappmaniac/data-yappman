@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this data, please cite it as below. No DOI exists yet; one will be added when it does."
+type: dataset
+title: "UK Online Shelf-Price Index"
+abstract: "A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi: products matched week on week, chained from a base of 100. It measures posted online shelf prices, not prices paid, and it is not a consumer prices index."
+authors:
+  - name: "Yappman Data (Abley-Yapp Consulting Limited)"
+    website: "https://data.yappman.com/"
+license: CC-BY-4.0
+url: "https://data.yappman.com/shelf-price-index/"
+keywords:
+  - price index
+  - groceries
+  - shelf prices
+  - United Kingdom
+  - open data

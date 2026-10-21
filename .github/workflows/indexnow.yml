@@ -1,0 +1,51 @@
+# Pings IndexNow with the pages that changed in the latest deployed commit. DRAFT: does nothing until the repository
+# variable INDEXNOW_ENABLED is set to "true" (Settings > Secrets and variables > Actions > Variables).
+# The IndexNow key is public by design: it is the name of the .txt file at the site root.
+name: indexnow
+on:
+  workflow_run:
+    workflows: ["pages-build-deployment"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      base:
+        description: "Git ref to compare with HEAD (default: the commit before HEAD)"
+        required: false
+permissions:
+  contents: read
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+jobs:
+  ping:
+    if: ${{ vars.INDEXNOW_ENABLED == 'true' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - name: Work out the changed pages
+        id: pages
+        run: |
+          BASE="${{ github.event.inputs.base }}"
+          [ -n "$BASE" ] || BASE="HEAD~1"
+          git diff --name-only "$BASE" HEAD -- '*.html' > changed.txt
+          node docs/release/indexnow-urls.js $(cat changed.txt) > urls.txt
+          echo "count=$(grep -c . urls.txt || true)" >> "$GITHUB_OUTPUT"
+          cat urls.txt
+      - name: Ping IndexNow
+        if: steps.pages.outputs.count != '0'
+        run: |
+          KEY_FILE=$(ls | grep -E '^[0-9a-f]{32}\.txt$' | head -n 1)
+          KEY="${KEY_FILE%.txt}"
+          test -n "$KEY"
+          # the key file must be served before any ping
+          test "$(curl -fsS "https://data.yappman.com/$KEY_FILE")" = "$KEY"
+          node -e '
+            const fs = require("fs");
+            const urls = fs.readFileSync("urls.txt", "utf8").split("\n").filter(Boolean);
+            const key = process.argv[1];
+            process.stdout.write(JSON.stringify({ host: "data.yappman.com", key, keyLocation: "https://data.yappman.com/" + key + ".txt", urlList: urls }));
+          ' "$KEY" > body.json
+          curl -fsS -X POST "https://api.indexnow.org/indexnow" -H "Content-Type: application/json; charset=utf-8" --data @body.json -w "\nHTTP %{http_code}\n"

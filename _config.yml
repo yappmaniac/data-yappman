@@ -3,3 +3,4 @@
 exclude:
   - docs
   - README.md
+  - CITATION.cff
