@@ -2,3 +2,4 @@
 # Folders starting with _ (such as _held/) are never published; docs/ holds review material only.
 exclude:
   - docs
+  - README.md

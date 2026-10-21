@@ -1,1 +1,0 @@
-<!-- Superseded on 19 Oct 2026 by the draft page guides/uk-supermarket-price-data/index.html (branch guide/uk-supermarket-price-data), whose third-party facts were re-checked on each publisher's page. Not published. -->
