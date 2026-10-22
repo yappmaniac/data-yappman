@@ -136,9 +136,9 @@
 
 <section id="archive" hidden>
   <h2>Every published week</h2>
-  <p>Each week's values are published once and never revised. The full series as <a id="csv-link" href="#">CSV</a> or <a id="json-link" href="#">JSON</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — cite as "Yappman Data, UK Online Shelf-Price Index".</p>
+  <p>Each week's values are published once and never revised. The full series as <a id="csv-link" href="#">CSV</a> or <a id="json-link" href="#">JSON</a>, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — cite as "Abley-Yapp Consulting Limited t/a Yappman Data, UK Online Shelf-Price Index".</p>
   <div class="dl-row"><a class="btn btn-solid" id="csv-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download CSV</a><a class="btn btn-outline" id="json-btn" href="#"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg> Download JSON</a></div>
-  <div class="cite"><div><div class="meta">Cite this (CC BY 4.0)</div><div id="cite-text">Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, https://data.yappman.com/shelf-price-index/</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
+  <div class="cite"><div><div class="meta">Cite this (CC BY 4.0)</div><div id="cite-text">Abley-Yapp Consulting Limited t/a Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, https://data.yappman.com/shelf-price-index/</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
   <div class="table-wrap"><table><thead><tr><th>Week</th><th class="num">Index</th><th class="num">Week on week</th><th class="num col-w4">Four weeks</th><th class="num">Matched products</th></tr></thead><tbody id="archive-rows"></tbody></table></div>
 </section>
 
@@ -168,7 +168,7 @@
   </div>
   <div class="foot-legal">
     <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
-    <p>Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. Index values: CC BY 4.0.</p>
+    <p>Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. The free index and basket datasets listed on this site are released under CC BY 4.0.</p>
     <p><a href="#top">Back to top &uarr;</a></p>
   </div>
 </div>
@@ -331,7 +331,7 @@ async function load() {
   document.getElementById("json-link").href = `${BASE}?format=json&clean=true`;
   document.getElementById("csv-btn").href = `${BASE}?format=csv&clean=true&attachment=true`;
   document.getElementById("json-btn").href = `${BASE}?format=json&clean=true`;
-  document.getElementById("cite-text").textContent = `Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage ${latest}, https://data.yappman.com/shelf-price-index/`;
+  document.getElementById("cite-text").textContent = `Abley-Yapp Consulting Limited t/a Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage ${latest}, https://data.yappman.com/shelf-price-index/`;
   document.getElementById("cite-copy").addEventListener("click", function () {
     const b = this, t = document.getElementById("cite-text").textContent;
     (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => { b.lastChild.textContent = " Copied"; setTimeout(() => { b.lastChild.textContent = " Copy"; }, 1800); }).catch(() => {});
