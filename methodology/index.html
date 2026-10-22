@@ -143,7 +143,7 @@
 <section class="band tint"><div class="wrap">
   <h2>How it is collected <span class="badge plan">Supermarket data</span></h2>
   <div class="grid4 steps" style="margin-top:14px">
-    <div class="card"><span class="num">1</span><p><strong>Source.</strong> The retailers' own public websites, read logged out. No accounts and no baskets; the data is designed not to include individuals' details.</p></div>
+    <div class="card"><span class="num">1</span><p><strong>Source.</strong> The retailers' own public websites, read logged out. No accounts and no baskets. The grocery data products hold product and price fields, with no reviewer, seller, account, shopping-basket or delivery-slot fields.</p></div>
     <div class="card"><span class="num">2</span><p><strong>Method.</strong> Automated reads of retailer web pages and the JSON they serve. Requests are made one at a time, at no more than two a second per retailer (one a second for Morrisons); in practice about 0.6 to 1.5 a second on average.</p></div>
     <div class="card"><span class="num">3</span><p><strong>Quality.</strong> Daily canary runs for every retailer, an automated weekly health review of every canary, snapshot and index build, and email alerts on failed runs. Weekly reconciliation of each retailer's product count against the previous week and the first full week; a drop of more than 10% is flagged. Parsers that fail loudly rather than emit partial rows; missed periods recorded as gaps, never interpolated.</p></div>
     <div class="card"><span class="num">4</span><p><strong>Change control.</strong> A change log ships with every delivery; schema and coverage changes are announced 30 days ahead, under <a href="/notices/">Notices</a>.</p></div>
