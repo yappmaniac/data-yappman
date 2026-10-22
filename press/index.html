@@ -45,12 +45,12 @@
 <p>The <a href="/shelf-price-index/">UK Online Shelf-Price Index</a> reads about 73,000 products a week in its weekly snapshots at Tesco, Sainsbury's, Asda and Aldi, and matches the same products week to week. It is point-in-time data, intended to be published weekly, when the week's snapshots pass the method's checks, and never revised, and it measures posted shelf prices, not prices paid, so it is not CPI. The series started with a base of 100 at ISO week 2026-W39; week 2026-W41 was skipped after an incomplete collection, so the index will restart with a new base at week 42, once it is published (<a href="/notices/w41-skipped/">see the notice</a>).</p>
 
 <h2>Cite as</h2>
-<div class="cite"><div><div class="meta">Citation (CC BY 4.0)</div><div id="cite-text">Abley-Yapp Consulting Limited t/a Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage [week], https://data.yappman.com/shelf-price-index/</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
+<div class="cite"><div><div class="meta">Citation (CC BY 4.0)</div><div id="cite-text">Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage [week], https://data.yappman.com/shelf-price-index/</div></div><button type="button" class="btn btn-outline" id="cite-copy"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg> Copy</button></div>
 <p class="meta">Use the week you are quoting. Please link to <a href="/shelf-price-index/">data.yappman.com/shelf-price-index</a>.</p>
-<p class="meta">Credit line for articles: Source: Abley-Yapp Consulting Limited t/a Yappman Data, UK Online Shelf-Price Index, vintage (the week you quote), CC BY 4.0.</p>
+<p class="meta">Credit line for articles: Source: Yappman Data, UK Online Shelf-Price Index, vintage (the week you quote), CC BY 4.0.</p>
 
 <h2 id="licence">Using the figures</h2>
-<p>The free index and basket datasets listed on this site are released under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>: the UK weekly index dataset, the Australian weekly index dataset and the daily 212-item basket dataset (including its Kaggle copy and same-week copies we publish elsewhere). You may copy, share and adapt them, including commercially, as long as you credit Abley-Yapp Consulting Limited t/a Yappman Data, link to the licence and say if you changed anything.</p>
+<p>The free index and basket datasets listed on this site are released under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>: the UK weekly index dataset, the Australian weekly index dataset and the daily 212-item basket dataset (including its Kaggle copy and same-week copies we publish elsewhere). You may copy, share and adapt them, including commercially, as long as you credit Yappman Data, link to the licence and say if you changed anything.</p>
 <p>Not covered by that licence: paid per-retailer catalogues and snapshots, private index chains, the output of anyone's own Actor run, the Analyst pack, and retailer content (images, descriptions, ingredient text, logos), which is not ours and not licensed by us.</p>
 <p>Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
 
@@ -92,7 +92,7 @@
   var el = document.getElementById("cite-text");
   fetch(BASE).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (rows) {
     var weeks = rows.filter(function (r) { return r.recordType === "headline"; }).map(function (r) { return r.vintage; }).sort();
-    if (weeks.length) el.textContent = "Abley-Yapp Consulting Limited t/a Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage " + weeks[weeks.length - 1] + ", https://data.yappman.com/shelf-price-index/";
+    if (weeks.length) el.textContent = "Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage " + weeks[weeks.length - 1] + ", https://data.yappman.com/shelf-price-index/";
   }).catch(function () {});
   document.getElementById("cite-copy").addEventListener("click", function () {
     var b = this, t = el.textContent;

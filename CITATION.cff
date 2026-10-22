@@ -4,7 +4,7 @@ type: dataset
 title: "UK Online Shelf-Price Index"
 abstract: "A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi: products matched week on week, chained from a base of 100. It measures posted online shelf prices, not prices paid, and it is not a consumer prices index."
 authors:
-  - name: "Abley-Yapp Consulting Limited t/a Yappman Data"
+  - name: "Yappman Data"
     website: "https://data.yappman.com/"
 license: CC-BY-4.0
 url: "https://data.yappman.com/shelf-price-index/"
