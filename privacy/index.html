@@ -41,14 +41,14 @@
   <p class="sub">What personal data the Yappman Data website collects, why, and your choices.</p>
 </header>
 
-<p>This notice explains what personal data the Yappman Data website at data.yappman.com collects about visitors, why, and your choices. The grocery data products describe retail prices and hold product and price fields, with no reviewer, seller, account, shopping-basket or delivery-slot fields. Names, brands and promotion text are the retailers' own text, copied as published, and can include a person's name.</p>
+<p>This notice explains what personal data the Yappman Data website at data.yappman.com collects about visitors, why, and your choices. The grocery data products describe retail prices and hold product and price fields, with no reviewer, seller, account, shopping-basket or delivery-slot fields. Names, brands and promotion text are the retailers&rsquo; own text, copied as published, and can include a person&rsquo;s name. Some of our other products can include the names of people, for example where a register lists a sole trader or a trader list names a business. The section "People whose details appear in public registers" below says how we handle the registers and Trade Info.</p>
 
 <h2>Who we are</h2>
 <p>Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF. The controller of personal data on this site is that company. Contact: <a href="mailto:info@yappman.com">info@yappman.com</a>.</p>
 
 <h2>What we collect, and why</h2>
 <ul>
-  <li><strong>Cookies and analytics.</strong> This site sets no cookies. We use cookieless analytics (Umami) that counts pages and referrers without identifying you. Umami records page views, referring sites, browser, operating system, device type and country, and describes its data as anonymous: it identifies a visit only by an anonymous session identifier and never tracks you across websites. We honour your browser&rsquo;s Do Not Track setting. Our lawful basis is legitimate interests (understanding how the site is used so we can improve it). See <a href="https://umami.is/privacy">Umami&rsquo;s privacy information</a>.</li>
+  <li><strong>Cookies and analytics.</strong> This site sets no cookies. We use cookieless analytics (Umami) to count pages and referrers. Like any web host, Umami&rsquo;s servers receive your IP address and browser details when the page loads its script. Umami records page views, referring sites, browser, operating system, device type and country. We do not send Umami your name or email address. We honour your browser&rsquo;s Do Not Track setting. Our lawful basis is legitimate interests (understanding how the site is used so we can improve it). See <a href="https://umami.is/privacy">Umami&rsquo;s privacy information</a>.</li>
   <li><strong>The announcement bar.</strong> If you dismiss it, we remember that for your visit in your browser&rsquo;s session storage. It never leaves your browser and is cleared when you close the tab.</li>
   <li><strong>Server logs.</strong> The site is hosted on GitHub Pages, which, like any web host, receives your IP address and browser details when you load a page. We do not have access to these logs for our own use. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub&rsquo;s privacy statement</a>.</li>
   <li><strong>The Shelf-Price Index page and the home page.</strong> They load the published index data directly from Apify&rsquo;s servers (api.apify.com), so Apify also receives your IP address when you view them. See <a href="https://docs.apify.com/legal/privacy-policy">Apify&rsquo;s privacy policy</a>.</li>
@@ -56,16 +56,84 @@
 </ul>
 
 <h2>Who receives data</h2>
-<p>GitHub (hosting), Apify (index data) and Umami (analytics), each acting as a service provider as described above. We do not sell personal data.</p>
+<p>GitHub (hosting of this site, and private code repositories), Apify (hosting of our tools and of the data they write, including published register rows, and index data on the site), Umami (analytics) and an AI assistant provider (see "AI model sessions"), each acting as a service provider as described above. Customers who run our tools receive the output in their own Apify accounts.</p>
 
 <h2>How long we keep it</h2>
-<p>Analytics data is kept for up to 6 months, the retention of our current Umami plan. Emails are kept for as long as needed for the enquiry and our records, then deleted.</p>
+<p>Analytics data is kept for up to 6 months, the retention of our current Umami plan. Emails are kept; no deletion step is applied yet.</p>
+
+<h2>People whose details appear in public registers</h2>
+<p>Some of our data products are built from public registers. Most entries on those registers are organisations. Some are sole traders or small providers whose name is, or contains, a person&rsquo;s name, and a few could be run from a home. This section is for anyone who may appear in one of the registers listed below.</p>
+<p>Our Trade Info product is built from other public sources. It is described under "Other products that can include names" below.</p>
+<p>This section describes what runs in our own account and how our tools are designed. Customers who run our tools receive rows in their own accounts and decide for themselves what to do with them.</p>
+<p><strong>Which registers.</strong> This section covers:</p>
+<ul>
+  <li>the UK Visas and Immigration register of licensed sponsors (workers);</li>
+  <li>the Care Quality Commission (CQC) register of providers and locations in England;</li>
+  <li>the Office for Students (OfS) Register of English higher education providers;</li>
+  <li>the UK public procurement notices used in our Contracts lookup;</li>
+  <li>the Global Legal Entity Identifier (LEI) records used in our LEI lookup.</li>
+</ul>
+<p>The Contracts and LEI lookups already exist as products. The sponsor, CQC and OfS registers are used for change feeds that have not been released yet. We name them here first so you can tell us before they are.</p>
+<p>We also keep copies of some other public registers for work that has not been released. You can ask about them by the route below.</p>
+<p><strong>Where it comes from.</strong> We take the data from each register&rsquo;s publisher, from the file or interface the publisher provides. We do not collect it from you.</p>
+<ul>
+  <li>Sponsor register: the file published by UK Visas and Immigration.</li>
+  <li>CQC: records we fetch from the CQC public interface.</li>
+  <li>OfS Register: the Register as published by the Office for Students.</li>
+  <li>Contracts: the notices published on Find a Tender, Contracts Finder and Public Contracts Scotland.</li>
+  <li>LEI: the records published through the Global Legal Entity Identifier Foundation (GLEIF).</li>
+</ul>
+<p><strong>What each product holds.</strong></p>
+<ul>
+  <li><strong>Sponsor register.</strong> We download the register file and compare each file with the previous one to record what changed: an organisation added, removed, or moved to a different route, type or rating. A row is a change: organisation name, town, county, route, old and new type and rating, dates and the name of the source file. The register does not keep a dated record of its own changes, so we build one. We also plan to publish a monthly net count of additions and removals, rounded to the nearest 5 and left blank when a month&rsquo;s count is under 20.</li>
+  <li><strong>CQC.</strong> A row is designed to hold provider and location names, postcode, local authority, region, service types, registration status and dates, and ratings with the date of each report. Rows are designed not to return names of registered managers or nominated individuals, contact details, phone numbers, websites, address lines or coordinates. We use the rows to record dated changes to ratings and registration. The records we store on our own computer to make those rows hold more than the rows do: for each location, its name, address, phone number, coordinates and property reference (registered-manager contact details are removed before a record is stored). A location whose name does not clearly look like an organisation is designed to be kept in our rows with its name blank, its postcode cut to the first half and a replacement key in place of its identifier (explained below).</li>
+  <li><strong>OfS Register.</strong> A row is a change to the Register: the provider&rsquo;s legal name, trading name, UKPRN (its reference number), registration category, fee-limit class, the status of its teaching-excellence entry, degree-awarding powers, university title, the conditions recorded against it, old and new values, the dates of changes and the source sheet. Conditions and old and new values can be free text copied as published. Rows are designed not to return the Register&rsquo;s contact address, email address and website columns.</li>
+  <li><strong>Contracts.</strong> A row holds the notice title, the buyer (an organisation), value, currency, CPV codes, regions, stage, dates, a link to the notice and notice ids. It has no supplier, winner, contact, address or description field. A title is free text copied as published. Email addresses, UK phone numbers and a name written straight after cue words such as "contact", "FAO" or "write to" are replaced with [redacted] by pattern, so a name written another way, including a supplier named in a title, can remain.</li>
+  <li><strong>LEI.</strong> A row holds the LEI, legal name, other names, category, legal form, jurisdiction, entity and registration status, dates, registration number, and the legal and headquarters address down to city only. For a recognised sole proprietor, or an arrangement named after a person (a settlement, a family or will trust, "estate of"), the names, registration number and addresses are left blank and listed as left out. In name and status searches those entities are left out of the results and counted.</li>
+</ul>
+<p>The files we keep from the publishers hold more than our rows return. The sponsor file has the same columns our rows use, but for every entry, including the names we leave out of what we publish. The OfS Register file can hold contact columns that our rows do not return. The CQC records, as described above, hold each location&rsquo;s name, address, phone number, coordinates and property reference. We keep these files on our own computer. How long is in the table below.</p>
+<p><strong>Names that look like a person are left out and counted.</strong> For the sponsor, CQC and OfS registers (not released yet) we are testing a rule that is designed to tell whether a name looks like an organisation. If a name looks like a sole trader or a person (for example a name with no company-type ending, unless it carries a school or education word; a title such as Mr or Dr; "care of"; or "trading as" a person), the row is designed to be left out of what we publish, and only a count of the rows left out is kept in what we publish. The source files we keep still hold those names. A name let through because it carries a school or education word can be a person&rsquo;s name. For CQC the design is different, as described above: the row is kept with the name blank. For LEI the same idea applies, and already runs, for the sole proprietors and person-named arrangements described above.</p>
+<p>The rule is a pattern test. It can leave out a genuine organisation. It can let through a limited company named after a person (for example "J SMITH LTD"), a company trading under a person&rsquo;s name (for example "LTD t/a" a person), and a school, academy or tuition business named after one person, because these appear on the register as published there. The LEI test can miss a person. We are still measuring how well the sponsor, CQC and OfS tests work.</p>
+<p><strong>What the CQC replacement key is.</strong> A care home run by a sole trader can be a person&rsquo;s home business. For such a location, the row is designed to carry no name, a postcode cut to its first half, and, in place of the CQC identifier, a code that we compute from the identifier with a secret key that we keep private. The code is designed to appear in the row, so changes to that location can be followed. The CQC identifier is designed not to. Public details such as a rating, a local authority and a service type could still lead someone who knows the place to a particular location. We have not yet accepted that residual.</p>
+<p><strong>Free text and links.</strong> A Contracts title, and the conditions and old and new values in an OfS row, are free text copied as published, and can mention a person. The notice link in a Contracts row and the record link in an LEI row open the publisher&rsquo;s own page, which we do not filter. For a person-named LEI record, the source page may show details our row leaves out.</p>
+<p><strong>What we do it for.</strong> The sponsor feed is designed to record dated changes to the sponsor register, which the register does not keep itself. The CQC and OfS feeds are designed to record dated changes to their registers. The Contracts lookup lets a buyer or bidder search public notices. The LEI lookup lets a user look up and check entities by name, status or LEI.</p>
+<h3>Other products that can include names</h3>
+<p><strong>Trade Info (UK importers and exporters).</strong> It reads the monthly lists of UK importers and exporters that HMRC publishes (HMRC UK Trade Info: bulk files for the latest month, and HMRC&rsquo;s interface for older months and lookups). HMRC lists sole traders&rsquo; names next to companies&rsquo; names.</p>
+<ul>
+  <li><strong>Returned:</strong> the trader&rsquo;s name as published; the outward part of its postcode only (for example EX2); the flow (import or export); the month; commodity codes; the source and its date; HMRC&rsquo;s trader id where HMRC&rsquo;s interface gives one; how the row matched your search; traderKey, computed from the name and outward code; and, in alert mode, alertFingerprint (a fingerprint of the organisation returned, described under Alerts).</li>
+  <li><strong>Not returned:</strong> the full postcode, contact details, and trade values, volumes, customers or suppliers. There is no address field; address columns in HMRC&rsquo;s files are read past and not kept.</li>
+  <li><strong>Left out and counted:</strong> a name is returned when it carries an organisation marker such as Ltd or PLC. Names without one, names with a title, and names with a trading-as, care-of or address part are left out and counted.</li>
+  <li><strong>Known misses:</strong> a company named after a person is returned as published. The rule can miss some people, for example a name written with spaced initials such as "P L C" or "L T D", and it can leave out a genuine organisation.</li>
+  <li><strong>Alerts:</strong> the alert mode records unsalted fingerprints of returned organisations only, not names, in a store in the account of the person who runs it. A fingerprint can be reversed by guessing.</li>
+  <li><strong>Asking us:</strong> use the route in "Asking us to see, correct or remove an entry" below. We will reply within one month.</li>
+</ul>
+<h3>How we handle all of these</h3>
+<p><strong>Who gets the published rows.</strong> Apify, our hosting platform, runs our tools and holds the datasets they write, including any published rows. Customers who run our tools receive copies in their own Apify accounts. A removal changes what we hold. It cannot take back rows a customer has already received, copies that others have made, or the publisher&rsquo;s own record. Our reply to you will say what we did and what we cannot do.</p>
+<p><strong>Where the processing happens.</strong> We download and check register files on one computer used for Yappman Data work. That computer is a personal device that is also enrolled in a third party&rsquo;s device management and endpoint security service. Administrators of that service, including an outside IT provider, can technically run scripts, collect files and see file and folder names on the device; they have no role in our processing. No retrieval or backup of our Yappman folders is set up on that service.</p>
+<p><strong>AI model sessions.</strong> Since October 2026, a general-purpose AI assistant from an outside provider has read register files and tool output while we built the rules that decide which entries look like people and checked our tools. That included a sample of about 200 register names, and test output from the Contracts and LEI tools. We have not published rows from that work.</p>
+<p><strong>How long we keep register data.</strong></p>
+<div class="table-wrap"><table><thead><tr><th>Item</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td>Counts of rows left out</td><td>Kept as counts. The counts we publish hold no names. The source files in the rows below still do.</td></tr>
+<tr><td>Sponsor register source files</td><td>Kept on our computer. No deletion rule is applied yet.</td></tr>
+<tr><td>Sponsor change records</td><td>Nothing is published yet. The change records we make are kept on our computer. No deletion rule is applied yet.</td></tr>
+<tr><td>CQC records fetched from the public interface, and the change records made from them</td><td>Kept on our computer. No deletion rule is applied yet.</td></tr>
+<tr><td>OfS Register files and change records</td><td>Kept on our computer. No deletion rule is applied yet.</td></tr>
+<tr><td>Rows from our own runs of our tools, in our own Apify account</td><td>Datasets and stores that our runs create without a name expire on Apify after 31 days. Named ones stay until we delete them.</td></tr>
+<tr><td>Removal lists</td><td>None is in place yet.</td></tr>
+<tr><td>Emails about a request</td><td>Kept. No deletion step is applied yet.</td></tr>
+</tbody>
+</table></div>
+<p><strong>Telling you about this.</strong> This page is where we tell you that these details are used. We do not write to people individually.</p>
+<p><strong>Asking us to see, correct or remove an entry.</strong> Email <strong>info@yappman.com</strong>. To find the entry without asking you for more about yourself, send the LEI (20 characters), the notice id or link from the source service, the traderKey shown in a Trade Info row, or the reference number shown in our row. If you have none of these, tell us which product and the name as it appears. You can ask what we hold about you and for a copy, ask us to correct it, ask us to remove it, or object. We will reply within one month. We may ask a question that shows you can speak for the entry. If we decline, we will say why.</p>
+<p>We do not edit the publishers&rsquo; records. A correction means the publisher fixes the record and our next run picks it up. Until a removal list is in place for a product, a later run of that product&rsquo;s tool can return a removed entry again, and our reply will say which applies. A removal does not take back rows a customer has already received, copies that others have made, or the publisher&rsquo;s own record, and our reply will say so.</p>
+<p><strong>If you are unhappy.</strong> You can tell us first at the same address, with "Complaint" in the subject. We will reply within one month. You can also complain to the Information Commissioner&rsquo;s Office at ico.org.uk at any time; you do not need to complain to us first.</p>
 
 <h2>Your rights</h2>
 <p>You can switch analytics off by turning on Do Not Track in your browser. Under UK data protection law you may ask for access to, correction or deletion of your personal data, or object to processing based on legitimate interests. Email <a href="mailto:info@yappman.com">info@yappman.com</a>. You may also complain to the Information Commissioner&rsquo;s Office at <a href="https://ico.org.uk/">ico.org.uk</a>.</p>
 
 <h2>Changes</h2>
-<p>We will update this page if what we collect changes. Last updated 22 October 2026.</p>
+<p>We will update this page if what we collect changes. Last updated 23 October 2026.</p>
 
 </main>
 <footer class="site-footer">
