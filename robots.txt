@@ -2,6 +2,6 @@ User-agent: *
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
-# Voluntary content-use signal. The published index data is licensed CC BY 4.0: credit Yappman Data.
+# Voluntary content-use signal. The free index and basket datasets listed on this site are released under CC BY 4.0: credit Yappman Data.
 
 Sitemap: https://data.yappman.com/sitemap.xml

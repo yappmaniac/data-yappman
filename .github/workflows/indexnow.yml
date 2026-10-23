@@ -27,8 +27,10 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
       - name: Work out the changed pages
         id: pages
+        env:
+          BASE_INPUT: ${{ github.event.inputs.base }}
         run: |
-          BASE="${{ github.event.inputs.base }}"
+          BASE="$BASE_INPUT"
           [ -n "$BASE" ] || BASE="HEAD~1"
           git diff --name-only "$BASE" HEAD -- '*.html' > changed.txt
           node docs/release/indexnow-urls.js $(cat changed.txt) > urls.txt
