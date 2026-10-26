@@ -325,7 +325,7 @@ async function load() {
   const addSkipped = () => { if (skippedDone) return; skippedDone = true; archiveHtml.push(`<tr class="skipped"><td>${SKIPPED_WEEK}</td><td colspan="4">Skipped: no complete data. <a href="/notices/w41-skipped/">See the notice</a>.</td></tr>`); };
   if (!ordered.some(g => !closedSet.has(g.base))) {
     archiveHtml.push(grp(`New series (week 42 onward): base 100 at ${NEW_BASE}`));
-    archiveHtml.push(`<tr><td colspan="5" class="meta">No weeks published yet. The series will restart with week 42 (base 100); the first weekly change is published for week 43.</td></tr>`);
+    archiveHtml.push(`<tr><td colspan="5" class="meta">No weeks published yet in this series.</td></tr>`);
   }
   ordered.forEach(g => {
     if (g.items[g.items.length - 1].week < SKIPPED_WEEK) addSkipped(); // week 41 sits between the series before it and those after it
