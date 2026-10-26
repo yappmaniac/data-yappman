@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UK Online Shelf-Price Index — Yappman Data</title>
-<meta name="description" content="Weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi. Latest week 2026-W40; restart at W42 pending. CC BY 4.0.">
+<meta name="description" content="Weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi. Base 100 at 2026-W42 after the skipped week 41. CC BY 4.0.">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
 <meta property="og:title" content="UK Online Shelf-Price Index — Yappman Data">
-<meta property="og:description" content="Weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi. Latest week 2026-W40; restart at W42 pending. CC BY 4.0.">
+<meta property="og:description" content="Weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi. Base 100 at 2026-W42 after the skipped week 41. CC BY 4.0.">
 <meta property="og:url" content="https://data.yappman.com/shelf-price-index/">
 <meta property="og:image" content="https://data.yappman.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -22,7 +22,7 @@
   "@context": "https://schema.org",
   "@type": "Dataset",
   "name": "UK Online Shelf-Price Index",
-  "description": "A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week and chained from a base of 100 at ISO week 2026-W39 (the closed series, weeks 39 and 40) and, after the skipped week 41, from a new base of 100 at ISO week 2026-W42 (not yet published; the latest published week is 2026-W40); week 2026-W41 has no data. Intended weekly, normally on Monday, when the week's snapshots pass the method's checks, with headline, retailer and category series. Shelf prices only; it is not CPI and not a measure of prices paid.",
+  "description": "A weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week and chained from a base of 100 at ISO week 2026-W39 (the closed series, weeks 39 and 40) and, after the skipped week 41, from a new base of 100 at ISO week 2026-W42; week 2026-W41 has no data. Intended weekly, normally on Monday, when the week's snapshots pass the method's checks, with headline, retailer and category series. Shelf prices only; it is not CPI and not a measure of prices paid.",
   "url": "https://data.yappman.com/shelf-price-index/",
   "license": "https://creativecommons.org/licenses/by/4.0/",
   "isAccessibleForFree": true,
@@ -84,7 +84,8 @@
       "description": "Matched products as a share of the previous week's products"
     }
   ],
-  "measurementTechnique": "Matched-product Jevons index (geometric mean of price ratios; equal weight to each product within a retailer-class cell, equal weight to each retailer, no spending weights), chained week on week; prices that multiply by 3 or more, or fall to a third or less, in one week are left out."
+  "measurementTechnique": "Matched-product Jevons index (geometric mean of price ratios; equal weight to each product within a retailer-class cell, equal weight to each retailer, no spending weights), chained week on week; prices that multiply by 3 or more, or fall to a third or less, in one week are left out.",
+  "dateModified": "2026-10-26"
 }
 </script>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
@@ -109,12 +110,12 @@
 <main id="main" tabindex="-1">
 <header>
   <h1>UK Online Shelf-Price Index</h1>
-  <p class="sub">Posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. The index will restart at week 42 after a skipped week 41 (<a href="/notices/w41-skipped/">see the notice</a>): base 100 at ISO week 2026-W39 for the closed series (weeks 39 and 40), and at 2026-W42 for the new series, which has not been published yet. The latest published week is 2026-W40. Intended weekly, normally on Monday, when the week's snapshots pass the method's checks.</p>
+  <p class="sub">Posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi, matched product by product week on week. The index restarted at week 42 after a skipped week 41 (<a href="/notices/w41-skipped/">see the notice</a>): base 100 at ISO week 2026-W39 for the closed series (weeks 39 and 40), and at 2026-W42 for the new series. Intended weekly, normally on Monday, when the week's snapshots pass the method's checks.</p>
 </header>
 
 <p id="status">Loading the latest week…</p>
 <!--static-latest:start-->
-<p id="static-latest" class="meta" data-vintage="">The latest published figures are added here when each week is published.</p>
+<p id="static-latest" class="meta" data-vintage="2026-W43">UK Online Shelf-Price Index: latest published week 2026-W43. Headline level 100.0, -0.04% on the week before. Published 26 October 2026.</p>
 <!--static-latest:end-->
 
 <section id="latest" hidden>
@@ -148,7 +149,7 @@
 
 <h2 id="method">What this measures, and what it doesn't</h2>
 <div class="box notice">
-  <p><strong>It measures posted online prices.</strong> Each week the online catalogue of four UK supermarkets — Tesco, Sainsbury's, Asda and Aldi — is read from its website. Products present in both this week and last week are matched by the retailer's own product id, and the index is the geometric mean (a Jevons index) of their price ratios, with equal weight to each product within a retailer-class cell, equal weight to each retailer, no spending weights, chained week on week from a base of 100 at ISO week 2026-W39 (the closed series, weeks 39 and 40) and, after the skipped week 41, from a new base of 100 at ISO week 2026-W42 (not published yet). Four-week changes are empty across the gap (<a href="/notices/w41-skipped/">see the notice</a>). Shelf price only: loyalty-card prices and multibuy promotions are recorded separately and excluded here.</p>
+  <p><strong>It measures posted online prices.</strong> Each week the online catalogue of four UK supermarkets — Tesco, Sainsbury's, Asda and Aldi — is read from its website. Products present in both this week and last week are matched by the retailer's own product id, and the index is the geometric mean (a Jevons index) of their price ratios, with equal weight to each product within a retailer-class cell, equal weight to each retailer, no spending weights, chained week on week from a base of 100 at ISO week 2026-W39 (the closed series, weeks 39 and 40) and, after the skipped week 41, from a new base of 100 at ISO week 2026-W42. Four-week changes are empty across the gap (<a href="/notices/w41-skipped/">see the notice</a>). Shelf price only: loyalty-card prices and multibuy promotions are recorded separately and excluded here.</p>
   <p><strong>It is not CPI, and it is not a measure of prices paid.</strong> The ONS consumer prices index uses scanner data with transaction quantities and includes discounts actually taken; this index has no quantities and no transactions. Treat it as a fast, product-level indicator of what the four retailers are asking online, published days after the week it describes.</p>
   <p><strong>Known limits.</strong> Online catalogues only, so in-store-only lines are absent; no store is chosen for Tesco and Sainsbury's, and one fixed store or service point is used for Asda and Aldi, so prices may differ in other stores, formats, regions and channels; Aldi publishes no barcodes, so cross-retailer joins there use name and pack size. Category rows can rest on fewer than four retailers where one retailer's cell is too thin. The four-week figure is empty until four weeks exist. There is no year-on-year figure until a year exists. Suspect moves (over 200% in a week) are excluded and listed in the weekly note.</p>
   <p><strong>Coverage.</strong> About 73,000 products a week in the weekly snapshots (73,745 in the week 40 snapshot of 4 October 2026); matched counts are shown on every row. A week is published only if all four retailers contribute to the headline; a retailer whose snapshot covers far fewer products than the week before is named in the metadata (<code>coverageWarnings</code>). Weeks are never backfilled or interpolated. Morrisons joins from November 2026, and the index continues on the four-retailer basis with Morrisons reported separately until a full year of five-retailer data exists.</p>
