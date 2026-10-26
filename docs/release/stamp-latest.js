@@ -8,8 +8,8 @@
 // not prove publication: the operator must pass --confirm-uk / --confirm-au with the vintage, as an assertion that the public
 // dataset holds it (the same idea as --confirm-vintage in the publish tool).
 //
-// Units: weekOnWeekPct and fourWeekPct are stored already in percent (GroceryPricesActor tools/indices/core.py:913-914,
-// "(relative - 1) * 100"), and the page script prints them with toFixed(2) + "%", the level with toFixed(1); this script does the same.
+// Units: weekOnWeekPct and fourWeekPct are stored already in percent (the index computation writes (relative - 1) * 100),
+// and the page script prints them with toFixed(2) + "%", the level with toFixed(1); this script does the same.
 //
 // Safety rules (each is tested in docs/release/stamp-latest.test.js):
 //  - the vintage must match the confirmation, be a well-formed ISO week (W01-W53), and not be older than the one already stamped;
