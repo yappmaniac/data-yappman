@@ -67,7 +67,7 @@
 <ul>
   <li><strong>The Australian shelf-price index:</strong> the published vintage files (2026-W42 so far).</li>
   <li><strong>The UK daily 212-item basket:</strong> price, was-price, loyalty price, unit price, pack size and stock flag, per retailer per day, for 24 September to 8 October 2026.</li>
-  <li><strong>The UK weekly index</strong> will be added once it is published.</li>
+  <li>Which index vintages are loaded is shown by <code>list_index_vintages</code>.</li>
 </ul>
 <p>Every row carries a date, the retailer, the retailer's own product id and the barcode where there is one. The server does not serve product names, brands, descriptions, images or links: those are retailers' content.</p>
 
@@ -75,12 +75,12 @@
 <ul>
   <li><code>get_shelf_price_index</code> returns an index vintage for the UK or Australia.</li>
   <li><code>list_index_vintages</code> says which vintages exist.</li>
-  <li><code>lookup_basket_prices</code> finds basket rows by barcode or retailer product id, up to 20 at a time, for one day.</li>
+  <li><code>lookup_basket_prices</code> finds basket rows by barcode (argument <code>eans</code>, a list of up to 20), for one day; each result row lists its barcodes in <code>ean</code>.</li>
   <li><code>about_the_data</code> explains the licence, the limits and how to cite it.</li>
 </ul>
 
 <h2>How to connect</h2>
-<p>The endpoint is <code>https://yappman-grocery-mcp.blue-bar-ca29.workers.dev/mcp</code> (Streamable HTTP, no authentication). With Claude Code:</p>
+<p>The endpoint is <code>https://yappman-grocery-mcp.blue-bar-ca29.workers.dev/mcp</code> (streamable HTTP, read-only, no key). With Claude Code:</p>
 <pre style="border:1px solid var(--line);background:var(--card);padding:10px 12px;border-radius:8px;overflow-x:auto;font-size:13px"><code>claude mcp add --transport http supermarket-prices https://yappman-grocery-mcp.blue-bar-ca29.workers.dev/mcp</code></pre>
 <p>Other clients that support remote MCP servers take the same address in their MCP settings. Or call it directly:</p>
 <pre style="border:1px solid var(--line);background:var(--card);padding:10px 12px;border-radius:8px;overflow-x:auto;font-size:13px"><code>curl -s -X POST https://yappman-grocery-mcp.blue-bar-ca29.workers.dev/mcp \
@@ -93,7 +93,7 @@
   <li><strong>Static snapshots, not live or real-time.</strong> Prices may be incomplete or out of date, so check the retailer before relying on one.</li>
   <li><strong>Not full coverage.</strong> Only the data listed above is in it.</li>
   <li><strong>A free hosting plan.</strong> Heavy use may be turned away for the rest of the day.</li>
-  <li>Usage is recorded as one record per request (tool name, client name and the time of the request, as stamped by Cloudflare), kept by Cloudflare for up to three months; counts made from them are approximate. A client name is as the client sends it and is not verified; it is stored only if it is on a fixed list of known clients, otherwise as "other", and a version is cut to its major and minor numbers. No IP addresses, request content or record of who called are kept.</li>
+  <li>Usage: Since version 0.2.1 the server keeps counts by tool and by the connecting client&rsquo;s name from a fixed list (anything else is counted as &ldquo;other&rdquo;), stamped by Cloudflare with the time of the request; no client version, IP address or request content. A client name is as the client sends it and is not verified. Records written by version 0.2.0 also kept a client version family (major.minor, known clients only); they stay until the three-month retention removes them and are never selected or shown. Cloudflare keeps these records for up to three months; counts made from them are approximate.</li>
   <li>The index is not CPI and does not show what shoppers paid. The data is provided as is, with no warranty.</li>
 </ul>
 
