@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grocery price snapshots MCP server — Yappman Data</title>
+<meta name="description" content="A free, read-only MCP server for AI assistants: the UK daily basket and the Australian shelf-price index, as static snapshots under CC BY 4.0.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="Grocery price snapshots MCP server — Yappman Data">
+<meta property="og:description" content="A free, read-only MCP server for AI assistants: the UK daily basket and the Australian shelf-price index, as static snapshots under CC BY 4.0.">
+<meta property="og:url" content="https://data.yappman.com/mcp/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://data.yappman.com/mcp/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Grocery price snapshots MCP server",
+  "description": "A free, read-only MCP server for AI assistants: the UK daily basket and the Australian shelf-price index, as static snapshots under CC BY 4.0.",
+  "url": "https://data.yappman.com/mcp/",
+  "mainEntityOfPage": "https://data.yappman.com/mcp/",
+  "inLanguage": "en-GB",
+  "author": {
+    "@type": "Organization",
+    "name": "Yappman Data",
+    "url": "https://data.yappman.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yappman Data",
+    "url": "https://data.yappman.com/"
+  }
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main" class="mainnav">
+  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <ul class="nav-list" id="site-menu">
+    <li class="nav-group mega"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-data" aria-haspopup="true">Data<span class="caret" aria-hidden="true"></span></button><div class="panel panel-mega" id="panel-data"><div class="panel-cols"><div class="panel-col"><h3 class="panel-h">Price data</h3><ul><li><a class="mi" href="https://apify.com/yappman/uk-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK supermarket prices</span><span class="badge live">Latest</span></span><span class="mi-desc">Weekly catalogue and a daily 212-item basket.</span></a></li><li><a class="mi" href="https://apify.com/yappman/au-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">AU supermarket prices</span><span class="badge soon">Oct 2026</span></span><span class="mi-desc">Weekly catalogue from Coles, Woolworths and Aldi Australia.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-property-listings" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK property listings</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Rightmove, Zoopla and OnTheMarket, with planning data.</span></a></li></ul></div><div class="panel-col"><h3 class="panel-h">Open data</h3><ul><li><a class="mi" href="https://apify.com/yappman/contracts-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Public contracts</span><span class="badge live">Latest</span></span><span class="mi-desc">Search UK public procurement notices. $0.005 a notice ($5.00 per 1,000) plus $0.005 a run.</span></a></li><li><a class="mi" href="https://apify.com/yappman/lei-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">LEI lookup</span><span class="badge live">Latest</span></span><span class="mi-desc">Legal Entity Identifier records by LEI, name or registration status. $0.001 an entity ($1.00 per 1,000), no start fee.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-importers-exporters" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK importers and exporters</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">HMRC trade lists by month, under the Open Government Licence. $0.005 a run plus $0.002 a trader row. Not affiliated with HMRC.</span></a></li></ul></div></div><div class="panel-foot"><a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener">Free basket snapshot, monthly (Kaggle)</a><a href="/methodology/#delivery">Delivery &amp; formats</a></div></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-indices" aria-haspopup="true">Indices<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-indices"><ul><li><a class="mi" href="/shelf-price-index/"><span class="mi-top"><span class="mi-name">UK Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/au-shelf-price-index/"><span class="mi-top"><span class="mi-name">AU Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/methodology/#indices"><span class="mi-top"><span class="mi-name">How the indices are built</span></span></a></li></ul></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-trust" aria-haspopup="true">Trust<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-trust"><ul><li><a class="mi" href="/data-quality/"><span class="mi-top"><span class="mi-name">Data quality</span></span></a></li><li><a class="mi" href="/methodology/"><span class="mi-top"><span class="mi-name">Methodology</span></span></a></li><li><a class="mi" href="/notices/"><span class="mi-top"><span class="mi-name">Notices (change log)</span></span></a></li><li><a class="mi" href="/press/#licence"><span class="mi-top"><span class="mi-name">Licence &amp; reuse</span></span></a></li><li><a class="mi" href="/#trust"><span class="mi-top"><span class="mi-name">Check schedule</span></span></a></li></ul></div></li>
+    <li class="nav-plain"><a href="/#pricing">Pricing</a></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-resources" aria-haspopup="true">Resources<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-resources"><ul><li><a class="mi" href="/demos/"><span class="mi-top"><span class="mi-name">Demos</span></span></a></li><li><a class="mi" href="https://github.com/yappmaniac/yappman-examples" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Examples (GitHub)</span></span></a></li><li><a class="mi" href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Kaggle dataset</span></span></a></li><li><a class="mi" href="https://yappman.substack.com/" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Newsletter (Substack)</span></span></a></li><li><a class="mi" href="https://dev.to/yappman" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Articles (dev.to)</span></span></a></li><li><a class="mi" href="/press/"><span class="mi-top"><span class="mi-name">Press</span></span></a></li></ul></div></li>
+    <li class="nav-cta"><a class="btn btn-primary" href="/#contact">Request a sample</a></li>
+  </ul>
+</nav>
+</div></div>
+<main id="main" tabindex="-1">
+<header>
+  <h1>Grocery price snapshots MCP server</h1>
+  <p class="sub">A free, read-only server that lets an AI assistant look up a price or read an index, from data we have already published. Static snapshots under CC BY 4.0.</p>
+</header>
+
+<h2>What it serves</h2>
+<ul>
+  <li><strong>The Australian shelf-price index:</strong> the published vintage files (2026-W42 so far).</li>
+  <li><strong>The UK daily 212-item basket:</strong> price, was-price, loyalty price, unit price, pack size and stock flag, per retailer per day, for 24 September to 8 October 2026.</li>
+  <li><strong>The UK weekly index</strong> will be added once it is published.</li>
+</ul>
+<p>Every row carries a date, the retailer, the retailer's own product id and the barcode where there is one. The server does not serve product names, brands, descriptions, images or links: those are retailers' content.</p>
+
+<h2>The four tools</h2>
+<ul>
+  <li><code>get_shelf_price_index</code> returns an index vintage for the UK or Australia.</li>
+  <li><code>list_index_vintages</code> says which vintages exist.</li>
+  <li><code>lookup_basket_prices</code> finds basket rows by barcode or retailer product id, up to 20 at a time, for one day.</li>
+  <li><code>about_the_data</code> explains the licence, the limits and how to cite it.</li>
+</ul>
+
+<h2>How to connect</h2>
+<p>The endpoint is <code>https://yappman-grocery-mcp.blue-bar-ca29.workers.dev/mcp</code> (Streamable HTTP, no authentication). With Claude Code:</p>
+<pre style="border:1px solid var(--line);background:var(--card);padding:10px 12px;border-radius:8px;overflow-x:auto;font-size:13px"><code>claude mcp add --transport http supermarket-prices https://yappman-grocery-mcp.blue-bar-ca29.workers.dev/mcp</code></pre>
+<p>Other clients that support remote MCP servers take the same address in their MCP settings. Or call it directly:</p>
+<pre style="border:1px solid var(--line);background:var(--card);padding:10px 12px;border-radius:8px;overflow-x:auto;font-size:13px"><code>curl -s -X POST https://yappman-grocery-mcp.blue-bar-ca29.workers.dev/mcp \
+  -H "content-type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'</code></pre>
+<p>The server is listed in the MCP Registry as <code>io.github.yappmaniac/grocery-price-snapshots</code>.</p>
+
+<h2>Limits</h2>
+<ul>
+  <li><strong>Static snapshots, not live or real-time.</strong> Prices may be incomplete or out of date, so check the retailer before relying on one.</li>
+  <li><strong>Not full coverage.</strong> Only the data listed above is in it.</li>
+  <li><strong>A free hosting plan.</strong> Heavy use may be turned away for the rest of the day.</li>
+  <li>Usage is recorded as one record per request (tool name, client name and the time of the request, as stamped by Cloudflare), kept by Cloudflare for up to three months; counts made from them are approximate. A client name is as the client sends it and is not verified; it is stored only if it is on a fixed list of known clients, otherwise as "other", and a version is cut to its major and minor numbers. No IP addresses, request content or record of who called are kept.</li>
+  <li>The index is not CPI and does not show what shoppers paid. The data is provided as is, with no warranty.</li>
+</ul>
+
+<h2>Licence and credit</h2>
+<p>Our compilation of these records is licensed CC BY 4.0. We claim no rights in retailer content, and no retailer-written text is served. Barcodes and retailer product ids are included only to identify rows. Please credit Yappman Data, for example "Source: Yappman Data, UK Supermarket Prices: Daily 212-Item Basket, CC BY 4.0", and say if you changed anything. See also <a href="/press/#licence">the licence statement</a>.</p>
+
+<h2>How it is built</h2>
+<p>It is a small server with no database of request data and no outbound calls. The only thing it stores is the usage records described above. The data is built into it from files already published, and a check at build time confirms that only the allowed fields are included.</p>
+
+<h2>Contact and independence</h2>
+<p>Questions, or something missing or wrong: info@yappman.com. Yappman Data is independent. It is not affiliated with or endorsed by any retailer, government body or Apify.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Price data kept as first published.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a></div>
+  </div>
+  <div class="foot-legal">
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p>Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed. The free index and basket datasets listed on this site are released under CC BY 4.0.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>
