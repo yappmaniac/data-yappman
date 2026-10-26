@@ -57,8 +57,8 @@
   <tr><td><code>level</code></td><td>number</td><td>Index level; the base week is 100.</td></tr>
   <tr><td><code>weekOnWeekPct</code></td><td>number or empty</td><td>Change on the previous week, in percent.</td></tr>
   <tr><td><code>fourWeekPct</code></td><td>number or empty</td><td>This week's level against the level four weeks earlier, in percent. Empty wherever that earlier level is missing.</td></tr>
-  <tr><td><code>matched</code></td><td>number or empty</td><td>Products matched in both weeks and used. Empty in the base week.</td></tr>
-  <tr><td><code>matchedShare</code></td><td>number or empty</td><td>Matched products as a share of last week's products (0 to 1). Empty in the base week.</td></tr>
+  <tr><td><code>matched</code></td><td>number or empty</td><td>Products found in both weeks with a price, counted before any are left out as suspect moves or for a pack-size change. Empty in the base week.</td></tr>
+  <tr><td><code>matchedShare</code></td><td>number or empty</td><td>Matched products as a share of last week's products in the cell. Usually 0 to 1; it can be above 1 when products move into a class between the weeks. Empty in the base week.</td></tr>
   <tr><td><code>status</code></td><td>text</td><td><code>ok</code>; <code>carried</code> (fewer than 20 used products, so last week's level is kept); <code>insufficient</code> (no used products, level kept); <code>base</code> (the base week).</td></tr>
 </tbody>
 </table></div>
@@ -66,7 +66,7 @@
 <h2 id="record-types">Record types</h2>
 <ul>
   <li><code>headline</code>: all four retailers, all classes.</li>
-  <li><code>retailer</code>: one retailer over all its matched products.</li>
+  <li><code>retailer</code>: one retailer over all its used products (matched products less those left out).</li>
   <li><code>class</code> and <code>retailer_class</code>: a class across retailers, and a retailer within a class.</li>
   <li><code>subtotal</code> and <code>retailer_subtotal</code>: food and soft drinks, the ten classes from <code>bread-cereals</code> to <code>soft-drinks</code> together. Not one of the 16 classes. In 2026-W39 and 2026-W40 this figure was published as <code>class</code> and <code>retailer_class</code> rows named <code>food-soft-drinks</code>.</li>
   <li><code>meta</code>: one per vintage; see below.</li>
