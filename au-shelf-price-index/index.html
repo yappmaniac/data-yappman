@@ -86,6 +86,7 @@
 }
 </script>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+<noscript><style>#status{display:none}</style></noscript>
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
@@ -110,6 +111,9 @@
 </header>
 
 <p id="status">Loading the latest week…</p>
+<!--static-latest:start-->
+<p id="static-latest" class="meta" data-vintage="">The latest published figures are added here when each week is published.</p>
+<!--static-latest:end-->
 
 <section id="latest" hidden>
   <div class="headline">
@@ -286,6 +290,7 @@ async function load() {
   const series = weeks.map(wk => ({ week: wk, level: (of("headline", wk)[0] || {}).level, base: baseOf(wk) })).filter(s => s.level !== undefined && s.level !== null);
   document.getElementById("chart").innerHTML = chart(series);
   document.getElementById("latest").hidden = false;
+  const staticLatest = document.getElementById("static-latest"); if (staticLatest) staticLatest.remove(); // live figures replace the stamped text
 
   const byRetailer = (scope) => of(scope, latest).sort((a, b) => String(a.retailer).localeCompare(String(b.retailer)));
   const fill = (rowsId, sectionId, scope) => { const rr = byRetailer(scope); if (rr.length) { document.getElementById(rowsId).innerHTML = rr.map(r => row(RETAILER_NAMES[r.retailer] || r.retailer, r)).join(""); document.getElementById(sectionId).hidden = false; } };
