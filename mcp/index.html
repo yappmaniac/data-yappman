@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grocery price snapshots MCP server — Yappman Data</title>
-<meta name="description" content="A free, read-only MCP server for AI assistants: the UK daily basket and the Australian shelf-price index, as static snapshots under CC BY 4.0.">
+<meta name="description" content="A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices and the UK daily basket, as static snapshots under CC BY 4.0.">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
 <meta property="og:title" content="Grocery price snapshots MCP server — Yappman Data">
-<meta property="og:description" content="A free, read-only MCP server for AI assistants: the UK daily basket and the Australian shelf-price index, as static snapshots under CC BY 4.0.">
+<meta property="og:description" content="A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices and the UK daily basket, as static snapshots under CC BY 4.0.">
 <meta property="og:url" content="https://data.yappman.com/mcp/">
 <meta property="og:image" content="https://data.yappman.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -23,7 +23,7 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "Grocery price snapshots MCP server",
-  "description": "A free, read-only MCP server for AI assistants: the UK daily basket and the Australian shelf-price index, as static snapshots under CC BY 4.0.",
+  "description": "A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices and the UK daily basket, as static snapshots under CC BY 4.0.",
   "url": "https://data.yappman.com/mcp/",
   "mainEntityOfPage": "https://data.yappman.com/mcp/",
   "inLanguage": "en-GB",
@@ -65,17 +65,17 @@
 
 <h2>What it serves</h2>
 <ul>
-  <li><strong>The Australian shelf-price index:</strong> the published vintage files (2026-W42 so far).</li>
-  <li><strong>The UK daily 212-item basket:</strong> price, was-price, loyalty price, unit price, pack size and stock flag, per retailer per day, for 24 September to 8 October 2026.</li>
+  <li><strong>The UK and Australian shelf-price indices:</strong> the published vintage files.</li>
+  <li><strong>The UK daily 212-item basket:</strong> price, was-price, loyalty price, unit price, pack size and stock flag, per retailer per day, from 24 September 2026. The loaded days, and any day with no data, are shown by <code>about_the_data</code>.</li>
   <li>Which index vintages are loaded is shown by <code>list_index_vintages</code>.</li>
 </ul>
-<p>Every row carries a date, the retailer, the retailer's own product id and the barcode where there is one. The server does not serve product names, brands, descriptions, images or links: those are retailers' content.</p>
+<p>Every basket row carries a date, the retailer, the retailer's own product id and the barcode where there is one. The server does not serve product names, brands, descriptions, images or links: those are retailers' content.</p>
 
 <h2>The four tools</h2>
 <ul>
   <li><code>get_shelf_price_index</code> returns an index vintage for the UK or Australia.</li>
   <li><code>list_index_vintages</code> says which vintages exist.</li>
-  <li><code>lookup_basket_prices</code> finds basket rows by barcode (argument <code>eans</code>, a list of up to 20), for one day; each result row lists its barcodes in <code>ean</code>.</li>
+  <li><code>lookup_basket_prices</code> finds basket rows by barcode (<code>eans</code>) or retailer product id (<code>products</code>), up to 20 at a time, for one day; each result row lists its barcodes in <code>ean</code>. Aldi has no barcodes, so use product ids for Aldi.</li>
   <li><code>about_the_data</code> explains the licence, the limits and how to cite it.</li>
 </ul>
 
