@@ -23,7 +23,7 @@
 <a class="skip" href="#main">Skip to content</a>
 <div class="topbar"><div class="wrap">
 <nav aria-label="Main" class="mainnav">
-  <a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a>
+  <a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a>
   <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
   <ul class="nav-list" id="site-menu">
     <li class="nav-group mega"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-data" aria-haspopup="true">Data<span class="caret" aria-hidden="true"></span></button><div class="panel panel-mega" id="panel-data"><div class="panel-cols"><div class="panel-col"><h3 class="panel-h">Price data</h3><ul><li><a class="mi" href="https://apify.com/yappman/uk-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK supermarket prices</span><span class="badge live">Latest</span></span><span class="mi-desc">Weekly catalogue and a daily 212-item basket.</span></a></li><li><a class="mi" href="https://apify.com/yappman/au-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">AU supermarket prices</span><span class="badge soon">Oct 2026</span></span><span class="mi-desc">Aldi Australia shelf prices by keyword, category or product page.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-property-listings" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK property listings</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Rightmove and OnTheMarket listings, plus Rightmove sold prices.</span></a></li><li><a class="mi" href="https://apify.com/yappman/google-hotels-prices" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Google Hotels rates</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Google Hotels results and per-booking-site rates, by city or hotel.</span></a></li></ul></div><div class="panel-col"><h3 class="panel-h">Open data</h3><ul><li><a class="mi" href="https://apify.com/yappman/contracts-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Public contracts</span><span class="badge live">Latest</span></span><span class="mi-desc">Search UK public procurement notices. $0.005 a notice ($5.00 per 1,000) plus $0.005 a run.</span></a></li><li><a class="mi" href="https://apify.com/yappman/lei-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">LEI lookup</span><span class="badge live">Latest</span></span><span class="mi-desc">Legal Entity Identifier records by LEI, name or registration status. $0.001 an entity ($1.00 per 1,000), no start fee.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-importers-exporters" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK importers and exporters</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">HMRC trade lists by month, under the Open Government Licence. $0.005 a run plus $0.002 a trader row. Not affiliated with HMRC.</span></a></li></ul></div></div><div class="panel-foot"><a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener">Free basket snapshot, monthly (Kaggle)</a><a href="/methodology/#delivery">Delivery &amp; formats</a></div></div></li>
@@ -50,7 +50,7 @@
   <thead><tr><th>Index</th><th>UK Online Shelf-Price Index</th><th>AU Online Shelf-Price Index</th></tr></thead>
   <tbody>
     <tr><td>Retailers</td><td>Tesco, Sainsbury&#39;s, Asda, Aldi</td><td>Coles (a staples-first partial slice, about 21% of the products in the Coles lists in 2026-W41), Woolworths (store 1101), Aldi Australia (regular range); prices in AUD</td></tr>
-    <tr><td>Products</td><td>About 73,000 a week in the weekly snapshots (73,745 in week 40); matched counts on every row</td><td>Matched counts on every row</td></tr>
+    <tr><td>Products</td><td>Over 75,000 a week in the weekly snapshots (75,835 in week 43); matched counts on every row</td><td>Matched counts on every row</td></tr>
     <tr><td>Matching</td><td colspan="2">The same product in both weeks, by the retailer&#39;s own product id, with a price in both weeks</td></tr>
     <tr><td>Formula</td><td colspan="2">Geometric mean (Jevons) of the price ratios; equal weight to each product within a retailer-class cell, equal weight to each retailer, no spending weights</td></tr>
     <tr><td>Headline</td><td>All four retailers, weighted equally; a week is not published unless all four contribute</td><td>Like-for-like over the classes where Coles has at least 20 used products that week (at least 4 classes), the three retailers weighted equally</td></tr>
@@ -70,7 +70,7 @@
     <div class="card">
       <div class="card-top"><h3>UK weekly catalogue</h3><span class="badge live">Latest</span></div>
       <p class="meta">Tesco, Sainsbury's, Asda, Aldi; Morrisons in the Actor now (opt-in), and in the weekly series from November 2026</p>
-      <div class="big-num">~73,000 <small>rows per period</small></div>
+      <div class="big-num">75,000+ <small>rows per period</small></div>
       <p class="meta">Weekly, Sunday. History from 27 Sep 2026</p>
     </div>
     <div class="card">
@@ -110,7 +110,7 @@
     <div class="table-wrap"><table>
       <thead><tr><th>Series</th><th>Coverage</th><th>Frequency</th><th>Rows per period</th><th>History from</th></tr></thead>
       <tbody>
-        <tr><td>UK weekly catalogue</td><td>Tesco, Sainsbury's, Asda, Aldi; Morrisons in the Actor now (opt-in), and in the weekly series from November 2026</td><td>Weekly, Sunday</td><td>~73,000</td><td>27 Sep 2026</td></tr>
+        <tr><td>UK weekly catalogue</td><td>Tesco, Sainsbury's, Asda, Aldi; Morrisons in the Actor now (opt-in), and in the weekly series from November 2026</td><td>Weekly, Sunday</td><td>Over 75,000</td><td>27 Sep 2026</td></tr>
         <tr><td>UK daily basket</td><td>212 staple products across the four retailers (up to three per retailer for each of 20 staples), the same items every day.</td><td>Daily</td><td>212</td><td>24 Sep 2026</td></tr>
         <tr><td>Australia weekly catalogue</td><td>Coles, Woolworths, Aldi Australia</td><td>Weekly</td><td>~65,000</td><td>October 2026</td></tr>
         <tr><td>UK property listings (Actor on the Apify Store; weekly series planned)</td><td>Listing counts, asking prices and days on market by area from Rightmove and OnTheMarket listings</td><td>Weekly (planned)</td><td>—</td><td>Q4 2026</td></tr>
@@ -166,7 +166,7 @@
 <footer class="site-footer">
 <div class="wrap">
   <div class="foot-grid">
-    <div><a class="brand" href="/"><span class="mark">Y</span>Yappman Data</a><p>Price data kept as first published.</p></div>
+    <div><a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a><p>Price data kept as first published.</p></div>
     <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a><a href="/actors/">Our Actors</a></div>
     <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
     <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a></div>

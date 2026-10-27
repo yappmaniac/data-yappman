@@ -63,12 +63,13 @@ nav .links{display:flex;flex-wrap:wrap;gap:6px 22px}
 .menu-btn{display:none;align-items:center;background:none;border:1px solid #5f7a99;color:#fff;border-radius:8px;padding:6px 14px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .menu-btn:hover{background:var(--navy-2)}
 nav a[aria-current="page"]{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--mint)}
-.mark{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:var(--brand);color:#fff;font-size:15px;font-weight:700;line-height:1}
+.mark{display:inline-block;width:26px;height:26px;border-radius:4px;background:url(/assets/favicon.svg) center/cover no-repeat;color:transparent;font-size:0;line-height:0;overflow:hidden}
 
 /* hero */
 .hero{background:var(--navy);color:var(--on-navy);padding:44px 0 48px}
 .hero .eyebrow{color:var(--on-navy-muted);font-size:14px;margin:0 0 10px}
 .hero h1{font-size:40px;max-width:720px;color:#fff;margin-bottom:12px}
+.hero .tagline{color:#fff;font-size:20px;font-weight:600;line-height:1.35;max-width:720px;margin:0 0 14px}
 .hero .lead{color:var(--on-navy-muted);font-size:18px;max-width:640px;margin:0 0 22px}
 .hero .actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
 .btn{display:inline-block;padding:11px 20px;border-radius:8px;font:inherit;font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;cursor:pointer;line-height:1.4}
