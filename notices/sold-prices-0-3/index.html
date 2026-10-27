@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Notice: sold-prices mode changes in version 0.3 — UK Property Listings</title>
-<meta name="description" content="From version 0.3 (not before 5 November 2026), UK Property Listings' sold-prices mode reads our own monthly copy of HM Land Registry's Price Paid Data. What changes and what to check.">
+<meta name="description" content="From version 0.3 (not before 27 November 2026), UK Property Listings' sold-prices mode reads our own monthly copy of HM Land Registry's Price Paid Data. What changes and what to check.">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
 <meta property="og:title" content="Notice: sold-prices mode changes in version 0.3 — UK Property Listings">
-<meta property="og:description" content="From version 0.3 (not before 5 November 2026), UK Property Listings' sold-prices mode reads our own monthly copy of HM Land Registry's Price Paid Data. What changes and what to check.">
+<meta property="og:description" content="From version 0.3 (not before 27 November 2026), UK Property Listings' sold-prices mode reads our own monthly copy of HM Land Registry's Price Paid Data. What changes and what to check.">
 <meta property="og:url" content="https://data.yappman.com/notices/sold-prices-0-3/">
 <meta property="og:image" content="https://data.yappman.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,41 +37,36 @@
 </div></div>
 <main id="main" tabindex="-1">
 <header>
-  <h1>Notice: sold-prices mode changes in version 0.3</h1>
-  <p class="sub">UK Property Listings on the Apify Store. Posted 5 October 2026. Version 0.3 will not be released before <strong>5 November 2026</strong>.</p>
-  <p class="sub">Clarified 6 October 2026.</p>
-  <p class="sub">Changed 7 October 2026.</p>
-  <p class="sub">Updated 8 October 2026.</p>
-  <p class="sub">Changed 27 October 2026.</p>
+  <h1>Notice: sold-prices mode changes in version 0.3 (not before 27 November 2026)</h1>
+  <p class="sub">UK Property Listings on the Apify Store. First posted 5 October 2026. Amended 27 October 2026.</p>
 </header>
 
-<p>From version 0.3 of <a href="https://apify.com/yappman/uk-property-listings">UK Property Listings</a>, <code>mode: "sold-prices"</code> will read sold prices from our own monthly copy of HM Land Registry's Price Paid Data instead of Rightmove's sold-price pages. If you use sold-prices mode, your inputs and the rows you get back will change. Listings mode (search and listing) does not change.</p>
+<p>From version 0.3 of <a href="https://apify.com/yappman/uk-property-listings">UK Property Listings</a>, <code>mode: "sold-prices"</code> will read sold prices from our own monthly copy of HM Land Registry's Price Paid Data instead of Rightmove's sold-price pages. Listings mode (search and listing) does not change.</p>
+
+<p><strong>What the amendment changes.</strong> Version 0.3 now changes more than the first notice said: rows carry no HM Land Registry transaction id, full postcodes are no longer accepted as input, and rows carry the postcode sector and the outcode only, with no coordinates. Because of that, the earliest release date moves from 5 November to <strong>27 November 2026</strong>, 30 days after this amended notice.</p>
 
 <h2>What changes</h2>
 <ul>
-  <li><strong>One row per sale, not per property.</strong> Each row is one registered sale, with its <code>price</code> and <code>date</code>. The <code>propertyId</code>, <code>sales</code>, <code>lastSoldPrice</code>, <code>lastSoldDate</code>, <code>area</code> and <code>landRegistryUpdatedAt</code> fields go. New fields: <code>tenure</code>, <code>newBuild</code>, <code>category</code> and <code>localAuthority</code> on every row (<code>tenure</code> and <code>localAuthority</code> are null where HM Land Registry or the ONS Postcode Directory has no value). Rows carry the postcode sector and the outcode, and no HM Land Registry transaction id. (Changed 27 October 2026.)</li>
-  <li><strong><code>portal</code> becomes <code>"landregistry"</code></strong> on sold-price rows.</li>
-  <li><strong><code>postcode</code> is now the postcode sector</strong> (for example <code>LS6 3</code>), not the full postcode; <code>outcode</code> stays. <code>latitude</code>, <code>longitude</code> and <code>coordinatesSource</code> are always null: sold-price rows no longer carry coordinates. (Changed 27 October 2026.)</li>
-  <li><strong>No transaction id.</strong> Rows do not carry HM Land Registry's transaction id, so rows can no longer be de-duplicated or joined across runs by that id. (Changed 27 October 2026.)</li>
-  <li><strong>History: back to 1995.</strong> A run with no dates set looks back 10 years; <code>soldWithinYears</code> (up to 40) or <code>soldFrom</code> reaches back to 1 January 1995, the first year of HM Land Registry's data. (Updated 8 October 2026.)</li>
-  <li><strong>Every registered sale in the chosen category.</strong> The 1,000-rows-per-area limit goes. The 1,000-rows-per-run ceiling and <code>maxItems</code> stay.</li>
-  <li><strong>Inputs.</strong> Postcode sectors, outcodes and local authority names. Full postcodes are not accepted. Rightmove <code>/house-prices/</code> URLs are no longer accepted; a run that gives one is told which input to use instead. (Changed 27 October 2026.)</li>
-  <li><strong>Filters.</strong> Any date range, price, property type, tenure, new build and category.</li>
-  <li><strong>Which sales.</strong> By default, rows are HM Land Registry's standard (category A) sales, the ones Rightmove's sold pages show; <code>saleCategory</code> <code>"additional"</code> (repossessions, buy-to-let and company purchases, transfers not at market value) or <code>"any"</code> widens it.</li>
-  <li><strong>Price.</strong> <code>sold-price</code> falls from $3.00 to $2.00 per 1,000 rows (higher plans $1.80, $1.60 and $1.40), plus the per-run start event, only when rows are returned; a run is not charged if our copy is out of date. (Changed 7 October 2026.)</li>
-  <li><strong>Bedrooms and bathrooms are opt-in</strong> (<code>includeBedsBaths</code>, off by default). When on, they are filled only where a sale matches Rightmove's sold record exactly, so they are often empty for older sales.</li>
-  <li><strong>Freshness.</strong> Updated within days of each monthly HM Land Registry release. HM Land Registry registers sales weeks to months after completion, so the newest months are always incomplete.</li>
+  <li><strong>One row per sale, not per property.</strong> Each row is one registered sale, with its <code>price</code> and <code>date</code>, plus <code>tenure</code>, <code>newBuild</code>, <code>category</code> and <code>localAuthority</code>. The <code>propertyId</code>, <code>sales</code>, <code>lastSoldPrice</code>, <code>lastSoldDate</code>, <code>area</code> and <code>landRegistryUpdatedAt</code> fields go. <code>portal</code> becomes <code>"landregistry"</code>.</li>
+  <li><strong>No transaction id.</strong> Rows do not carry HM Land Registry's transaction id, so rows cannot be joined across runs by that id. (New in this amendment.)</li>
+  <li><strong>Postcode sector and outcode only.</strong> <code>postcode</code> holds the postcode sector (for example <code>LS6 3</code>), never the full postcode; <code>outcode</code> stays. <code>latitude</code>, <code>longitude</code> and <code>coordinatesSource</code> are always null for sold-price rows. (New in this amendment: the first notice said postcode level with the postcode's centroid.)</li>
+  <li><strong>Inputs.</strong> Postcode sectors, outcodes and local authority names. Full postcodes are not accepted: they are skipped, with a note in the run summary. Rightmove <code>/house-prices/</code> URLs are no longer accepted. (New in this amendment: the first notice listed full postcodes as an input.)</li>
+  <li><strong>History back to 1995.</strong> A run with no dates set looks back 10 years; <code>soldWithinYears</code> (up to 40) or <code>soldFrom</code> reaches back to 1 January 1995.</li>
+  <li><strong>Every registered sale</strong> in the chosen category, with no per-area limit. The 1,000-rows-per-run ceiling and <code>maxItems</code> stay.</li>
+  <li><strong>Standard sales by default</strong> (HM Land Registry's category A, the sales Rightmove's sold pages show). <code>saleCategory: "additional"</code> (repossessions, buy-to-let and company purchases, and transfers not at market value) or <code>"any"</code> widens it.</li>
+  <li><strong>Bedrooms and bathrooms are opt-in</strong> (<code>includeBedsBaths</code>, off by default), filled only where a sale matches Rightmove's sold record exactly, so they are often empty.</li>
+  <li><strong>Price.</strong> From version 0.3, <code>sold-price</code> falls from $3.00 to $2.00 per 1,000 rows (higher plans $1.80, $1.60 and $1.40 per 1,000), plus the per-run start event, only when rows are returned. Until 0.3 is released, sold-price rows stay at $3.00 per 1,000.</li>
 </ul>
 
 <h2>What does not change</h2>
 <ul>
-  <li>No street address in any row. (Changed 27 October 2026.)</li>
+  <li>No street address in any row.</li>
   <li>England and Wales only.</li>
-  <li>Sale prices and dates are HM Land Registry's Price Paid Data, and local authorities come from the ONS Postcode Directory; both are under the Open Government Licence.</li>
+  <li>The data is HM Land Registry's, under the Open Government Licence.</li>
 </ul>
 
 <h2>What to do</h2>
-<p>If you call sold-prices mode from code or a scheduled task, check your inputs and the fields you read against the list above before 5 November 2026. The full details will be in the Actor's README and CHANGELOG with the release.</p>
+<p>If you call sold-prices mode from code or a scheduled task, check your inputs and the fields you read against the list above before 27 November 2026. In particular, replace full postcodes with postcode sectors, and stop relying on a transaction id or on coordinates in sold-price rows. The full details will be in the README and CHANGELOG with the release.</p>
 
 </main>
 <footer class="site-footer">
