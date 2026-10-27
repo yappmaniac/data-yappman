@@ -42,20 +42,20 @@
   <p class="sub">Clarified 6 October 2026.</p>
   <p class="sub">Changed 7 October 2026.</p>
   <p class="sub">Updated 8 October 2026.</p>
-  <p class="sub">Changed 20 October 2026.</p>
+  <p class="sub">Changed 27 October 2026.</p>
 </header>
 
 <p>From version 0.3 of <a href="https://apify.com/yappman/uk-property-listings">UK Property Listings</a>, <code>mode: "sold-prices"</code> will read sold prices from our own monthly copy of HM Land Registry's Price Paid Data instead of Rightmove's sold-price pages. If you use sold-prices mode, your inputs and the rows you get back will change. Listings mode (search and listing) does not change.</p>
 
 <h2>What changes</h2>
 <ul>
-  <li><strong>One row per sale, not per property.</strong> Each row is one registered sale, with its <code>price</code> and <code>date</code>. The <code>propertyId</code>, <code>sales</code>, <code>lastSoldPrice</code>, <code>lastSoldDate</code>, <code>area</code> and <code>landRegistryUpdatedAt</code> fields go. New fields: <code>tenure</code>, <code>newBuild</code>, <code>category</code> and <code>localAuthority</code> on every row. Rows carry the postcode sector and the outcode, and no HM Land Registry transaction id. (Changed 20 October 2026.)</li>
+  <li><strong>One row per sale, not per property.</strong> Each row is one registered sale, with its <code>price</code> and <code>date</code>. The <code>propertyId</code>, <code>sales</code>, <code>lastSoldPrice</code>, <code>lastSoldDate</code>, <code>area</code> and <code>landRegistryUpdatedAt</code> fields go. New fields: <code>tenure</code>, <code>newBuild</code>, <code>category</code> and <code>localAuthority</code> on every row (<code>tenure</code> and <code>localAuthority</code> are null where HM Land Registry or the ONS Postcode Directory has no value). Rows carry the postcode sector and the outcode, and no HM Land Registry transaction id. (Changed 27 October 2026.)</li>
   <li><strong><code>portal</code> becomes <code>"landregistry"</code></strong> on sold-price rows.</li>
-  <li><strong><code>postcode</code> is now the postcode sector</strong> (for example <code>LS6 3</code>), not the full postcode; <code>outcode</code> stays. <code>latitude</code>, <code>longitude</code> and <code>coordinatesSource</code> are always null: sold-price rows no longer carry coordinates. (Changed 20 October 2026.)</li>
-  <li><strong>No transaction id.</strong> Rows do not carry HM Land Registry's transaction id, so rows can no longer be de-duplicated or joined across runs by that id. (Changed 20 October 2026.)</li>
+  <li><strong><code>postcode</code> is now the postcode sector</strong> (for example <code>LS6 3</code>), not the full postcode; <code>outcode</code> stays. <code>latitude</code>, <code>longitude</code> and <code>coordinatesSource</code> are always null: sold-price rows no longer carry coordinates. (Changed 27 October 2026.)</li>
+  <li><strong>No transaction id.</strong> Rows do not carry HM Land Registry's transaction id, so rows can no longer be de-duplicated or joined across runs by that id. (Changed 27 October 2026.)</li>
   <li><strong>History: back to 1995.</strong> A run with no dates set looks back 10 years; <code>soldWithinYears</code> (up to 40) or <code>soldFrom</code> reaches back to 1 January 1995, the first year of HM Land Registry's data. (Updated 8 October 2026.)</li>
-  <li><strong>Every registered sale.</strong> The 1,000-rows-per-area limit goes. The 1,000-rows-per-run ceiling and <code>maxItems</code> stay.</li>
-  <li><strong>Inputs.</strong> Postcode sectors, outcodes and local authority names. Full postcodes are not accepted. Rightmove <code>/house-prices/</code> URLs are no longer accepted; a run that gives one is told which input to use instead. (Changed 20 October 2026.)</li>
+  <li><strong>Every registered sale in the chosen category.</strong> The 1,000-rows-per-area limit goes. The 1,000-rows-per-run ceiling and <code>maxItems</code> stay.</li>
+  <li><strong>Inputs.</strong> Postcode sectors, outcodes and local authority names. Full postcodes are not accepted. Rightmove <code>/house-prices/</code> URLs are no longer accepted; a run that gives one is told which input to use instead. (Changed 27 October 2026.)</li>
   <li><strong>Filters.</strong> Any date range, price, property type, tenure, new build and category.</li>
   <li><strong>Which sales.</strong> By default, rows are HM Land Registry's standard (category A) sales, the ones Rightmove's sold pages show; <code>saleCategory</code> <code>"additional"</code> (repossessions, buy-to-let and company purchases, transfers not at market value) or <code>"any"</code> widens it.</li>
   <li><strong>Price.</strong> <code>sold-price</code> falls from $3.00 to $2.00 per 1,000 rows (higher plans $1.80, $1.60 and $1.40), plus the per-run start event, only when rows are returned; a run is not charged if our copy is out of date. (Changed 7 October 2026.)</li>
@@ -65,9 +65,9 @@
 
 <h2>What does not change</h2>
 <ul>
-  <li>No street address in any row. (Changed 20 October 2026.)</li>
+  <li>No street address in any row. (Changed 27 October 2026.)</li>
   <li>England and Wales only.</li>
-  <li>The data is HM Land Registry's, under the Open Government Licence.</li>
+  <li>Sale prices and dates are HM Land Registry's Price Paid Data, and local authorities come from the ONS Postcode Directory; both are under the Open Government Licence.</li>
 </ul>
 
 <h2>What to do</h2>
