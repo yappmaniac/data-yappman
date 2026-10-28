@@ -19,14 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: main
       - name: Fetch the record
         env:
           SUMMARY_URL: ${{ vars.BASKET_SUMMARY_URL }}
         run: |
-          case "$SUMMARY_URL" in https://api.apify.com/v2/key-value-stores/*/records/WEEKLY-SUMMARY) ;; *) echo "unexpected URL"; exit 1;; esac
+          if ! [[ "$SUMMARY_URL" =~ ^https://api\.apify\.com/v2/key-value-stores/[A-Za-z0-9]{6,32}/records/WEEKLY-SUMMARY$ ]]; then echo "unexpected URL"; exit 1; fi
           curl -fsS --max-time 30 --max-filesize 70000 -H "Accept: application/json" "$SUMMARY_URL" -o incoming.json
       - name: Validate it (a failure stops here and leaves the current copy in place)
         run: |

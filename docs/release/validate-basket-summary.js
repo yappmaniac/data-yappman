@@ -11,6 +11,9 @@ const ITEMS = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
 const FLAGS = new Set(["fresh", "frozen", "size-differs", "pack-changed", "optional",
   "gap:no-line", "gap:held", "gap:not-priced", "gap:blocked", "gap:implausible"]);
 const REASONS = new Set(["no-line", "held", "not-priced", "blocked", "implausible"]);
+// UTC timestamps only, for example 2026-10-28T05:45:41Z or 2026-10-28T05:45:41.123Z.
+const ISO_UTC = /^20\d\d-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d(\.\d{1,3})?Z$/;
+const isoTime = v => typeof v === "string" && v.length <= 24 && ISO_UTC.test(v) && isFinite(Date.parse(v));
 
 function fail(msg) { process.stderr.write("invalid: " + msg + "\n"); process.exit(1); }
 const isObj = v => v !== null && typeof v === "object" && !Array.isArray(v);
@@ -28,8 +31,8 @@ try { rec = JSON.parse(raw.toString("utf8")); } catch (e) { fail("not JSON"); }
 if (!isObj(rec)) fail("not an object");
 keysOnly(rec, ["schema", "updated", "weeks", "gaps"], "record");
 if (rec.schema !== 1) fail("schema is not 1");
+if (!isoTime(rec.updated)) fail("updated is not a UTC timestamp");
 const updated = Date.parse(rec.updated);
-if (typeof rec.updated !== "string" || !isFinite(updated)) fail("updated is not a date");
 if (updated > Date.now() + 3600e3) fail("updated is in the future");
 if (!Array.isArray(rec.weeks) || rec.weeks.length < 1 || rec.weeks.length > 9) fail("weeks must hold 1 to 9 entries");
 const seen = new Set();
@@ -40,7 +43,7 @@ rec.weeks.forEach((w, i) => {
   if (typeof w.week !== "string" || !/^20\d\d-W\d\d$/.test(w.week) || seen.has(w.week)) fail(at + ": bad or repeated week");
   seen.add(w.week);
   if (typeof w.asOf !== "string" || !/^20\d\d-\d\d-\d\d$/.test(w.asOf)) fail(at + ": bad asOf");
-  if (w.appliedAt !== undefined && (typeof w.appliedAt !== "string" || !isFinite(Date.parse(w.appliedAt)))) fail(at + ": bad appliedAt");
+  if (w.appliedAt !== undefined && !isoTime(w.appliedAt)) fail(at + ": bad appliedAt");
   count(w.commonItems, at + ".commonItems");
   if (!isObj(w.commonTotal)) fail(at + ".commonTotal missing");
   keysOnly(w.commonTotal, RETAILERS, at + ".commonTotal");
