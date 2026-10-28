@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://data.yappman.com/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/shelf-price-index/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/au-shelf-price-index/</loc>
@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://data.yappman.com/notices/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/notices/w41-skipped/</loc>
@@ -22,11 +22,11 @@
   </url>
   <url>
     <loc>https://data.yappman.com/notices/default-retailers/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-27</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/notices/matchkey/</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-27</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/notices/sold-prices-0-3/</loc>
@@ -38,7 +38,7 @@
   </url>
   <url>
     <loc>https://data.yappman.com/methodology/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/demos/</loc>
@@ -54,7 +54,7 @@
   </url>
   <url>
     <loc>https://data.yappman.com/shelf-price-index/method/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/shelf-price-index/data-dictionary/</loc>
@@ -78,10 +78,18 @@
   </url>
   <url>
     <loc>https://data.yappman.com/actors/</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-10-28</lastmod>
   </url>
   <url>
     <loc>https://data.yappman.com/council-tax/</loc>
     <lastmod>2026-10-27</lastmod>
+  </url>
+  <url>
+    <loc>https://data.yappman.com/notices/ean-cleanup/</loc>
+    <lastmod>2026-10-28</lastmod>
+  </url>
+  <url>
+    <loc>https://data.yappman.com/christmas-basket/</loc>
+    <lastmod>2026-10-28</lastmod>
   </url>
 </urlset>

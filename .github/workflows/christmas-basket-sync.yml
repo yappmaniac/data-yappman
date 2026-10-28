@@ -1,0 +1,52 @@
+# Copies the public Christmas basket summary record into the site as data/christmas-basket.json.
+# Runs daily at 06:20 UTC, after the 05:45 UTC basket run. The job does nothing unless the repository variable
+# BASKET_SYNC_ENABLED is "true" and BASKET_SUMMARY_URL holds the record's public URL (Settings > Secrets and variables >
+# Actions > Variables). Setting BASKET_SYNC_ENABLED to anything else stops it. No secret or token is used: the record is public.
+name: christmas-basket-sync
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 6 * * *"
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: christmas-basket-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    if: ${{ vars.BASKET_SYNC_ENABLED == 'true' && vars.BASKET_SUMMARY_URL != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Fetch the record
+        env:
+          SUMMARY_URL: ${{ vars.BASKET_SUMMARY_URL }}
+        run: |
+          case "$SUMMARY_URL" in https://api.apify.com/v2/key-value-stores/*/records/WEEKLY-SUMMARY) ;; *) echo "unexpected URL"; exit 1;; esac
+          curl -fsS --max-time 30 --max-filesize 70000 -H "Accept: application/json" "$SUMMARY_URL" -o incoming.json
+      - name: Validate it (a failure stops here and leaves the current copy in place)
+        run: |
+          node docs/release/validate-basket-summary.js incoming.json data/christmas-basket.json > checked.json
+      - name: Commit it if it changed
+        id: commit
+        run: |
+          mkdir -p data
+          if [ -f data/christmas-basket.json ] && cmp -s checked.json data/christmas-basket.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          cp checked.json data/christmas-basket.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/christmas-basket.json
+          git commit -m "Update the Christmas basket summary"
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Ask GitHub Pages to build (pushes made with the workflow token may not start a build by themselves)
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"

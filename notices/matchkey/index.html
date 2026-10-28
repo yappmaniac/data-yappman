@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Notice: matchKey changes — UK Supermarket Price Scraper</title>
-<meta name="description" content="Announced 5 October 2026; ships no earlier than 4 November 2026. How the UK Supermarket Price Scraper matchKey changes and how matchKeyV1 keeps existing joins working.">
+<meta name="description" content="Announced 5 October 2026; ships no earlier than 5 November 2026. How the UK Supermarket Price Scraper matchKey changes and how matchKeyV1 keeps existing joins working.">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
 <meta property="og:title" content="Notice: matchKey changes — UK Supermarket Price Scraper">
-<meta property="og:description" content="Announced 5 October 2026; ships no earlier than 4 November 2026. How the UK Supermarket Price Scraper matchKey changes and how matchKeyV1 keeps existing joins working.">
+<meta property="og:description" content="Announced 5 October 2026; ships no earlier than 5 November 2026. How the UK Supermarket Price Scraper matchKey changes and how matchKeyV1 keeps existing joins working.">
 <meta property="og:url" content="https://data.yappman.com/notices/matchkey/">
 <meta property="og:image" content="https://data.yappman.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -38,10 +38,11 @@
 <main id="main" tabindex="-1">
 <header>
   <h1>Notice: matchKey changes</h1>
-  <p class="sub">UK Supermarket Price Scraper on the Apify Store. Posted 5 October 2026. Ships no earlier than <strong>4 November 2026</strong>.</p>
+  <p class="sub">UK Supermarket Price Scraper on the Apify Store. Posted 5 October 2026. Ships no earlier than <strong>5 November 2026</strong>.</p>
+  <p class="sub">Updated 27 October 2026: the release date moved from no earlier than 4 November to no earlier than 5 November 2026.</p>
 </header>
 
-<p>Announced change to matchKey (UK Supermarket Price Scraper), 5 October 2026. Ships no earlier than 4 November 2026. Unit words in product names are written in the singular, so "2 Pints" and "2 Pint" give the same key. Pint-sized volumes are written in pints: a pack within 0.5% of a whole number of UK pints becomes &lt;n&gt;pt, so "2.272L", "2.27L", "2272ml" and "4 pint" all become 4pt; pint-sized means 1 to 8 pints (per unit of a multipack, so "2x568ml" becomes 2x1pt), and larger volumes such as a 70 L bin bag stay in ml; other sizes stay in ml and g. For one release, UK rows also carry matchKeyV1, the key exactly as built today, so existing joins keep working while you switch; matchKeyV1 is removed in the release after that, with its own notice. The same release also adds the fields matchBasis (which parts of the row went into its matchKey) and matchConfidence (0 to 1: the measured chance that another retailer's row with the same matchKey is the same product); both are additive. No existing field, price or event changes. UK edition only; AU rows are unaffected.</p>
+<p>Announced change to matchKey (UK Supermarket Price Scraper), 5 October 2026. Ships no earlier than 5 November 2026. Unit words in product names are written in the singular, so "2 Pints" and "2 Pint" give the same key. Pint-sized volumes are written in pints: a pack within 0.5% of a whole number of UK pints becomes &lt;n&gt;pt, so "2.272L", "2.27L", "2272ml" and "4 pint" all become 4pt; pint-sized means 1 to 8 pints (per unit of a multipack, so "2x568ml" becomes 2x1pt), and larger volumes such as a 70 L bin bag stay in ml; other sizes stay in ml and g. For one release, UK rows also carry matchKeyV1, the key exactly as built today, so existing joins keep working while you switch; matchKeyV1 is removed in the release after that, with its own notice. The same release also adds the fields matchBasis (which parts of the row went into its matchKey) and matchConfidence (0 to 1: the measured chance that another retailer's row with the same matchKey is the same product); both are additive. No existing field, price or event changes. UK edition only; AU rows are unaffected.</p>
 
 </main>
 <footer class="site-footer">
