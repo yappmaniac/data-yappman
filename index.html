@@ -61,13 +61,13 @@
   ],
   "spatialCoverage": "United Kingdom",
   "temporalCoverage": "2026-09-24/..",
-  "distribution": [
-    {
-      "@type": "DataDownload",
-      "encodingFormat": "text/csv",
-      "contentUrl": "https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket"
-    }
-  ]
+  "variableMeasured": [
+    {"@type": "PropertyValue", "name": "shelfPrice", "description": "The shelf price shown online for each product"},
+    {"@type": "PropertyValue", "name": "wasPrice", "description": "The was-price, where a retailer publishes one"},
+    {"@type": "PropertyValue", "name": "loyaltyPrice", "description": "The loyalty price, where a retailer publishes one"}
+  ],
+  "measurementTechnique": "The online catalogue of each of four UK supermarkets is read from its website for a fixed basket of 212 products (up to three per retailer for each of 20 staples), the same items each time.",
+  "citation": "Yappman Data. UK Supermarket Prices: Daily 212-Item Basket [data set]. CC BY 4.0. https://data.yappman.com/"
 }
 </script>
 </head>
