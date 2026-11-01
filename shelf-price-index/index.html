@@ -184,9 +184,8 @@
 </footer>
 
 <script>
-// ---- configuration: set once, when the public dataset exists ----
+// UK Online Shelf-Price Index: reads the public Apify dataset (anyone with the id can read).
 const DATASET_ID = "AvRCWqFinCiNjx3sP"; // Apify dataset id of uk-shelf-price-index (read-by-id)
-// -----------------------------------------------------------------
 const BASE = `https://api.apify.com/v2/datasets/${DATASET_ID}/items`;
 const RETAILER_NAMES = { tesco:"Tesco", sainsburys:"Sainsbury's", asda:"Asda", aldi:"Aldi", morrisons:"Morrisons" };
 
