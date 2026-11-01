@@ -79,11 +79,12 @@
 </ul>
 <p>Every basket row carries a date, the retailer, the retailer's own product id and the barcode where there is one. The server does not serve product names, brands, descriptions, images or links: those are retailers' content.</p>
 
-<h2>The four tools</h2>
+<h2>The five tools</h2>
 <ul>
   <li><code>get_shelf_price_index</code> returns an index vintage for the UK or Australia.</li>
   <li><code>list_index_vintages</code> says which vintages exist.</li>
   <li><code>lookup_basket_prices</code> finds basket rows by barcode (<code>eans</code>) or retailer product id (<code>products</code>), up to 20 at a time, for one day; each result row lists its barcodes in <code>ean</code>. Aldi has no barcodes, so use product ids for Aldi.</li>
+  <li><code>list_basket_products</code> (from version 0.2.5) lists the identifiers in the daily basket for one day, sorted, with paging: the retailer, the retailer product id and the barcodes in <code>ean</code> (empty where the basket holds none, as for Aldi). It returns no names, brands or prices; pass the ids or barcodes to <code>lookup_basket_prices</code>.</li>
   <li><code>about_the_data</code> explains the licence, the limits and how to cite it, and from version 0.2.2 points to the UK and Australia supermarket Actors.</li>
 </ul>
 
