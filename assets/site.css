@@ -299,6 +299,7 @@ nav.mainnav{position:relative}
 .panel{display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:250px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 36px rgba(8,20,36,.30);padding:8px;z-index:60}
 .panel::before{content:"";position:absolute;left:0;right:0;top:-8px;height:8px}
 .panel-mega{left:0;right:0;padding:18px}
+@media (min-width:769px){.panel-mega .panel-cols{max-height:calc(100vh - 175px);overflow-y:auto}}
 .panel ul{list-style:none;margin:0;padding:0}
 .panel-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px}
 .panel-h{font-size:13px;font-weight:700;color:var(--muted);margin:0 0 6px 12px}
