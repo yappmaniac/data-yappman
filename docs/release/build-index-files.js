@@ -10,8 +10,9 @@
 // --new is needed only for the first build, when neither site file exists yet.
 //
 // What the two files hold:
-//  - JSON: a flat array of the dataset's items, grouped by vintage, the meta item first, as in the vintage files (the same item
-//    shapes as the Apify dataset's JSON); nothing is added or dropped.
+//  - JSON: a flat array of the dataset's items, grouped by vintage, the meta item first, as in the vintage files; nothing is
+//    added; an empty meta coverageWarnings list is left out, as the dataset does not return it (seen for 2026-W43 and 2026-W44).
+//    Only known meta keys are accepted, so nothing unexpected in a local file reaches the public copy.
 //  - CSV: the rows only (no meta), with the tool's 16 columns in its order plus one last column, base, copied from the vintage's
 //    meta (2026-W39 for the closed series, 2026-W42 after the restart), so a chart can tell the two series apart. Vintages from
 //    before the four flow columns existed (entered, left, relinked, missingPackSize) leave them empty, as the tool's own CSV does.
@@ -24,10 +25,10 @@
 //    or named in the meta, only known columns, every number finite or null; exactly one headline row, one row per retailer;
 //  - the tool's CSV must have the same rows as the JSON, field for field; a quoted field or an unknown column stops the build;
 //  - --check re-reads both site files and fails unless they agree with each other row for row;
-//  - atomic writes with rollback (the commit() of stamp-latest.js); no network, no eval, no child processes (only fs and path).
+//  - atomic writes with rollback (as in stamp-latest.js; a file that did not exist before is deleted again, not left empty);
+//    no network, no eval, no child processes (only fs and path).
 const fs = require("fs");
 const path = require("path");
-const { commit } = require("./stamp-latest.js");
 
 const TITLE = "UK Online Shelf-Price Index";
 const CSV_OUT = "data/uk-shelf-price-index.csv";
@@ -40,6 +41,7 @@ const RECORD_TYPES = new Set(["headline", "retailer", "class", "retailer_class",
 const STATUSES = new Set(["ok", "carried", "insufficient", "base"]);
 const WEEK_RE = /^\d{4}-W(0[1-9]|[1-4]\d|5[0-3])$/;
 const ISO_RE = /^(\d{4}-\d{2}-\d{2})(T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2})?)?$/;
+const META_KEYS = new Set(["vintage", "publishedAt", "revision", "recordType", "title", "base", "weighting", "retailers", "classes", "matchedTotal", "coverageWarnings", "headlineRetailers", "methodologyUrl", "notCpi", "measures", "license", "subtotals"]);
 const NUM_RE = /^-?\d+(\.\d+)?([eE][-+]?\d+)?$/;
 const SLUG_RE = /^[a-z][a-z0-9-]{0,40}$/;
 const KNOWN_FLAGS = new Set(["uk", "confirm-uk", "new", "root", "check"]);
@@ -49,6 +51,11 @@ const isNum = v => typeof v === "number" && isFinite(v);
 
 function checkMeta(meta, vintage, today) {
   if (!meta || meta.recordType !== "meta" || meta.vintage !== vintage) throw new Error(`no meta item for ${vintage}`);
+  for (const k of Object.keys(meta)) if (!META_KEYS.has(k)) throw new Error(`${vintage}: unknown meta key ${k}`);
+  for (const k of ["weighting", "methodologyUrl", "measures"]) if (k in meta && typeof meta[k] !== "string") throw new Error(`${vintage}: meta ${k} is not text`);
+  for (const k of ["matchedTotal", "headlineRetailers"]) if (k in meta && meta[k] !== null && !isNum(meta[k])) throw new Error(`${vintage}: meta ${k} is not a finite number or null`);
+  if ("notCpi" in meta && meta.notCpi !== true) throw new Error(`${vintage}: meta notCpi is not true`);
+  if ("coverageWarnings" in meta && (!Array.isArray(meta.coverageWarnings) || !meta.coverageWarnings.every(w => typeof w === "string"))) throw new Error(`${vintage}: meta coverageWarnings is not a list of text`);
   if (meta.revision !== 1) throw new Error(`${vintage}: meta revision is not 1`);
   if (meta.license !== "CC BY 4.0") throw new Error(`${vintage}: meta licence is not CC BY 4.0`);
   if (meta.title !== TITLE) throw new Error(`${vintage}: meta title is not "${TITLE}"`);
@@ -116,7 +123,9 @@ function readVintage(file, vintage, today) {
   const fields = parseCsv(fs.readFileSync(csvFile, "utf8"), csvFile);
   if (fields.length !== data.rows.length) throw new Error(`${vintage}: the CSV has ${fields.length} rows, the JSON ${data.rows.length}`);
   const lines = data.rows.map((r, i) => csvLine(fields[i], r, data.meta, `${vintage} row ${i + 1}`));
-  return { items: [data.meta, ...data.rows], lines };
+  const meta = { ...data.meta };
+  if (Array.isArray(meta.coverageWarnings) && !meta.coverageWarnings.length) delete meta.coverageWarnings;
+  return { items: [meta, ...data.rows], lines };
 }
 
 // The current site files -> { items, lines, last } after checking that they agree.
@@ -165,12 +174,35 @@ function build(opts) {
     const v = readVintage(file, vintage, today);
     items.push(...v.items); lines.push(...v.lines); last = vintage;
   }
-  const out = new Map(), orig = new Map();
-  const put = (f, s) => { const p = path.join(root, f); orig.set(p, fs.existsSync(p) ? fs.readFileSync(p, "utf8") : ""); out.set(p, s); };
+  const out = new Map(), orig = new Map(); // orig: null for a file that does not exist yet
+  const put = (f, s) => { const p = path.join(root, f); orig.set(p, fs.existsSync(p) ? fs.readFileSync(p, "utf8") : null); out.set(p, s); };
   fs.mkdirSync(path.join(root, "data"), { recursive: true });
   put(CSV_OUT, [OUT_COLUMNS.join(","), ...lines].join("\n") + "\n");
   put(JSON_OUT, "[\n" + items.map(it => JSON.stringify(it)).join(",\n") + "\n]\n");
   return { out, orig, last, rows: lines.length };
+}
+
+// Writes after validation: temporary files first, then renames; if a rename fails, the files already replaced are put back
+// (or deleted, if they are new). The temporary suffix is the one .gitignore already covers.
+function commit(out, orig) {
+  const tmp = [];
+  const cleanup = () => { const left = []; for (const [, t] of tmp) { try { if (fs.existsSync(t)) fs.unlinkSync(t); } catch { left.push(t); } } return left; };
+  try {
+    for (const [p, s] of out) { const t = p + ".stamp-tmp"; tmp.push([p, t]); fs.writeFileSync(t, s); }
+  } catch (e) {
+    const left = cleanup();
+    throw new Error("could not write temporary files; nothing was changed (" + e.message + ")" + (left.length ? "; could not remove: " + left.join(", ") : ""));
+  }
+  const done = [];
+  try {
+    for (const [p, t] of tmp) { fs.renameSync(t, p); done.push(p); }
+  } catch (e) {
+    const notRestored = [];
+    for (const p of done) { try { if (orig.get(p) === null) fs.unlinkSync(p); else fs.writeFileSync(p, orig.get(p)); } catch { notRestored.push(p); } }
+    const left = cleanup();
+    throw new Error("could not replace a file (" + e.message + "); " + (notRestored.length ? "COULD NOT RESTORE: " + notRestored.join(", ") : "nothing was left changed")
+      + (left.length ? "; could not remove: " + left.join(", ") : "") + "; run git status before git add");
+  }
 }
 
 function parseArgs(args) {
@@ -192,7 +224,7 @@ function parseArgs(args) {
   return o;
 }
 
-module.exports = { build, readSite, readVintage, parseArgs, CSV_OUT, JSON_OUT, OUT_COLUMNS };
+module.exports = { build, commit, readSite, readVintage, parseArgs, CSV_OUT, JSON_OUT, OUT_COLUMNS };
 
 if (require.main === module) {
   let o;

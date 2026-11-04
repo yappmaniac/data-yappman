@@ -5,8 +5,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const cp = require("child_process");
-const { build, readSite, parseArgs, CSV_OUT, JSON_OUT } = require("./build-index-files.js");
-const { commit } = require("./stamp-latest.js");
+const { build, commit, readSite, parseArgs, CSV_OUT, JSON_OUT } = require("./build-index-files.js");
 
 const SCRIPT = path.join(__dirname, "build-index-files.js");
 const TODAY = new Date().toISOString().slice(0, 10);
@@ -67,8 +66,8 @@ test("the confirmation must match the file, and be a real ISO week", () => {
   assert.throws(() => build({ root, uk: [[f, "2026-W54"]], new: true }), /ISO week/);
 });
 
-test("meta checks: revision, licence, title, base, future publishedAt", () => {
-  const cases = [[{ revision: 2 }, /revision/], [{ license: "MIT" }, /licence/], [{ title: "X" }, /title/], [{ base: "W42" }, /base/], [{ publishedAt: "2999-01-01T00:00:00Z" }, /future/], [{ publishedAt: "2026-02-30" }, /strict ISO/]];
+test("meta checks: revision, licence, title, base, future publishedAt, unknown or wrongly typed keys", () => {
+  const cases = [[{ runId: "abc" }, /unknown meta key runId/], [{ notCpi: false }, /notCpi/], [{ matchedTotal: "1" }, /matchedTotal/], [{ coverageWarnings: [1] }, /coverageWarnings/], [{ weighting: 2 }, /weighting/], [{ revision: 2 }, /revision/], [{ license: "MIT" }, /licence/], [{ title: "X" }, /title/], [{ base: "W42" }, /base/], [{ publishedAt: "2999-01-01T00:00:00Z" }, /future/], [{ publishedAt: "2026-02-30" }, /strict ISO/]];
   for (const [m, re] of cases) {
     const root = site(); const f = vintage(root, "2026-W44", { m });
     assert.throws(() => build({ root, uk: [[f, "2026-W44"]], new: true }), re);
@@ -128,4 +127,24 @@ test("a failed build writes nothing; arguments pair up", () => {
   assert.throws(() => parseArgs(["--uk", "a.json"]), /without its/);
   assert.throws(() => parseArgs(["--confirm-uk", "2026-W44"]), /without a --uk/);
   assert.throws(() => parseArgs(["--au", "x"]), /unknown argument/);
+});
+
+test("an empty coverageWarnings list is left out of the JSON; a non-empty one is kept", () => {
+  const root = site();
+  run(root, { uk: [[vintage(root, "2026-W43", { m: { coverageWarnings: [] } }), "2026-W43"], [vintage(root, "2026-W44", { m: { coverageWarnings: ["aldi: fewer products"] } }), "2026-W44"]], new: true });
+  const metas = JSON.parse(read(root, JSON_OUT)).filter(i => i.recordType === "meta");
+  assert.ok(!("coverageWarnings" in metas[0]));
+  assert.deepStrictEqual(metas[1].coverageWarnings, ["aldi: fewer products"]);
+});
+
+test("a failed rename deletes a new file again instead of leaving it empty, and restores an existing one", () => {
+  const root = site();
+  const fresh = path.join(root, "new.txt"), old = path.join(root, "old.txt"), blocked = path.join(root, "blocked");
+  fs.writeFileSync(old, "before"); fs.mkdirSync(blocked); fs.writeFileSync(path.join(blocked, "x"), "x");
+  const out = new Map([[fresh, "a"], [old, "b"], [blocked, "c"]]);
+  const orig = new Map([[fresh, null], [old, "before"], [blocked, "?"]]);
+  assert.throws(() => commit(out, orig), /could not replace a file/);
+  assert.ok(!fs.existsSync(fresh));
+  assert.strictEqual(fs.readFileSync(old, "utf8"), "before");
+  assert.ok(!fs.readdirSync(root).some(f => f.endsWith(".stamp-tmp")));
 });
