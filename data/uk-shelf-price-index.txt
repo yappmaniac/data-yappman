@@ -1,0 +1,13 @@
+UK Online Shelf-Price Index
+https://data.yappman.com/shelf-price-index/
+
+Download: uk-shelf-price-index.csv and uk-shelf-price-index.json
+The data is in long format: one row per vintage, record type, retailer and class. The JSON holds the same figures as the dataset, the meta item first in each vintage. The CSV holds the rows without the meta items, with one more column at the end, base: the base week of that vintage's series (2026-W39 for weeks 39 and 40, 2026-W42 from week 42).
+Fields, record types, statuses and meta: https://data.yappman.com/shelf-price-index/data-dictionary/
+Shelf prices only; it is not CPI and not a measure of prices paid.
+
+Licence: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+
+Cite: Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage [week], https://data.yappman.com/shelf-price-index/.
+
+Product-level shelf prices from Tesco, Sainsbury's, Asda and Aldi can be read on demand with the UK Supermarket Price Scraper, a pay-per-event Actor on the Apify Store: https://apify.com/yappman/uk-supermarket-price-scraper
