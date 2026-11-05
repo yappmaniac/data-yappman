@@ -1,7 +1,8 @@
 """Median sold prices by postcode district: fetch the table from the Property session's Apify store.
 
-RUSSELL RUNS THIS, in his own terminal, from the repo root. It refuses to run inside a Claude Code session (CLAUDECODE
-set), and no session reads, lists or prints the credential it uses.
+RUSSELL RUNS THIS, in his own terminal, with `python -I` (it refuses without it). It refuses to run inside a Claude
+Code session (CLAUDECODE set), and no session reads, lists or prints the credential it uses. The CLAUDECODE check is a
+guard against mistakes, not a security boundary: the token's own scope (read-only, this one store) is what limits it.
 
     python -I -B docs/release/fetch_district_table.py --dry-run   # reads DT_STATE only; prints its facts; saves nothing
     python -I -B docs/release/fetch_district_table.py --fetch     # DT_STATE, the two table files, DT_STATE again
@@ -20,13 +21,14 @@ OpenDataTools; standard library only):
 - The base URL and the store name are constants in this file; nothing comes from the command line, the environment
   or a file. Only three record keys can be requested: DT_STATE, table_latest.json and table_latest.csv. Every request
   is a GET: this tool cannot write to the store.
-- HTTPS only, no proxy, no redirect followed (a 3xx is refused: the header could otherwise go to another host), a
-  timeout on every request, at most 3 attempts on 429 or 5xx, no retry on a 4xx or a network failure.
+- HTTPS only with an explicit verified TLS context (TLS 1.2 or later, no key log file even if SSLKEYLOGFILE is set),
+  no proxy, no redirect followed (a 3xx is refused: the header could otherwise go to another host), a timeout on every
+  request, at most 3 attempts on 429 or 5xx, no retry on a 4xx or a network failure.
 - Output is one JSON line of facts (month, builtAt, row and district counts, sizes and SHA-256 of the saved files).
   The token, the store's name or id, response bodies and URLs are never printed; an error is a short code and, when
   there was one, the HTTP status.
-- --fetch saves the three files to _incoming/sold-prices/ (git-ignored, and never published: folders starting with _
-  are not served) only when DT_STATE read again after the two table files is unchanged; otherwise it saves nothing
+- --fetch saves the three files to _incoming/sold-prices/ in this repo (anchored to this file; the repo is checked by
+  its CNAME), which is git-ignored and never published (folders starting with _ are not served), only when DT_STATE read again after the two table files is unchanged; otherwise it saves nothing
   (a build was midway: try again later).
 
 Exit codes: 0 done; 2 refused (nothing read); 3 the store answered but the table is not ready (nothing saved);
@@ -40,6 +42,7 @@ import hashlib
 import json
 import os
 import re
+import ssl
 import sys
 import time
 import urllib.error
@@ -54,7 +57,9 @@ STORE_URL = f'{BASE_URL}/key-value-stores/yappman~pp-district-table'
 CREDENTIAL_TARGET = 'yappman/pp-district-read'
 KEYS = ('DT_STATE', 'table_latest.json', 'table_latest.csv')
 SAVED_AS = {'DT_STATE': 'DT_STATE.json', 'table_latest.json': 'table_latest.json', 'table_latest.csv': 'table_latest.csv'}
+REPO = Path(__file__).resolve().parents[2]
 INCOMING = Path('_incoming/sold-prices')
+RELEASE_RE = re.compile(r'[A-Z]{3}_[0-9]{4}')
 TOKEN_RE = re.compile(r'[A-Za-z0-9_.\-]{8,200}')    # no whitespace or control character: no header injection
 TIMEOUT_SECONDS = 60
 PACE_SECONDS = 0.5
@@ -214,11 +219,21 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def build_opener() -> urllib.request.OpenerDirector:
-    """HTTPS only (no HTTP or file handler), no proxy from the environment, no redirect."""
+def tls_context() -> ssl.SSLContext:
+    """Certificate and host name checked, TLS 1.2 or later, and no TLS key log (review W2: the default context writes
+    one to SSLKEYLOGFILE outside isolated mode, which would let a packet capture show the Bearer header)."""
+    context = ssl.create_default_context()
+    context.minimum_version = ssl.TLSVersion.TLSv1_2
+    context.keylog_filename = None
+    return context
+
+
+def build_opener(https_handler: Any = None) -> urllib.request.OpenerDirector:
+    """HTTPS only (no HTTP or file handler), no proxy from the environment, no redirect. `https_handler` is for the
+    tests only (a handler that answers without a socket)."""
     opener = urllib.request.OpenerDirector()
     opener.add_handler(urllib.request.ProxyHandler({}))
-    opener.add_handler(urllib.request.HTTPSHandler())
+    opener.add_handler(https_handler or urllib.request.HTTPSHandler(context=tls_context()))
     opener.add_handler(_NoRedirect())
     opener.add_handler(urllib.request.HTTPDefaultErrorHandler())
     opener.add_handler(urllib.request.HTTPErrorProcessor())
@@ -298,7 +313,10 @@ def state_facts(raw: bytes | None) -> dict[str, Any]:
     if not isinstance(state, dict) or state.get('v') != 2:
         raise FetchError('state-not-version-2', exit_code=3)
     facts = {k: state.get(k) for k in ('month', 'postcodeRelease', 'builtAt', 'districts', 'rows')}
-    if not all(isinstance(facts[k], str) for k in ('month', 'builtAt')):
+    if not (isinstance(facts['month'], str) and re.fullmatch(r'[0-9]{4}-[0-9]{2}', facts['month'])
+            and isinstance(facts['builtAt'], str) and len(facts['builtAt']) <= 40
+            and isinstance(facts['postcodeRelease'], str) and RELEASE_RE.fullmatch(facts['postcodeRelease'])
+            and all(type(facts[k]) is int and 0 <= facts[k] < 10_000_000 for k in ('districts', 'rows'))):
         raise FetchError('state-incomplete', exit_code=3)
     return facts
 
@@ -328,15 +346,29 @@ def run(args: argparse.Namespace, transport: Transport, root: Path) -> dict[str,
     return {'status': 'fetched', 'state': facts, 'saved': saved, 'folder': str(INCOMING)}
 
 
+def is_this_repo(root: Path) -> bool:
+    try:
+        return (root / 'CNAME').read_text(encoding='utf-8').strip() == 'data.yappman.com'
+    except OSError:
+        return False
+
+
 def main(argv: list[str] | None = None, *, reader: Callable[[], str | None] | None = None, opener: Any = None,
-         root: Path = Path('.'), sleep: Callable[[float], None] = time.sleep) -> int:
+         root: Path = REPO, sleep: Callable[[float], None] = time.sleep) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--dry-run', action='store_true', help='read DT_STATE only and print its facts')
     mode.add_argument('--fetch', action='store_true', help='save DT_STATE and the two table files')
     args = parser.parse_args(argv)
-    if os.environ.get('CLAUDECODE') and (reader is None or opener is None):
+    real = reader is None or opener is None
+    if os.environ.get('CLAUDECODE') and real:
         emit(json.dumps({'status': 'refused', 'code': 'refused-inside-claude-code'}))
+        return 2
+    if real and not sys.flags.isolated:
+        emit(json.dumps({'status': 'refused', 'code': 'run-with-python-I'}))
+        return 2
+    if not is_this_repo(root):
+        emit(json.dumps({'status': 'refused', 'code': 'not-the-data-yappman-repo'}))
         return 2
     try:
         token = read_token(reader)

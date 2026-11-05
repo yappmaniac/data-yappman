@@ -1,7 +1,7 @@
 """Median sold prices by postcode district: the website build (no network, no token).
 
 Turns the three files that fetch_district_table.py saved (DT_STATE.json, table_latest.json, table_latest.csv) into
-the download files and the page. Run from the repo root, after the fetch:
+the download files and the page. Run from anywhere (paths are anchored to this repo):
 
     python -I -B docs/release/district_table_site.py --check                    # the checks only, writes nothing
     python -I -B docs/release/district_table_site.py --publish [--first-publish]
@@ -9,23 +9,27 @@ the download files and the page. Run from the repo root, after the fetch:
 Spec: Orchestrator drafts/sessions/property/district-table-design-4-nov.md, sections 2 (columns), 5 (attribution)
 and 6 (URLs, checks, page text). What it does:
 - Reads DT_STATE first and publishes only when all eight checks of section 6 pass; otherwise it writes nothing and
-  what is live stays live (exit 3). Check 5 and 6 compare with the live latest file in data/sold-prices/.
+  what is live stays live (exit 3). Check 5 and 6 compare with the live latest file in data/sold-prices/. Beyond the
+  spec (security review of 9a1dfd6, C3): no JSON object may repeat a key, DT_STATE and the JSON's top level have an
+  exact key set with checked types, and each attribution statement must match its text in full (only the year, the
+  build year, may vary), so what is checked is exactly what is served.
+- Plans everything in memory first (the page and sitemap text included) and writes only when the plan is complete
+  (review C2): the data files, then the page, then the sitemap.
 - Writes data/sold-prices/district-medians-latest.{csv,json} and, once per month, the dated archive
   district-medians-<YYYY-MM>.{csv,json}. An archive file is never rewritten: a later build of the same month updates
-  the latest files only and says so.
+  the latest files only and says so. A month with only one of its two archive files is refused.
 - Rewrites only the marked parts of sold-prices/index.html (the summary, the downloads list and the attribution,
-  taken from the JSON) and the page's lastmod in sitemap.xml.
-The files are published as fetched (byte for byte), so what was checked is what is served.
+  taken from the JSON and escaped) and the page's lastmod in sitemap.xml.
+The files are published as fetched (byte for byte).
 
-Exit codes: 0 published, or nothing new; 2 refused (usage, or --first-publish against a live table); 3 a check
-failed, nothing written.
+Exit codes: 0 published, or nothing new; 2 refused (usage, wrong folder, or --first-publish against a live table);
+3 a check failed or the page template is broken, nothing written.
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
-import decimal
 import html
 import io
 import json
@@ -38,6 +42,7 @@ from pathlib import Path
 from typing import Any
 
 TABLE_VERSION = 2
+LAG_MONTHS = 3
 TITLE = 'Median sold prices by postcode district, England and Wales'
 LICENCE = 'Open Government Licence v3.0'
 COLUMNS = (
@@ -45,17 +50,33 @@ COLUMNS = (
     'sales12m', 'median12m', 'lowerQuartile12m', 'upperQuartile12m', 'sales3m', 'median3m',
     'salesPrev12m', 'medianPrev12m', 'medianChangePct', 'lowSample',
 )
+DOCUMENT_KEYS = frozenset({
+    'v', 'title', 'month', 'periodFrom', 'periodTo', 'previousPeriodFrom', 'previousPeriodTo', 'threeMonthFrom',
+    'lagMonths', 'postcodeRelease', 'builtAt', 'licence', 'attribution', 'method', 'columns', 'rows',
+})
+STATE_KEYS = frozenset({'v', 'month', 'postcodeRelease', 'builtAt', 'districts', 'rows'})
 COUNT_COLUMNS = ('sales12m', 'sales3m', 'salesPrev12m')
 FIGURE_COLUMNS = ('median12m', 'lowerQuartile12m', 'upperQuartile12m', 'median3m', 'medianPrev12m')
 PROPERTY_TYPES = frozenset({'all', 'detached', 'semi-detached', 'terraced', 'flat'})
 ROW_CHANGE_LIMIT = 0.20          # check 6: the row count is within 20% of last month's
 MAX_FILE_BYTES = 8_000_000       # the Actor refuses a table over this
+MAX_METHOD_CHARS = 1_000
 
 MONTH_RE = re.compile(r'[0-9]{4}-(?:0[1-9]|1[0-2])')
+BUILT_AT_RE = re.compile(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,6})?Z')
+RELEASE_RE = re.compile(r'[A-Z]{3}_[0-9]{4}')
 DISTRICT_RE = re.compile(r'[A-Z]{1,2}[0-9][0-9A-Z]?')       # an outcode only: no sector, no full postcode
 AUTHORITIES_RE = re.compile(r'(?:[EW][0-9]{8}(?:;[EW][0-9]{8})*)?')
-ATTRIBUTION_STARTS = ('Contains HM Land Registry data', 'Local authority codes:')
+NUMBER_CELL_RE = re.compile(r'-?[0-9]+(?:\.[0-9]+)?')
+ATTRIBUTION_RES = (
+    re.compile(r'Contains HM Land Registry data © Crown copyright and database right (?P<y>20[0-9]{2})\. '
+               r'This data is licensed under the Open Government Licence v3\.0\.'),
+    re.compile(r'Local authority codes: Source: Office for National Statistics licensed under the Open Government '
+               r'Licence v3\.0\. Contains OS data © Crown copyright and database right (?P<y>20[0-9]{2})\. Contains '
+               r'Royal Mail data © Royal Mail copyright and database right (?P<z>20[0-9]{2})\.'),
+)
 
+REPO = Path(__file__).resolve().parents[2]
 INCOMING = Path('_incoming/sold-prices')
 OUT = Path('data/sold-prices')
 PAGE = Path('sold-prices/index.html')
@@ -72,6 +93,10 @@ class CheckFailed(Exception):
         super().__init__(f'check {check}: {reason}')
         self.check = check
         self.refused = refused      # a usage refusal (exit 2), not a held table (exit 3)
+
+
+class TemplateBroken(Exception):
+    """The page or sitemap does not have the marked places the build fills."""
 
 
 @dataclass(frozen=True)
@@ -102,15 +127,14 @@ def csv_cell(value: Any) -> str:
 
 
 def cell_matches(cell: str, value: Any) -> bool:
-    """The CSV cell is the JSON value as table_csv writes it. Numbers are compared as numbers, so a JSON 3.0 that
-    a store re-serialised as 3 still matches the CSV's 3.0; text, empty and true/false are compared exactly."""
+    """The CSV cell is the JSON value as table_csv writes it. Numbers are compared as numbers (a JSON 3.0 that a store
+    re-serialised as 3 still matches the CSV's 3.0), but the cell must be a plain decimal: no sign other than a
+    leading minus, no exponent, space or underscore. Text, empty and true/false are compared exactly."""
     if value is None or type(value) is bool or isinstance(value, str):
         return cell == csv_cell(value)
-    if type(value) in (int, float):
-        try:
-            return decimal.Decimal(cell) == decimal.Decimal(repr(value))
-        except decimal.InvalidOperation:
-            return False
+    if type(value) in (int, float) and NUMBER_CELL_RE.fullmatch(cell):
+        from decimal import Decimal
+        return Decimal(cell) == Decimal(repr(value))
     return False
 
 
@@ -119,50 +143,85 @@ def _is_count(value: Any) -> bool:
 
 
 def _is_number_or_empty(value: Any) -> bool:
-    if value is None:
-        return True
-    if type(value) is int:
+    if value is None or type(value) is int:
         return True
     return type(value) is float and math.isfinite(value)
 
 
+def _is_month(value: Any) -> bool:
+    return isinstance(value, str) and MONTH_RE.fullmatch(value) is not None
+
+
+def _no_repeats(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    keys = [key for key, _ in pairs]
+    if len(keys) != len(set(keys)):
+        raise ValueError('repeated key')
+    return dict(pairs)
+
+
 def _load_json(raw: bytes, check: int, name: str) -> Any:
+    """Strict JSON: UTF-8, no repeated key in any object, no NaN or Infinity."""
+    def no_constant(text: str) -> Any:
+        raise ValueError('not a JSON number')
     try:
-        return json.loads(raw.decode('utf-8'))
+        return json.loads(raw.decode('utf-8'), object_pairs_hook=_no_repeats, parse_constant=no_constant)
     except (UnicodeDecodeError, ValueError):
-        raise CheckFailed(check, f'{name} is not valid UTF-8 JSON') from None
+        raise CheckFailed(check, f'{name} is not strict UTF-8 JSON (or repeats a key)') from None
+
+
+def _attribution_ok(attribution: Any, year: str) -> bool:
+    if not (isinstance(attribution, list) and len(attribution) == len(ATTRIBUTION_RES)):
+        return False
+    for statement, pattern in zip(attribution, ATTRIBUTION_RES):
+        match = pattern.fullmatch(statement) if isinstance(statement, str) else None
+        if match is None or any(found != year for found in match.groupdict().values()):
+            return False
+    return True
 
 
 def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[str, Any] | None,
                 first_publish: bool) -> Table:
-    """All eight checks of section 6, in order. Raises CheckFailed (number and reason) at the first failure."""
-    state = _load_json(state_raw, 1, 'DT_STATE')
-    if not isinstance(state, dict):
-        raise CheckFailed(1, 'DT_STATE is not an object')
-    for name, raw in (('table_latest.json', json_raw), ('table_latest.csv', csv_raw)):
+    """All eight checks of section 6, in order, plus the strictness of review C3. Raises CheckFailed (number and
+    reason) at the first failure."""
+    for name, raw in (('DT_STATE', state_raw), ('table_latest.json', json_raw), ('table_latest.csv', csv_raw)):
         if len(raw) > MAX_FILE_BYTES:
             raise CheckFailed(1, f'{name} is larger than {MAX_FILE_BYTES} bytes')
+    state = _load_json(state_raw, 1, 'DT_STATE')
     document = _load_json(json_raw, 1, 'table_latest.json')
-    if not isinstance(document, dict):
-        raise CheckFailed(1, 'table_latest.json is not an object')
+    if not isinstance(state, dict) or set(state) != STATE_KEYS:
+        raise CheckFailed(1, 'DT_STATE does not have exactly its six keys')
+    if not isinstance(document, dict) or set(document) != DOCUMENT_KEYS:
+        raise CheckFailed(1, 'table_latest.json does not have exactly its keys')
 
     # 1. versions and columns
-    if state.get('v') != TABLE_VERSION or document.get('v') != TABLE_VERSION:
+    if state['v'] != TABLE_VERSION or document['v'] != TABLE_VERSION or type(state['v']) is not int:
         raise CheckFailed(1, f'DT_STATE.v and the JSON v must both be {TABLE_VERSION}')
-    if document.get('columns') != list(COLUMNS):
+    if document['columns'] != list(COLUMNS):
         raise CheckFailed(1, 'the JSON columns are not the 16 names in order')
 
-    # 2. the JSON and DT_STATE come from one build
-    month, built_at, rows = state.get('month'), state.get('builtAt'), state.get('rows')
-    if not (isinstance(month, str) and MONTH_RE.fullmatch(month)) or not isinstance(built_at, str) or not _is_count(rows):
-        raise CheckFailed(2, 'DT_STATE has no month, builtAt or row count')
-    if document.get('month') != month or document.get('builtAt') != built_at:
-        raise CheckFailed(2, 'the JSON month or builtAt differs from DT_STATE')
-    json_rows = document.get('rows')
+    # 2. the JSON and DT_STATE come from one build (and every field the page shows is checked here)
+    month, built_at, rows = state['month'], state['builtAt'], state['rows']
+    if not _is_month(month) or not (isinstance(built_at, str) and BUILT_AT_RE.fullmatch(built_at)):
+        raise CheckFailed(2, 'DT_STATE month or builtAt is malformed')
+    if not _is_count(rows) or not _is_count(state['districts']):
+        raise CheckFailed(2, 'DT_STATE rows or districts is not a whole number')
+    if not (isinstance(state['postcodeRelease'], str) and RELEASE_RE.fullmatch(state['postcodeRelease'])):
+        raise CheckFailed(2, 'DT_STATE postcodeRelease is malformed')
+    if (document['month'], document['builtAt'], document['postcodeRelease']) != (month, built_at, state['postcodeRelease']):
+        raise CheckFailed(2, 'the JSON month, builtAt or postcodeRelease differs from DT_STATE')
+    json_rows = document['rows']
     if not isinstance(json_rows, list) or len(json_rows) != rows:
         raise CheckFailed(2, 'the JSON row count differs from DT_STATE.rows')
-    if document.get('title') != TITLE or document.get('licence') != LICENCE:
+    if document['title'] != TITLE or document['licence'] != LICENCE:
         raise CheckFailed(2, 'the JSON title or licence is not the expected one')
+    if not all(_is_month(document[k]) for k in ('periodFrom', 'periodTo', 'previousPeriodFrom', 'previousPeriodTo', 'threeMonthFrom')):
+        raise CheckFailed(2, 'a period bound in the JSON is not YYYY-MM')
+    if not (document['periodFrom'] <= document['periodTo'] < month and document['previousPeriodTo'] < document['periodFrom']):
+        raise CheckFailed(2, 'the period bounds are out of order')
+    if document['lagMonths'] != LAG_MONTHS or type(document['lagMonths']) is not int:
+        raise CheckFailed(2, f'lagMonths is not {LAG_MONTHS}')
+    if not (isinstance(document['method'], str) and 0 < len(document['method']) <= MAX_METHOD_CHARS):
+        raise CheckFailed(2, 'the method sentence is missing or too long')
 
     # 3. the CSV is the same build, cell for cell
     try:
@@ -176,7 +235,7 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
     if len(body) != rows:
         raise CheckFailed(3, 'the CSV row count differs from DT_STATE.rows')
     for index, (cells, row) in enumerate(zip(body, json_rows), start=1):
-        if not isinstance(row, dict) or len(row) != len(COLUMNS) or set(row) != set(COLUMNS):
+        if not isinstance(row, dict) or set(row) != set(COLUMNS):
             raise CheckFailed(3, f'JSON row {index} does not have the 16 keys')
         if not cells or cells[0] != month:
             raise CheckFailed(3, f'CSV row {index} has another month')
@@ -190,8 +249,8 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
     else:
         if first_publish:
             raise CheckFailed(5, '--first-publish refused: a table is already live', refused=True)
-        if month < live['month']:
-            raise CheckFailed(5, f'the table is for {month}, older than the live {live["month"]}')
+        if month < live['month'] or (month == live['month'] and built_at < live['builtAt']):
+            raise CheckFailed(5, f'the table ({month}, built {built_at}) is older than the live one')
         # 6. the row count is within 20% of last month's
         if abs(rows - live['rows']) > ROW_CHANGE_LIMIT * live['rows']:
             raise CheckFailed(6, f'{rows} rows against {live["rows"]} live: more than a {ROW_CHANGE_LIMIT:.0%} change')
@@ -200,13 +259,12 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
     for index, row in enumerate(json_rows, start=1):
         if row['month'] != month or row['propertyType'] not in PROPERTY_TYPES:
             raise CheckFailed(7, f'row {index}: month or property type')
+        if (row['periodFrom'], row['periodTo']) != (document['periodFrom'], document['periodTo']):
+            raise CheckFailed(7, f'row {index}: the period differs from the table')
         if not (isinstance(row['district'], str) and DISTRICT_RE.fullmatch(row['district'])):
             raise CheckFailed(7, f'row {index}: the district is not an outcode')
         if not (isinstance(row['localAuthorityCodes'], str) and AUTHORITIES_RE.fullmatch(row['localAuthorityCodes'])):
             raise CheckFailed(7, f'row {index}: the authority codes')
-        for key in ('periodFrom', 'periodTo'):
-            if not (isinstance(row[key], str) and MONTH_RE.fullmatch(row[key])):
-                raise CheckFailed(7, f'row {index}: {key}')
         if not all(_is_count(row[c]) for c in COUNT_COLUMNS):
             raise CheckFailed(7, f'row {index}: a count is not a whole number')
         if not all(_is_number_or_empty(row[c]) for c in (*FIGURE_COLUMNS, 'medianChangePct')):
@@ -214,11 +272,9 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
         if type(row['lowSample']) is not bool:
             raise CheckFailed(7, f'row {index}: lowSample is not true or false')
 
-    # 8. the attribution is present (the page shows it: see write_page)
-    attribution = document.get('attribution')
-    if not (isinstance(attribution, list) and len(attribution) == 2 and all(isinstance(a, str) for a in attribution)
-            and all(a.startswith(s) for a, s in zip(attribution, ATTRIBUTION_STARTS))):
-        raise CheckFailed(8, 'the two attribution statements are missing')
+    # 8. the attribution is present, word for word, with the build year (the page shows it: see plan_page)
+    if not _attribution_ok(document['attribution'], built_at[:4]):
+        raise CheckFailed(8, 'the two attribution statements are missing or not word for word')
     return Table(state, document, json_raw, csv_raw)
 
 
@@ -235,113 +291,136 @@ def _size(n: int) -> str:
     return f'{n / 1_000_000:.1f} MB' if n >= 100_000 else f'{max(1, round(n / 1000))} KB'
 
 
-def _months(root: Path) -> list[str]:
-    found = set()
-    for path in (root / OUT).glob('district-medians-*.json'):
-        stem = path.stem.removeprefix('district-medians-')
-        if MONTH_RE.fullmatch(stem):
-            found.add(stem)
-    return sorted(found, reverse=True)
-
-
 def _region(text: str, name: str, content: str) -> str:
     start, end = f'<!-- district-table:{name} -->', f'<!-- /district-table:{name} -->'
     if text.count(start) != 1 or text.count(end) != 1 or text.index(start) > text.index(end):
-        raise ValueError(f'the page has no single {name} region')
+        raise TemplateBroken(f'the page has no single {name} region')
     head, rest = text.split(start)
     _, tail = rest.split(end)
     return f'{head}{start}\n{content}{end}{tail}'
 
 
-def render_regions(root: Path, table: Table) -> dict[str, str]:
-    d = table.document
-    e = html.escape
-    districts = table.state.get('districts')
+def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
+    """The three regions, from checked fields only, every value escaped. `sizes` maps each file name that will be
+    served (after this publish) to its size in bytes."""
+    d, e = table.document, html.escape
     summary = (f'<p>Latest table: {e(d["month"])}, sales from {e(d["periodFrom"])} to {e(d["periodTo"])}; '
-               f'{table.rows:,} rows'
-               + (f' for {districts:,} districts' if _is_count(districts) else '')
-               + f'. Built {e(d["builtAt"][:10])}.</p>\n')
+               f'{table.rows:,} rows for {table.state["districts"]:,} districts. Built {e(d["builtAt"][:10])}.</p>\n')
     lines = ['<div class="table-wrap"><table><thead><tr><th>File</th><th>Month</th><th>Size</th></tr></thead>', '<tbody>']
     for ext in ('csv', 'json'):
         name = f'{LATEST}.{ext}'
-        size = (root / OUT / name).stat().st_size
-        lines.append(f'<tr><td><a href="/data/sold-prices/{name}">{name}</a> (latest)</td><td>{e(d["month"])}</td><td>{_size(size)}</td></tr>')
-    for month in _months(root):
+        lines.append(f'<tr><td><a href="/data/sold-prices/{name}">{name}</a> (latest)</td><td>{e(d["month"])}</td><td>{_size(sizes[name])}</td></tr>')
+    months = sorted({n[len('district-medians-'):-len('.json')] for n in sizes if n.endswith('.json') and n != f'{LATEST}.json'}, reverse=True)
+    for month in months:
         for ext in ('csv', 'json'):
             name = f'district-medians-{month}.{ext}'
-            path = root / OUT / name
-            if path.exists():
-                lines.append(f'<tr><td><a href="/data/sold-prices/{name}">{name}</a></td><td>{month}</td><td>{_size(path.stat().st_size)}</td></tr>')
+            lines.append(f'<tr><td><a href="/data/sold-prices/{name}">{name}</a></td><td>{e(month)}</td><td>{_size(sizes[name])}</td></tr>')
     lines.append('</tbody></table></div>')
     attribution = ''.join(f'<p class="attribution">{e(a)}</p>\n' for a in d['attribution'])
     return {'summary': summary, 'downloads': '\n'.join(lines) + '\n', 'attribution': attribution}
 
 
-def write_page(root: Path, table: Table, today: str) -> None:
-    page = root / PAGE
-    text = page.read_text(encoding='utf-8')
-    for name, content in render_regions(root, table).items():
-        text = _region(text, name, content)
-    for statement in table.document['attribution']:      # check 8: the attribution is shown on the page
-        if html.escape(statement) not in text:
-            raise CheckFailed(8, 'the attribution is not on the page')
-    page.write_text(text, encoding='utf-8', newline='\n')
-    sitemap = root / SITEMAP
-    raw = sitemap.read_text(encoding='utf-8')
-    pattern = re.compile(r'(<loc>' + re.escape(PAGE_URL) + r'</loc>\s*<lastmod>)[0-9-]{10}(</lastmod>)')
-    if len(pattern.findall(raw)) != 1:
-        raise ValueError('sitemap.xml has no single entry for the page')
-    sitemap.write_text(pattern.sub(rf'\g<1>{today}\g<2>', raw), encoding='utf-8', newline='')
+@dataclass(frozen=True)
+class Plan:
+    files: list[tuple[Path, bytes]]     # the data files to write, in order
+    page: str
+    sitemap: str
+    done: list[str]
 
 
-def publish(root: Path, table: Table, today: str) -> list[str]:
-    """Writes the files and the page. Returns what was done, one line each."""
+def plan_publish(root: Path, table: Table, today: str) -> Plan:
+    """Everything the publish writes, worked out in memory. Raises CheckFailed or TemplateBroken before anything is
+    written (review C2)."""
     out = root / OUT
-    out.mkdir(parents=True, exist_ok=True)
-    done = []
-    for ext, data in (('json', table.json_bytes), ('csv', table.csv_bytes)):
-        archive = out / f'district-medians-{table.month}.{ext}'
-        if not archive.exists():
-            archive.write_bytes(data)
-            done.append(f'archived {archive.name}')
-        elif archive.read_bytes() != data:
-            done.append(f'kept {archive.name} as first published (a later build of {table.month} updates the latest file only)')
-        (out / f'{LATEST}.{ext}').write_bytes(data)
-        done.append(f'wrote {LATEST}.{ext}')
-    write_page(root, table, today)
+    sizes: dict[str, int] = {}
+    for path in out.glob('district-medians-*.*') if out.exists() else ():
+        stem = path.name[len('district-medians-'):].rsplit('.', 1)[0]
+        if path.suffix in ('.csv', '.json') and MONTH_RE.fullmatch(stem):
+            sizes[path.name] = path.stat().st_size
+    for month in {n[len('district-medians-'):].rsplit('.', 1)[0] for n in sizes}:
+        if not {f'district-medians-{month}.csv', f'district-medians-{month}.json'} <= set(sizes):
+            raise CheckFailed(5, f'the archive for {month} has only one of its two files', refused=True)
+    files, done = [], []
+    pair = [(f'district-medians-{table.month}.{ext}', data) for ext, data in (('json', table.json_bytes), ('csv', table.csv_bytes))]
+    if all(name in sizes for name, _ in pair):
+        if any((out / name).read_bytes() != data for name, data in pair):
+            done.append(f'kept the {table.month} archive as first published (a later build of the month updates the latest files only)')
+    else:
+        for name, data in pair:
+            files.append((out / name, data))
+            sizes[name] = len(data)
+            done.append(f'archived {name}')
+    for name, data in ((f'{LATEST}.json', table.json_bytes), (f'{LATEST}.csv', table.csv_bytes)):
+        files.append((out / name, data))
+        sizes[name] = len(data)
+        done.append(f'wrote {name}')
+    try:
+        page = (root / PAGE).read_text(encoding='utf-8')
+        sitemap = (root / SITEMAP).read_text(encoding='utf-8')
+    except OSError:
+        raise TemplateBroken('the page or sitemap is missing') from None
+    for name, content in render_regions(table, sizes).items():
+        page = _region(page, name, content)
+    for statement in table.document['attribution']:      # check 8: the attribution is shown on the page
+        if f'<p class="attribution">{html.escape(statement)}</p>' not in page:
+            raise CheckFailed(8, 'the attribution is not on the page')
+    pattern = re.compile(r'(<loc>' + re.escape(PAGE_URL) + r'</loc>\s*<lastmod>)[0-9-]{10}(</lastmod>)')
+    if len(pattern.findall(sitemap)) != 1:
+        raise TemplateBroken('sitemap.xml has no single entry for the page')
     done.append('updated sold-prices/index.html and its sitemap lastmod')
-    return done
+    return Plan(files, page, pattern.sub(rf'\g<1>{today}\g<2>', sitemap), done)
 
 
-def main(argv: list[str] | None = None, *, root: Path = Path('.'), today: str | None = None) -> int:
+def write_plan(root: Path, plan: Plan) -> None:
+    (root / OUT).mkdir(parents=True, exist_ok=True)
+    for path, data in plan.files:
+        path.write_bytes(data)
+    (root / PAGE).write_text(plan.page, encoding='utf-8', newline='\n')
+    (root / SITEMAP).write_text(plan.sitemap, encoding='utf-8', newline='')
+
+
+def is_this_repo(root: Path) -> bool:
+    try:
+        return (root / 'CNAME').read_text(encoding='utf-8').strip() == 'data.yappman.com'
+    except OSError:
+        return False
+
+
+def main(argv: list[str] | None = None, *, root: Path = REPO, today: str | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--check', action='store_true', help='the checks only; writes nothing')
     mode.add_argument('--publish', action='store_true')
     parser.add_argument('--first-publish', action='store_true', help='only when no table is live yet')
     args = parser.parse_args(argv)
-    incoming = root / INCOMING
+    if not is_this_repo(root):
+        print(json.dumps({'status': 'refused', 'code': 'not-the-data-yappman-repo'}))
+        return 2
     try:
-        raws = [(incoming / name).read_bytes() for name in (STATE_FILE, JSON_FILE, CSV_FILE)]
+        raws = [(root / INCOMING / name).read_bytes() for name in (STATE_FILE, JSON_FILE, CSV_FILE)]
     except OSError:
         print(json.dumps({'status': 'refused', 'code': 'incoming-files-missing', 'folder': str(INCOMING)}))
         return 2
     live = live_table(root)
     try:
         table = check_table(*raws, live, args.first_publish)
+        if live is not None and live['month'] == table.month and live['builtAt'] == table.state['builtAt']:
+            print(json.dumps({'status': 'nothing-new', 'month': table.month, 'builtAt': table.state['builtAt']}))
+            return 0
+        plan = plan_publish(root, table, today or datetime.now(UTC).date().isoformat())
     except CheckFailed as failure:
         print(json.dumps({'status': 'refused' if failure.refused else 'held', 'check': failure.check,
                           'reason': str(failure), 'live': live}))
         return 2 if failure.refused else 3
-    if live is not None and live['month'] == table.month and live['builtAt'] == table.state['builtAt']:
-        print(json.dumps({'status': 'nothing-new', 'month': table.month, 'builtAt': table.state['builtAt']}))
-        return 0
+    except TemplateBroken as broken:
+        print(json.dumps({'status': 'held', 'code': 'template-broken', 'reason': str(broken)}))
+        return 3
     summary = {'month': table.month, 'builtAt': table.state['builtAt'], 'rows': table.rows, 'live': live}
     if args.check:
-        print(json.dumps({'status': 'checks-passed', **summary}))
+        print(json.dumps({'status': 'checks-passed', **summary, 'wouldDo': plan.done}))
         return 0
-    done = publish(root, table, today or datetime.now(UTC).date().isoformat())
-    print(json.dumps({'status': 'published', **summary, 'done': done}))
+    write_plan(root, plan)
+    print(json.dumps({'status': 'published', **summary, 'done': plan.done}))
     return 0
 
 

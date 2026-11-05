@@ -8,14 +8,18 @@ from __future__ import annotations
 
 import contextlib
 import csv
+import email.message
 import io
 import json
 import os
 import shutil
+import ssl
 import sys
 import tempfile
 import unittest
 import urllib.error
+import urllib.request
+import urllib.response
 from pathlib import Path
 from unittest import mock
 
@@ -25,7 +29,7 @@ import district_table_site as site  # noqa: E402
 import fetch_district_table as fetch  # noqa: E402
 
 REPO = HERE.parent.parent
-TOKEN = 'apify_api_FAKEtokenFORtests0123456789'
+TOKEN = 'FAKEtokenFORtests0123456789abcdef'   # not an apify_api_ prefix: no secret-scanning hit
 BUILT = '2026-11-05T12:01:15.123456Z'
 
 
@@ -90,6 +94,7 @@ class SiteRoot:
         self.dir = tempfile.TemporaryDirectory()
         root = Path(self.dir.name)
         (root / 'sold-prices').mkdir()
+        (root / 'CNAME').write_text('data.yappman.com\n', encoding='utf-8')
         shutil.copy(REPO / 'sold-prices' / 'index.html', root / 'sold-prices' / 'index.html')
         shutil.copy(REPO / 'sitemap.xml', root / 'sitemap.xml')
         return root
@@ -187,7 +192,7 @@ class BuildTests(unittest.TestCase):
             self.assertEqual((out / 'district-medians-2026-10.json').read_bytes(), first['table_latest.json'])
             self.assertEqual((out / 'district-medians-2026-10.csv').read_bytes(), first['table_latest.csv'])
             self.assertEqual((out / 'district-medians-latest.json').read_bytes(), again['table_latest.json'])
-            self.assertTrue(any(line.startswith('kept district-medians-2026-10') for line in result['done']))
+            self.assertTrue(any(line.startswith('kept the 2026-10 archive') for line in result['done']))
 
     def test_a_new_month_is_archived_beside_the_old(self) -> None:
         with SiteRoot() as root:
@@ -267,6 +272,65 @@ class BuildTests(unittest.TestCase):
         self.assert_held(8, self.edited('json', lambda d: d.update(attribution=[])))
         self.assert_held(8, self.edited('json', lambda d: d.update(attribution=['Contains HM Land Registry data', 'other'])))
 
+    def test_c3_a_repeated_key_is_refused(self) -> None:
+        files = make_files()
+        raw = files['table_latest.json'].decode('utf-8')
+        files['table_latest.json'] = raw.replace('"district":"LS6"', '"district":"LS6 1AA","district":"LS6"', 1).encode('utf-8')
+        self.assertIn(b'LS6 1AA', files['table_latest.json'])
+        self.assert_held(1, files)
+
+    def test_c3_exact_top_level_keys_and_checked_fields(self) -> None:
+        self.assert_held(1, self.edited('json', lambda d: d.update(note='<script>x</script>')))
+        self.assert_held(1, self.edited('state', lambda s: s.update(extra=1)))
+        self.assert_held(2, self.edited('json', lambda d: d.update(periodFrom='<b>')))
+        self.assert_held(2, self.edited('json', lambda d: d.update(lagMonths=2)))
+        self.assert_held(2, self.edited('json', lambda d: d.update(method='x' * 1001)))
+        self.assert_held(2, make_files(built='2026-11-05<script>'))
+        self.assert_held(2, self.edited('state', lambda s: s.update(postcodeRelease='AUG 2026 <i>')))
+
+    def test_c3_attribution_must_match_word_for_word(self) -> None:
+        def attribution(change):
+            return self.edited('json', lambda d: d.update(attribution=change(d['attribution'])))
+        self.assert_held(8, attribution(lambda a: [a[0] + ' <script>alert(1)</script>', a[1]]))
+        self.assert_held(8, attribution(lambda a: [a[0], a[1] + ' <!-- /district-table:attribution -->']))
+        self.assert_held(8, attribution(lambda a: [a[0].replace('2026', '2025'), a[1]]))
+        self.assert_held(8, attribution(lambda a: [a[1], a[0]]))
+
+    def test_n3_a_number_cell_must_be_plain(self) -> None:
+        for odd in ('2.5E5', '25_0000', ' 250000', '+250000'):
+            self.assert_held(3, self.edited('csv', lambda t, odd=odd: t.replace(',250000,', f',{odd},', 1)))
+
+    def test_n4_an_older_build_of_the_same_month_is_refused(self) -> None:
+        self.assert_held(5, make_files(built='2026-11-04T12:00:00Z'), live_first=True)
+
+    def test_c2_a_broken_page_template_writes_nothing(self) -> None:
+        with SiteRoot() as root:
+            page = root / site.PAGE
+            page.write_text(page.read_text(encoding='utf-8').replace('<!-- /district-table:downloads -->', ''), encoding='utf-8')
+            put_incoming(root, make_files())
+            before = snapshot(root)
+            code, result = run_site(root, '--publish', '--first-publish')
+            self.assertEqual((code, result['code']), (3, 'template-broken'))
+            self.assertEqual(snapshot(root), before)
+            self.assertFalse((root / site.OUT).exists())
+
+    def test_c2_a_half_archived_month_is_refused(self) -> None:
+        with SiteRoot() as root:
+            put_incoming(root, make_files())
+            run_site(root, '--publish', '--first-publish')
+            (root / site.OUT / 'district-medians-2026-10.json').unlink()
+            put_incoming(root, make_files('2026-11', '2026-12-05T12:00:00Z'))
+            before = snapshot(root)
+            code, result = run_site(root, '--publish')
+            self.assertEqual((code, result['status']), (2, 'refused'))
+            self.assertEqual(snapshot(root), before)
+
+    def test_refused_outside_this_repo(self) -> None:
+        with SiteRoot() as root:
+            (root / 'CNAME').write_text('example.com', encoding='utf-8')
+            put_incoming(root, make_files())
+            self.assertEqual(run_site(root, '--check', '--first-publish')[0], 2)
+
     def test_outputs_hold_no_postcode_beyond_the_district(self) -> None:
         with SiteRoot() as root:
             put_incoming(root, make_files())
@@ -310,6 +374,34 @@ class FakeOpener:
         return FakeReply(status, body)
 
 
+class FetchRoot:
+    """A temporary folder that passes the repo check (a CNAME of data.yappman.com)."""
+
+    def __enter__(self) -> str:
+        self.dir = tempfile.TemporaryDirectory()
+        Path(self.dir.name, 'CNAME').write_text('data.yappman.com\n', encoding='utf-8')
+        return self.dir.name
+
+    def __exit__(self, *exc: object) -> None:
+        self.dir.cleanup()
+
+
+class FakeHTTPS(urllib.request.BaseHandler):
+    """An https_open that answers without a socket, so the REAL opener (proxy, redirect and error handlers) runs."""
+
+    def __init__(self, status: int, body: bytes = b'', headers: dict[str, str] | None = None) -> None:
+        self.status, self.body, self.headers, self.seen = status, body, headers or {}, []
+
+    def https_open(self, request):
+        self.seen.append(request)
+        message = email.message.Message()
+        for key, value in self.headers.items():
+            message[key] = value
+        reply = urllib.response.addinfourl(io.BytesIO(self.body), message, request.full_url, self.status)
+        reply.msg = 'x'
+        return reply
+
+
 def run_fetch(root: Path, opener: FakeOpener, *argv: str, reader=lambda: TOKEN) -> tuple[int, str]:
     out = io.StringIO()
     with contextlib.redirect_stdout(out):
@@ -333,7 +425,7 @@ class FetchTests(unittest.TestCase):
                 fetch.credential_token()
 
     def test_dry_run_reads_dt_state_only_and_saves_nothing(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with FetchRoot() as tmp:
             opener = FakeOpener(make_files())
             code, out = run_fetch(Path(tmp), opener, '--dry-run')
             self.assertEqual(code, 0)
@@ -343,7 +435,7 @@ class FetchTests(unittest.TestCase):
             self.assertFalse((Path(tmp) / fetch.INCOMING).exists())
 
     def test_fetch_reads_three_keys_then_dt_state_again_and_saves(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with FetchRoot() as tmp:
             files = make_files()
             opener = FakeOpener(files)
             code, out = run_fetch(Path(tmp), opener, '--fetch')
@@ -354,7 +446,7 @@ class FetchTests(unittest.TestCase):
                 self.assertEqual((Path(tmp) / fetch.INCOMING / fetch.SAVED_AS[key]).read_bytes(), body)
 
     def test_every_request_is_a_get_with_the_token_in_the_header_only(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with FetchRoot() as tmp:
             opener = FakeOpener(make_files())
             _, out = run_fetch(Path(tmp), opener, '--fetch')
             for request in opener.seen:
@@ -369,7 +461,7 @@ class FetchTests(unittest.TestCase):
             self.assertNotIn('key-value-stores', out)
 
     def test_dt_state_changed_during_the_fetch_saves_nothing(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with FetchRoot() as tmp:
             later = make_files(built='2026-11-05T12:30:00Z')['DT_STATE']
             opener = FakeOpener(make_files(), script={4: (200, later)})
             code, out = run_fetch(Path(tmp), opener, '--fetch')
@@ -378,13 +470,13 @@ class FetchTests(unittest.TestCase):
             self.assertFalse((Path(tmp) / fetch.INCOMING).exists())
 
     def test_no_table_yet_and_wrong_version_stop(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with FetchRoot() as tmp:
             self.assertEqual(run_fetch(Path(tmp), FakeOpener({}), '--dry-run')[0], 3)
             old = {'DT_STATE': json.dumps({'v': 1, 'month': '2026-10', 'builtAt': BUILT}).encode()}
             self.assertEqual(run_fetch(Path(tmp), FakeOpener(old), '--dry-run')[0], 3)
 
     def test_a_redirect_is_refused_and_not_followed(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with FetchRoot() as tmp:
             opener = FakeOpener(make_files(), script={1: (302, b'')})
             code, out = run_fetch(Path(tmp), opener, '--dry-run')
             self.assertEqual(code, 4)
@@ -393,7 +485,7 @@ class FetchTests(unittest.TestCase):
             self.assertNotIn('body-with-detail', out)
 
     def test_a_4xx_is_not_retried_and_a_5xx_is(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
+        with FetchRoot() as tmp:
             opener = FakeOpener(make_files(), script={1: (401, b'')})
             code, out = run_fetch(Path(tmp), opener, '--dry-run')
             self.assertEqual((code, len(opener.seen), json.loads(out)['httpStatus']), (4, 1, 401))
@@ -415,7 +507,71 @@ class FetchTests(unittest.TestCase):
         for bad in ('has space inside', 'short', 'line\nbreak0000'):
             with self.assertRaises(fetch.FetchError):
                 fetch.Secret(bad)
-        self.assertEqual(run_fetch(Path(tempfile.gettempdir()), FakeOpener({}), '--dry-run', reader=lambda: None)[0], 2)
+        with FetchRoot() as tmp:
+            code, out = run_fetch(Path(tmp), FakeOpener({}), '--dry-run', reader=lambda: None)
+            self.assertEqual((code, json.loads(out)['code']), (2, 'no-credential'))
+
+    def test_the_real_opener_is_https_only_with_no_proxy(self) -> None:
+        opener = fetch.build_opener(FakeHTTPS(200))
+        self.assertEqual(set(opener.handle_open), {'https'})
+        context = fetch.tls_context()
+        self.assertIsNone(context.keylog_filename)
+        self.assertEqual(context.verify_mode, ssl.CERT_REQUIRED)
+        self.assertTrue(context.check_hostname)
+        self.assertGreaterEqual(context.minimum_version, ssl.TLSVersion.TLSv1_2)
+
+    def test_the_real_opener_refuses_a_redirect(self) -> None:
+        handler = FakeHTTPS(302, headers={'Location': 'https://elsewhere.example/steal'})
+        with FetchRoot() as tmp:
+            code, out = run_fetch(Path(tmp), fetch.build_opener(handler), '--dry-run')
+        self.assertEqual((code, json.loads(out)['code']), (4, 'redirect-refused'))
+        self.assertEqual(len(handler.seen), 1)
+        self.assertNotIn('elsewhere', out)
+
+    def test_the_real_opener_reads_a_record(self) -> None:
+        handler = FakeHTTPS(200, make_files()['DT_STATE'])
+        with FetchRoot() as tmp:
+            code, out = run_fetch(Path(tmp), fetch.build_opener(handler), '--dry-run')
+        self.assertEqual((code, json.loads(out)['state']['month']), (0, '2026-10'))
+        self.assertEqual(handler.seen[0].get_header('Authorization'), 'Bearer ' + TOKEN)
+
+    def test_an_oversize_response_is_refused(self) -> None:
+        with FetchRoot() as tmp, mock.patch.object(fetch, 'MAX_RESPONSE_BYTES', 10):
+            code, out = run_fetch(Path(tmp), FakeOpener(make_files()), '--dry-run')
+        self.assertEqual((code, json.loads(out)['code']), (4, 'response-too-large'))
+
+    def test_a_network_error_that_echoes_the_token_prints_only_a_code(self) -> None:
+        class Leaky:
+            def open(self, request, timeout):
+                raise OSError('failed for ' + request.full_url + ' with ' + request.get_header('Authorization'))
+        with FetchRoot() as tmp:
+            code, out = run_fetch(Path(tmp), Leaky(), '--dry-run')
+        self.assertEqual((code, json.loads(out)['code']), (4, 'network-failure'))
+        self.assertNotIn(TOKEN, out)
+        self.assertNotIn('pp-district-table', out)
+
+    def test_inside_claude_code_a_fake_reader_alone_is_still_refused(self) -> None:
+        with mock.patch.dict(os.environ, {'CLAUDECODE': '1'}), FetchRoot() as tmp:
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                self.assertEqual(fetch.main(['--dry-run'], reader=lambda: TOKEN, root=Path(tmp)), 2)
+            self.assertIn('refused-inside-claude-code', out.getvalue())
+
+    def test_refused_without_python_I_before_the_credential(self) -> None:
+        with mock.patch.dict(os.environ, {}), FetchRoot() as tmp, \
+                mock.patch.object(fetch, '_credential_api', side_effect=AssertionError('reached')), \
+                mock.patch.object(sys, 'flags', mock.Mock(isolated=0)):
+            os.environ.pop('CLAUDECODE', None)
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                self.assertEqual(fetch.main(['--dry-run'], opener=FakeOpener(make_files()), root=Path(tmp)), 2)
+            self.assertIn('run-with-python-I', out.getvalue())
+
+    def test_refused_outside_this_repo(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            code, out = run_fetch(Path(tmp), FakeOpener(make_files()), '--fetch')
+            self.assertEqual((code, json.loads(out)['code']), (2, 'not-the-data-yappman-repo'))
+            self.assertFalse((Path(tmp) / fetch.INCOMING).exists())
 
     def test_fetch_then_build_end_to_end(self) -> None:
         with SiteRoot() as root:
