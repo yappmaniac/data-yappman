@@ -237,6 +237,7 @@ class BuildTests(unittest.TestCase):
     def test_check_1_versions_and_columns(self) -> None:
         self.assert_held(1, self.edited('state', lambda s: s.update(v=1)))
         self.assert_held(1, self.edited('json', lambda d: d.update(v=1)))
+        self.assert_held(1, self.edited('json', lambda d: d.update(v=2.0)))
         self.assert_held(1, self.edited('json', lambda d: d['columns'].reverse()))
 
     def test_check_2_one_build(self) -> None:

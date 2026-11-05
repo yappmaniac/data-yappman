@@ -34,6 +34,7 @@ import html
 import io
 import json
 import math
+import os
 import re
 import sys
 from dataclasses import dataclass
@@ -194,7 +195,7 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
         raise CheckFailed(1, 'table_latest.json does not have exactly its keys')
 
     # 1. versions and columns
-    if state['v'] != TABLE_VERSION or document['v'] != TABLE_VERSION or type(state['v']) is not int:
+    if state['v'] != TABLE_VERSION or document['v'] != TABLE_VERSION or type(state['v']) is not int or type(document['v']) is not int:
         raise CheckFailed(1, f'DT_STATE.v and the JSON v must both be {TABLE_VERSION}')
     if document['columns'] != list(COLUMNS):
         raise CheckFailed(1, 'the JSON columns are not the 16 names in order')
@@ -371,12 +372,21 @@ def plan_publish(root: Path, table: Table, today: str) -> Plan:
     return Plan(files, page, pattern.sub(rf'\g<1>{today}\g<2>', sitemap), done)
 
 
+def _replace(path: Path, data: bytes) -> None:
+    """Each file is written whole as <name>.part and then moved into place, so a reader never sees half a file. An OS
+    error part way through (a file lock, say) can still leave some files new and some old; the next run then refuses
+    a half-archived month (exit 2) and says which, and Russell deletes the newer files of that month by hand."""
+    temporary = path.with_name(path.name + '.part')
+    temporary.write_bytes(data)
+    os.replace(temporary, path)
+
+
 def write_plan(root: Path, plan: Plan) -> None:
     (root / OUT).mkdir(parents=True, exist_ok=True)
     for path, data in plan.files:
-        path.write_bytes(data)
-    (root / PAGE).write_text(plan.page, encoding='utf-8', newline='\n')
-    (root / SITEMAP).write_text(plan.sitemap, encoding='utf-8', newline='')
+        _replace(path, data)
+    _replace(root / PAGE, plan.page.encode('utf-8'))
+    _replace(root / SITEMAP, plan.sitemap.encode('utf-8'))
 
 
 def is_this_repo(root: Path) -> bool:
