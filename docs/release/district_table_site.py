@@ -310,8 +310,14 @@ def live_table(root: Path) -> dict[str, Any] | None:
     path = root / OUT / f'{LATEST}.json'
     if not path.exists():
         return None
-    document = json.loads(path.read_bytes().decode('utf-8'))
-    return {'month': document['month'], 'builtAt': document['builtAt'], 'rows': len(document['rows'])}
+    try:
+        document = json.loads(path.read_bytes().decode('utf-8'))
+        live = {'month': document['month'], 'builtAt': document['builtAt'], 'rows': len(document['rows'])}
+    except (OSError, UnicodeDecodeError, ValueError, KeyError, TypeError):
+        raise CheckFailed(5, 'the live latest file cannot be read') from None
+    if not (_is_month(live['month']) and isinstance(live['builtAt'], str) and BUILT_AT_RE.fullmatch(live['builtAt'])):
+        raise CheckFailed(5, 'the live latest file has a malformed month or builtAt (edited by hand?)')
+    return live
 
 
 def _size(n: int) -> str:
@@ -437,8 +443,9 @@ def main(argv: list[str] | None = None, *, root: Path = REPO, today: str | None 
     except OSError:
         print(json.dumps({'status': 'refused', 'code': 'incoming-files-missing', 'folder': str(INCOMING)}))
         return 2
-    live = live_table(root)
+    live = None
     try:
+        live = live_table(root)
         table = check_table(*raws, live, args.first_publish)
         if live is not None and live['month'] == table.month and live['builtAt'] == table.state['builtAt']:
             print(json.dumps({'status': 'nothing-new', 'month': table.month, 'builtAt': table.state['builtAt']}))

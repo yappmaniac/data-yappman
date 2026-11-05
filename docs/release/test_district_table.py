@@ -305,6 +305,24 @@ class BuildTests(unittest.TestCase):
         self.assert_held(5, make_files(built='2026-11-04T12:00:00Z'), live_first=True)
         self.assert_held(5, make_files(built='2026-11-05T12:01:15Z'), live_first=True)   # BUILT less its fraction
 
+    def test_a_hand_edited_live_file_is_held_not_a_crash(self) -> None:
+        for edit in (lambda d: d.update(builtAt='yesterday'), lambda d: d.pop('rows'), None):
+            with SiteRoot() as root:
+                put_incoming(root, make_files())
+                run_site(root, '--publish', '--first-publish')
+                live = root / site.OUT / 'district-medians-latest.json'
+                if edit is None:
+                    live.write_bytes(b'{not json')
+                else:
+                    document = json.loads(live.read_bytes())
+                    edit(document)
+                    live.write_bytes(json.dumps(document).encode())
+                put_incoming(root, make_files(built='2026-11-06T12:00:00Z'))
+                before = snapshot(root)
+                code, result = run_site(root, '--publish')
+                self.assertEqual((code, result['status'], result['check']), (3, 'held', 5))
+                self.assertEqual(snapshot(root), before)
+
     def test_w_a_figures_follow_their_counts(self) -> None:
         def regenerated(change):
             files = self.edited('json', change)
