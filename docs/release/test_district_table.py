@@ -42,7 +42,7 @@ def make_rows(month: str = '2026-10', districts: tuple[str, ...] = ('LS6', 'M1',
             sales = 40 + 7 * n if kind == 'all' else 4 + n
             shown = sales >= 5
             median = base + 1_000 * n if shown else None
-            previous = int(median / 1.03) if shown else None
+            previous = int((base + 1_000 * n) / 1.03) if sales + 2 >= 5 else None
             rows.append({
                 'month': month, 'periodFrom': '2025-08', 'periodTo': '2026-07', 'district': district,
                 'localAuthorityCodes': 'E08000035' if district == 'LS6' else 'E08000003;E08000035',
@@ -51,7 +51,7 @@ def make_rows(month: str = '2026-10', districts: tuple[str, ...] = ('LS6', 'M1',
                 'upperQuartile12m': median + 30_000 if shown else None,
                 'sales3m': sales // 4, 'median3m': median if sales // 4 >= 5 else None,
                 'salesPrev12m': sales + 2, 'medianPrev12m': previous,
-                'medianChangePct': 3.0 if shown else None, 'lowSample': sales < 20,
+                'medianChangePct': 3.0 if shown and previous is not None else None, 'lowSample': sales < 20,
             })
     return rows
 
@@ -77,7 +77,7 @@ def make_files(month: str = '2026-10', built: str = BUILT, rows: list[dict] | No
             'Contains HM Land Registry data © Crown copyright and database right 2026. This data is licensed under the Open Government Licence v3.0.',
             'Local authority codes: Source: Office for National Statistics licensed under the Open Government Licence v3.0. Contains OS data © Crown copyright and database right 2026. Contains Royal Mail data © Royal Mail copyright and database right 2026.',
         ],
-        'method': 'Category A (standard price paid) sales only.', 'columns': list(site.COLUMNS), 'rows': rows,
+        'method': site.METHOD, 'columns': list(site.COLUMNS), 'rows': rows,
     }
     state = {'v': 2, 'month': month, 'postcodeRelease': 'AUG_2026', 'builtAt': built, 'districts': 3, 'rows': len(rows)}
     return {
@@ -285,7 +285,7 @@ class BuildTests(unittest.TestCase):
         self.assert_held(1, self.edited('state', lambda s: s.update(extra=1)))
         self.assert_held(2, self.edited('json', lambda d: d.update(periodFrom='<b>')))
         self.assert_held(2, self.edited('json', lambda d: d.update(lagMonths=2)))
-        self.assert_held(2, self.edited('json', lambda d: d.update(method='x' * 1001)))
+        self.assert_held(2, self.edited('json', lambda d: d.update(method=d['method'] + ' Extra words.')))
         self.assert_held(2, make_files(built='2026-11-05<script>'))
         self.assert_held(2, self.edited('state', lambda s: s.update(postcodeRelease='AUG 2026 <i>')))
 
@@ -303,6 +303,25 @@ class BuildTests(unittest.TestCase):
 
     def test_n4_an_older_build_of_the_same_month_is_refused(self) -> None:
         self.assert_held(5, make_files(built='2026-11-04T12:00:00Z'), live_first=True)
+        self.assert_held(5, make_files(built='2026-11-05T12:01:15Z'), live_first=True)   # BUILT less its fraction
+
+    def test_w_a_figures_follow_their_counts(self) -> None:
+        def regenerated(change):
+            files = self.edited('json', change)
+            files['table_latest.csv'] = table_csv(json.loads(files['table_latest.json'])['rows']).encode()
+            return files
+        rows = make_rows()
+        shown = next(i for i, r in enumerate(rows) if r['median12m'] is not None)
+        blank = next(i for i, r in enumerate(rows) if r['median12m'] is None)
+        def row(i, **fields):
+            return lambda d: d['rows'][i].update(fields)
+        for change in (row(blank, median12m=123_000), row(shown, median12m=None), row(shown, upperQuartile12m=None),
+                       row(shown, sales3m=4), row(blank, lowerQuartile12m=1), row(shown, lowSample=True),
+                       row(blank, lowSample=False), row(blank, medianChangePct=1.5)):
+            self.assert_held(7, regenerated(change))
+
+    def test_a_broken_csv_quote_is_held_cleanly(self) -> None:
+        self.assert_held(3, self.edited('csv', lambda t: t.replace('LS6', '"LS6', 1)))
 
     def test_c2_a_broken_page_template_writes_nothing(self) -> None:
         with SiteRoot() as root:

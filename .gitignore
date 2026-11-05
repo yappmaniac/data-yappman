@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 # fetched district-table files (docs/release/fetch_district_table.py); never committed
 _incoming/
+# a half-written file of docs/release/district_table_site.py (written whole, then renamed)
+*.part

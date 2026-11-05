@@ -61,7 +61,16 @@ FIGURE_COLUMNS = ('median12m', 'lowerQuartile12m', 'upperQuartile12m', 'median3m
 PROPERTY_TYPES = frozenset({'all', 'detached', 'semi-detached', 'terraced', 'flat'})
 ROW_CHANGE_LIMIT = 0.20          # check 6: the row count is within 20% of last month's
 MAX_FILE_BYTES = 8_000_000       # the Actor refuses a table over this
-MAX_METHOD_CHARS = 1_000
+MIN_SALES = 5                    # a window's median and quartiles are blank under this (the page says so)
+LOW_SAMPLE_BELOW = 20            # lowSample is true under this many 12-month sales
+# The Actor's method sentence, word for word (price_paid/src/district_table.py table_json, MIN_SALES 5). Pinned so
+# no other free text reaches the public JSON; if the Actor's wording changes, the table is held until this matches.
+METHOD = ('Category A (standard price paid) sales only, by transfer date. Medians and quartiles (inclusive method) in '
+          'whole pounds; null when a window has fewer than 5 sales (a quality threshold: every sale is already '
+          'published by HM Land Registry). The newest months are revised as late registrations arrive. Not an index: '
+          'the mix of homes sold changes from period to period.')
+WINDOWS = (('sales12m', ('median12m', 'lowerQuartile12m', 'upperQuartile12m')), ('sales3m', ('median3m',)),
+           ('salesPrev12m', ('medianPrev12m',)))
 
 MONTH_RE = re.compile(r'[0-9]{4}-(?:0[1-9]|1[0-2])')
 BUILT_AT_RE = re.compile(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,6})?Z')
@@ -149,6 +158,11 @@ def _is_number_or_empty(value: Any) -> bool:
     return type(value) is float and math.isfinite(value)
 
 
+def _instant(value: str) -> datetime:
+    """A checked builtAt as a moment, so '…:15Z' and '…:15.5Z' compare by time, not as text."""
+    return datetime.fromisoformat(value.replace('Z', '+00:00'))
+
+
 def _is_month(value: Any) -> bool:
     return isinstance(value, str) and MONTH_RE.fullmatch(value) is not None
 
@@ -221,15 +235,18 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
         raise CheckFailed(2, 'the period bounds are out of order')
     if document['lagMonths'] != LAG_MONTHS or type(document['lagMonths']) is not int:
         raise CheckFailed(2, f'lagMonths is not {LAG_MONTHS}')
-    if not (isinstance(document['method'], str) and 0 < len(document['method']) <= MAX_METHOD_CHARS):
-        raise CheckFailed(2, 'the method sentence is missing or too long')
+    if document['method'] != METHOD:
+        raise CheckFailed(2, 'the method sentence is not the expected one')
 
     # 3. the CSV is the same build, cell for cell
     try:
         csv_text = csv_raw.decode('utf-8')
     except UnicodeDecodeError:
         raise CheckFailed(3, 'table_latest.csv is not UTF-8') from None
-    parsed = list(csv.reader(io.StringIO(csv_text, newline='')))
+    try:
+        parsed = list(csv.reader(io.StringIO(csv_text, newline='')))
+    except csv.Error:
+        raise CheckFailed(3, 'table_latest.csv is not valid CSV') from None
     if not parsed or parsed[0] != list(COLUMNS):
         raise CheckFailed(3, 'the CSV header is not the columns')
     body = parsed[1:]
@@ -250,7 +267,7 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
     else:
         if first_publish:
             raise CheckFailed(5, '--first-publish refused: a table is already live', refused=True)
-        if month < live['month'] or (month == live['month'] and built_at < live['builtAt']):
+        if month < live['month'] or (month == live['month'] and _instant(built_at) < _instant(live['builtAt'])):
             raise CheckFailed(5, f'the table ({month}, built {built_at}) is older than the live one')
         # 6. the row count is within 20% of last month's
         if abs(rows - live['rows']) > ROW_CHANGE_LIMIT * live['rows']:
@@ -272,6 +289,15 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
             raise CheckFailed(7, f'row {index}: a figure is not a number or empty')
         if type(row['lowSample']) is not bool:
             raise CheckFailed(7, f'row {index}: lowSample is not true or false')
+        # what the page says, enforced: figures are blank exactly when their window has under 5 sales, the change
+        # only when both 12-month medians are shown, and lowSample is true exactly under 20 sales
+        for count, figures in WINDOWS:
+            if any((row[f] is None) != (row[count] < MIN_SALES) for f in figures):
+                raise CheckFailed(7, f'row {index}: a figure is blank or shown against its {count}')
+        if row['medianChangePct'] is not None and (row['median12m'] is None or row['medianPrev12m'] is None):
+            raise CheckFailed(7, f'row {index}: a change is shown without both medians')
+        if row['lowSample'] != (row['sales12m'] < LOW_SAMPLE_BELOW):
+            raise CheckFailed(7, f'row {index}: lowSample does not match sales12m')
 
     # 8. the attribution is present, word for word, with the build year (the page shows it: see plan_page)
     if not _attribution_ok(document['attribution'], built_at[:4]):
