@@ -1,3 +1,5 @@
 *.stamp-tmp
 __pycache__/
 *.pyc
+# fetched district-table files (docs/release/fetch_district_table.py); never committed
+_incoming/
