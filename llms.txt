@@ -14,7 +14,7 @@
 - [Grocery price snapshots MCP server](https://data.yappman.com/mcp/): A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices and the UK daily basket, as static snapshots under CC BY 4.0.
 
 ## Actors on the Apify Store
-- [Our Actors on the Apify Store](https://data.yappman.com/actors/): The Yappman Data Actors on the Apify Store, with one line on what each does: UK and AU supermarket prices, UK property listings, public contracts, LEI lookup, UK importers and exporters, UK sponsor register changes and CQC England care locations. Prices and terms are on each Store page.
+- [Our Actors on the Apify Store](https://data.yappman.com/actors/): The Yappman Data Actors on the Apify Store, with one line on what each does: UK and AU supermarket prices, UK property listings, Google Hotels rates, public contracts, LEI lookup, UK importers and exporters, UK sponsor register changes, CQC England care locations and the CRICOS register lookup (Australia). Prices and terms are on each Store page.
 - [UK supermarket prices](https://apify.com/yappman/uk-supermarket-price-scraper)
 - [AU supermarket prices](https://apify.com/yappman/au-supermarket-price-scraper)
 - [UK property listings](https://apify.com/yappman/uk-property-listings)
@@ -35,7 +35,7 @@
 ## Press, licence and contact
 - [Press](https://data.yappman.com/press/): For journalists and writers: what the UK Online Shelf-Price Index is, how to cite it, what CC BY 4.0 allows, the latest finding, and who to contact.
 - [Where to get UK supermarket price data: free and paid, compared](https://data.yappman.com/guides/uk-supermarket-price-data/): UK supermarket price data compared: ONS statistics, the Warwick and LSE research data, a Kaggle time series, the Which? and Trolley trackers, and our weekly CC BY 4.0 index. What each covers and whether you can download it.
-- [Privacy](https://data.yappman.com/privacy/): What personal data the Yappman Data website collects, why, and your choices, including analytics, server logs and what we keep if you email us.
+- [Privacy](https://data.yappman.com/privacy/): What personal data the Yappman Data website collects, why, and your choices, including analytics, server logs and what we keep if you email us; and, for people whose details appear in the public registers our feeds use, what we hold, why, and how to ask for it to be removed.
 - Contact: info@yappman.com
 
 ## Optional
