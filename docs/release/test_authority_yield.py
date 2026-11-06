@@ -288,6 +288,7 @@ class BuildTests(unittest.TestCase):
         self.assert_held(2, regenerated(make_files(), lambda d: [d.update(periodTo='2026-06')] + [r.update(periodTo='2026-06') for r in d['rows']]))
         self.assert_held(2, make_files('2027-01', built='2026-12-31T00:00:00Z'))         # a month after the clock
         self.assert_held(2, make_files(built='2026-12-31T14:00:00Z'))                   # built two hours ahead
+        self.assert_held(2, make_files(built='2026-11-31T25:61:61Z'))                   # not a real time (re-review 2)
 
     def test_check_3_the_csv_matches(self) -> None:
         def csv_edit(change):
@@ -323,9 +324,6 @@ class BuildTests(unittest.TestCase):
             row(index[('Leeds', 'flat')], rentOneBed=850),              # a bedroom rent off the all row
             row(index[('Tower Hamlets', 'detached')], medianPrice12m=700000),   # a median under 5 sales
             row(leeds_all, lowSample=True),
-            row(leeds_all, authorityName='Leeds <b>'),
-            row(leeds_all, authorityName='Leeds LS1 4AP'),
-            row(leeds_all, authorityName='Leeds 2'),
             row(leeds_all, country='Wales'),
             row(leeds_all, authorityCode='S12000036'),
             row(leeds_all, rentMonthly=0),
@@ -334,6 +332,15 @@ class BuildTests(unittest.TestCase):
             row(leeds_all, periodFrom='2025-07'),
         ):
             self.assert_held(7, regenerated(make_files(), change))
+        # a bad name on all five Leeds rows, so only the name pattern can hold it (re-review 1)
+        leeds = [i for i, r in enumerate(rows) if r['authorityCode'] == 'E08000035']
+        for bad in ('Leeds <b>', 'Leeds LS1 4AP', 'Leeds 2', 'Leeds\u00b2', 'Leeds_x'):
+            files = regenerated(make_files(), lambda d, bad=bad: [d['rows'][i].update(authorityName=bad) for i in leeds])
+            with SiteRoot() as root:
+                put_incoming(root, files)
+                code, result = run_site(root, '--publish', '--first-publish')
+                self.assertEqual((code, result['check']), (3, 7), result)
+                self.assertIn('the authority code or name', result['reason'])
         swapped = make_rows()
         swapped[0], swapped[1] = swapped[1], swapped[0]
         self.assert_held(7, make_files(rows=swapped))

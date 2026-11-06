@@ -197,7 +197,11 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
         raise CheckFailed(2, 'AY_STATE month or piprEdition is malformed')
     if not (isinstance(built_at, str) and dts.BUILT_AT_RE.fullmatch(built_at)):
         raise CheckFailed(2, 'AY_STATE builtAt is malformed')
-    if month > now.strftime('%Y-%m') or (dts._instant(built_at) - now).total_seconds() > CLOCK_SKEW_SECONDS:
+    try:
+        ahead = (dts._instant(built_at) - now).total_seconds()
+    except ValueError:
+        raise CheckFailed(2, 'AY_STATE builtAt is not a real time') from None
+    if month > now.strftime('%Y-%m') or ahead > CLOCK_SKEW_SECONDS:
         raise CheckFailed(2, 'AY_STATE month or builtAt is in the future')
     if not dts._is_count(rows) or not dts._is_count(state['authorities']) or rows != 5 * state['authorities']:
         raise CheckFailed(2, 'AY_STATE rows is not five times its authorities')
@@ -263,7 +267,9 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
             if (row['month'], row['periodFrom'], row['periodTo'], row['piprEdition']) != (
                     month, document['periodFrom'], document['periodTo'], edition):
                 raise CheckFailed(7, f'{where}: the month, period or edition differs from the table')
-            if row['authorityCode'] != code or not (isinstance(row['authorityName'], str) and NAME_RE.fullmatch(row['authorityName'])):
+            name = row['authorityName']
+            if row['authorityCode'] != code or not (isinstance(name, str) and NAME_RE.fullmatch(name)) \
+                    or any(c.isnumeric() for c in name):
                 raise CheckFailed(7, f'{where}: the authority code or name')
             if row['authorityName'] != group[0]['authorityName'] or row['country'] != ('England' if code[0] == 'E' else 'Wales'):
                 raise CheckFailed(7, f'{where}: the name or country differs within the authority')
