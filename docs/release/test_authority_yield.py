@@ -169,6 +169,30 @@ def regenerated(files, change):
 
 class BuildTests(unittest.TestCase):
 
+    def setUp(self) -> None:
+        # the fixtures hold 6 or 8 authorities; the real bound (300 to 330) is tested on its own below
+        patcher = mock.patch.multiple(site, MIN_AUTHORITIES=1, MAX_AUTHORITIES=20)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def test_w_a_the_authority_count_bound(self) -> None:
+        with mock.patch.multiple(site, MIN_AUTHORITIES=300, MAX_AUTHORITIES=330):
+            self.assert_held(2, make_files())        # 6 authorities is far outside 300 to 330
+
+    def test_w_a_a_published_authority_keeps_its_name(self) -> None:
+        rows = make_rows(edition='2026-11-18')
+        for r in rows:
+            if r['authorityCode'] == 'E08000035':
+                r['authorityName'] = 'John Smith'    # letters only, so only the live-name rule can hold it
+        self.assert_held(7, make_files(edition='2026-11-18', built='2026-11-18T14:31:00Z', rows=rows), live_first=True)
+        # a new code (a reorganisation) is allowed beside the live ones
+        more = make_rows(edition='2026-11-18', authorities=AUTHORITIES + [('E06000099', 'New Unitary', {t: (900, 0, None) for t in TYPES}, (1, 1, 1, 1))])
+        with SiteRoot() as root:
+            put_incoming(root, make_files())
+            run_site(root, '--publish', '--first-publish')
+            put_incoming(root, make_files(edition='2026-11-18', built='2026-11-18T14:31:00Z', rows=more))
+            self.assertEqual(run_site(root, '--publish')[0], 0)
+
     def test_the_fixture_matches_the_review(self) -> None:
         rows = {(r['authorityName'], r['propertyType']): r for r in make_rows()}
         self.assertEqual(rows[('Leeds', 'all')]['grossYieldPct'], 5.4)
@@ -478,6 +502,17 @@ class FetchTests(unittest.TestCase):
             with contextlib.redirect_stdout(out):
                 self.assertEqual(fetch.main(['--dry-run'], reader=lambda: TOKEN, root=Path(tmp)), 2)
 
+    def test_refused_when_a_certificate_override_is_set(self) -> None:
+        for name in ('SSL_CERT_FILE', 'SSL_CERT_DIR'):
+            with mock.patch.dict(os.environ, {name: 'C:/somewhere/ca.pem'}), FetchRoot() as tmp, \
+                    mock.patch.object(fetch, '_credential_api', side_effect=AssertionError('reached')), \
+                    mock.patch.object(sys, 'flags', mock.Mock(isolated=1)):
+                os.environ.pop('CLAUDECODE', None)
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    self.assertEqual(fetch.main(['--dry-run'], opener=FakeOpener(make_files()), root=Path(tmp)), 2)
+                self.assertIn('ssl-cert-override-set', out.getvalue())
+
     def test_refused_without_python_I_and_outside_the_repo(self) -> None:
         with mock.patch.dict(os.environ, {}), FetchRoot() as tmp, \
                 mock.patch.object(fetch, '_credential_api', side_effect=AssertionError('reached')), \
@@ -575,7 +610,7 @@ class FetchTests(unittest.TestCase):
                 fetch.Secret(bad)
 
     def test_fetch_then_build_end_to_end(self) -> None:
-        with SiteRoot() as root:
+        with SiteRoot() as root, mock.patch.multiple(site, MIN_AUTHORITIES=1, MAX_AUTHORITIES=20):
             self.assertEqual(run_fetch(root, FakeOpener(make_files()), '--fetch')[0], 0)
             self.assertEqual(run_site(root, '--publish', '--first-publish')[0], 0)
 

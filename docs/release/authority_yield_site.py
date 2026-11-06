@@ -99,6 +99,10 @@ MAX_RENT = 100_000            # a monthly rent above this is a parsing fault, no
 MAX_PRICE = 100_000_000
 MAX_SALES = 1_000_000         # more 12-month sales than this in one authority is a fault (review 6)
 CLOCK_SKEW_SECONDS = 3600     # a builtAt this far ahead of our clock is refused (review 6)
+# England and Wales local authorities in PIPR: 316 on 6 Nov 2026 (294 English, 22 Welsh). A table far outside this
+# is a fault, not a reorganisation (Orchestrator review W-a). Tests narrow these to their fixtures.
+MIN_AUTHORITIES = 300
+MAX_AUTHORITIES = 330
 
 INCOMING = Path('_incoming/rental-yield')
 OUT = Path('data/rental-yield')
@@ -205,6 +209,8 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
         raise CheckFailed(2, 'AY_STATE month or builtAt is in the future')
     if not dts._is_count(rows) or not dts._is_count(state['authorities']) or rows != 5 * state['authorities']:
         raise CheckFailed(2, 'AY_STATE rows is not five times its authorities')
+    if not MIN_AUTHORITIES <= state['authorities'] <= MAX_AUTHORITIES:
+        raise CheckFailed(2, f'{state["authorities"]} authorities, outside {MIN_AUTHORITIES} to {MAX_AUTHORITIES}')
     if (document['month'], document['piprEdition'], document['builtAt']) != (month, edition, built_at):
         raise CheckFailed(2, 'the JSON month, piprEdition or builtAt differs from AY_STATE')
     json_rows = document['rows']
@@ -273,6 +279,10 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
                 raise CheckFailed(7, f'{where}: the authority code or name')
             if row['authorityName'] != group[0]['authorityName'] or row['country'] != ('England' if code[0] == 'E' else 'Wales'):
                 raise CheckFailed(7, f'{where}: the name or country differs within the authority')
+            # W-a: an authority already published keeps its published name; a renamed or swapped name is held for a
+            # person to look at (a new code, after a reorganisation, is allowed)
+            if live is not None and code in live['names'] and live['names'][code] != row['authorityName']:
+                raise CheckFailed(7, f'{where}: the name differs from the live table\'s name for {code}')
             if not dts._is_count(row['sales12m']) or row['sales12m'] > MAX_SALES or not _is_amount(row['rentMonthly'], MAX_RENT) \
                     or not _is_amount(row['medianPrice12m'], MAX_PRICE):
                 raise CheckFailed(7, f'{where}: a count, rent or price is not a whole number in range')
@@ -301,6 +311,7 @@ def live_table(root: Path) -> dict[str, Any] | None:
     try:
         document = json.loads(path.read_bytes().decode('utf-8'))
         live = {k: document[k] for k in ('month', 'piprEdition', 'builtAt')} | {'rows': len(document['rows'])}
+        live['names'] = {row['authorityCode']: row['authorityName'] for row in document['rows']}
     except (OSError, UnicodeDecodeError, ValueError, KeyError, TypeError):
         raise CheckFailed(5, 'the live latest file cannot be read') from None
     if not (dts._is_month(live['month']) and isinstance(live['piprEdition'], str) and EDITION_RE.fullmatch(live['piprEdition'])

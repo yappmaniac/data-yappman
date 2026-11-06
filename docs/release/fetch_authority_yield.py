@@ -21,7 +21,8 @@ Rules (modelled on the reviewed FHRS/CQC publish tools and on fetch_district_tab
 - The base URL and the store name are constants in this file; nothing comes from the command line, the environment
   or a file. Only three record keys can be requested: AY_STATE, yield_latest.json and yield_latest.csv. Every request
   is a GET: this tool cannot write to the store, list its keys or read any other record.
-- HTTPS only with an explicit verified TLS context (TLS 1.2 or later, no key log file even if SSLKEYLOGFILE is set),
+- HTTPS only with an explicit verified TLS context (TLS 1.2 or later, no key log file even if SSLKEYLOGFILE is set;
+  refused when SSL_CERT_FILE or SSL_CERT_DIR is set, since python -I does not clear them),
   no proxy, no redirect followed (a 3xx is refused: the header could otherwise go to another host), a timeout on every
   request, at most 3 attempts on 429 or 5xx, no retry on a 4xx or a network failure.
 - Output is one JSON line of facts (month, PIPR edition, builtAt, authority and row counts, sizes and SHA-256 of the
@@ -366,6 +367,11 @@ def main(argv: list[str] | None = None, *, reader: Callable[[], str | None] | No
         return 2
     if real and not sys.flags.isolated:
         emit(json.dumps({'status': 'refused', 'code': 'run-with-python-I'}))
+        return 2
+    # python -I does not clear these, and they would let another certificate authority be trusted for this request
+    # (Orchestrator review W-c): refuse rather than send the token through a substituted trust store
+    if real and (os.environ.get('SSL_CERT_FILE') or os.environ.get('SSL_CERT_DIR')):
+        emit(json.dumps({'status': 'refused', 'code': 'ssl-cert-override-set'}))
         return 2
     if not is_this_repo(root):
         emit(json.dumps({'status': 'refused', 'code': 'not-the-data-yappman-repo'}))
