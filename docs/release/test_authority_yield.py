@@ -123,6 +123,28 @@ def make_files(month='2026-10', edition='2026-10-21', built=BUILT, rows=None):
             'yield_latest.csv': yield_csv(rows).encode('utf-8')}
 
 
+FIXTURE_PINNED = {code: name for code, name, _, _ in AUTHORITIES}
+
+
+class PinnedFixture:
+    """The build's reviewed list pointed at a temporary file holding the fixture authorities (or `pairs`)."""
+
+    def __init__(self, pairs=None):
+        self.pairs = FIXTURE_PINNED if pairs is None else pairs
+
+    def __enter__(self):
+        self.dir = tempfile.TemporaryDirectory()
+        path = Path(self.dir.name, 'pinned.json')
+        path.write_text(json.dumps({'note': 'fixture', 'authorities': self.pairs}, ensure_ascii=False), encoding='utf-8')
+        self.patch = mock.patch.object(site, 'PINNED_FILE', path)
+        self.patch.start()
+        return path
+
+    def __exit__(self, *exc):
+        self.patch.stop()
+        self.dir.cleanup()
+
+
 class SiteRoot:
     def __enter__(self) -> Path:
         self.dir = tempfile.TemporaryDirectory()
@@ -174,6 +196,9 @@ class BuildTests(unittest.TestCase):
         patcher = mock.patch.multiple(site, MIN_AUTHORITIES=1, MAX_AUTHORITIES=20)
         patcher.start()
         self.addCleanup(patcher.stop)
+        pinned = PinnedFixture()
+        pinned.__enter__()
+        self.addCleanup(pinned.__exit__)
 
     def test_w_a_the_authority_count_bound(self) -> None:
         with mock.patch.multiple(site, MIN_AUTHORITIES=300, MAX_AUTHORITIES=330):
@@ -185,13 +210,105 @@ class BuildTests(unittest.TestCase):
             if r['authorityCode'] == 'E08000035':
                 r['authorityName'] = 'John Smith'    # letters only, so only the live-name rule can hold it
         self.assert_held(7, make_files(edition='2026-11-18', built='2026-11-18T14:31:00Z', rows=rows), live_first=True)
-        # a new code (a reorganisation) is allowed beside the live ones
+        # W1: a new code (a reorganisation) is held until a person accepts it, then allowed, with a reminder
         more = make_rows(edition='2026-11-18', authorities=AUTHORITIES + [('E06000099', 'New Unitary', {t: (900, 0, None) for t in TYPES}, (1, 1, 1, 1))])
         with SiteRoot() as root:
             put_incoming(root, make_files())
             run_site(root, '--publish', '--first-publish')
             put_incoming(root, make_files(edition='2026-11-18', built='2026-11-18T14:31:00Z', rows=more))
-            self.assertEqual(run_site(root, '--publish')[0], 0)
+            before = snapshot(root)
+            code, result = run_site(root, '--publish')
+            self.assertEqual((code, result['check']), (3, 7), result)
+            self.assertIn('E06000099 New Unitary', result['reason'])
+            self.assertEqual(snapshot(root), before)
+            code, result = run_site(root, '--publish', '--accept-new-codes', 'E06000099')
+            self.assertEqual(code, 0, result)
+            self.assertEqual(result['acceptedNewCodes'], ['E06000099'])
+            self.assertIn('rental-yield-authorities.json', result['reminder'])
+
+    def test_w2_the_reviewed_list(self) -> None:
+        # a code that is not on the list is held, and printed as a validated code/name pair
+        with PinnedFixture({c: n for c, n in FIXTURE_PINNED.items() if c != 'E07000999'}):
+            with SiteRoot() as root:
+                put_incoming(root, make_files())
+                before = snapshot(root)
+                code, result = run_site(root, '--publish', '--first-publish')
+                self.assertEqual((code, result['check']), (3, 7), result)
+                self.assertIn('1 authority code(s)', result['reason'])
+                self.assertIn('E07000999 Example District', result['reason'])
+                self.assertEqual(snapshot(root), before)
+                self.assertEqual(run_site(root, '--publish', '--first-publish', '--accept-new-codes', 'E07000999')[0], 0)
+        # a name that differs from the list is held, with no override
+        with PinnedFixture(FIXTURE_PINNED | {'E08000035': 'City of Leeds'}):
+            self.assert_held(7, make_files())
+        # a list that cannot be read, or holds a bad pair, holds every run
+        with PinnedFixture(FIXTURE_PINNED | {'E08000099': 'Leeds 2'}):
+            self.assert_held(7, make_files())
+        with mock.patch.object(site, 'PINNED_FILE', Path(tempfile.gettempdir(), 'no-such-list.json')):
+            self.assert_held(7, make_files())
+
+    def test_w2_accept_new_codes_is_strict(self) -> None:
+        with SiteRoot() as root:
+            put_incoming(root, make_files())
+            for value in ('E08000035', 'X1', 'E08000035;rm'):
+                code, result = run_site(root, '--check', '--first-publish', '--accept-new-codes', value)
+                self.assertEqual(code, 2, (value, result))
+
+    def test_n9_counts_by_default_and_names_only_on_request(self) -> None:
+        with SiteRoot() as root:
+            put_incoming(root, make_files())
+            code, result = run_site(root, '--check', '--first-publish')
+            self.assertEqual((code, result['authorities']), (0, 6))
+            self.assertNotIn('authorityList', result)
+            self.assertNotIn('Leeds', json.dumps(result))
+            code, result = run_site(root, '--check', '--first-publish', '--list-authorities')
+            self.assertEqual(len(result['authorityList']), 6)
+            self.assertIn('E08000035 Leeds', result['authorityList'])
+            self.assertEqual(run_site(root, '--publish', '--first-publish', '--list-authorities')[0], 2)
+            run_site(root, '--publish', '--first-publish')
+            put_incoming(root, make_files(built='2026-11-05T00:00:00Z'))        # held against the live table
+            code, result = run_site(root, '--publish')
+            self.assertEqual(code, 3)
+            self.assertNotIn('names', result['live'])
+
+    def test_n8_a_live_builtat_that_is_not_a_real_time(self) -> None:
+        with SiteRoot() as root:
+            put_incoming(root, make_files())
+            run_site(root, '--publish', '--first-publish')
+            live = root / site.OUT / 'rental-yield-latest.json'
+            document = json.loads(live.read_bytes())
+            document['builtAt'] = '2026-11-31T25:61:61Z'
+            live.write_bytes(json.dumps(document).encode())
+            put_incoming(root, make_files(built='2026-11-07T08:00:00Z'))
+            code, result = run_site(root, '--publish')
+            self.assertEqual((code, result['check']), (3, 5), result)
+
+    def test_w4_links_and_leftover_part_files_are_refused(self) -> None:
+        for linked in ('_incoming', '_incoming/rental-yield', 'data/rental-yield', 'rental-yield/index.html', 'sitemap.xml'):
+            with SiteRoot() as root:
+                put_incoming(root, make_files())
+                (root / 'data' / 'rental-yield').mkdir(parents=True)
+                before = snapshot(root)
+                target = root / linked
+                with mock.patch.object(site, '_is_link', side_effect=lambda p, target=target: Path(p) == target):
+                    code, result = run_site(root, '--publish', '--first-publish')
+                self.assertEqual((code, result['code'], result['where']), (2, 'link-refused', str(Path(linked))), result)
+                self.assertEqual(snapshot(root), before)
+        with SiteRoot() as root:
+            put_incoming(root, make_files())
+            (root / 'data' / 'rental-yield').mkdir(parents=True)
+            (root / 'data' / 'rental-yield' / 'rental-yield-latest.json.part').write_bytes(b'left over')
+            before = snapshot(root)
+            code, result = run_site(root, '--publish', '--first-publish')
+            self.assertEqual((code, result['code']), (2, 'part-file-left-over'))
+            self.assertEqual(snapshot(root), before)
+
+    def test_the_committed_reviewed_list(self) -> None:
+        pairs = site.load_pinned(HERE / 'rental-yield-authorities.json')
+        self.assertEqual(len(pairs), 316)
+        self.assertEqual(sum(c.startswith('E') for c in pairs), 294)
+        self.assertEqual(sum(c.startswith('W') for c in pairs), 22)
+        self.assertEqual(pairs['E08000035'], 'Leeds')
 
     def test_the_fixture_matches_the_review(self) -> None:
         rows = {(r['authorityName'], r['propertyType']): r for r in make_rows()}
@@ -610,7 +727,7 @@ class FetchTests(unittest.TestCase):
                 fetch.Secret(bad)
 
     def test_fetch_then_build_end_to_end(self) -> None:
-        with SiteRoot() as root, mock.patch.multiple(site, MIN_AUTHORITIES=1, MAX_AUTHORITIES=20):
+        with SiteRoot() as root, mock.patch.multiple(site, MIN_AUTHORITIES=1, MAX_AUTHORITIES=20), PinnedFixture():
             self.assertEqual(run_fetch(root, FakeOpener(make_files()), '--fetch')[0], 0)
             self.assertEqual(run_site(root, '--publish', '--first-publish')[0], 0)
 

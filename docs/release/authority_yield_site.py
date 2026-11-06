@@ -21,8 +21,17 @@ own writer (price_paid/src/authority_yield.py at 3e9ee16). It reuses the reviewe
 - Rewrites only the marked parts of rental-yield/index.html (summary, downloads, method, attribution, every row) and
   the page's lastmod in sitemap.xml. The files are published as fetched (byte for byte).
 
-Exit codes: 0 published, or nothing new; 2 refused (usage, wrong folder, or --first-publish against a live table);
-3 a check failed or the page template is broken, nothing written.
+Hardening for the monthly runs (Orchestrator review of 40643ca, 6 Nov 2026):
+- W1/W2: docs/release/rental-yield-authorities.json is the reviewed list of codes and names (a reviewed commit changes
+  it). A code that is not in it, or not in the live table, is held until it is named in --accept-new-codes; a name that
+  differs from the list or the live table is held. `--check --list-authorities` prints the checked code/name pairs, so
+  no session needs to read the fetched files. Without it only counts are printed (N9).
+- W4: the incoming, data and page folders and files must not be junctions, symlinks or other reparse points, and each
+  file is written whole as <name>.part opened with O_EXCL (a leftover .part refuses the run), then moved into place.
+- N8: a live builtAt that is not a real time is a check-5 hold, not a traceback.
+
+Exit codes: 0 published, or nothing new; 2 refused (usage, wrong folder, a link or leftover .part file, or
+--first-publish against a live table); 3 a check failed or the page template is broken, nothing written.
 """
 
 from __future__ import annotations
@@ -32,7 +41,9 @@ import csv
 import html
 import io
 import json
+import os
 import re
+import stat
 import sys
 from dataclasses import dataclass
 from datetime import UTC, datetime
@@ -110,6 +121,8 @@ PAGE = Path('rental-yield/index.html')
 PAGE_URL = 'https://data.yappman.com/rental-yield/'
 STATE_FILE, JSON_FILE, CSV_FILE = 'AY_STATE.json', 'yield_latest.json', 'yield_latest.csv'
 LATEST = 'rental-yield-latest'
+PINNED_FILE = Path(__file__).resolve().parent / 'rental-yield-authorities.json'
+SHOWN_CODES = 20              # at most this many unaccepted code/name pairs are printed in a hold
 ARCHIVE_RE = re.compile(r'rental-yield-(?P<month>[0-9]{4}-(?:0[1-9]|1[0-2]))-pipr-(?P<edition>' + EDITION_RE.pattern + r')\.(?:csv|json)')
 
 
@@ -175,10 +188,57 @@ def _month_minus(month: str, months: int) -> str:
     return f'{index // 12:04d}-{index % 12 + 1:02d}'
 
 
+class Refused(Exception):
+    """The run cannot be made safely (a link or a leftover .part file). Carries a short code and the folder or file."""
+
+    def __init__(self, code: str, where: str) -> None:
+        super().__init__(code)
+        self.code, self.where = code, where
+
+
+def _is_link(path: Path) -> bool:
+    """A symlink, junction or any other reparse point (Windows), checked without following it."""
+    try:
+        st = os.lstat(path)
+    except FileNotFoundError:
+        return False
+    reparse = getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0x400)
+    return stat.S_ISLNK(st.st_mode) or bool(getattr(st, 'st_file_attributes', 0) & reparse)
+
+
+def refuse_links(root: Path, *relatives: Path) -> None:
+    """Every folder from the repo root down to each path, and the path itself, must be a plain folder or file (W4)."""
+    for relative in relatives:
+        current = root
+        for part in relative.parts:
+            current = current / part
+            if _is_link(current):
+                raise Refused('link-refused', str(current.relative_to(root)))
+
+
+def load_pinned(path: Path | None = None) -> dict[str, str]:
+    """The reviewed code/name list (W2). A list that cannot be read, or holds a malformed pair, holds every run."""
+    try:
+        document = json.loads((path or PINNED_FILE).read_bytes().decode('utf-8'), object_pairs_hook=dts._no_repeats)
+        pairs = document['authorities']
+    except (OSError, UnicodeDecodeError, ValueError, KeyError, TypeError):
+        raise CheckFailed(7, 'the reviewed authority list cannot be read') from None
+    if not isinstance(pairs, dict) or not all(isinstance(c, str) and AUTHORITY_RE.fullmatch(c) and isinstance(n, str)
+                                              and NAME_RE.fullmatch(n) and not any(ch.isnumeric() for ch in n)
+                                              for c, n in pairs.items()):
+        raise CheckFailed(7, 'the reviewed authority list holds a malformed code or name')
+    return pairs
+
+
 def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[str, Any] | None,
-                first_publish: bool, now: datetime | None = None) -> Table:
-    """Every check, in order. Raises CheckFailed (number and reason) at the first failure. `now` is for the tests."""
+                first_publish: bool, now: datetime | None = None, *, pinned: dict[str, str] | None = None,
+                accepted: frozenset[str] = frozenset()) -> Table:
+    """Every check, in order. Raises CheckFailed (number and reason) at the first failure. `now` is for the tests;
+    `pinned` is the reviewed code/name list (None: no list, for the tests of the other checks); `accepted` the codes a
+    person has accepted for this run with --accept-new-codes."""
     now = now or datetime.now(UTC)
+    unaccepted: list[str] = []
+    used_accepted: set[str] = set()
     for name, raw in (('AY_STATE', state_raw), ('yield_latest.json', json_raw), ('yield_latest.csv', csv_raw)):
         if len(raw) > dts.MAX_FILE_BYTES:
             raise CheckFailed(1, f'{name} is larger than {dts.MAX_FILE_BYTES} bytes')
@@ -279,10 +339,18 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
                 raise CheckFailed(7, f'{where}: the authority code or name')
             if row['authorityName'] != group[0]['authorityName'] or row['country'] != ('England' if code[0] == 'E' else 'Wales'):
                 raise CheckFailed(7, f'{where}: the name or country differs within the authority')
-            # W-a: an authority already published keeps its published name; a renamed or swapped name is held for a
-            # person to look at (a new code, after a reorganisation, is allowed)
+            # W-a and W2: an authority already published, or on the reviewed list, keeps that name; a renamed or
+            # swapped name is held for a person to look at
             if live is not None and code in live['names'] and live['names'][code] != row['authorityName']:
                 raise CheckFailed(7, f'{where}: the name differs from the live table\'s name for {code}')
+            if pinned is not None and code in pinned and pinned[code] != row['authorityName']:
+                raise CheckFailed(7, f'{where}: the name differs from the reviewed list\'s name for {code}')
+            # W1/W2: a code not on the reviewed list, or not in the live table, waits for a person (--accept-new-codes)
+            if offset == 0 and ((pinned is not None and code not in pinned) or (live is not None and code not in live['names'])):
+                if code in accepted:
+                    used_accepted.add(code)
+                else:
+                    unaccepted.append(f'{code} {row["authorityName"]}')
             if not dts._is_count(row['sales12m']) or row['sales12m'] > MAX_SALES or not _is_amount(row['rentMonthly'], MAX_RENT) \
                     or not _is_amount(row['medianPrice12m'], MAX_PRICE):
                 raise CheckFailed(7, f'{where}: a count, rent or price is not a whole number in range')
@@ -297,6 +365,14 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
             for column in BEDROOM_COLUMNS:
                 if not _is_amount(row[column], MAX_RENT) or (row['propertyType'] != 'all' and row[column] is not None):
                     raise CheckFailed(7, f'{where}: a bedroom rent off the all row, or out of range')
+
+    if unaccepted:
+        shown = '; '.join(unaccepted[:SHOWN_CODES]) + ('' if len(unaccepted) <= SHOWN_CODES else f'; and {len(unaccepted) - SHOWN_CODES} more')
+        raise CheckFailed(7, f'{len(unaccepted)} authority code(s) not on the reviewed list or not in the live table, '
+                             f'held until accepted with --accept-new-codes: {shown}')
+    if accepted - used_accepted:
+        raise CheckFailed(7, f'--accept-new-codes names code(s) that need no acceptance: {", ".join(sorted(accepted - used_accepted))}',
+                          refused=True)
 
     # 8. the three attribution statements, word for word, with the build year (the page shows them: see plan_publish)
     if not _attribution_ok(document['attribution'], built_at[:4]):
@@ -317,7 +393,18 @@ def live_table(root: Path) -> dict[str, Any] | None:
     if not (dts._is_month(live['month']) and isinstance(live['piprEdition'], str) and EDITION_RE.fullmatch(live['piprEdition'])
             and isinstance(live['builtAt'], str) and dts.BUILT_AT_RE.fullmatch(live['builtAt'])):
         raise CheckFailed(5, 'the live latest file has a malformed month, edition or builtAt (edited by hand?)')
+    try:
+        dts._instant(live['builtAt'])                     # N8: a builtAt that is not a real time
+    except ValueError:
+        raise CheckFailed(5, 'the live latest file\'s builtAt is not a real time (edited by hand?)') from None
+    if not all(isinstance(c, str) and isinstance(n, str) for c, n in live['names'].items()):
+        raise CheckFailed(5, 'the live latest file has a malformed authority')
     return live
+
+
+def live_summary(live: dict[str, Any] | None) -> dict[str, Any] | None:
+    """What is printed about the live table: no names (N9)."""
+    return None if live is None else {k: live[k] for k in ('month', 'piprEdition', 'builtAt', 'rows')}
 
 
 def _pounds(value: int | None) -> str:
@@ -381,6 +468,11 @@ class Plan:
 def plan_publish(root: Path, table: Table, today: str) -> Plan:
     """Everything the publish writes, worked out in memory; raises before anything is written."""
     out = root / OUT
+    targets = [OUT / f'{table.archive}.{e}' for e in ('json', 'csv')] + [OUT / f'{LATEST}.{e}' for e in ('json', 'csv')] + [PAGE, dts.SITEMAP]
+    refuse_links(root, *targets)                          # W4: no link anywhere on the way to a file this run writes
+    for target in targets:
+        if (root / target).with_name(target.name + '.part').exists():
+            raise Refused('part-file-left-over', str(target) + '.part')
     sizes: dict[str, int] = {}
     for path in out.glob('rental-yield-*.*') if out.exists() else ():
         if ARCHIVE_RE.fullmatch(path.name):
@@ -421,12 +513,29 @@ def plan_publish(root: Path, table: Table, today: str) -> Plan:
     return Plan(files, page, pattern.sub(rf'\g<1>{today}\g<2>', sitemap), done)
 
 
+def _replace(root: Path, path: Path, data: bytes) -> None:
+    """The file written whole as <name>.part, opened with O_EXCL (never through an existing file or link), then moved
+    into place (W4)."""
+    refuse_links(root, path.relative_to(root))
+    temporary = path.with_name(path.name + '.part')
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_BINARY', 0)
+    fd = os.open(temporary, flags, 0o644)
+    try:
+        with os.fdopen(fd, 'wb') as handle:
+            handle.write(data)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
+    os.replace(temporary, path)
+
+
 def write_plan(root: Path, plan: Plan) -> None:
     (root / OUT).mkdir(parents=True, exist_ok=True)
+    refuse_links(root, OUT)
     for path, data in plan.files:
-        dts._replace(path, data)
-    dts._replace(root / PAGE, plan.page.encode('utf-8'))
-    dts._replace(root / dts.SITEMAP, plan.sitemap.encode('utf-8'))
+        _replace(root, path, data)
+    _replace(root, root / PAGE, plan.page.encode('utf-8'))
+    _replace(root, root / dts.SITEMAP, plan.sitemap.encode('utf-8'))
 
 
 def main(argv: list[str] | None = None, *, root: Path = dts.REPO, today: str | None = None,
@@ -436,9 +545,21 @@ def main(argv: list[str] | None = None, *, root: Path = dts.REPO, today: str | N
     mode.add_argument('--check', action='store_true', help='the checks only; writes nothing')
     mode.add_argument('--publish', action='store_true')
     parser.add_argument('--first-publish', action='store_true', help='only when no table is live yet')
+    parser.add_argument('--accept-new-codes', default='', metavar='CODE,CODE',
+                        help='authority codes a person has looked at and accepts for this run (W1)')
+    parser.add_argument('--list-authorities', action='store_true', help='with --check: print the checked code/name pairs')
     args = parser.parse_args(argv)
+    accepted = frozenset(c for c in args.accept_new_codes.split(',') if c)
+    if not all(AUTHORITY_RE.fullmatch(c) for c in accepted) or (args.list_authorities and not args.check):
+        print(json.dumps({'status': 'refused', 'code': 'bad-arguments'}))
+        return 2
     if not dts.is_this_repo(root):
         print(json.dumps({'status': 'refused', 'code': 'not-the-data-yappman-repo'}))
+        return 2
+    try:
+        refuse_links(root, *(INCOMING / name for name in (STATE_FILE, JSON_FILE, CSV_FILE)))
+    except Refused as refusal:
+        print(json.dumps({'status': 'refused', 'code': refusal.code, 'where': refusal.where}))
         return 2
     try:
         raws = [(root / INCOMING / name).read_bytes() for name in (STATE_FILE, JSON_FILE, CSV_FILE)]
@@ -448,19 +569,28 @@ def main(argv: list[str] | None = None, *, root: Path = dts.REPO, today: str | N
     live = None
     try:
         live = live_table(root)
-        table = check_table(*raws, live, args.first_publish, now)
+        table = check_table(*raws, live, args.first_publish, now, pinned=load_pinned(), accepted=accepted)
         if live is not None and (live['month'], live['piprEdition'], live['builtAt']) == (table.month, table.edition, table.state['builtAt']):
             print(json.dumps({'status': 'nothing-new', 'month': table.month, 'piprEdition': table.edition}))
             return 0
         plan = plan_publish(root, table, today or datetime.now(UTC).date().isoformat())
     except CheckFailed as failure:
         print(json.dumps({'status': 'refused' if failure.refused else 'held', 'check': failure.check,
-                          'reason': str(failure), 'live': live}))
+                          'reason': str(failure), 'live': live_summary(live)}))
         return 2 if failure.refused else 3
+    except Refused as refusal:
+        print(json.dumps({'status': 'refused', 'code': refusal.code, 'where': refusal.where}))
+        return 2
     except TemplateBroken as broken:
         print(json.dumps({'status': 'held', 'code': 'template-broken', 'reason': str(broken)}))
         return 3
-    summary = {'month': table.month, 'piprEdition': table.edition, 'builtAt': table.state['builtAt'], 'rows': table.rows, 'live': live}
+    summary = {'month': table.month, 'piprEdition': table.edition, 'builtAt': table.state['builtAt'], 'rows': table.rows,
+               'authorities': table.state['authorities'], 'live': live_summary(live)}
+    if accepted:
+        summary['acceptedNewCodes'] = sorted(accepted)
+        summary['reminder'] = 'add the accepted codes and names to docs/release/rental-yield-authorities.json in a reviewed commit'
+    if args.check and args.list_authorities:
+        summary['authorityList'] = [f'{r["authorityCode"]} {r["authorityName"]}' for r in table.document['rows'][::5]]
     if args.check:
         print(json.dumps({'status': 'checks-passed', **summary, 'wouldDo': plan.done}))
         return 0
