@@ -11,6 +11,7 @@
 - [AU Online Shelf-Price Index: data dictionary](https://data.yappman.com/au-shelf-price-index/data-dictionary/): Fields, record types, statuses and meta of the AU Online Shelf-Price Index dataset (au-shelf-price-index), with the CSV and JSON download links. Licensed CC BY 4.0.
 - [UK Christmas dinner basket 2026](https://data.yappman.com/christmas-basket/): A fixed Christmas dinner basket of 27 items at Tesco, Sainsbury's, Asda and Aldi: posted online shelf prices read from pinned product pages, weekly totals and item by item.
 - [Council tax Band D reference table](https://data.yappman.com/council-tax/): Band D council tax for England, Wales and Scotland, 2025-26 and 2026-27, with nine English regions for 2026-27. 20 rows, CSV download, sources and Open Government Licence attribution.
+- [Median sold prices by postcode district](https://data.yappman.com/sold-prices/): A free monthly table of median sold prices by postcode district for England and Wales, from HM Land Registry Price Paid Data, as CSV and JSON under the Open Government Licence v3.0.
 - [Grocery price snapshots MCP server](https://data.yappman.com/mcp/): A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices and the UK daily basket, as static snapshots under CC BY 4.0.
 
 ## Actors on the Apify Store
