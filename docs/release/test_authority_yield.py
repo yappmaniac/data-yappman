@@ -619,8 +619,33 @@ class FetchTests(unittest.TestCase):
             with contextlib.redirect_stdout(out):
                 self.assertEqual(fetch.main(['--dry-run'], reader=lambda: TOKEN, root=Path(tmp)), 2)
 
+    def test_w4_links_and_leftover_part_files_save_nothing(self) -> None:
+        for linked in ('_incoming', '_incoming/rental-yield', '_incoming/rental-yield/yield_latest.json'):
+            with FetchRoot() as tmp:
+                target = Path(tmp) / linked
+                with mock.patch.object(fetch, '_is_link', side_effect=lambda p, target=target: Path(p) == target):
+                    code, out = run_fetch(tmp, FakeOpener(make_files()), '--fetch')
+                self.assertEqual((code, json.loads(out)['code']), (2, 'link-refused'), linked)
+                self.assertFalse(any((Path(tmp) / fetch.INCOMING).glob('*.json')))
+        with FetchRoot() as tmp:
+            folder = Path(tmp) / fetch.INCOMING
+            folder.mkdir(parents=True)
+            (folder / 'yield_latest.csv.part').write_bytes(b'left over')
+            code, out = run_fetch(tmp, FakeOpener(make_files()), '--fetch')
+            self.assertEqual((code, json.loads(out)['code']), (3, 'part-file-left-over'))
+            self.assertEqual(sorted(p.name for p in folder.iterdir()), ['yield_latest.csv.part'])
+
+    def test_n2_a_malformed_builtat_or_edition_is_not_printed(self) -> None:
+        for field, bad in (('builtAt', '2026-11-06 <script>'), ('builtAt', 'x' * 30), ('piprEdition', '2026-13-45')):
+            state = json.loads(make_files()['AY_STATE'])
+            state[field] = bad
+            with FetchRoot() as tmp:
+                code, out = run_fetch(tmp, FakeOpener({'AY_STATE': json.dumps(state).encode()}), '--dry-run')
+            self.assertEqual((code, json.loads(out)['code']), (3, 'state-incomplete'), (field, bad))
+            self.assertNotIn(bad, out)
+
     def test_refused_when_a_certificate_override_is_set(self) -> None:
-        for name in ('SSL_CERT_FILE', 'SSL_CERT_DIR'):
+        for name in fetch.TLS_OVERRIDES:
             with mock.patch.dict(os.environ, {name: 'C:/somewhere/ca.pem'}), FetchRoot() as tmp, \
                     mock.patch.object(fetch, '_credential_api', side_effect=AssertionError('reached')), \
                     mock.patch.object(sys, 'flags', mock.Mock(isolated=1)):
@@ -628,7 +653,8 @@ class FetchTests(unittest.TestCase):
                 out = io.StringIO()
                 with contextlib.redirect_stdout(out):
                     self.assertEqual(fetch.main(['--dry-run'], opener=FakeOpener(make_files()), root=Path(tmp)), 2)
-                self.assertIn('ssl-cert-override-set', out.getvalue())
+                self.assertIn('tls-override-set', out.getvalue())
+        self.assertEqual(set(fetch.TLS_OVERRIDES), {'SSL_CERT_FILE', 'SSL_CERT_DIR', 'OPENSSL_CONF', 'OPENSSL_MODULES', 'OPENSSL_ENGINES'})
 
     def test_refused_without_python_I_and_outside_the_repo(self) -> None:
         with mock.patch.dict(os.environ, {}), FetchRoot() as tmp, \

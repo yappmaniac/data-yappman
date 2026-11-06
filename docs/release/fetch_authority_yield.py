@@ -22,7 +22,8 @@ Rules (modelled on the reviewed FHRS/CQC publish tools and on fetch_district_tab
   or a file. Only three record keys can be requested: AY_STATE, yield_latest.json and yield_latest.csv. Every request
   is a GET: this tool cannot write to the store, list its keys or read any other record.
 - HTTPS only with an explicit verified TLS context (TLS 1.2 or later, no key log file even if SSLKEYLOGFILE is set;
-  refused when SSL_CERT_FILE or SSL_CERT_DIR is set, since python -I does not clear them),
+  refused when SSL_CERT_FILE, SSL_CERT_DIR, OPENSSL_CONF, OPENSSL_MODULES or OPENSSL_ENGINES is set, since python -I
+  does not clear them),
   no proxy, no redirect followed (a 3xx is refused: the header could otherwise go to another host), a timeout on every
   request, at most 3 attempts on 429 or 5xx, no retry on a 4xx or a network failure.
 - Output is one JSON line of facts (month, PIPR edition, builtAt, authority and row counts, sizes and SHA-256 of the
@@ -31,6 +32,8 @@ Rules (modelled on the reviewed FHRS/CQC publish tools and on fetch_district_tab
 - --fetch saves the three files to _incoming/rental-yield/ in this repo (anchored to this file; the repo is checked by
   its CNAME), which is git-ignored and never published (folders starting with _ are not served), only when AY_STATE
   read again after the two yield files is unchanged; otherwise it saves nothing (a build was midway: try again later).
+  The folders and files must not be junctions, symlinks or other reparse points, and each file is written as
+  <name>.part opened with O_EXCL (a leftover .part stops the run), then moved into place.
 
 Exit codes: 0 done; 2 refused (nothing read); 3 the store answered but the table is not ready (nothing saved);
 4 a request failed (nothing saved).
@@ -44,6 +47,7 @@ import json
 import os
 import re
 import ssl
+import stat
 import sys
 import time
 import urllib.error
@@ -60,7 +64,10 @@ KEYS = ('AY_STATE', 'yield_latest.json', 'yield_latest.csv')
 SAVED_AS = {'AY_STATE': 'AY_STATE.json', 'yield_latest.json': 'yield_latest.json', 'yield_latest.csv': 'yield_latest.csv'}
 REPO = Path(__file__).resolve().parents[2]
 INCOMING = Path('_incoming/rental-yield')
-EDITION_RE = re.compile(r'20[0-9]{2}-[0-9]{2}-[0-9]{2}')
+EDITION_RE = re.compile(r'20[0-9]{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])')     # as the build's
+BUILT_AT_RE = re.compile(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]{1,6})?Z')  # as the build's
+# python -I does not clear these; each would let the TLS layer trust or load something else (Orchestrator review W3)
+TLS_OVERRIDES = ('SSL_CERT_FILE', 'SSL_CERT_DIR', 'OPENSSL_CONF', 'OPENSSL_MODULES', 'OPENSSL_ENGINES')
 TOKEN_RE = re.compile(r'[A-Za-z0-9_.\-]{8,200}')    # no whitespace or control character: no header injection
 TIMEOUT_SECONDS = 60
 PACE_SECONDS = 0.5
@@ -316,7 +323,7 @@ def state_facts(raw: bytes | None) -> dict[str, Any]:
     facts = {k: state.get(k) for k in ('month', 'piprEdition', 'builtAt', 'authorities', 'rows')}
     if not (isinstance(facts['month'], str) and re.fullmatch(r'[0-9]{4}-[0-9]{2}', facts['month'])
             and isinstance(facts['piprEdition'], str) and EDITION_RE.fullmatch(facts['piprEdition'])
-            and isinstance(facts['builtAt'], str) and len(facts['builtAt']) <= 40
+            and isinstance(facts['builtAt'], str) and BUILT_AT_RE.fullmatch(facts['builtAt'])
             and all(type(facts[k]) is int and 0 <= facts[k] < 1_000_000 for k in ('authorities', 'rows'))):
         raise FetchError('state-incomplete', exit_code=3)
     return facts
@@ -336,15 +343,45 @@ def run(args: argparse.Namespace, transport: Transport, root: Path) -> dict[str,
     if transport.get('AY_STATE') != first:
         raise FetchError('state-changed-during-fetch', exit_code=3)
     folder = root / INCOMING
+    refuse_links(root, INCOMING)
     folder.mkdir(parents=True, exist_ok=True)
+    refuse_links(root, *(INCOMING / name for name in SAVED_AS.values()))
+    if any((folder / (name + '.part')).exists() for name in SAVED_AS.values()):
+        raise FetchError('part-file-left-over', exit_code=3)
     saved = {}
     for key, body in files.items():
         target = folder / SAVED_AS[key]
         temporary = target.with_name(target.name + '.part')
-        temporary.write_bytes(body)
+        fd = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_BINARY', 0), 0o644)
+        try:
+            with os.fdopen(fd, 'wb') as handle:
+                handle.write(body)
+        except BaseException:
+            temporary.unlink(missing_ok=True)
+            raise
         os.replace(temporary, target)
         saved[SAVED_AS[key]] = {'bytes': len(body), 'sha256': hashlib.sha256(body).hexdigest()}
     return {'status': 'fetched', 'state': facts, 'saved': saved, 'folder': str(INCOMING)}
+
+
+def _is_link(path: Path) -> bool:
+    """A symlink, junction or any other reparse point (Windows), checked without following it."""
+    try:
+        st = os.lstat(path)
+    except FileNotFoundError:
+        return False
+    reparse = getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0x400)
+    return stat.S_ISLNK(st.st_mode) or bool(getattr(st, 'st_file_attributes', 0) & reparse)
+
+
+def refuse_links(root: Path, *relatives: Path) -> None:
+    """Every folder from the repo root down to each path, and the path itself, must be a plain folder or file (W4)."""
+    for relative in relatives:
+        current = root
+        for part in relative.parts:
+            current = current / part
+            if _is_link(current):
+                raise FetchError('link-refused', exit_code=2)
 
 
 def is_this_repo(root: Path) -> bool:
@@ -370,8 +407,8 @@ def main(argv: list[str] | None = None, *, reader: Callable[[], str | None] | No
         return 2
     # python -I does not clear these, and they would let another certificate authority be trusted for this request
     # (Orchestrator review W-c): refuse rather than send the token through a substituted trust store
-    if real and (os.environ.get('SSL_CERT_FILE') or os.environ.get('SSL_CERT_DIR')):
-        emit(json.dumps({'status': 'refused', 'code': 'ssl-cert-override-set'}))
+    if real and any(os.environ.get(name) for name in TLS_OVERRIDES):
+        emit(json.dumps({'status': 'refused', 'code': 'tls-override-set'}))
         return 2
     if not is_this_repo(root):
         emit(json.dumps({'status': 'refused', 'code': 'not-the-data-yappman-repo'}))
