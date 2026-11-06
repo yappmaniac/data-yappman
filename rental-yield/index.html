@@ -19,6 +19,144 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://data.yappman.com/rental-yield/">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Gross rental yield by local authority, England and Wales",
+  "description": "A free monthly table of gross rental yield by local authority and property type for England and Wales, from ONS private rents and HM Land Registry sold prices, as CSV and JSON under the Open Government Licence v3.0.",
+  "url": "https://data.yappman.com/rental-yield/",
+  "license": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Organization",
+    "name": "Yappman Data",
+    "url": "https://data.yappman.com/",
+    "sameAs": [
+      "https://www.youtube.com/@yappmandata",
+      "https://bsky.app/profile/yappmandata.bsky.social"
+    ]
+  },
+  "keywords": [
+    "England",
+    "Wales",
+    "rental yield",
+    "private rents",
+    "local authority",
+    "ONS",
+    "HM Land Registry"
+  ],
+  "spatialCoverage": "England and Wales",
+  "temporalCoverage": "2025-08-01/..",
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "name": "Latest table, CSV",
+      "encodingFormat": "text/csv",
+      "contentUrl": "https://data.yappman.com/data/rental-yield/rental-yield-latest.csv"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Latest table, JSON",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://data.yappman.com/data/rental-yield/rental-yield-latest.json"
+    }
+  ],
+  "variableMeasured": [
+    {
+      "@type": "PropertyValue",
+      "name": "month",
+      "description": "The Price Paid month the table was built from (YYYY-MM)"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "periodFrom",
+      "description": "The 12 months of rents and sales (YYYY-MM). periodTo is three months before month"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "periodTo",
+      "description": "The 12 months of rents and sales (YYYY-MM). periodTo is three months before month"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "piprEdition",
+      "description": "The date of the PIPR edition the rents come from"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "authorityCode",
+      "description": "The local authority’s GSS code and name, as PIPR publishes them"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "authorityName",
+      "description": "The local authority’s GSS code and name, as PIPR publishes them"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "country",
+      "description": "England or Wales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "propertyType",
+      "description": "all, detached, semi-detached, terraced or flat"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "rentMonthly",
+      "description": "The mean of PIPR’s 12 monthly rents for the type, in whole pounds. Blank unless all 12 months are published"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "sales12m",
+      "description": "Category A sales of the type in the 12 months"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "medianPrice12m",
+      "description": "The median price of those sales, in whole pounds. Blank under 5 sales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "grossYieldPct",
+      "description": "rentMonthly × 12 / medianPrice12m, in %, to one decimal place. Blank when withheld, or when the rent or the median is blank"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "yieldWithheld",
+      "description": "Why a type’s yield is withheld (one of the two reasons below); blank otherwise"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "lowSample",
+      "description": "true when sales12m is under 20"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "rentOneBed",
+      "description": "PIPR’s mean rent by number of bedrooms, on the all row only (HM Land Registry has no bedroom counts)"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "rentTwoBed",
+      "description": "PIPR’s mean rent by number of bedrooms, on the all row only (HM Land Registry has no bedroom counts)"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "rentThreeBed",
+      "description": "PIPR’s mean rent by number of bedrooms, on the all row only (HM Land Registry has no bedroom counts)"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "rentFourPlusBed",
+      "description": "PIPR’s mean rent by number of bedrooms, on the all row only (HM Land Registry has no bedroom counts)"
+    }
+  ],
+  "measurementTechnique": "Gross yield is the average monthly rent times 12, divided by the median price, as a percentage to one decimal place."
+}
+</script>
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>

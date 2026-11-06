@@ -19,6 +19,134 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://data.yappman.com/sold-prices/">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Median sold prices by postcode district, England and Wales",
+  "description": "A free monthly table of median sold prices by postcode district for England and Wales, from HM Land Registry Price Paid Data, as CSV and JSON under the Open Government Licence v3.0.",
+  "url": "https://data.yappman.com/sold-prices/",
+  "license": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Organization",
+    "name": "Yappman Data",
+    "url": "https://data.yappman.com/",
+    "sameAs": [
+      "https://www.youtube.com/@yappmandata",
+      "https://bsky.app/profile/yappmandata.bsky.social"
+    ]
+  },
+  "keywords": [
+    "England",
+    "Wales",
+    "house prices",
+    "sold prices",
+    "postcode district",
+    "HM Land Registry",
+    "Price Paid Data"
+  ],
+  "spatialCoverage": "England and Wales",
+  "temporalCoverage": "2025-08-01/..",
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "name": "Latest table, CSV",
+      "encodingFormat": "text/csv",
+      "contentUrl": "https://data.yappman.com/data/sold-prices/district-medians-latest.csv"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Latest table, JSON",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://data.yappman.com/data/sold-prices/district-medians-latest.json"
+    }
+  ],
+  "variableMeasured": [
+    {
+      "@type": "PropertyValue",
+      "name": "month",
+      "description": "The Price Paid month the table was built from (YYYY-MM)"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "periodFrom",
+      "description": "The 12-month window (YYYY-MM). periodTo is three months before month (the registration lag)"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "periodTo",
+      "description": "The 12-month window (YYYY-MM). periodTo is three months before month (the registration lag)"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "district",
+      "description": "The postcode district (outcode), for example LS6"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "localAuthorityCodes",
+      "description": "The GSS codes of the authorities with postcodes in the district, separated by ;"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "propertyType",
+      "description": "all, detached, semi-detached, terraced or flat"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "sales12m",
+      "description": "Category A sales in the window. Always shown"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "median12m",
+      "description": "Whole pounds. Blank under 5 sales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "lowerQuartile12m",
+      "description": "Whole pounds. Blank under 5 sales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "upperQuartile12m",
+      "description": "Whole pounds. Blank under 5 sales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "sales3m",
+      "description": "The last 3 months of the window. The median is blank under 5 sales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "median3m",
+      "description": "The last 3 months of the window. The median is blank under 5 sales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "salesPrev12m",
+      "description": "The 12 months before the window. The median is blank under 5 sales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "medianPrev12m",
+      "description": "The 12 months before the window. The median is blank under 5 sales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "medianChangePct",
+      "description": "median12m against medianPrev12m, in %, to one decimal place. Blank unless both medians are shown"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "lowSample",
+      "description": "true when sales12m is under 20"
+    }
+  ],
+  "measurementTechnique": "Medians and quartiles of HM Land Registry standard sales (category A) by transfer date, over 12 months ending three months before the latest monthly file, with the 3-month median and the change from the 12 months before; left blank where a period has fewer than 5 sales."
+}
+</script>
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
