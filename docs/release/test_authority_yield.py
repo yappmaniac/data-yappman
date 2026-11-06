@@ -22,6 +22,7 @@ import unittest
 import urllib.error
 import urllib.request
 import urllib.response
+from datetime import UTC, datetime
 from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 from unittest import mock
@@ -34,6 +35,7 @@ import fetch_authority_yield as fetch  # noqa: E402
 REPO = HERE.parent.parent
 TOKEN = 'FAKEtokenFORtests0123456789abcdef'   # not an apify_api_ prefix: no secret-scanning hit
 BUILT = '2026-11-06T08:39:07.123456Z'
+NOW = datetime(2026, 12, 31, 12, 0, tzinfo=UTC)     # the tests' clock: after every fixture's month and builtAt
 TYPES = ('all', 'detached', 'semi-detached', 'terraced', 'flat')
 
 
@@ -81,7 +83,7 @@ def make_rows(month='2026-10', edition='2026-10-21', authorities=AUTHORITIES):
         group = []
         for t in TYPES:
             rent, sales, median = by_type[t]
-            row = {'month': month, 'periodFrom': '2025-08', 'periodTo': '2026-07', 'piprEdition': edition,
+            row = {'month': month, 'periodFrom': site._month_minus(month, 14), 'periodTo': site._month_minus(month, 3), 'piprEdition': edition,
                    'authorityCode': code, 'authorityName': name, 'country': 'England' if code[0] == 'E' else 'Wales',
                    'propertyType': t, 'rentMonthly': rent, 'sales12m': sales, 'medianPrice12m': median,
                    'grossYieldPct': actor_yield(rent, median), 'yieldWithheld': None, 'lowSample': sales < 20}
@@ -112,7 +114,7 @@ def attribution(year='2026'):
 
 def make_files(month='2026-10', edition='2026-10-21', built=BUILT, rows=None):
     rows = make_rows(month, edition) if rows is None else rows
-    document = {'v': 2, 'title': site.TITLE, 'month': month, 'periodFrom': '2025-08', 'periodTo': '2026-07', 'lagMonths': 3,
+    document = {'v': 2, 'title': site.TITLE, 'month': month, 'periodFrom': site._month_minus(month, 14), 'periodTo': site._month_minus(month, 3), 'lagMonths': 3,
                 'piprEdition': edition, 'builtAt': built, 'licence': site.LICENCE, 'attribution': attribution(built[:4]),
                 'method': site.METHOD, 'columns': list(site.COLUMNS), 'rows': rows}
     state = {'v': 2, 'month': month, 'piprEdition': edition, 'builtAt': built, 'authorities': len(rows) // 5, 'rows': len(rows)}
@@ -145,7 +147,7 @@ def put_incoming(root, files):
 def run_site(root, *argv, today='2026-11-06'):
     out = io.StringIO()
     with contextlib.redirect_stdout(out):
-        code = site.main(list(argv), root=root, today=today)
+        code = site.main(list(argv), root=root, today=today, now=NOW)
     return code, json.loads(out.getvalue())
 
 
@@ -233,12 +235,18 @@ class BuildTests(unittest.TestCase):
             page = (root / site.PAGE).read_text(encoding='utf-8')
             self.assertLess(page.index('pipr-2026-11-18.csv'), page.index('pipr-2026-10-21.csv'))
             # a later build of the same month and edition updates the latest files only
+            second = make_files(edition='2026-11-18', built='2026-11-18T14:31:00Z')
             rows = make_rows(edition='2026-11-18')
             rows[0]['sales12m'] += 1
-            put_incoming(root, make_files(edition='2026-11-18', built='2026-11-19T14:31:00Z', rows=rows))
+            rows[0]['lowSample'] = rows[0]['sales12m'] < 20
+            third = make_files(edition='2026-11-18', built='2026-11-19T14:31:00Z', rows=rows)
+            put_incoming(root, third)
             code, result = run_site(root, '--publish')
-            self.assertEqual(code, 0)
+            self.assertEqual(code, 0, result)
             self.assertTrue(any(line.startswith('kept the rental-yield-2026-10-pipr-2026-11-18 archive') for line in result['done']))
+            for ext, key in (('json', 'yield_latest.json'), ('csv', 'yield_latest.csv')):
+                self.assertEqual((out / f'rental-yield-2026-10-pipr-2026-11-18.{ext}').read_bytes(), second[key])
+                self.assertEqual((out / f'rental-yield-latest.{ext}').read_bytes(), third[key])
 
     def assert_held(self, check, files, live_first=False):
         with SiteRoot() as root:
@@ -276,6 +284,10 @@ class BuildTests(unittest.TestCase):
         self.assert_held(2, self.edited('json', lambda d: d.update(method=d['method'] + ' Official figures.')))
         self.assert_held(2, self.edited('json', lambda d: d.update(title='Official rental yields')))
         self.assert_held(2, self.edited('json', lambda d: d.update(lagMonths=2)))
+        self.assert_held(2, regenerated(make_files(), lambda d: [d.update(periodFrom='2025-07')] + [r.update(periodFrom='2025-07') for r in d['rows']]))
+        self.assert_held(2, regenerated(make_files(), lambda d: [d.update(periodTo='2026-06')] + [r.update(periodTo='2026-06') for r in d['rows']]))
+        self.assert_held(2, make_files('2027-01', built='2026-12-31T00:00:00Z'))         # a month after the clock
+        self.assert_held(2, make_files(built='2026-12-31T14:00:00Z'))                   # built two hours ahead
 
     def test_check_3_the_csv_matches(self) -> None:
         def csv_edit(change):
@@ -312,10 +324,13 @@ class BuildTests(unittest.TestCase):
             row(index[('Tower Hamlets', 'detached')], medianPrice12m=700000),   # a median under 5 sales
             row(leeds_all, lowSample=True),
             row(leeds_all, authorityName='Leeds <b>'),
+            row(leeds_all, authorityName='Leeds LS1 4AP'),
+            row(leeds_all, authorityName='Leeds 2'),
             row(leeds_all, country='Wales'),
             row(leeds_all, authorityCode='S12000036'),
             row(leeds_all, rentMonthly=0),
             row(leeds_all, sales12m=-1),
+            row(leeds_all, sales12m=1_000_001),
             row(leeds_all, periodFrom='2025-07'),
         ):
             self.assert_held(7, regenerated(make_files(), change))
@@ -445,10 +460,12 @@ class FetchTests(unittest.TestCase):
             with contextlib.redirect_stdout(out):
                 self.assertEqual(fetch.main(['--dry-run']), 2)
             self.assertIn('refused-inside-claude-code', out.getvalue())
-            with self.assertRaises(fetch.FetchError):
+            with self.assertRaises(fetch.FetchError) as caught:
                 fetch.read_token()
-            with self.assertRaises(fetch.FetchError):
+            self.assertEqual((caught.exception.code, caught.exception.exit_code), ('refused-inside-claude-code', 2))
+            with self.assertRaises(fetch.FetchError) as caught:
                 fetch.credential_token()
+            self.assertEqual(caught.exception.code, 'refused-inside-claude-code')
         with mock.patch.dict(os.environ, {'CLAUDECODE': '1'}), FetchRoot() as tmp:
             out = io.StringIO()
             with contextlib.redirect_stdout(out):
@@ -535,7 +552,9 @@ class FetchTests(unittest.TestCase):
             code, out = run_fetch(tmp, Leaky(), '--dry-run')
             self.assertEqual((code, json.loads(out)['code']), (4, 'network-failure'))
             self.assertNotIn(TOKEN, out)
-            self.assertEqual(run_fetch(tmp, FakeOpener(make_files(), script={1: (401, b'')}), '--dry-run')[0], 4)
+            opener = FakeOpener(make_files(), script={1: (401, b'')})
+            code, out = run_fetch(tmp, opener, '--dry-run')
+            self.assertEqual((code, len(opener.seen), json.loads(out)['httpStatus']), (4, 1, 401))
             opener = FakeOpener(make_files(), script={1: (503, b''), 2: (503, b''), 3: (503, b'')})
             self.assertEqual(run_fetch(tmp, opener, '--dry-run')[0], 4)
             self.assertEqual(len(opener.seen), 3)

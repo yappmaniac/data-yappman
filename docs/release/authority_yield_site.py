@@ -93,9 +93,12 @@ ATTRIBUTION_RES = (
 )
 EDITION_RE = re.compile(r'20[0-9]{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])')
 AUTHORITY_RE = re.compile(r'[EW]0[6-9][0-9]{6}')      # E06-E09 and W06: unitary, district, metropolitan, London, Welsh
-NAME_RE = re.compile(r"[^\W\d_][\w ,.'’&()/-]{1,79}")   # letters (Welsh names included), no markup characters
+# letters only (Welsh names included) and a few separators: no digit, so no postcode, and no markup (review 1)
+NAME_RE = re.compile(r"[^\W\d_](?:[^\W\d_]|[ ,.'’&()/-]){1,79}")
 MAX_RENT = 100_000            # a monthly rent above this is a parsing fault, not a rent
 MAX_PRICE = 100_000_000
+MAX_SALES = 1_000_000         # more 12-month sales than this in one authority is a fault (review 6)
+CLOCK_SKEW_SECONDS = 3600     # a builtAt this far ahead of our clock is refused (review 6)
 
 INCOMING = Path('_incoming/rental-yield')
 OUT = Path('data/rental-yield')
@@ -163,9 +166,15 @@ def _is_amount(value: Any, ceiling: int) -> bool:
     return value is None or (type(value) is int and 0 < value <= ceiling)
 
 
+def _month_minus(month: str, months: int) -> str:
+    index = int(month[:4]) * 12 + int(month[5:7]) - 1 - months
+    return f'{index // 12:04d}-{index % 12 + 1:02d}'
+
+
 def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[str, Any] | None,
-                first_publish: bool) -> Table:
-    """Every check, in order. Raises CheckFailed (number and reason) at the first failure."""
+                first_publish: bool, now: datetime | None = None) -> Table:
+    """Every check, in order. Raises CheckFailed (number and reason) at the first failure. `now` is for the tests."""
+    now = now or datetime.now(UTC)
     for name, raw in (('AY_STATE', state_raw), ('yield_latest.json', json_raw), ('yield_latest.csv', csv_raw)):
         if len(raw) > dts.MAX_FILE_BYTES:
             raise CheckFailed(1, f'{name} is larger than {dts.MAX_FILE_BYTES} bytes')
@@ -188,6 +197,8 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
         raise CheckFailed(2, 'AY_STATE month or piprEdition is malformed')
     if not (isinstance(built_at, str) and dts.BUILT_AT_RE.fullmatch(built_at)):
         raise CheckFailed(2, 'AY_STATE builtAt is malformed')
+    if month > now.strftime('%Y-%m') or (dts._instant(built_at) - now).total_seconds() > CLOCK_SKEW_SECONDS:
+        raise CheckFailed(2, 'AY_STATE month or builtAt is in the future')
     if not dts._is_count(rows) or not dts._is_count(state['authorities']) or rows != 5 * state['authorities']:
         raise CheckFailed(2, 'AY_STATE rows is not five times its authorities')
     if (document['month'], document['piprEdition'], document['builtAt']) != (month, edition, built_at):
@@ -197,9 +208,9 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
         raise CheckFailed(2, 'the JSON row count differs from AY_STATE.rows')
     if document['title'] != TITLE or document['licence'] != LICENCE:
         raise CheckFailed(2, 'the JSON title or licence is not the expected one')
-    if not (dts._is_month(document['periodFrom']) and dts._is_month(document['periodTo'])
-            and document['periodFrom'] <= document['periodTo'] < month):
-        raise CheckFailed(2, 'the period bounds are malformed or out of order')
+    # the page says the 12 months end three months before month (review 5): exactly that
+    if (document['periodTo'], document['periodFrom']) != (_month_minus(month, LAG_MONTHS), _month_minus(month, LAG_MONTHS + 11)):
+        raise CheckFailed(2, 'the period is not the 12 months ending three months before month')
     if document['lagMonths'] != LAG_MONTHS or type(document['lagMonths']) is not int:
         raise CheckFailed(2, f'lagMonths is not {LAG_MONTHS}')
     if document['method'] != METHOD:
@@ -256,7 +267,7 @@ def check_table(state_raw: bytes, json_raw: bytes, csv_raw: bytes, live: dict[st
                 raise CheckFailed(7, f'{where}: the authority code or name')
             if row['authorityName'] != group[0]['authorityName'] or row['country'] != ('England' if code[0] == 'E' else 'Wales'):
                 raise CheckFailed(7, f'{where}: the name or country differs within the authority')
-            if not dts._is_count(row['sales12m']) or not _is_amount(row['rentMonthly'], MAX_RENT) \
+            if not dts._is_count(row['sales12m']) or row['sales12m'] > MAX_SALES or not _is_amount(row['rentMonthly'], MAX_RENT) \
                     or not _is_amount(row['medianPrice12m'], MAX_PRICE):
                 raise CheckFailed(7, f'{where}: a count, rent or price is not a whole number in range')
             if (row['medianPrice12m'] is None) != (row['sales12m'] < MIN_SALES):
@@ -401,7 +412,8 @@ def write_plan(root: Path, plan: Plan) -> None:
     dts._replace(root / dts.SITEMAP, plan.sitemap.encode('utf-8'))
 
 
-def main(argv: list[str] | None = None, *, root: Path = dts.REPO, today: str | None = None) -> int:
+def main(argv: list[str] | None = None, *, root: Path = dts.REPO, today: str | None = None,
+         now: datetime | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--check', action='store_true', help='the checks only; writes nothing')
@@ -419,7 +431,7 @@ def main(argv: list[str] | None = None, *, root: Path = dts.REPO, today: str | N
     live = None
     try:
         live = live_table(root)
-        table = check_table(*raws, live, args.first_publish)
+        table = check_table(*raws, live, args.first_publish, now)
         if live is not None and (live['month'], live['piprEdition'], live['builtAt']) == (table.month, table.edition, table.state['builtAt']):
             print(json.dumps({'status': 'nothing-new', 'month': table.month, 'piprEdition': table.edition}))
             return 0
