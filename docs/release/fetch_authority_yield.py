@@ -36,7 +36,8 @@ Rules (modelled on the reviewed FHRS/CQC publish tools and on fetch_district_tab
   <name>.part opened with O_EXCL (a leftover .part stops the run), then moved into place.
 
 Exit codes: 0 done; 2 refused (nothing read); 3 the store answered but the table is not ready (nothing saved);
-4 a request failed (nothing saved).
+4 a request failed (nothing saved); 5 a .part file is left over from an earlier run (nothing read or saved: check it,
+delete it by hand, run again).
 """
 
 from __future__ import annotations
@@ -77,6 +78,7 @@ MAX_RESPONSE_BYTES = 8_000_000   # the build refuses a file over 8,000,000 bytes
 CRED_TYPE_GENERIC = 1
 CRED_MAX_BLOB = 2560
 ERROR_NOT_FOUND = 1168
+LEFTOVER_EXIT = 5                # a leftover .part file: not "try again later" (exit 3), a person has to look
 USER_AGENT = 'yappman-data-authority-yield/1'
 
 
@@ -343,11 +345,9 @@ def run(args: argparse.Namespace, transport: Transport, root: Path) -> dict[str,
     if transport.get('AY_STATE') != first:
         raise FetchError('state-changed-during-fetch', exit_code=3)
     folder = root / INCOMING
-    refuse_links(root, INCOMING)
+    check_incoming(root)                  # also done before the token is read; repeated here in case it changed since
     folder.mkdir(parents=True, exist_ok=True)
-    refuse_links(root, *(INCOMING / name for name in SAVED_AS.values()))
-    if any((folder / (name + '.part')).exists() for name in SAVED_AS.values()):
-        raise FetchError('part-file-left-over', exit_code=3)
+    check_incoming(root)
     saved = {}
     for key, body in files.items():
         target = folder / SAVED_AS[key]
@@ -384,6 +384,16 @@ def refuse_links(root: Path, *relatives: Path) -> None:
                 raise FetchError('link-refused', exit_code=2)
 
 
+def check_incoming(root: Path) -> None:
+    """The folder and its three files must be plain (no link or reparse point), and no .part file may be left over from
+    an earlier run. Run BEFORE the token is read (Orchestrator review W3), so a refusal costs no credential access.
+    A leftover .part has its own exit code (5) and wording: it needs a person to look at it and delete it by hand."""
+    refuse_links(root, INCOMING, *(INCOMING / name for name in SAVED_AS.values()))
+    folder = root / INCOMING
+    if any((folder / (name + '.part')).exists() for name in SAVED_AS.values()):
+        raise FetchError('part-file-left-over', exit_code=LEFTOVER_EXIT)
+
+
 def is_this_repo(root: Path) -> bool:
     try:
         return (root / 'CNAME').read_text(encoding='utf-8').strip() == 'data.yappman.com'
@@ -414,11 +424,15 @@ def main(argv: list[str] | None = None, *, reader: Callable[[], str | None] | No
         emit(json.dumps({'status': 'refused', 'code': 'not-the-data-yappman-repo'}))
         return 2
     try:
+        if args.fetch:
+            check_incoming(root)              # before read_token: a link or a leftover .part never reaches the credential
         token = read_token(reader)
         result = run(args, Transport(token, opener=opener, sleep=sleep), root)
     except FetchError as error:
-        emit(json.dumps({'status': 'refused' if error.exit_code == 2 else 'stopped', 'code': error.code,
-                         'httpStatus': error.status}))
+        line = {'status': 'refused' if error.exit_code == 2 else 'stopped', 'code': error.code, 'httpStatus': error.status}
+        if error.exit_code == LEFTOVER_EXIT:
+            line['hint'] = 'a .part file is left over in _incoming/rental-yield: check it, delete it by hand, then run again'
+        emit(json.dumps(line))
         return error.exit_code
     except Exception as error:  # noqa: BLE001 - the type only
         emit(json.dumps({'status': 'failed', 'type': type(error).__name__}))

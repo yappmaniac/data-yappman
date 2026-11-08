@@ -631,9 +631,42 @@ class FetchTests(unittest.TestCase):
             folder = Path(tmp) / fetch.INCOMING
             folder.mkdir(parents=True)
             (folder / 'yield_latest.csv.part').write_bytes(b'left over')
-            code, out = run_fetch(tmp, FakeOpener(make_files()), '--fetch')
-            self.assertEqual((code, json.loads(out)['code']), (3, 'part-file-left-over'))
+            calls = []
+            opener = FakeOpener(make_files())
+            code, out = run_fetch(tmp, opener, '--fetch', reader=lambda: calls.append(1) or TOKEN)
+            line = json.loads(out)
+            self.assertEqual((code, line['code']), (5, 'part-file-left-over'))        # its own exit, not "try again later" (3)
+            self.assertIn('delete it by hand', line['hint'])
+            self.assertEqual((calls, opener.seen), ([], []))                          # the token was never read, nothing requested
             self.assertEqual(sorted(p.name for p in folder.iterdir()), ['yield_latest.csv.part'])
+
+    def test_w3_links_are_refused_before_the_token_is_read(self) -> None:
+        with FetchRoot() as tmp:
+            calls = []
+            opener = FakeOpener(make_files())
+            target = Path(tmp) / '_incoming'
+            with mock.patch.object(fetch, '_is_link', side_effect=lambda p: Path(p) == target):
+                code, out = run_fetch(tmp, opener, '--fetch', reader=lambda: calls.append(1) or TOKEN)
+            self.assertEqual((code, json.loads(out)['code']), (2, 'link-refused'))
+            self.assertEqual((calls, opener.seen), ([], []))
+
+    @unittest.skipUnless(sys.platform == 'win32', 'junctions are a Windows feature')
+    def test_w2_a_real_junction_is_refused_and_nothing_is_written(self) -> None:
+        import _winapi
+        for where in ('_incoming', '_incoming/rental-yield'):
+            with FetchRoot() as tmp, tempfile.TemporaryDirectory() as elsewhere:
+                root = Path(tmp)
+                link = root / where
+                link.parent.mkdir(parents=True, exist_ok=True)
+                _winapi.CreateJunction(str(Path(elsewhere)), str(link))
+                self.assertTrue(fetch._is_link(link))                                  # a genuine reparse point
+                calls = []
+                opener = FakeOpener(make_files())
+                code, out = run_fetch(tmp, opener, '--fetch', reader=lambda: calls.append(1) or TOKEN)
+                self.assertEqual((code, json.loads(out)['code']), (2, 'link-refused'), where)
+                self.assertEqual((calls, opener.seen), ([], []))
+                self.assertEqual(list(Path(elsewhere).iterdir()), [], 'nothing was written through the junction')
+                os.rmdir(link)                                                        # removes the junction, not its target
 
     def test_n2_a_malformed_builtat_or_edition_is_not_printed(self) -> None:
         for field, bad in (('builtAt', '2026-11-06 <script>'), ('builtAt', 'x' * 30), ('piprEdition', '2026-13-45')):
