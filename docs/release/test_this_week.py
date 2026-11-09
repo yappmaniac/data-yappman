@@ -38,12 +38,28 @@ def uk_records(vintage='2026-W44', published='2026-11-09T08:20:48Z', classes=Non
     return rows
 
 
-def basket(items_now=17, items_prev=17):
-    def week(w, as_of, items, scale):
-        return {'week': w, 'asOf': as_of, 'appliedAt': as_of + 'T05:45:42Z', 'commonItems': items,
-                'commonTotal': {'tesco': 77.46 * scale, 'sainsburys': 65.51 * scale, 'asda': 65.11 * scale, 'aldi': 52.42 * scale}}
+def basket_item(n, scale):
+    return {'n': n, 'tesco': round((2 + 0.2 * n) * scale, 2), 'sainsburys': round((1.8 + 0.2 * n) * scale, 2),
+            'asda': round((1.7 + 0.2 * n) * scale, 2), 'aldi': round((1.2 + 0.1 * n) * scale, 2), 'flags': {}}
+
+
+def basket(items_now=range(1, 18), items_prev=range(1, 18)):
+    def week(w, as_of, numbers, scale):
+        items = [basket_item(n, scale) for n in numbers]
+        common = list(items)
+        items.append(dict(basket_item(30, scale), flags={'tesco': ['optional']}))      # optional: never common
+        items.append(dict(basket_item(31, scale), asda=None, flags={'asda': ['gap:not-priced']}))
+        return {'week': w, 'asOf': as_of, 'appliedAt': as_of + 'T05:45:42Z', 'commonItems': len(common), 'items': items,
+                'commonTotal': {k: round(sum(i[k] for i in common), 2) for k in tw.RETAILERS}}
     return {'schema': 1, 'updated': '2026-11-06T05:45:54Z', 'gaps': [],
             'weeks': [week('2026-W44', '2026-11-01', items_prev, 1.0), week('2026-W45', '2026-11-06', items_now, 1.05)]}
+
+
+def basket_change(data, numbers, retailer='tesco'):
+    """The expected like-for-like change, worked out here from the fixture, over the given item numbers."""
+    prev, now = ({i['n']: i for i in w['items']} for w in data['weeks'][-2:])
+    a, b = sum(prev[n][retailer] for n in numbers), sum(now[n][retailer] for n in numbers)
+    return f'{tw._signed(b - a, 2)} ({tw._signed((b / a - 1) * 100, 1)}%)'
 
 
 def monthly(kind, built='2026-11-06T09:00:00Z', month='2026-10'):
@@ -158,12 +174,43 @@ class ThisWeekTests(unittest.TestCase):
             run(root, '--publish')
             text = page(root)
             self.assertIn('Against 2026-W44 (the same 17 items priced in common)', text)
-            self.assertIn('Tesco: +3.87 (+5.0%)', text)
-        with Site({tw.BASKET_JSON: basket(items_now=17, items_prev=18)}) as root:
+            self.assertIn('Tesco: ' + basket_change(basket(), range(1, 18)), text)
+        with Site({tw.BASKET_JSON: basket(items_now=range(1, 18), items_prev=range(1, 19))}) as root:
             run(root, '--publish')
             text = page(root)
-            self.assertIn('No comparison with 2026-W44: the items priced in common differ (17 against 18)', text)
-            self.assertNotIn('Against 2026-W44', text)
+            self.assertIn('Against 2026-W44, like for like over the 17 items priced at all four retailers in both weeks', text)
+            self.assertNotIn('the same 17 items', text)
+
+    def test_equal_counts_with_different_items_are_compared_over_the_shared_items_only(self) -> None:
+        # Both weeks have 17 common items, but item 11 leaves and item 20 joins (the W44/W45 case found in review).
+        now = [n for n in range(1, 18) if n != 11] + [20]
+        data = basket(items_now=now, items_prev=range(1, 18))
+        shared = [n for n in range(1, 18) if n != 11]
+        with Site({tw.BASKET_JSON: data}) as root:
+            run(root, '--publish')
+            text = page(root)
+            self.assertIn('like for like over the 16 items priced at all four retailers in both weeks', text)
+            self.assertNotIn('the same 17 items', text)
+            for k in tw.RETAILERS:
+                self.assertIn(f'{tw.RETAILER_NAMES[k]}: ' + basket_change(data, shared, k), text)
+        with Site({tw.BASKET_JSON: basket(items_now=range(20, 25), items_prev=range(1, 6))}) as root:
+            run(root, '--publish')
+            self.assertIn('No comparison with 2026-W44: no item was priced in common in both weeks.', page(root))
+
+    def test_a_change_that_rounds_to_zero_has_no_sign(self) -> None:
+        self.assertEqual([tw._signed(v) for v in (-1e-15, 1e-15, 0, -0.004, 0.005, -0.005, 1234.5)],
+                         ['0.00', '0.00', '0.00', '0.00', '+0.01', '-0.01', '+1,234.50'])
+
+    def test_basket_items_that_do_not_give_back_the_totals_hold_the_page(self) -> None:
+        for mutate in (lambda w: w['commonTotal'].update(tesco=w['commonTotal']['tesco'] + 0.95),   # an item swap hidden in the total
+                       lambda w: w.update(commonItems=w['commonItems'] + 1),
+                       lambda w: w['items'].append(dict(w['items'][0])),                              # a repeated item number
+                       lambda w: w.pop('items')):
+            for index in (-1, -2):
+                data = basket()
+                mutate(data['weeks'][index])
+                with Site({tw.BASKET_JSON: data}) as root:
+                    self.assert_held(root, 2)
 
     def test_monthly_tables_only_in_a_week_with_a_new_one(self) -> None:
         with Site() as root:
@@ -173,7 +220,8 @@ class ThisWeekTests(unittest.TestCase):
             self.assertIn('4 districts, of which 3 have a 12-month median for all homes; the median of those medians is &pound;300,000', text)
             self.assertIn('4 authorities, of which 3 have an all-homes yield; the median of those yields is 5.0%', text)
             monthly_region = text.split('<!-- district-table:monthly -->')[1].split('<!-- /district-table:monthly -->')[0]
-            self.assertIn('The sales are from 2025-08 to 2026-07, ending 3 months before the table month to allow for registration.',
+            self.assertIn('The sales are standard sales in England and Wales by transfer date, from 2025-08 to 2026-07, '
+                          'ending 3 months before the table month to allow for registration.',
                           monthly_region)
             self.assertIn(tw.SOLD_REVISION, monthly_region)
             for caveat in tw.YIELD_CAVEATS:

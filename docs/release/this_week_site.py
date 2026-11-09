@@ -8,7 +8,9 @@ Reads only files already public in this repo and fills the marked regions of thi
 - UK Online Shelf-Price Index (data/uk-shelf-price-index.json): the latest vintage's headline level and week-on-week
   change, and the three largest moves up and down among categories with at least MIN_MATCHED matched products.
 - UK Christmas basket (data/christmas-basket.json): the latest week's totals per retailer for the items priced in
-  common, and a comparison with the week before ONLY when both weeks priced the same number of common items.
+  common, and a like-for-like comparison with the week before over the item NUMBERS common in both weeks (the count
+  alone is not enough: an item can leave and another join). Each week's set of common items (priced at all four
+  retailers, not optional) must give back that week's own commonItems and commonTotal, or the page is held.
 - Monthly tables (data/sold-prices/ and data/rental-yield/ latest files): shown only in a week when a new table was
   built (builtAt within NEW_TABLE_DAYS of the run day); otherwise "no new monthly table this week". Each shown table
   carries its caveats (sentences that stand on its page or in its method text, compared by a test) and the attribution
@@ -77,6 +79,7 @@ POINTERS = (
 YIELD_CAVEATS = (
     'It is gross, before costs, voids, tax and finance, and it is not advice. The rent is a mean and the price a median, '
     'and the homes rented and the homes sold differ, so these are area averages, not a valuation.',
+    'The rents come from the ONS Price Index of Private Rents (PIPR).',
     'PIPR figures are statistics in development and are not seasonally adjusted.',
 )
 # A sentence from the sold-prices table's own method text (the method field of its JSON; a test compares it).
@@ -110,7 +113,9 @@ def _round(value: float | int, places: int) -> str:
 
 def _signed(value: float, places: int = 2) -> str:
     text = _round(abs(value), places)
-    return ('+' if value > 0 else '-' if value < 0 else '') + text
+    if Decimal(text.replace(',', '')) == 0:      # no sign on a figure that rounds to zero (a sum of floats can be -1e-15)
+        return text
+    return ('+' if value > 0 else '-') + text
 
 
 # --- the figures --------------------------------------------------------------------------------------------------
@@ -159,10 +164,31 @@ def basket_figures(document: Any, today: date) -> dict[str, Any]:
                 or type(w.get('commonItems')) is not int or not isinstance(w.get('commonTotal'), dict) \
                 or set(w['commonTotal']) != set(RETAILERS) or not all(_num(w['commonTotal'][k]) and w['commonTotal'][k] > 0 for k in RETAILERS):
             raise CheckFailed(2, 'a basket week is malformed')
-        return {'week': w['week'], 'asOf': _day(w.get('asOf'), 'the basket asOf'), 'items': w['commonItems'], 'totals': w['commonTotal']}
+        common = _common_items(w)
+        # The set of common items must give back the week's own count and totals, or the file is not understood.
+        if len(common) != w['commonItems'] or any(abs(sum(p[k] for p in common.values()) - w['commonTotal'][k]) > 0.005 for k in RETAILERS):
+            raise CheckFailed(2, f'the basket items of {w["week"]} do not add up to its common totals')
+        return {'week': w['week'], 'asOf': _day(w.get('asOf'), 'the basket asOf'), 'items': w['commonItems'], 'totals': w['commonTotal'],
+                'common': common}
     latest = week(weeks[-1])
     previous = week(weeks[-2]) if len(weeks) > 1 else None
     return {'latest': latest, 'previous': previous, 'fresh': 0 <= (today - latest['asOf']).days <= FRESH_DAYS}
+
+
+def _common_items(w: dict[str, Any]) -> dict[int, dict[str, float]]:
+    """The items priced at all four retailers and not optional (the basket page's rule for its headline total), by item number."""
+    items = w.get('items')
+    if not isinstance(items, list) or not all(isinstance(i, dict) and type(i.get('n')) is int for i in items) \
+            or len({i['n'] for i in items}) != len(items):
+        raise CheckFailed(2, 'the basket items are malformed')
+    common = {}
+    for i in items:
+        flags = i.get('flags') or {}
+        if not isinstance(flags, dict) or not all(isinstance(v, list) for v in flags.values()):
+            raise CheckFailed(2, 'the basket item flags are malformed')
+        if all(_num(i.get(k)) and i[k] > 0 for k in RETAILERS) and not any('optional' in flags.get(k, []) for k in RETAILERS):
+            common[i['n']] = {k: i[k] for k in RETAILERS}
+    return common
 
 
 def monthly_figures(document: Any, today: date, kind: str) -> dict[str, Any]:
@@ -232,13 +258,20 @@ def render(uk: dict[str, Any], basket: dict[str, Any], sold: dict[str, Any], ren
     if basket['fresh']:
         cells = ''.join(f'<tr><td>{RETAILER_NAMES[k]}</td><td>&pound;{_round(b["totals"][k], 2)}</td></tr>' for k in RETAILERS)
         compare = ''
-        if p is not None and p['items'] == b['items']:
-            diffs = ''.join(f'<li>{RETAILER_NAMES[k]}: {_signed(b["totals"][k] - p["totals"][k], 2)} '
-                            f'({_signed((b["totals"][k] / p["totals"][k] - 1) * 100, 1)}%)</li>' for k in RETAILERS)
-            compare = f'<p>Against {e(p["week"])} (the same {b["items"]} items priced in common), in pounds:</p><ul>{diffs}</ul>'
+        both = sorted(set(b['common']) & set(p['common'])) if p is not None else []
+        if both:
+            # Like for like: both weeks' totals over the same items only (an item in one week alone is left out).
+            now = {k: sum(b['common'][n][k] for n in both) for k in RETAILERS}
+            before = {k: sum(p['common'][n][k] for n in both) for k in RETAILERS}
+            diffs = ''.join(f'<li>{RETAILER_NAMES[k]}: {_signed(now[k] - before[k], 2)} '
+                            f'({_signed((now[k] / before[k] - 1) * 100, 1)}%)</li>' for k in RETAILERS)
+            if set(b['common']) == set(p['common']):
+                compare = f'<p>Against {e(p["week"])} (the same {len(both)} items priced in common), in pounds:</p><ul>{diffs}</ul>'
+            else:
+                compare = (f'<p>Against {e(p["week"])}, like for like over the {len(both)} items priced at all four retailers in '
+                           f'both weeks (items priced in common in only one of the two weeks are left out), in pounds:</p><ul>{diffs}</ul>')
         elif p is not None:
-            compare = (f'<p>No comparison with {e(p["week"])}: the items priced in common differ ({b["items"]} against '
-                       f'{p["items"]}), so the totals are not like for like.</p>')
+            compare = f'<p>No comparison with {e(p["week"])}: no item was priced in common in both weeks.</p>'
         bhtml = (f'<p>{e(b["week"])}, as of {b["asOf"].isoformat()}: the {b["items"]} items priced at all four retailers, '
                  f'total per retailer. Source: <a href="/christmas-basket/">UK Christmas dinner basket 2026</a> (CC BY 4.0).</p>'
                  f'<div class="table-wrap"><table><thead><tr><th>Retailer</th><th>Total for the common items</th></tr></thead>'
@@ -250,8 +283,8 @@ def render(uk: dict[str, Any], basket: dict[str, Any], sold: dict[str, Any], ren
     if sold['new']:
         parts.append(f'<p><a href="/sold-prices/">Median sold prices by postcode district</a>: new table for {e(sold["month"])}. '
                      f'{sold["places"]:,} districts, of which {sold["withFigure"]:,} have a 12-month median for all homes; '
-                     f'the median of those medians is &pound;{_round(sold["median"], 0)}. The sales are from {e(sold["from"])} '
-                     f'to {e(sold["to"])}, ending {sold["lag"]} months before the table month to allow for registration. '
+                     f'the median of those medians is &pound;{_round(sold["median"], 0)}. The sales are standard sales in England and '
+                     f'Wales by transfer date, from {e(sold["from"])} to {e(sold["to"])}, ending {sold["lag"]} months before the table month to allow for registration. '
                      f'{SOLD_REVISION}</p>' + notices['sold-prices'])
     if rent['new']:
         parts.append(f'<p><a href="/rental-yield/">Gross rental yield by local authority</a>: new table for {e(rent["month"])}. '
