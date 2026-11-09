@@ -54,7 +54,7 @@ def monthly(kind, built='2026-11-06T09:00:00Z', month='2026-10'):
         rows.append(row)
     rows.append({'propertyType': 'flat', 'district': 'LS1', 'median12m': 1, 'authorityCode': 'E08000030', 'grossYieldPct': 9.9})
     rows.append({'propertyType': 'all', 'district': 'LS9', 'authorityCode': 'E08000039', 'median12m': None, 'grossYieldPct': None})
-    return {'month': month, 'builtAt': built, 'rows': rows}
+    return {'month': month, 'periodFrom': '2025-08', 'periodTo': '2026-07', 'lagMonths': 3, 'builtAt': built, 'rows': rows}
 
 
 class Site:
@@ -71,6 +71,9 @@ class Site:
         (root / 'this-week').mkdir()
         shutil.copy(REPO / 'this-week' / 'index.html', root / 'this-week' / 'index.html')
         shutil.copy(REPO / 'sitemap.xml', root / 'sitemap.xml')
+        for source in tw.SOURCE_PAGES.values():
+            (root / source).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(REPO / source, root / source)
         for relative, content in self.files.items():
             (root / relative).parent.mkdir(parents=True, exist_ok=True)
             (root / relative).write_text(content if isinstance(content, str) else json.dumps(content), encoding='utf-8')
@@ -107,7 +110,7 @@ class ThisWeekTests(unittest.TestCase):
             text = page(root)
             self.assertNotIn('No figures have been published here yet.', text)
             self.assertIn('Updated 2026-11-09.', text)
-            self.assertIn('headline level is 99.72, -0.2% on the week before', text)
+            self.assertIn('headline level is 99.72, -0.24% on the week before', text)
             self.assertIn('<loc>https://data.yappman.com/this-week/</loc>\n    <lastmod>2026-11-09</lastmod>',
                           (root / 'sitemap.xml').read_text(encoding='utf-8').replace('\r\n', '\n'))
             self.assertNotIn('official', text.lower())
@@ -124,8 +127,18 @@ class ThisWeekTests(unittest.TestCase):
             self.assertEqual(re.findall(r'<td>([a-z ]+)</td><td>', falls), ['fish', 'vegetables', 'oils fats'])
             for left_out in ('other', 'drinks', 'skipped'):
                 self.assertNotIn(f'<td>{left_out}</td>', text)
-            self.assertIn('+2.6%', rises)
-            self.assertIn('-2.2%', falls)
+            self.assertIn('+2.60%', rises)
+            self.assertIn('-2.20%', falls)
+            self.assertIn('categories tied at the cut-off are all shown', text)
+
+    def test_categories_tied_at_the_cut_off_are_all_shown(self) -> None:
+        tied = [('dairy-eggs', 0.0722, 800), ('vegetables', 0.0722, 600), ('meat', 0.5, 900), ('fruit', 0.4, 500),
+                ('fish', 0.01, 300), ('oils-fats', -0.3, 250)]
+        with Site({tw.UK_JSON: uk_records(classes=tied)}) as root:
+            run(root, '--publish')
+            rises = page(root).split('Largest category rises')[1].split('Largest category falls')[0]
+            self.assertEqual(re.findall(r'<td>([a-z ]+)</td><td>', rises), ['meat', 'fruit', 'dairy eggs', 'vegetables'])
+            self.assertEqual(rises.count('+0.07%'), 2)
 
     def test_a_stale_source_says_so_and_shows_no_figures(self) -> None:
         old = uk_records(published='2026-10-20T08:00:00Z')
@@ -159,6 +172,20 @@ class ThisWeekTests(unittest.TestCase):
             self.assertIn('new table for 2026-10', text)
             self.assertIn('4 districts, of which 3 have a 12-month median for all homes; the median of those medians is &pound;300,000', text)
             self.assertIn('4 authorities, of which 3 have an all-homes yield; the median of those yields is 5.0%', text)
+            monthly_region = text.split('<!-- district-table:monthly -->')[1].split('<!-- /district-table:monthly -->')[0]
+            self.assertIn('The sales are from 2025-08 to 2026-07, ending 3 months before the table month to allow for registration.',
+                          monthly_region)
+            self.assertIn(tw.SOLD_REVISION, monthly_region)
+            for caveat in tw.YIELD_CAVEATS:
+                self.assertIn(caveat, monthly_region)
+            for kind in ('sold-prices', 'rental-yield'):
+                self.assertIn(tw.attribution(REPO, kind), monthly_region)
+            self.assertEqual(monthly_region.count('Contains HM Land Registry data'), 2)
+        with Site({tw.SOLD_JSON: monthly('sold', built='2026-10-06T09:00:00Z')}) as root:
+            run(root, '--publish')
+            monthly_region = page(root).split('<!-- district-table:monthly -->')[1].split('<!-- /district-table:monthly -->')[0]
+            self.assertEqual(monthly_region.count('Contains HM Land Registry data'), 1)    # only the shown table's notices
+            self.assertNotIn(tw.SOLD_REVISION, monthly_region)
         with Site({tw.SOLD_JSON: monthly('sold', built='2026-10-06T09:00:00Z'), tw.YIELD_JSON: monthly('yield', built='2026-10-06T09:00:00Z')}) as root:
             run(root, '--publish')
             self.assertIn('No new monthly table this week.', page(root))
@@ -194,6 +221,9 @@ class ThisWeekTests(unittest.TestCase):
                 self.assert_held(root, 2)
             with Site({key: monthly(kind) | {'rows': []}}) as root:
                 self.assert_held(root, 2)
+            for broken in ({'periodTo': '2026-13'}, {'lagMonths': '3'}, {'lagMonths': 0}):
+                with Site({key: monthly(kind) | broken}) as root:
+                    self.assert_held(root, 2)
         with Site({tw.UK_JSON: '{not json'}) as root:
             self.assert_held(root, 1)
         with Site({tw.BASKET_JSON: '{"weeks": [], "weeks": []}'}) as root:       # a repeated key
@@ -210,6 +240,15 @@ class ThisWeekTests(unittest.TestCase):
         with Site() as root:
             (root / 'CNAME').write_text('example.com', encoding='utf-8')
             self.assertEqual(run(root, '--check')[0], 2)
+        for change in (lambda t: t.replace('<!-- /district-table:attribution -->', ''),
+                       lambda t: t.replace('<p class="attribution">Contains HM Land Registry', '<p class="attribution"><b>x</b>Contains HM Land Registry')):
+            with Site() as root:
+                p = root / tw.SOURCE_PAGES['rental-yield']
+                p.write_text(change(p.read_text(encoding='utf-8')), encoding='utf-8')
+                before = snapshot(root)
+                code, result = run(root, '--publish')
+                self.assertEqual((code, result['code']), (3, 'template-broken'))
+                self.assertEqual(snapshot(root), before)
 
     def test_markup_in_a_source_value_is_held_not_published(self) -> None:
         bad = uk_records()
@@ -229,11 +268,19 @@ class ThisWeekTests(unittest.TestCase):
             self.assertIn('<p>' + plain(sentence) + '</p>', re.sub(r'\?utm_source=[^"]*', '', source), relative)
             self.assertIn('utm_campaign=this-week', sentence)
 
+    def test_the_caveats_are_the_sentences_of_their_sources(self) -> None:
+        source = (REPO / tw.SOURCE_PAGES['rental-yield']).read_text(encoding='utf-8')
+        for caveat in tw.YIELD_CAVEATS:
+            self.assertIn(caveat, source)
+        method = json.loads((REPO / tw.SOLD_JSON).read_text(encoding='utf-8'))['method']
+        self.assertIn(tw.SOLD_REVISION, method)
+
     def test_the_real_data_builds(self) -> None:
         """The committed data files and page, in a copy: every check passes on today's real figures."""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            for relative in (tw.UK_JSON, tw.BASKET_JSON, tw.SOLD_JSON, tw.YIELD_JSON, tw.PAGE, dts.SITEMAP, Path('CNAME')):
+            for relative in (tw.UK_JSON, tw.BASKET_JSON, tw.SOLD_JSON, tw.YIELD_JSON, tw.PAGE, dts.SITEMAP, Path('CNAME'),
+                             *tw.SOURCE_PAGES.values()):
                 (root / relative).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy(REPO / relative, root / relative)
             code, result = run(root, '--check', today=date(2026, 11, 9))
