@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grocery price snapshots MCP server — Yappman Data</title>
-<meta name="description" content="A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices and the UK daily basket, as static snapshots under CC BY 4.0.">
+<meta name="description" content="A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices, the UK daily basket and the UK Christmas dinner basket, as static snapshots under CC BY 4.0.">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
 <meta property="og:title" content="Grocery price snapshots MCP server — Yappman Data">
-<meta property="og:description" content="A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices and the UK daily basket, as static snapshots under CC BY 4.0.">
+<meta property="og:description" content="A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices, the UK daily basket and the UK Christmas dinner basket, as static snapshots under CC BY 4.0.">
 <meta property="og:url" content="https://data.yappman.com/mcp/">
 <meta property="og:image" content="https://data.yappman.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -23,7 +23,7 @@
   "@context": "https://schema.org",
   "@type": "TechArticle",
   "headline": "Grocery price snapshots MCP server",
-  "description": "A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices and the UK daily basket, as static snapshots under CC BY 4.0.",
+  "description": "A free, read-only MCP server for AI assistants: the UK and Australian shelf-price indices, the UK daily basket and the UK Christmas dinner basket, as static snapshots under CC BY 4.0.",
   "url": "https://data.yappman.com/mcp/",
   "mainEntityOfPage": "https://data.yappman.com/mcp/",
   "inLanguage": "en-GB",
@@ -73,18 +73,20 @@
 
 <h2>What it serves</h2>
 <ul>
-  <li><strong>The UK and Australian shelf-price indices:</strong> the published vintage files from 2026-W42.</li>
+  <li><strong>The UK and Australian shelf-price indices:</strong> the published vintage files, UK from 2026-W42 and Australia from 2026-W41.</li>
   <li><strong>The UK daily 212-item basket:</strong> price, was-price, loyalty price, unit price, pack size and stock flag, per retailer per day, from 24 September 2026. The loaded days, and any day with no data, are shown by <code>about_the_data</code>.</li>
+  <li><strong>The UK Christmas dinner basket:</strong> a weekly summary to 24 December 2026, by item number, at Tesco, Sainsbury&rsquo;s, Asda and Aldi.</li>
   <li>Which index vintages are loaded is shown by <code>list_index_vintages</code>.</li>
 </ul>
 <p>Every basket row carries a date, the retailer, the retailer's own product id and the barcode where there is one. The server does not serve product names, brands, descriptions, images or links: those are retailers' content.</p>
 
-<h2>The five tools</h2>
+<h2>The six tools</h2>
 <ul>
   <li><code>get_shelf_price_index</code> returns an index vintage for the UK or Australia.</li>
   <li><code>list_index_vintages</code> says which vintages exist.</li>
   <li><code>lookup_basket_prices</code> finds basket rows by barcode (<code>eans</code>) or retailer product id (<code>products</code>), up to 20 at a time, for one day; each result row lists its barcodes in <code>ean</code>. Aldi has no barcodes, so use product ids for Aldi.</li>
   <li><code>list_basket_products</code> (from version 0.2.5) lists the identifiers in the daily basket for one day, sorted, with paging: the retailer, the retailer product id and the barcodes in <code>ean</code> (empty where the basket holds none, as for Aldi). It returns no names, brands or prices; pass the ids or barcodes to <code>lookup_basket_prices</code>.</li>
+  <li><code>get_christmas_basket_prices</code> (from version 0.3.0) returns one week of the UK Christmas dinner basket summary: the posted shelf prices of numbered items at Tesco, Sainsbury&rsquo;s, Asda and Aldi with flags, or each retailer&rsquo;s total over the items it priced. Item numbers only, no product names. It does not rank retailers, and the totals cover different items. Omit <code>week</code> for the latest week.</li>
   <li><code>about_the_data</code> explains the licence, the limits and how to cite it, and from version 0.2.2 points to the UK and Australia supermarket Actors.</li>
 </ul>
 
