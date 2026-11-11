@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "note": "The date is the day each weekly index published its latest week. Weekly series, not real time. A published week can rest on incomplete retailer data; see https://data.yappman.com/notices/.",
+  "latestPublishedAt": "2026-11-09",
+  "datasets": [
+    {
+      "dataset": "uk-shelf-price-index",
+      "title": "UK Online Shelf-Price Index",
+      "isoWeek": "2026-W45",
+      "publishedAt": "2026-11-09",
+      "page": "https://data.yappman.com/shelf-price-index/",
+      "files": [
+        "https://data.yappman.com/data/uk-shelf-price-index.csv",
+        "https://data.yappman.com/data/uk-shelf-price-index.json"
+      ]
+    },
+    {
+      "dataset": "au-shelf-price-index",
+      "title": "AU Online Shelf-Price Index",
+      "isoWeek": "2026-W45",
+      "publishedAt": "2026-11-09",
+      "page": "https://data.yappman.com/au-shelf-price-index/",
+      "files": [
+        "https://data.yappman.com/data/au-shelf-price-index.json"
+      ]
+    }
+  ]
+}
