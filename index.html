@@ -73,7 +73,7 @@
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
-<div class="strip" id="strip" role="region" aria-label="Announcement"><span>Next change: matchKey (UK Supermarket Price Scraper), ships no earlier than 5 November 2026. <a href="/notices/matchkey/">Read the notice</a></span><button type="button" class="strip-x" aria-label="Dismiss announcement">&times;</button></div>
+<div class="strip" id="strip" role="region" aria-label="Announcement" data-until="2026-11-12"><span>Next change: ean clean-up (UK Supermarket Price Scraper), ships no earlier than 12 November 2026. <a href="/notices/ean-cleanup/">Read the notice</a></span><button type="button" class="strip-x" aria-label="Dismiss announcement">&times;</button></div>
 <div class="topbar"><div class="wrap">
 <nav aria-label="Main" class="mainnav">
   <a class="brand" href="/" aria-current="page"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a>
@@ -121,8 +121,8 @@
     <div class="card pcard">
       <div class="card-top"><h3>AU grocery</h3><span class="badge live">On the Apify Store</span></div>
       <p>Aldi Australia shelf prices by keyword, category or product page.</p>
-      <div class="pnum">~65,000</div>
-      <div class="plabel">rows a week (all three retailers, from our own runs)</div>
+      <div class="pnum">~26,000</div>
+      <div class="plabel">rows a week (all three retailers, from our own runs; Coles is a partial slice)</div>
       <a class="plink" href="https://apify.com/yappman/au-supermarket-price-scraper">On the Apify Store &rarr;</a>
     </div>
     <div class="card pcard">
@@ -214,7 +214,8 @@
 </footer>
 <script>
 (function () {
-  var BASE = "https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=json&clean=true";
+  // The headline rows of the UK index, a small static file refreshed with each weekly release (docs/release/build-index-files.js).
+  var BASE = "/data/uk-shelf-price-index-headline.json";
   function fmtDelta(v) {
     if (v === null || v === undefined || v === "") return { t: "—", c: "flat" };
     var n = Number(v);

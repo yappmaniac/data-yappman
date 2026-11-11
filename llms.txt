@@ -31,7 +31,7 @@
 ## Method, quality and notices
 - [Methodology](https://data.yappman.com/methodology/): How the Yappman Data series work: what we provide, the fields in each row, how the data is collected, how it is delivered, and due diligence.
 - [Data quality](https://data.yappman.com/data-quality/): How complete and accurate our Actors' data is: barcode coverage, match accuracy, run success rate and field completeness for UK grocery, AU grocery, hotels and property, with known gaps stated plainly.
-- [Notices](https://data.yappman.com/notices/): Announced changes to Yappman Data products, posted at least 30 days before they ship. Each notice gives the date it was announced and the earliest date it ships.
+- [Notices](https://data.yappman.com/notices/): Announced changes to Yappman Data products, posted before they ship. Each notice gives the date it was announced and the earliest date it ships.
 - [YappmanData-PriceFacts: our shelf-price collector](https://data.yappman.com/bot/): Who sends requests with the YappmanData-PriceFacts user agent, how they are paced, and how a site owner asks us to stop.
 
 ## Press, licence and contact

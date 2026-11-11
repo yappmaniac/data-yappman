@@ -5,7 +5,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const cp = require("child_process");
-const { build, commit, readSite, parseArgs, CSV_OUT, JSON_OUT } = require("./build-index-files.js");
+const { build, commit, readSite, checkAll, parseArgs, MARKETS, CSV_OUT, JSON_OUT, HEADLINE_OUT, AU_JSON_OUT } = require("./build-index-files.js");
 
 const SCRIPT = path.join(__dirname, "build-index-files.js");
 const TODAY = new Date().toISOString().slice(0, 10);
@@ -108,6 +108,9 @@ test("numbers keep the tool's text (100.0 stays 100.0 when the JSON value is 100
 
 test("--check fails when the site files disagree, or only one exists", () => {
   const root = site(); run(root, { uk: [[vintage(root, "2026-W44"), "2026-W44"]], new: true });
+  const noPage = cp.spawnSync(process.execPath, [SCRIPT, "--check", "--root", root], { encoding: "utf8" });
+  assert.strictEqual(noPage.status, 1); assert.match(noPage.stderr, /shelf-price-index\/index\.html not found/);
+  pageWith(root, MARKETS.uk.page, "2026-W44");
   assert.strictEqual(cp.spawnSync(process.execPath, [SCRIPT, "--check", "--root", root], { encoding: "utf8" }).status, 0);
   fs.writeFileSync(path.join(root, CSV_OUT), read(root, CSV_OUT).replace("100.0653", "100.0654"));
   const r = cp.spawnSync(process.execPath, [SCRIPT, "--check", "--root", root], { encoding: "utf8" });
@@ -126,7 +129,10 @@ test("a failed build writes nothing; arguments pair up", () => {
   assert.deepStrictEqual(parseArgs(["--uk", "a.json", "--confirm-uk", "2026-W44", "--uk", "b.json", "--confirm-uk", "2026-W45"]).uk, [["a.json", "2026-W44"], ["b.json", "2026-W45"]]);
   assert.throws(() => parseArgs(["--uk", "a.json"]), /without its/);
   assert.throws(() => parseArgs(["--confirm-uk", "2026-W44"]), /without a --uk/);
-  assert.throws(() => parseArgs(["--au", "x"]), /unknown argument/);
+  assert.throws(() => parseArgs(["--nz", "x"]), /unknown argument/);
+  assert.throws(() => parseArgs(["--au", "x"]), /--au without its --confirm-au/);
+  assert.throws(() => parseArgs(["--uk", "a.json", "--confirm-au", "2026-W44"]), /--confirm-au without a --au/);
+  assert.deepStrictEqual(parseArgs(["--au", "a.json", "--confirm-au", "2026-W44"]).au, [["a.json", "2026-W44"]]);
 });
 
 test("an empty coverageWarnings list is left out of the JSON; a non-empty one is kept", () => {
@@ -147,4 +153,114 @@ test("a failed rename deletes a new file again instead of leaving it empty, and 
   assert.ok(!fs.existsSync(fresh));
   assert.strictEqual(fs.readFileSync(old, "utf8"), "before");
   assert.ok(!fs.readdirSync(root).some(f => f.endsWith(".stamp-tmp")));
+});
+
+// ---- the headline file, the AU site JSON and the page check
+const AU_META = { title: "AU Online Shelf-Price Index", base: "2026-W41", retailers: ["coles", "aldi_au"], classes: ["dairy-eggs", "pet"], currency: "AUD", headlineDefinition: "like-for-like", headlineClasses: ["dairy-eggs"], colesStatus: "partial", colesProducts: 6844, colesRangeSharePct: 22.4, colesRequests: 170, woolworthsStore: "1101", classRulesVersion: "fa356eec3b57" };
+const auRows = v => [row(v, "headline", "", "", 100.1408, {}, false), row(v, "retailer", "coles", "", 99.5, {}, false), row(v, "retailer", "aldi_au", "", 100, {}, false), row(v, "retailer_like_for_like", "coles", "", 99.4, {}, false), row(v, "class", "", "pet", 101.5, {}, false)];
+function auVintage(root, v, m = {}, rows) {
+  const rs = rows || auRows(v);
+  const jp = path.join(root, `au-shelf-price-index-${v}.json`);
+  fs.writeFileSync(jp, JSON.stringify({ meta: meta(v, { ...AU_META, ...m }), rows: rs }));
+  fs.writeFileSync(jp.replace(/\.json$/, ".csv"), toCsv(rs, false));
+  return jp;
+}
+const pageWith = (root, file, v) => { fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true }); fs.writeFileSync(path.join(root, file), `<!--static-latest:start-->\n<p id="static-latest" data-vintage="${v}">x</p>\n<!--static-latest:end-->\n`); };
+
+test("the headline file holds exactly the headline rows of the JSON, in the same item text, and follows each build", () => {
+  const root = site();
+  run(root, { uk: [[vintage(root, "2026-W43"), "2026-W43"]], new: true });
+  run(root, { uk: [[vintage(root, "2026-W44"), "2026-W44"]] });
+  const heads = JSON.parse(read(root, HEADLINE_OUT)), all = JSON.parse(read(root, JSON_OUT));
+  assert.deepStrictEqual(heads, all.filter(i => i.recordType === "headline"));
+  assert.deepStrictEqual(heads.map(h => h.vintage), ["2026-W43", "2026-W44"]);
+  for (const line of read(root, HEADLINE_OUT).split("\n").slice(1, -2)) assert.ok(read(root, JSON_OUT).includes(line.replace(/,$/, "")));
+  fs.writeFileSync(path.join(root, HEADLINE_OUT), read(root, HEADLINE_OUT).replace("99.7238", "99.7239"));
+  assert.throws(() => readSite(root), /not the headline rows/);
+});
+
+test("--derive rewrites only the headline file; --check needs it", () => {
+  const root = site(); run(root, { uk: [[vintage(root, "2026-W44"), "2026-W44"]], new: true });
+  const json = read(root, JSON_OUT), csv = read(root, CSV_OUT), head = read(root, HEADLINE_OUT);
+  fs.unlinkSync(path.join(root, HEADLINE_OUT));
+  assert.throws(() => checkAll(root), /run --derive/);
+  const r = cp.spawnSync(process.execPath, [SCRIPT, "--derive", "--root", root], { encoding: "utf8" });
+  assert.strictEqual(r.status, 0);
+  assert.strictEqual(read(root, HEADLINE_OUT), head); assert.strictEqual(read(root, JSON_OUT), json); assert.strictEqual(read(root, CSV_OUT), csv);
+  fs.writeFileSync(path.join(root, HEADLINE_OUT), "[]\n"); // a wrong headline file: --derive repairs it
+  assert.strictEqual(cp.spawnSync(process.execPath, [SCRIPT, "--derive", "--root", root], { encoding: "utf8" }).status, 0);
+  assert.strictEqual(read(root, HEADLINE_OUT), head);
+  assert.throws(() => build({ root, derive: true, uk: [[vintage(root, "2026-W45"), "2026-W45"]] }), /do not give it with/);
+});
+
+test("AU: a site JSON only (no CSV, no headline file), with its own meta keys and record type; UK rules still refuse them", () => {
+  const root = site();
+  run(root, { au: [[auVintage(root, "2026-W44"), "2026-W44"]], new: true });
+  run(root, { au: [[auVintage(root, "2026-W45", { coverageWarnings: ["coles"] }), "2026-W45"]] });
+  const items = JSON.parse(read(root, AU_JSON_OUT));
+  assert.strictEqual(items.length, 12); assert.strictEqual(items[0].currency, "AUD"); assert.deepStrictEqual(items[6].coverageWarnings, ["coles"]);
+  assert.ok(items.some(i => i.recordType === "retailer_like_for_like" && i.retailer === "coles"));
+  assert.deepStrictEqual(fs.readdirSync(path.join(root, "data")), ["au-shelf-price-index.json"]);
+  assert.strictEqual(readSite(root, MARKETS.au).last, "2026-W45");
+  assert.strictEqual(readSite(root), null); // no UK files were written
+  assert.throws(() => build({ root, au: [[auVintage(root, "2026-W46", { colesProducts: "many" }), "2026-W46"]] }), /colesProducts/);
+  assert.throws(() => build({ root, au: [[auVintage(root, "2026-W46", { headlineClasses: ["=cmd"] }), "2026-W46"]] }), /headlineClasses/);
+  assert.throws(() => build({ root, au: [[auVintage(root, "2026-W46", { headlineClasses: [["pet"]] }), "2026-W46"]] }), /headlineClasses/);
+  assert.throws(() => build({ root, au: [[auVintage(root, "2026-W46", { runId: "abc" }), "2026-W46"]] }), /unknown meta key runId/);
+  assert.throws(() => build({ root, au: [[auVintage(root, "2026-W46", { title: "UK Online Shelf-Price Index" }), "2026-W46"]] }), /title/);
+  const r2 = site(); const rows = rowsFor("2026-W44"); rows[3].recordType = "retailer_like_for_like";
+  assert.throws(() => build({ root: r2, uk: [[vintage(r2, "2026-W44", { rows }), "2026-W44"]], new: true }), /record type/);
+  assert.throws(() => build({ root: r2, uk: [[vintage(r2, "2026-W44", { m: { currency: "GBP" } }), "2026-W44"]], new: true }), /unknown meta key currency/);
+});
+
+test("AU: the tool's CSV is still checked against the JSON, and --new is refused once the file exists", () => {
+  const root = site(); const f = auVintage(root, "2026-W44");
+  fs.writeFileSync(f.replace(/\.json$/, ".csv"), toCsv(auRows("2026-W44"), false).replace("100.1408", "100.1409"));
+  assert.throws(() => build({ root, au: [[f, "2026-W44"]], new: true }), /differ in level/);
+  run(root, { au: [[auVintage(root, "2026-W44"), "2026-W44"]], new: true });
+  assert.throws(() => build({ root, au: [[auVintage(root, "2026-W45"), "2026-W45"]], new: true }), /already exist/);
+});
+
+test("--check: a page's stamped week must be the last week in its data file; the AU file is needed once the AU page exists", () => {
+  const root = site();
+  run(root, { uk: [[vintage(root, "2026-W44"), "2026-W44"]], new: true });
+  pageWith(root, MARKETS.uk.page, "2026-W44");
+  assert.strictEqual(checkAll(root).length, 1);
+  pageWith(root, MARKETS.uk.page, "2026-W45"); // stamped, but the week was not added to the data file
+  assert.throws(() => checkAll(root), /stamped 2026-W45 but the last week in data\/uk-shelf-price-index\.json is 2026-W44/);
+  pageWith(root, MARKETS.uk.page, "2026-W44");
+  pageWith(root, MARKETS.au.page, "2026-W44");
+  assert.throws(() => checkAll(root), /au-shelf-price-index\.json does not exist/);
+  run(root, { au: [[auVintage(root, "2026-W44"), "2026-W44"]], new: true });
+  assert.strictEqual(checkAll(root).length, 2);
+  const r = cp.spawnSync(process.execPath, [SCRIPT, "--check", "--root", root], { encoding: "utf8" });
+  assert.strictEqual(r.status, 0); assert.match(r.stdout, /au-shelf-price-index\.json: 5 rows, last vintage 2026-W44/);
+});
+
+test("a site JSON whose vintage has no headline row, or two, is refused", () => {
+  const root = site(); run(root, { au: [[auVintage(root, "2026-W44"), "2026-W44"]], new: true });
+  const items = JSON.parse(read(root, AU_JSON_OUT));
+  fs.writeFileSync(path.join(root, AU_JSON_OUT), JSON.stringify(items.filter(i => i.recordType !== "headline")));
+  assert.throws(() => readSite(root, MARKETS.au), /exactly one headline row/);
+});
+
+test("the pages read the site files and never fetch the dataset", () => {
+  const top = path.join(__dirname, "..", "..");
+  const want = { "index.html": HEADLINE_OUT, "press/index.html": HEADLINE_OUT, "shelf-price-index/index.html": JSON_OUT, "au-shelf-price-index/index.html": AU_JSON_OUT };
+  for (const [page, file] of Object.entries(want)) {
+    const html = fs.readFileSync(path.join(top, page), "utf8");
+    assert.ok(html.includes(`"/${file}"`), `${page} should read /${file}`);
+    assert.doesNotMatch(html, /fetch\([^)]*api\.apify\.com/);
+    assert.doesNotMatch(html, /fetch\(`?\$?\{?BASE\}?\?/); // the old call: fetch(`${BASE}?format=json...`)
+  }
+});
+
+test("the announcement bar on the home page and /notices/ carries a real last-day date, and site.js hides it after that day", () => {
+  const top = path.join(__dirname, "..", "..");
+  for (const page of ["index.html", "notices/index.html"]) {
+    const m = fs.readFileSync(path.join(top, page), "utf8").match(/<div class="strip" id="strip"[^>]*data-until="(\d{4}-\d{2}-\d{2})"/);
+    assert.ok(m, `${page}: the bar needs data-until`);
+    assert.strictEqual(new Date(m[1] + "T00:00:00Z").toISOString().slice(0, 10), m[1]);
+  }
+  assert.match(fs.readFileSync(path.join(top, "assets/site.js"), "utf8"), /data-until[\s\S]{0,200}toISOString\(\)\.slice\(0, 10\) > until\) strip\.hidden = true/);
 });

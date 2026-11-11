@@ -1,0 +1,8 @@
+[
+{"vintage":"2026-W39","publishedAt":"2026-10-05T06:59:15Z","revision":1,"recordType":"headline","retailer":"","class":"","level":100,"weekOnWeekPct":null,"fourWeekPct":null,"matched":null,"matchedShare":null,"status":"base"},
+{"vintage":"2026-W40","publishedAt":"2026-10-05T06:59:15Z","revision":1,"recordType":"headline","retailer":"","class":"","level":100.0685,"weekOnWeekPct":0.0685,"fourWeekPct":null,"matched":71399,"matchedShare":0.9856,"status":"ok"},
+{"vintage":"2026-W42","publishedAt":"2026-10-26T09:58:29Z","revision":1,"recordType":"headline","retailer":"","class":"","level":100,"weekOnWeekPct":null,"fourWeekPct":null,"matched":null,"matchedShare":null,"status":"base"},
+{"vintage":"2026-W43","publishedAt":"2026-10-26T09:58:29Z","revision":1,"recordType":"headline","retailer":"","class":"","level":99.9645,"weekOnWeekPct":-0.0355,"fourWeekPct":null,"matched":74503,"matchedShare":0.9823,"status":"ok"},
+{"vintage":"2026-W44","publishedAt":"2026-11-02T08:20:48Z","revision":1,"recordType":"headline","retailer":"","class":"","level":99.7238,"weekOnWeekPct":-0.2409,"fourWeekPct":null,"matched":74335,"matchedShare":0.9802,"status":"ok","entered":1434,"left":1500,"relinked":1,"missingPackSize":60},
+{"vintage":"2026-W45","publishedAt":"2026-11-09T12:49:02Z","revision":1,"recordType":"headline","retailer":"","class":"","level":99.7347,"weekOnWeekPct":0.0109,"fourWeekPct":null,"matched":74668,"matchedShare":0.9855,"status":"ok","entered":1485,"left":1101,"relinked":1,"missingPackSize":14}
+]

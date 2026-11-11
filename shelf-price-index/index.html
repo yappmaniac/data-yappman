@@ -201,7 +201,9 @@
 </footer>
 
 <script>
-// UK Online Shelf-Price Index: reads the public Apify dataset (anyone with the id can read).
+// UK Online Shelf-Price Index: reads the site copy of the dataset's items, a static file refreshed in the same commit as
+// each weekly release (docs/release/build-index-files.js). The page never calls the dataset; BASE is only for the download links.
+const DATA_FILE = "/data/uk-shelf-price-index.json";
 const DATASET_ID = "AvRCWqFinCiNjx3sP"; // Apify dataset id of uk-shelf-price-index (read-by-id)
 const BASE = `https://api.apify.com/v2/datasets/${DATASET_ID}/items`;
 const RETAILER_NAMES = { tesco:"Tesco", sainsburys:"Sainsbury's", asda:"Asda", aldi:"Aldi", morrisons:"Morrisons" };
@@ -284,7 +286,7 @@ async function load() {
   if (DATASET_ID.startsWith("REPLACE")) { status.textContent = "The first weekly vintage is published on Monday 5 October 2026."; return; }
   let rows;
   try {
-    const r = await fetch(`${BASE}?format=json&clean=true`);
+    const r = await fetch(DATA_FILE);
     if (!r.ok) throw new Error(r.status);
     rows = await r.json();
     // Map the published schema (vintage/recordType/class/weekOnWeekPct/fourWeekPct) onto the names used below.

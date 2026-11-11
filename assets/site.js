@@ -100,6 +100,9 @@
   // ---------- Dismissible announcement bar. The choice is kept only for this visit (session storage), never sent anywhere.
   var strip = document.getElementById('strip');
   if (strip) {
+    // Self-expiring: data-until is the last day (UTC, yyyy-mm-dd) the bar is shown, so a bar about a dated change cannot go stale.
+    var until = strip.getAttribute('data-until');
+    if (until && new Date().toISOString().slice(0, 10) > until) strip.hidden = true;
     try { if (sessionStorage.getItem('yd-strip-dismissed') === '1') strip.hidden = true; } catch (e) {}
     var x = strip.querySelector('.strip-x');
     if (x) x.addEventListener('click', function () {

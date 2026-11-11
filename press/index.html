@@ -105,7 +105,8 @@
 </footer>
 <script>
 (function () {
-  var BASE = "https://api.apify.com/v2/datasets/AvRCWqFinCiNjx3sP/items?format=json&clean=true";
+  // The headline rows of the UK index, a small static file refreshed with each weekly release (docs/release/build-index-files.js).
+  var BASE = "/data/uk-shelf-price-index-headline.json";
   var el = document.getElementById("cite-text");
   fetch(BASE).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (rows) {
     var weeks = rows.filter(function (r) { return r.recordType === "headline"; }).map(function (r) { return r.vintage; }).sort();

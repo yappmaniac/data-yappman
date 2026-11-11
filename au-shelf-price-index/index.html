@@ -203,8 +203,10 @@
 </div>
 </footer>
 <script>
-// AU Online Shelf-Price Index: reads the public Apify dataset `au-shelf-price-index` (anyone with the id can read).
-const DATASET_ID = "FvrQZaMOARuesHgPp";
+// AU Online Shelf-Price Index: reads the site copy of the dataset's items, a static file refreshed in the same commit as
+// each weekly release (docs/release/build-index-files.js). The page never calls the dataset; BASE is only for the download links.
+const DATA_FILE = "/data/au-shelf-price-index.json";
+const DATASET_ID = "FvrQZaMOARuesHgPp"; // Apify dataset id of au-shelf-price-index (read-by-id)
 const BASE = `https://api.apify.com/v2/datasets/${DATASET_ID}/items`;
 const RETAILER_NAMES = { coles: "Coles", woolworths: "Woolworths", aldi_au: "Aldi Australia" };
 
@@ -271,7 +273,7 @@ async function load() {
   if (DATASET_ID.startsWith("REPLACE")) { status.textContent = "The first vintage (2026-W41 base and 2026-W42) was published on 15 October 2026."; return; }
   let rows;
   try {
-    const r = await fetch(`${BASE}?format=json&clean=true`);
+    const r = await fetch(DATA_FILE);
     if (!r.ok) throw new Error(r.status);
     rows = await r.json();
   } catch (e) { status.textContent = "The index data could not be loaded right now. The CSV and JSON links below still work."; return; }
