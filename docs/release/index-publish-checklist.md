@@ -9,6 +9,7 @@ Done by the Data Website session in the same push as the weekly figures, after t
 - [ ] `docs/release/build-endpoints.js` run after build-index-files.js, and `build-endpoints.js --check` clean: it refreshes data/v1/ (the stable copies of the index files and manifest.json); the files go in the SAME commit.
 - [ ] `docs/release/build-category-pages.js` run after build-index-files.js (it reads data/uk-shelf-price-index.json) and `build-category-pages.js --check` clean: it rewrites the 17 pages under shelf-price-index/categories/; they go in the SAME commit, and `set-lastmod.js` covers their sitemap dates.
 - [ ] `docs/release/build-cpi-page.js` run after the index files, and `--check` clean (it rewrites /shelf-price-index/vs-cpi/ with the latest weeks). When ONS or ABS publish a new CPI month, update data/cpi-reference.json by hand from their release pages (value, month, publication date, link, retrievedOn) and rebuild.
+- [ ] `docs/release/build-moves-feed.js` run after the index files, and `--check` clean: it rewrites shelf-price-index/moves.xml (Atom) with the new week; same commit.
 - [ ] `docs/release/build-index-files.js --check` clean. The index pages, the home page and `/press/` read these files and never call the dataset, so a week that is stamped but not added here would leave the page showing the week before; `--check` fails on that. The data files go in the SAME commit as the stamp.
 - [ ] `docs/release/set-lastmod.js` run for the pages that changed (sitemap `lastmod`).
 - [ ] Wording lint: 0 errors.

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>tag:data.yappman.com,2026:uk-shelf-price-index-moves</id>
+  <title>UK Online Shelf-Price Index: weekly largest category moves</title>
+  <subtitle>The headline change and the largest category rises and falls each published week. Shelf prices only; not CPI.</subtitle>
+  <link rel="self" type="application/atom+xml" href="https://data.yappman.com/shelf-price-index/moves.xml"/>
+  <link rel="alternate" type="text/html" href="https://data.yappman.com/shelf-price-index/"/>
+  <updated>2026-11-09T12:49:02Z</updated>
+  <author><name>Yappman Data</name><uri>https://data.yappman.com/</uri></author>
+  <rights>CC BY 4.0, https://creativecommons.org/licenses/by/4.0/. Cite as Yappman Data, UK Online Shelf-Price Index.</rights>
+  <entry>
+    <id>tag:data.yappman.com,2026:uk-shelf-price-index/2026-W45</id>
+    <title>UK shelf prices, 2026-W45: headline +0.01% on the week</title>
+    <link rel="alternate" type="text/html" href="https://data.yappman.com/shelf-price-index/"/>
+    <published>2026-11-09T12:49:02Z</published>
+    <updated>2026-11-09T12:49:02Z</updated>
+    <content type="html">&lt;p&gt;UK Online Shelf-Price Index, week 2026-W45: headline level 99.7 (base 100 at 2026-W42), +0.01% on the week before.&lt;/p&gt;&lt;p&gt;Largest category rises (categories with at least 100 matched products): bread cereals +0.22% (7,487 matched products); fish +0.18% (1,136 matched products); dairy eggs +0.07% (2,879 matched products); vegetables +0.07% (1,758 matched products).&lt;/p&gt;&lt;p&gt;Largest category falls: oils fats -0.21% (316 matched products); baby -0.20% (2,590 matched products); soft drinks -0.16% (5,522 matched products).&lt;/p&gt;&lt;p&gt;Levels from different base weeks are not comparable: the series restarted at week 42, and earlier entries use an earlier base. Shelf prices only; not CPI and not a measure of prices paid. Source: Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage 2026-W45, https://data.yappman.com/shelf-price-index/&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:data.yappman.com,2026:uk-shelf-price-index/2026-W44</id>
+    <title>UK shelf prices, 2026-W44: headline -0.24% on the week</title>
+    <link rel="alternate" type="text/html" href="https://data.yappman.com/shelf-price-index/"/>
+    <published>2026-11-02T08:20:48Z</published>
+    <updated>2026-11-02T08:20:48Z</updated>
+    <content type="html">&lt;p&gt;UK Online Shelf-Price Index, week 2026-W44: headline level 99.7 (base 100 at 2026-W42), -0.24% on the week before.&lt;/p&gt;&lt;p&gt;Largest category rises (categories with at least 100 matched products): fish +0.24% (1,140 matched products); vegetables +0.09% (1,769 matched products); soft drinks +0.07% (5,382 matched products).&lt;/p&gt;&lt;p&gt;Largest category falls: other -3.50% (2,445 matched products); personal care -0.47% (14,388 matched products); sugar confectionery -0.47% (5,261 matched products).&lt;/p&gt;&lt;p&gt;Levels from different base weeks are not comparable: the series restarted at week 42, and earlier entries use an earlier base. Shelf prices only; not CPI and not a measure of prices paid. Source: Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage 2026-W44, https://data.yappman.com/shelf-price-index/&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:data.yappman.com,2026:uk-shelf-price-index/2026-W43</id>
+    <title>UK shelf prices, 2026-W43: headline -0.04% on the week</title>
+    <link rel="alternate" type="text/html" href="https://data.yappman.com/shelf-price-index/"/>
+    <published>2026-10-26T09:58:29Z</published>
+    <updated>2026-10-26T09:58:29Z</updated>
+    <content type="html">&lt;p&gt;UK Online Shelf-Price Index, week 2026-W43: headline level 100.0 (base 100 at 2026-W42), -0.04% on the week before.&lt;/p&gt;&lt;p&gt;Largest category rises (categories with at least 100 matched products): oils fats +0.43% (317 matched products); fruit +0.21% (1,754 matched products); dairy eggs +0.15% (2,875 matched products).&lt;/p&gt;&lt;p&gt;Largest category falls: alcohol -0.47% (5,208 matched products); other -0.35% (2,433 matched products); fish -0.14% (1,121 matched products).&lt;/p&gt;&lt;p&gt;Levels from different base weeks are not comparable: the series restarted at week 42, and earlier entries use an earlier base. Shelf prices only; not CPI and not a measure of prices paid. Source: Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage 2026-W43, https://data.yappman.com/shelf-price-index/&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:data.yappman.com,2026:uk-shelf-price-index/2026-W40</id>
+    <title>UK shelf prices, 2026-W40: headline +0.07% on the week</title>
+    <link rel="alternate" type="text/html" href="https://data.yappman.com/shelf-price-index/"/>
+    <published>2026-10-05T06:59:15Z</published>
+    <updated>2026-10-05T06:59:15Z</updated>
+    <content type="html">&lt;p&gt;UK Online Shelf-Price Index, week 2026-W40: headline level 100.1 (base 100 at 2026-W39), +0.07% on the week before.&lt;/p&gt;&lt;p&gt;Largest category rises (categories with at least 100 matched products): other +0.98% (1,515 matched products); baby +0.95% (2,587 matched products); fruit +0.16% (1,640 matched products).&lt;/p&gt;&lt;p&gt;Largest category falls: household -0.17% (3,430 matched products); alcohol -0.13% (4,710 matched products); vegetables -0.12% (1,744 matched products).&lt;/p&gt;&lt;p&gt;Levels from different base weeks are not comparable: the series restarted at week 42, and earlier entries use an earlier base. Shelf prices only; not CPI and not a measure of prices paid. Source: Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage 2026-W40, https://data.yappman.com/shelf-price-index/&lt;/p&gt;</content>
+  </entry>
+</feed>
