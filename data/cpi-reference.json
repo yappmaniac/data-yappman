@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "note": "Latest figures published by the national statistics offices, copied by hand from their release pages on the day shown in retrievedOn. Reference only: not our data, not revised by us, and replaced when a newer release is published.",
+  "retrievedOn": "2026-11-11",
+  "series": [
+    {
+      "market": "uk",
+      "publisher": "Office for National Statistics",
+      "name": "CPI annual rate, 01 Food and non-alcoholic beverages",
+      "seriesId": "D7G8",
+      "period": "September 2026",
+      "value": 1.3,
+      "unit": "% (change on the same month a year earlier)",
+      "publishedOn": "2026-10-21",
+      "nextRelease": "2026-11-18",
+      "url": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7g8/mm23",
+      "month": "2026-09"
+    },
+    {
+      "market": "uk",
+      "publisher": "Office for National Statistics",
+      "name": "CPI monthly rate, 01 Food and non-alcoholic beverages",
+      "seriesId": "D7JH",
+      "period": "September 2026",
+      "value": -0.2,
+      "unit": "% (change on the month before)",
+      "publishedOn": "2026-10-21",
+      "nextRelease": "2026-11-18",
+      "url": "https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7jh/mm23",
+      "month": "2026-09"
+    },
+    {
+      "market": "au",
+      "publisher": "Australian Bureau of Statistics",
+      "name": "CPI, Food and non-alcoholic beverages, 12 months to September 2026 (weighted average of eight capital cities, original)",
+      "seriesId": null,
+      "period": "September 2026",
+      "value": 3.2,
+      "unit": "% (change on the same month a year earlier)",
+      "publishedOn": "2026-10-28",
+      "nextRelease": null,
+      "url": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/sep-2026",
+      "month": "2026-09"
+    },
+    {
+      "market": "au",
+      "publisher": "Australian Bureau of Statistics",
+      "name": "CPI, Food and non-alcoholic beverages, August to September 2026 (weighted average of eight capital cities, original)",
+      "seriesId": null,
+      "period": "September 2026",
+      "value": 0.0,
+      "unit": "% (change on the month before)",
+      "publishedOn": "2026-10-28",
+      "nextRelease": null,
+      "url": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/sep-2026",
+      "month": "2026-09"
+    }
+  ]
+}

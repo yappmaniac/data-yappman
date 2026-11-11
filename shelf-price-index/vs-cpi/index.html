@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our shelf-price indices and the ONS and ABS consumer price indices — Yappman Data</title>
+<meta name="description" content="The latest UK and AU shelf-price index figures next to the latest ONS and ABS food CPI figures, and why they measure different things. No conclusion is drawn.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="Our shelf-price indices and the ONS and ABS consumer price indices — Yappman Data">
+<meta property="og:description" content="The latest UK and AU shelf-price index figures next to the latest ONS and ABS food CPI figures, and why they measure different things. No conclusion is drawn.">
+<meta property="og:url" content="https://data.yappman.com/shelf-price-index/vs-cpi/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://data.yappman.com/shelf-price-index/vs-cpi/">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main" class="mainnav">
+  <a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <ul class="nav-list" id="site-menu">
+    <li class="nav-group mega"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-data" aria-haspopup="true">Data<span class="caret" aria-hidden="true"></span></button><div class="panel panel-mega" id="panel-data"><div class="panel-cols"><div class="panel-col"><h3 class="panel-h">Price data</h3><ul><li><a class="mi" href="https://apify.com/yappman/uk-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK supermarket prices</span><span class="badge live">Latest</span></span><span class="mi-desc">Weekly catalogue and a daily 212-item basket.</span></a></li><li><a class="mi" href="https://apify.com/yappman/au-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">AU supermarket prices</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Aldi Australia shelf prices by keyword, category or product page.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-property-listings" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK property listings</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Rightmove and OnTheMarket listings, plus Rightmove sold prices.</span></a></li><li><a class="mi" href="https://apify.com/yappman/google-hotels-prices" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Google Hotels rates</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Google Hotels results and per-booking-site rates, by city or hotel.</span></a></li></ul></div><div class="panel-col"><h3 class="panel-h">Open data</h3><ul><li><a class="mi" href="https://apify.com/yappman/contracts-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Public contracts</span><span class="badge live">Latest</span></span><span class="mi-desc">Search UK public procurement notices. $0.005 a notice ($5.00 per 1,000) plus $0.005 a run.</span></a></li><li><a class="mi" href="https://apify.com/yappman/lei-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">LEI lookup</span><span class="badge live">Latest</span></span><span class="mi-desc">Legal Entity Identifier records by LEI, name or registration status. $0.002 an entity ($2.00 per 1,000), no start fee.</span></a></li><li><a class="mi" href="https://apify.com/yappman/cricos-register" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">CRICOS register lookup (Australia)</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Australian education providers registered to enrol overseas students: one row each with type, state, postcode, city, capacity and course counts. $0.002 a row ($2.00 per 1,000), no start fee. Not affiliated with the Department of Education.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-importers-exporters" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK importers and exporters</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">HMRC trade lists by month, under the Open Government Licence. $0.005 a run plus $0.002 a trader row. Not affiliated with HMRC.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-sponsor-register-changes" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK sponsor register changes</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Dated changes to the UK register of licensed sponsors, one row per change. $0.005 a change row ($5.00 per 1,000), no start fee. Not affiliated with the Home Office or UK Visas and Immigration.</span></a></li><li><a class="mi" href="https://apify.com/yappman/cqc-register" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">CQC England care locations</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Search and look up care locations in the CQC directory for England, and list what changed between its files. $0.005 a run plus $0.004 a location or $0.003 a change. Not affiliated with the Care Quality Commission.</span></a></li></ul></div></div><div class="panel-foot"><a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener">Free basket snapshot, monthly (Kaggle)</a><a href="/methodology/#delivery">Delivery &amp; formats</a></div></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-indices" aria-haspopup="true">Indices<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-indices"><ul><li><a class="mi" href="/shelf-price-index/"><span class="mi-top"><span class="mi-name">UK Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/au-shelf-price-index/"><span class="mi-top"><span class="mi-name">AU Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/methodology/#indices"><span class="mi-top"><span class="mi-name">How the indices are built</span></span></a></li></ul></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-trust" aria-haspopup="true">Trust<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-trust"><ul><li><a class="mi" href="/data-quality/"><span class="mi-top"><span class="mi-name">Data quality</span></span></a></li><li><a class="mi" href="/methodology/"><span class="mi-top"><span class="mi-name">Methodology</span></span></a></li><li><a class="mi" href="/notices/"><span class="mi-top"><span class="mi-name">Notices (change log)</span></span></a></li><li><a class="mi" href="/press/#licence"><span class="mi-top"><span class="mi-name">Licence &amp; reuse</span></span></a></li><li><a class="mi" href="/#trust"><span class="mi-top"><span class="mi-name">Check schedule</span></span></a></li></ul></div></li>
+    <li class="nav-plain"><a href="/#pricing">Pricing</a></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-resources" aria-haspopup="true">Resources<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-resources"><ul><li><a class="mi" href="/demos/"><span class="mi-top"><span class="mi-name">Demos</span></span></a></li><li><a class="mi" href="https://github.com/yappmaniac/yappman-examples" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Examples (GitHub)</span></span></a></li><li><a class="mi" href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Kaggle dataset</span></span></a></li><li><a class="mi" href="/sold-prices/"><span class="mi-top"><span class="mi-name">Median sold prices by postcode district</span></span></a></li><li><a class="mi" href="/rental-yield/"><span class="mi-top"><span class="mi-name">Gross rental yield by local authority</span></span></a></li><li><a class="mi" href="https://yappman.substack.com/" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Newsletter (Substack)</span></span></a></li><li><a class="mi" href="https://dev.to/yappman" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Articles (dev.to)</span></span></a></li><li><a class="mi" href="/press/"><span class="mi-top"><span class="mi-name">Press</span></span></a></li></ul></div></li>
+    <li class="nav-cta"><a class="btn btn-primary" href="/#contact">Request a sample</a></li>
+  </ul>
+</nav>
+</div></div>
+<main id="main" tabindex="-1">
+<header>
+  <h1>Our shelf-price indices and the ONS and ABS consumer price indices</h1>
+  <p class="sub">The latest figures of each kind, side by side, and why they are not the same thing. The figures are only for the months and weeks shown. This page draws no conclusion from them.</p>
+</header>
+
+<h2 id="ours">Our indices (weekly, posted online shelf prices)</h2>
+<div class="table-wrap"><table><thead><tr><th>Index</th><th>Week</th><th class="num">Level</th><th>Change</th><th>Base 100 at</th><th>Published</th></tr></thead><tbody>
+<tr><td><a href="/shelf-price-index/">UK, all four retailers, all categories</a></td><td>2026-W45</td><td class="num">99.7</td><td>+0.01% on the week before</td><td>2026-W42</td><td>9 November 2026</td></tr>
+<tr><td>UK, food and soft drinks subtotal</td><td>2026-W45</td><td class="num">99.9</td><td>+0.05% on the week before</td><td>2026-W42</td><td>9 November 2026</td></tr>
+<tr><td><a href="/au-shelf-price-index/">AU, like-for-like headline</a></td><td>2026-W45</td><td class="num">100.1</td><td>-0.50% on the week before</td><td>2026-W41</td><td>9 November 2026</td></tr>
+</tbody></table></div>
+
+<h2 id="cpi">ONS and ABS CPI, food and non-alcoholic beverages (monthly)</h2>
+<p>Copied by hand on 11 November 2026 from the release pages linked in the table. They are the publishers&rsquo; figures, not ours, and are replaced when a newer release is published (the next ONS release is 18 November 2026).</p>
+<div class="table-wrap"><table><thead><tr><th>Publisher</th><th>Series</th><th>Month</th><th class="num">Value</th><th>Unit</th><th>Published</th><th>Link</th></tr></thead><tbody>
+<tr><td>Office for National Statistics</td><td>CPI annual rate, 01 Food and non-alcoholic beverages (series D7G8)</td><td>September 2026</td><td class="num">+1.3</td><td>% (change on the same month a year earlier)</td><td>21 October 2026</td><td><a href="https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7g8/mm23">source</a></td></tr>
+<tr><td>Office for National Statistics</td><td>CPI monthly rate, 01 Food and non-alcoholic beverages (series D7JH)</td><td>September 2026</td><td class="num">-0.2</td><td>% (change on the month before)</td><td>21 October 2026</td><td><a href="https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7jh/mm23">source</a></td></tr>
+<tr><td>Australian Bureau of Statistics</td><td>CPI, Food and non-alcoholic beverages, 12 months to September 2026 (weighted average of eight capital cities, original)</td><td>September 2026</td><td class="num">+3.2</td><td>% (change on the same month a year earlier)</td><td>28 October 2026</td><td><a href="https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/sep-2026">source</a></td></tr>
+<tr><td>Australian Bureau of Statistics</td><td>CPI, Food and non-alcoholic beverages, August to September 2026 (weighted average of eight capital cities, original)</td><td>September 2026</td><td class="num">0.0</td><td>% (change on the month before)</td><td>28 October 2026</td><td><a href="https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/sep-2026">source</a></td></tr>
+</tbody></table></div>
+
+<h2 id="differ">Why they are not comparable</h2>
+<ul>
+  <li><strong>Different periods.</strong> The latest CPI figures are for September 2026. Of our UK index, only week 39 of the closed series (data from 27 September 2026) falls in September; the later weeks are in October and November, and the current series starts at week 42 (base 100). The AU index starts in October 2026 (week 41, base 100). A CPI annual rate compares a month with the same month a year earlier; our indices have no year-on-year figure until a year exists.</li>
+  <li><strong>Different things measured.</strong> Our indices follow the posted online shelf prices of the same products at Tesco, Sainsbury&rsquo;s, Asda and Aldi (UK) and Coles, Woolworths and Aldi Australia (AU): shelf price only, with loyalty-card prices and multibuy promotions left out, no quantities and no transactions. The CPI is a measure of consumer price inflation built by each statistics office from its own sources and weights (<a href="/shelf-price-index/#method">how our index is built</a>).</li>
+  <li><strong>Different weighting.</strong> Our indices give equal weight to each product within a retailer-category cell and to each retailer, with no spending weights.</li>
+  <li><strong>Different scope.</strong> Our UK headline covers all categories at four retailers; the food and soft drinks subtotal is the nearest to the CPI food group, but it is not defined the same way. Our AU headline covers the categories in its like-for-like set, not food alone, and Coles is a partial slice of its range.</li>
+</ul>
+<p>Our indices are shelf prices only, not CPI and not a measure of prices paid; they are released under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. ONS figures: contains public sector information licensed under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>. ABS figures: source, Australian Bureau of Statistics, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Not affiliated with the Office for National Statistics or the Australian Bureau of Statistics.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a><p>Price data kept as first published.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a><a href="/actors/">Our Actors</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a><a href="https://www.youtube.com/@yappmandata" rel="noopener">YouTube</a><a href="https://bsky.app/profile/yappmandata.bsky.social" rel="noopener">Bluesky</a></div>
+  </div>
+  <div class="foot-legal">
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>
