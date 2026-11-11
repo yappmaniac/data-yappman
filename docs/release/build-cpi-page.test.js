@@ -38,6 +38,7 @@ test("our figures come from the index files and the official figures from the re
 test("the page draws no conclusion and makes no accuracy or tracking claim", () => {
   const p = build(site()).get(OUT);
   assert.match(p, /draws no conclusion/); assert.match(p, /not comparable/); assert.match(p, /only week 39 of the closed series/);
+  assert.match(p, /The ABS figures shown are the original series, not seasonally adjusted\./);
   assert.match(p, /Open Government Licence v3\.0/); assert.match(p, /Australian Bureau of Statistics, <a href="https:\/\/creativecommons\.org\/licenses\/by\/4\.0\/">CC BY 4\.0/);
   assert.doesNotMatch(p, /\b(accurate|accuracy|tracks|predict|leading indicator|ahead of|confirms|matches CPI|nowcast|official)\b/i);
 });

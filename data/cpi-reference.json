@@ -45,7 +45,7 @@
     {
       "market": "au",
       "publisher": "Australian Bureau of Statistics",
-      "name": "CPI, Food and non-alcoholic beverages, August to September 2026 (weighted average of eight capital cities, original)",
+      "name": "CPI, Food and non-alcoholic beverages, August to September 2026 (weighted average of eight capital cities, original, not seasonally adjusted)",
       "seriesId": null,
       "period": "September 2026",
       "value": 0.0,

@@ -80,6 +80,7 @@ function body(d) {
 ${cpiRows("uk")}
 ${cpiRows("au")}
 </tbody></table></div>
+<p>The ABS figures shown are the original series, not seasonally adjusted. A one-month change in an original series includes the usual seasonal movement for that month.</p>
 
 <h2 id="differ">Why they are not comparable</h2>
 <ul>
