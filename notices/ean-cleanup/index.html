@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Notice: ean clean-up — UK Supermarket Price Scraper</title>
-<meta name="description" content="Announced 28 October 2026; ships no earlier than 12 November 2026. The UK Supermarket Price Scraper's ean field stops carrying retailer-internal numbers. Manufacturer barcodes are unaffected.">
+<title>Notice: ean clean-up — UK Supermarket &amp; Grocery Prices</title>
+<meta name="description" content="Announced 28 October 2026; ships no earlier than 12 November 2026. The ean field of the UK Supermarket &amp; Grocery Prices Actor stops carrying retailer-internal numbers. Manufacturer barcodes are unaffected.">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/site.css">
@@ -12,8 +12,8 @@
 <link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Yappman Data">
-<meta property="og:title" content="Notice: ean clean-up — UK Supermarket Price Scraper">
-<meta property="og:description" content="Announced 28 October 2026; ships no earlier than 12 November 2026. The UK Supermarket Price Scraper's ean field stops carrying retailer-internal numbers. Manufacturer barcodes are unaffected.">
+<meta property="og:title" content="Notice: ean clean-up — UK Supermarket &amp; Grocery Prices">
+<meta property="og:description" content="Announced 28 October 2026; ships no earlier than 12 November 2026. The ean field of the UK Supermarket &amp; Grocery Prices Actor stops carrying retailer-internal numbers. Manufacturer barcodes are unaffected.">
 <meta property="og:url" content="https://data.yappman.com/notices/ean-cleanup/">
 <meta property="og:image" content="https://data.yappman.com/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -39,10 +39,10 @@
 <main id="main" tabindex="-1">
 <header>
   <h1>Notice: ean clean-up</h1>
-  <p class="sub">UK Supermarket Price Scraper on the Apify Store. Posted 28 October 2026. Ships no earlier than <strong>12 November 2026</strong>.</p>
+  <p class="sub">UK Supermarket &amp; Grocery Prices on the Apify Store. Posted 28 October 2026. Ships no earlier than <strong>12 November 2026</strong>.</p>
 </header>
 
-<p>Announced change to the <code>ean</code> field (UK Supermarket Price Scraper), 28 October 2026. Ships no earlier than 12 November 2026. From that release, <code>ean</code> stops carrying retailer-internal numbers: a retailer&rsquo;s own product id padded to 13 digits; codes with six or more leading zeros; in-store and coupon codes (13-digit codes starting 2, codes starting 02, 04 or 05, and codes from 980 to 999); and 8-digit in-store codes starting 2. Manufacturer barcodes are unaffected.</p>
+<p>Announced change to the <code>ean</code> field (UK Supermarket &amp; Grocery Prices), 28 October 2026. Ships no earlier than 12 November 2026. From that release, <code>ean</code> stops carrying retailer-internal numbers: a retailer&rsquo;s own product id padded to 13 digits; codes with six or more leading zeros; in-store and coupon codes (13-digit codes starting 2, codes starting 02, 04 or 05, and codes from 980 to 999); and 8-digit in-store codes starting 2. Manufacturer barcodes are unaffected.</p>
 <p>More rows will have an empty <code>ean</code>. In the 4 October 2026 snapshots the share of rows with an empty <code>ean</code> goes from 0.9% to 3.4% at Tesco, from 0.0% to 15.9% at Sainsbury&rsquo;s and from 1.1% to 3.2% at Asda. Aldi and Morrisons rows already carry none. Where <code>ean</code> is empty, join on <code>matchKey</code>.</p>
 <p>The basket endpoint matches <code>ean</code> lines against the cleaned list. A line that uses a removed number becomes unmatched, and unmatched lines are never charged.</p>
 <p>No input, default, price or event changes. The weekly shelf-price index does not read <code>ean</code>, so index values do not change.</p>

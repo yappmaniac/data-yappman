@@ -65,8 +65,8 @@ UTM = 'utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=this
 # The pointer sentences, word for word as they stand on the source pages (a test compares each with its page).
 POINTERS = (
     ('christmas-basket/index.html',
-     'Product-level shelf prices for these retailers can be read on demand with the '
-     '<a href="https://apify.com/yappman/uk-supermarket-price-scraper?' + UTM + '">UK Supermarket Price Scraper</a>, '
+     'Product-level shelf prices for these retailers can be read on demand with '
+     '<a href="https://apify.com/yappman/uk-supermarket-price-scraper?' + UTM + '">UK Supermarket &amp; Grocery Prices</a>, '
      'a pay-per-event Actor on the Apify Store.'),
     ('sold-prices/index.html',
      'For current asking prices in a district, and a free rental yield summary by outcode, use the '

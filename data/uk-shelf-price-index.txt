@@ -10,4 +10,4 @@ Licence: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
 
 Cite: Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage [week], https://data.yappman.com/shelf-price-index/.
 
-Product-level shelf prices from Tesco, Sainsbury's, Asda and Aldi can be read on demand with the UK Supermarket Price Scraper, a pay-per-event Actor on the Apify Store: https://apify.com/yappman/uk-supermarket-price-scraper
+Product-level shelf prices from Tesco, Sainsbury's, Asda and Aldi can be read on demand with UK Supermarket & Grocery Prices, a pay-per-event Actor on the Apify Store: https://apify.com/yappman/uk-supermarket-price-scraper
