@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free index files: stable addresses and recipes — Yappman Data</title>
+<meta name="description" content="The UK and AU shelf-price index files at stable v1 addresses as CSV and JSON, with the columns, a changelog, a manifest and copy-and-paste recipes for Python, R, Excel and Google Sheets.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="Free index files: stable addresses and recipes — Yappman Data">
+<meta property="og:description" content="The UK and AU shelf-price index files at stable v1 addresses as CSV and JSON, with the columns, a changelog, a manifest and copy-and-paste recipes for Python, R, Excel and Google Sheets.">
+<meta property="og:url" content="https://data.yappman.com/data/v1/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://data.yappman.com/data/v1/">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main" class="mainnav">
+  <a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <ul class="nav-list" id="site-menu">
+    <li class="nav-group mega"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-data" aria-haspopup="true">Data<span class="caret" aria-hidden="true"></span></button><div class="panel panel-mega" id="panel-data"><div class="panel-cols"><div class="panel-col"><h3 class="panel-h">Price data</h3><ul><li><a class="mi" href="https://apify.com/yappman/uk-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK supermarket prices</span><span class="badge live">Latest</span></span><span class="mi-desc">Weekly catalogue and a daily 212-item basket.</span></a></li><li><a class="mi" href="https://apify.com/yappman/au-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">AU supermarket prices</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Aldi Australia shelf prices by keyword, category or product page.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-property-listings" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK property listings</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Rightmove and OnTheMarket listings, plus Rightmove sold prices.</span></a></li><li><a class="mi" href="https://apify.com/yappman/google-hotels-prices" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Google Hotels rates</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Google Hotels results and per-booking-site rates, by city or hotel.</span></a></li></ul></div><div class="panel-col"><h3 class="panel-h">Open data</h3><ul><li><a class="mi" href="https://apify.com/yappman/contracts-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Public contracts</span><span class="badge live">Latest</span></span><span class="mi-desc">Search UK public procurement notices. $0.005 a notice ($5.00 per 1,000) plus $0.005 a run.</span></a></li><li><a class="mi" href="https://apify.com/yappman/lei-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">LEI lookup</span><span class="badge live">Latest</span></span><span class="mi-desc">Legal Entity Identifier records by LEI, name or registration status. $0.002 an entity ($2.00 per 1,000), no start fee.</span></a></li><li><a class="mi" href="https://apify.com/yappman/cricos-register" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">CRICOS register lookup (Australia)</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Australian education providers registered to enrol overseas students: one row each with type, state, postcode, city, capacity and course counts. $0.002 a row ($2.00 per 1,000), no start fee. Not affiliated with the Department of Education.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-importers-exporters" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK importers and exporters</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">HMRC trade lists by month, under the Open Government Licence. $0.005 a run plus $0.002 a trader row. Not affiliated with HMRC.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-sponsor-register-changes" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK sponsor register changes</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Dated changes to the UK register of licensed sponsors, one row per change. $0.005 a change row ($5.00 per 1,000), no start fee. Not affiliated with the Home Office or UK Visas and Immigration.</span></a></li><li><a class="mi" href="https://apify.com/yappman/cqc-register" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">CQC England care locations</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Search and look up care locations in the CQC directory for England, and list what changed between its files. $0.005 a run plus $0.004 a location or $0.003 a change. Not affiliated with the Care Quality Commission.</span></a></li></ul></div></div><div class="panel-foot"><a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener">Free basket snapshot, monthly (Kaggle)</a><a href="/methodology/#delivery">Delivery &amp; formats</a></div></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-indices" aria-haspopup="true">Indices<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-indices"><ul><li><a class="mi" href="/shelf-price-index/"><span class="mi-top"><span class="mi-name">UK Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/au-shelf-price-index/"><span class="mi-top"><span class="mi-name">AU Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/methodology/#indices"><span class="mi-top"><span class="mi-name">How the indices are built</span></span></a></li></ul></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-trust" aria-haspopup="true">Trust<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-trust"><ul><li><a class="mi" href="/data-quality/"><span class="mi-top"><span class="mi-name">Data quality</span></span></a></li><li><a class="mi" href="/methodology/"><span class="mi-top"><span class="mi-name">Methodology</span></span></a></li><li><a class="mi" href="/notices/"><span class="mi-top"><span class="mi-name">Notices (change log)</span></span></a></li><li><a class="mi" href="/press/#licence"><span class="mi-top"><span class="mi-name">Licence &amp; reuse</span></span></a></li><li><a class="mi" href="/#trust"><span class="mi-top"><span class="mi-name">Check schedule</span></span></a></li></ul></div></li>
+    <li class="nav-plain"><a href="/#pricing">Pricing</a></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-resources" aria-haspopup="true">Resources<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-resources"><ul><li><a class="mi" href="/demos/"><span class="mi-top"><span class="mi-name">Demos</span></span></a></li><li><a class="mi" href="https://github.com/yappmaniac/yappman-examples" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Examples (GitHub)</span></span></a></li><li><a class="mi" href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Kaggle dataset</span></span></a></li><li><a class="mi" href="/sold-prices/"><span class="mi-top"><span class="mi-name">Median sold prices by postcode district</span></span></a></li><li><a class="mi" href="/rental-yield/"><span class="mi-top"><span class="mi-name">Gross rental yield by local authority</span></span></a></li><li><a class="mi" href="https://yappman.substack.com/" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Newsletter (Substack)</span></span></a></li><li><a class="mi" href="https://dev.to/yappman" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Articles (dev.to)</span></span></a></li><li><a class="mi" href="/press/"><span class="mi-top"><span class="mi-name">Press</span></span></a></li></ul></div></li>
+    <li class="nav-cta"><a class="btn btn-primary" href="/#contact">Request a sample</a></li>
+  </ul>
+</nav>
+</div></div>
+<main id="main" tabindex="-1">
+<header>
+  <h1>Free index files: stable addresses</h1>
+  <p class="sub">The UK and AU Online Shelf-Price Index as CSV and JSON at addresses that keep their meaning. Weekly series, not real time. Licensed CC BY 4.0.</p>
+</header>
+
+<h2 id="files">The files</h2>
+<div class="table-wrap"><table><thead><tr><th>Index</th><th>CSV</th><th>JSON</th><th>Page</th></tr></thead><tbody>
+<tr><td>UK Online Shelf-Price Index</td><td><a href="/data/v1/uk-shelf-price-index.csv">uk-shelf-price-index.csv</a></td><td><a href="/data/v1/uk-shelf-price-index.json">uk-shelf-price-index.json</a></td><td><a href="/shelf-price-index/">index</a>, <a href="/shelf-price-index/data-dictionary/">data dictionary</a></td></tr>
+<tr><td>AU Online Shelf-Price Index</td><td><a href="/data/v1/au-shelf-price-index.csv">au-shelf-price-index.csv</a></td><td><a href="/data/v1/au-shelf-price-index.json">au-shelf-price-index.json</a></td><td><a href="/au-shelf-price-index/">index</a>, <a href="/au-shelf-price-index/data-dictionary/">data dictionary</a></td></tr>
+</tbody></table></div>
+<p><a href="/data/v1/manifest.json">manifest.json</a> lists, for each index, the latest week and the day it was published, the number of rows, and the size and SHA-256 of each file, so you can check a download. Each week&rsquo;s figures are added to the files when they are published; published values are not revised except to correct an error, and a correction is a new, marked revision. Browsers and proxies may keep a copy of a file for a few minutes.</p>
+
+<h2 id="shape">What is in a file</h2>
+<p>Long format: one row per week, record type, retailer and class. The JSON holds the same figures as the public dataset, with the meta item first for each week. The CSV holds the rows without the meta items and one extra last column, <code>base</code>: the base week of that week&rsquo;s series. For the AU CSV, empty means no value and numbers are written as in the JSON. What each column and record type means is in the data dictionaries linked above.</p>
+<div class="table-wrap"><table><thead><tr><th>Column</th><th>UK CSV</th><th>AU CSV</th></tr></thead><tbody>
+<tr><td><code>vintage</code>, <code>publishedAt</code>, <code>revision</code>, <code>recordType</code>, <code>retailer</code>, <code>class</code></td><td>yes</td><td>yes</td></tr>
+<tr><td><code>level</code>, <code>weekOnWeekPct</code>, <code>fourWeekPct</code>, <code>matched</code>, <code>matchedShare</code>, <code>status</code></td><td>yes</td><td>yes</td></tr>
+<tr><td><code>entered</code>, <code>left</code>, <code>relinked</code>, <code>missingPackSize</code></td><td>yes (empty before 2026-W44)</td><td>no</td></tr>
+<tr><td><code>base</code></td><td>yes, last</td><td>yes, last</td></tr>
+</tbody></table></div>
+
+<h2 id="versioning">Versioning</h2>
+<p>Within <code>v1</code> a column keeps its meaning and its place; new columns are added at the end. A change that would break a reader is announced on the <a href="/notices/">notices page</a> before it ships, and a new path will normally be used for it. The older addresses under <code>/data/</code> hold the same files and are intended to keep working; if one is ever withdrawn, that is announced on the notices page first.</p>
+
+<h2 id="changelog">Changelog</h2>
+<p>The changes below are from the method pages, which give the full text: <a href="/shelf-price-index/method/#changelog">UK</a> and <a href="/au-shelf-price-index/method/#changelog">AU</a>.</p>
+<ul>
+  <li><strong>UK, 5 October 2026:</strong> first week published, 2026-W40, with the 2026-W39 base rows.</li>
+  <li><strong>UK, after 2026-W40:</strong> the combined &ldquo;food and soft drinks&rdquo; figure is published as a subtotal (record types <code>subtotal</code> and <code>retailer_subtotal</code>); weeks 39 and 40 stay as published.</li>
+  <li><strong>UK, 12 October 2026:</strong> week 41 skipped; the index restarted with a new base at 2026-W42 (<a href="/notices/w41-skipped/">notice</a>).</li>
+  <li><strong>UK, 26 October 2026:</strong> the new series published (2026-W42 base rows and the 2026-W43 figures); from this week a pack size missing in one of the two weeks is treated as unknown and the shelf price is compared.</li>
+  <li><strong>UK, from 2026-W44:</strong> a product relaunched under a new identifier with the same barcode is matched within its retailer, and the columns <code>entered</code>, <code>left</code>, <code>relinked</code> and <code>missingPackSize</code> are filled for headline and retailer rows; the published 2026-W43 figures are unchanged.</li>
+  <li><strong>AU, 15 October 2026:</strong> first weeks published, the 2026-W41 base and 2026-W42.</li>
+</ul>
+
+<h2 id="recipes">Copy-and-paste recipes</h2>
+<p>Each reads the UK CSV; change the address for the AU file. They keep the headline rows, one per week. The UK index has two series, with base 2026-W39 (weeks 39 and 40) and base 2026-W42 (from week 42), which are not joined: keep the <code>base</code> column with the level, and do not chart levels from different bases as one line.</p>
+<h3>Python</h3>
+<pre><code>import pandas as pd
+df = pd.read_csv("https://data.yappman.com/data/v1/uk-shelf-price-index.csv")
+headline = df[df["recordType"] == "headline"]
+print(headline[["vintage", "base", "level", "weekOnWeekPct"]])</code></pre>
+<h3>R</h3>
+<pre><code>df &lt;- read.csv("https://data.yappman.com/data/v1/uk-shelf-price-index.csv")
+headline &lt;- subset(df, recordType == "headline")
+head(headline[, c("vintage", "base", "level", "weekOnWeekPct")])</code></pre>
+<h3>Excel (Power Query)</h3>
+<p>Data &gt; Get Data &gt; From Other Sources &gt; Blank Query &gt; Advanced Editor, then paste:</p>
+<pre><code>let
+    Source = Csv.Document(Web.Contents("https://data.yappman.com/data/v1/uk-shelf-price-index.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true])
+in
+    Promoted</code></pre>
+<h3>Google Sheets</h3>
+<pre><code>=IMPORTDATA("https://data.yappman.com/data/v1/uk-shelf-price-index.csv")</code></pre>
+<p>Google Sheets limits how much IMPORTDATA can load and how often it refreshes.</p>
+
+<h2 id="licence">Licence and citation</h2>
+<p>The files are released under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Cite as &ldquo;Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, vintage [week], https://data.yappman.com/shelf-price-index/&rdquo; (AU: &ldquo;Yappman Data, AU Online Shelf-Price Index, CC BY 4.0, vintage [week], https://data.yappman.com/au-shelf-price-index/&rdquo;). Shelf prices only; not CPI and not a measure of prices paid. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a><p>Price data kept as first published.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a><a href="/actors/">Our Actors</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a><a href="https://www.youtube.com/@yappmandata" rel="noopener">YouTube</a><a href="https://bsky.app/profile/yappmandata.bsky.social" rel="noopener">Bluesky</a></div>
+  </div>
+  <div class="foot-legal">
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "version": "v1",
+  "note": "Free index files, CC BY 4.0. Rows keep their meaning and column order within v1; new columns are added at the end. A change that would break a reader is announced on https://data.yappman.com/notices/ before it ships and will normally use a new path. Weekly series, not real time.",
+  "datasets": [
+    {
+      "id": "uk-shelf-price-index",
+      "latestVintage": "2026-W45",
+      "publishedAt": "2026-11-09",
+      "vintages": 6,
+      "rows": 540,
+      "files": [
+        {
+          "path": "/data/v1/uk-shelf-price-index.csv",
+          "bytes": 52807,
+          "sha256": "8c477e0e4828aff8fee134684b6b51920ae2978c7063b2126b5934e0a76f995b"
+        },
+        {
+          "path": "/data/v1/uk-shelf-price-index.json",
+          "bytes": 149162,
+          "sha256": "2511a85c113b625cc3ef48c0f5a5fb6d0e7206f9ce7d71fac7ea2b49e5231e62"
+        }
+      ],
+      "page": "https://data.yappman.com/shelf-price-index/"
+    },
+    {
+      "id": "au-shelf-price-index",
+      "latestVintage": "2026-W45",
+      "publishedAt": "2026-11-09",
+      "vintages": 5,
+      "rows": 375,
+      "files": [
+        {
+          "path": "/data/v1/au-shelf-price-index.csv",
+          "bytes": 36266,
+          "sha256": "476ef15dfc5a981bfdbba30b2410ac58aa848089fa04a58b7965de3158be80ed"
+        },
+        {
+          "path": "/data/v1/au-shelf-price-index.json",
+          "bytes": 98975,
+          "sha256": "34a4b021e8cb7a6b0a7fd36dacd42c5b69b9af9865af75602f1e2d0b7696532a"
+        }
+      ],
+      "page": "https://data.yappman.com/au-shelf-price-index/"
+    }
+  ]
+}
