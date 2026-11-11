@@ -9,4 +9,4 @@ Done by the Data Website session in the same push as the weekly figures, after t
 - [ ] `docs/release/build-index-files.js --check` clean. The index pages, the home page and `/press/` read these files and never call the dataset, so a week that is stamped but not added here would leave the page showing the week before; `--check` fails on that. The data files go in the SAME commit as the stamp.
 - [ ] `docs/release/set-lastmod.js` run for the pages that changed (sitemap `lastmod`).
 - [ ] Wording lint: 0 errors.
-- [ ] After the push: IndexNow run succeeded; the live pages carry the new dates.
+- [ ] After the push: IndexNow run succeeded and its log lists every HTML page the push changed (`git diff --name-only <last pinged commit> HEAD -- '*.html'`; docs/release/indexnow-base.js picks the base); the live pages carry the new dates. A manual run takes `base` = the commit to compare with.

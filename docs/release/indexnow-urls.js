@@ -7,7 +7,7 @@ function urlFor(f) {
   if (/^(_held|docs|assets|\.github)\//.test(f) || f === "404.html" || /^google[0-9a-f]+\.html$/.test(f)) return null;
   if (f === "index.html") return HOST + "/";
   const m = /^(.*)\/index\.html$/.exec(f);
-  return m ? HOST + "/" + m[1] + "/" : null;
+  return m ? HOST + "/" + encodeURI(m[1]) + "/" : null; // a name with a space or a non-ASCII letter is sent as a valid URL
 }
 if (require.main === module) {
   const urls = [...new Set(process.argv.slice(2).map(urlFor).filter(Boolean))].sort();

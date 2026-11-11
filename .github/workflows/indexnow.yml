@@ -1,4 +1,5 @@
-# Pings IndexNow with the pages that changed in the latest deployed commit. DRAFT: does nothing until the repository
+# Pings IndexNow with the pages that changed since the last commit this workflow pinged (docs/release/indexnow-base.js), so a push of
+# several commits, or one that follows a missed run, pings every page it changed. DRAFT: does nothing until the repository
 # variable INDEXNOW_ENABLED is set to "true" (Settings > Secrets and variables > Actions > Variables).
 # The IndexNow key is public by design: it is the name of the .txt file at the site root.
 name: indexnow
@@ -9,31 +10,42 @@ on:
   workflow_dispatch:
     inputs:
       base:
-        description: "Git ref to compare with HEAD (default: the commit before HEAD)"
+        description: "Commit id to compare with HEAD (default: the last commit a successful run of this workflow pinged). Run from main."
         required: false
 permissions:
   contents: read
+  actions: read # lists this workflow's own earlier runs (read only)
 concurrency:
   group: indexnow
   cancel-in-progress: false
 jobs:
   ping:
-    if: ${{ vars.INDEXNOW_ENABLED == 'true' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success') }}
+    if: ${{ vars.INDEXNOW_ENABLED == 'true' && ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || github.event.workflow_run.conclusion == 'success') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ github.sha }}
       - name: Work out the changed pages
         id: pages
         env:
           BASE_INPUT: ${{ github.event.inputs.base }}
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
         run: |
-          BASE="$BASE_INPUT"
-          [ -n "$BASE" ] || BASE="HEAD~1"
-          git diff --name-only "$BASE" HEAD -- '*.html' > changed.txt
-          node docs/release/indexnow-urls.js $(cat changed.txt) > urls.txt
+          # The commit the Pages deployment reports can be the one before the push, so it is not used. The base is the head commit of this
+          # workflow's own newest earlier successful run that is still in the history (see docs/release/indexnow-base.js).
+          PREV=""
+          if [ -z "$BASE_INPUT" ]; then
+            # (a skipped run has conclusion "skipped", not "success", so it is not listed; the jq filter says so again)
+            RUNS=$(gh api "repos/$REPO/actions/workflows/indexnow.yml/runs?status=success&per_page=20" --jq '.workflow_runs[] | select(.conclusion == "success") | .head_sha') || { echo "::warning::could not list earlier runs; using the commit before HEAD"; RUNS=""; }
+            PREV=$(echo "$RUNS" | tr '\n' ' ')
+          fi
+          BASE=$(node docs/release/indexnow-base.js --head "$(git rev-parse HEAD)" ${BASE_INPUT:+--input "$BASE_INPUT"} --previous "$PREV")
+          echo "comparing $BASE with $(git rev-parse HEAD)"
+          # -z and xargs -0 keep a file name with a space or a glob character as one argument
+          git diff --name-only -z "$BASE" HEAD -- '*.html' | xargs -0 -r node docs/release/indexnow-urls.js > urls.txt
           echo "count=$(grep -c . urls.txt || true)" >> "$GITHUB_OUTPUT"
           cat urls.txt
       - name: Ping IndexNow
