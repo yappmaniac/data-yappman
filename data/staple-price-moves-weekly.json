@@ -1,0 +1,618 @@
+{
+  "schema": 1,
+  "note": "Posted online shelf prices, not prices paid, of the products in each staple, pooled over Tesco, Sainsbury's, Asda and Aldi from the public UK daily basket. Counts of products whose posted shelf price rose, fell or stayed the same on the week before. Pooled figures only: no retailer, product or link is given. Not CPI and not a price comparison; weeks with too few products are left out. If the basket was read more than once on a day, the latest read counts. Credit: Yappman Data, UK Supermarket Prices: Daily 212-Item Basket, CC BY 4.0. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.",
+  "notCpi": true,
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "definition": {
+    "source": "UK daily 212-item basket (public dataset), CC BY 4.0",
+    "staplesFile": "uk-staples.json version 2026-09, built 2026-09-24",
+    "firstDay": "2026-09-24",
+    "lastDay": "2026-10-26",
+    "weekRule": "A product counts in an ISO week if seen on at least 5 days of it; its value is the low median of its daily values. A week needs at least 5 counted products.",
+    "minProducts": 5,
+    "minDays": 5,
+    "unitRule": "Unit price as posted; 100g and 100ml converted to kg and l; each staple uses its most common unit; other products left out."
+  },
+  "staples": [
+    {
+      "id": "milk",
+      "name": "Milk",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        }
+      ]
+    },
+    {
+      "id": "bread",
+      "name": "Bread",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 11
+        }
+      ]
+    },
+    {
+      "id": "eggs",
+      "name": "Eggs",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 11
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 11
+        }
+      ]
+    },
+    {
+      "id": "butter",
+      "name": "Butter",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        }
+      ]
+    },
+    {
+      "id": "cheddar",
+      "name": "Cheddar",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 11,
+          "rose": 0,
+          "fell": 1,
+          "unchanged": 10
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 4,
+          "fell": 0,
+          "unchanged": 8
+        }
+      ]
+    },
+    {
+      "id": "chicken-breast",
+      "name": "Chicken breast",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 11
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 11
+        }
+      ]
+    },
+    {
+      "id": "bananas",
+      "name": "Bananas",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 10,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 10
+        },
+        {
+          "week": "2026-W42",
+          "matched": 10,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 10
+        },
+        {
+          "week": "2026-W43",
+          "matched": 10,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 10
+        }
+      ]
+    },
+    {
+      "id": "apples",
+      "name": "Apples",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 2,
+          "fell": 1,
+          "unchanged": 9
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        }
+      ]
+    },
+    {
+      "id": "potatoes",
+      "name": "Potatoes",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 8,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 8
+        },
+        {
+          "week": "2026-W42",
+          "matched": 8,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 8
+        },
+        {
+          "week": "2026-W43",
+          "matched": 8,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 7
+        }
+      ]
+    },
+    {
+      "id": "onions",
+      "name": "Onions",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 2,
+          "fell": 0,
+          "unchanged": 10
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 0,
+          "fell": 1,
+          "unchanged": 11
+        }
+      ]
+    },
+    {
+      "id": "tomatoes",
+      "name": "Tomatoes",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 2,
+          "fell": 0,
+          "unchanged": 10
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 3,
+          "fell": 0,
+          "unchanged": 9
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 11
+        }
+      ]
+    },
+    {
+      "id": "pasta",
+      "name": "Pasta",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        }
+      ]
+    },
+    {
+      "id": "rice",
+      "name": "Rice",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 5,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 5
+        },
+        {
+          "week": "2026-W42",
+          "matched": 5,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 5
+        },
+        {
+          "week": "2026-W43",
+          "matched": 5,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 5
+        }
+      ]
+    },
+    {
+      "id": "baked-beans",
+      "name": "Baked beans",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 10,
+          "rose": 0,
+          "fell": 3,
+          "unchanged": 7
+        },
+        {
+          "week": "2026-W42",
+          "matched": 10,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 10
+        },
+        {
+          "week": "2026-W43",
+          "matched": 10,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 10
+        }
+      ]
+    },
+    {
+      "id": "cereal",
+      "name": "Cereal",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 7,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 7
+        },
+        {
+          "week": "2026-W42",
+          "matched": 7,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 6
+        },
+        {
+          "week": "2026-W43",
+          "matched": 7,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 7
+        }
+      ]
+    },
+    {
+      "id": "coffee",
+      "name": "Coffee",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 10,
+          "rose": 0,
+          "fell": 1,
+          "unchanged": 9
+        },
+        {
+          "week": "2026-W42",
+          "matched": 10,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 9
+        },
+        {
+          "week": "2026-W43",
+          "matched": 10,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 10
+        }
+      ]
+    },
+    {
+      "id": "tea-bags",
+      "name": "Tea bags",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 11,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 11
+        },
+        {
+          "week": "2026-W42",
+          "matched": 11,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 10
+        },
+        {
+          "week": "2026-W43",
+          "matched": 11,
+          "rose": 1,
+          "fell": 0,
+          "unchanged": 10
+        }
+      ]
+    },
+    {
+      "id": "sugar",
+      "name": "Sugar",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 8,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 8
+        },
+        {
+          "week": "2026-W42",
+          "matched": 8,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 8
+        },
+        {
+          "week": "2026-W43",
+          "matched": 8,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 8
+        }
+      ]
+    },
+    {
+      "id": "orange-juice",
+      "name": "Orange juice",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W42",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        },
+        {
+          "week": "2026-W43",
+          "matched": 12,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 12
+        }
+      ]
+    },
+    {
+      "id": "olive-oil",
+      "name": "Olive oil",
+      "withheld": [
+        "2026-W44"
+      ],
+      "weeks": [
+        {
+          "week": "2026-W41",
+          "matched": 11,
+          "rose": 0,
+          "fell": 1,
+          "unchanged": 10
+        },
+        {
+          "week": "2026-W42",
+          "matched": 11,
+          "rose": 0,
+          "fell": 0,
+          "unchanged": 11
+        },
+        {
+          "week": "2026-W43",
+          "matched": 11,
+          "rose": 0,
+          "fell": 1,
+          "unchanged": 10
+        }
+      ]
+    }
+  ]
+}

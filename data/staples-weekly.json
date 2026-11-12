@@ -1,0 +1,681 @@
+{
+  "schema": 1,
+  "note": "Posted online shelf prices, not prices paid, of the products in each staple, pooled over Tesco, Sainsbury's, Asda and Aldi from the public UK daily basket. Unit prices as the retailers post them. Pooled figures only: no retailer, product or link is given. Not CPI and not a price comparison; weeks with too few products are left out. If the basket was read more than once on a day, the latest read counts. Credit: Yappman Data, UK Supermarket Prices: Daily 212-Item Basket, CC BY 4.0. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.",
+  "notCpi": true,
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "definition": {
+    "source": "UK daily 212-item basket (public dataset), CC BY 4.0",
+    "staplesFile": "uk-staples.json version 2026-09, built 2026-09-24",
+    "firstDay": "2026-09-24",
+    "lastDay": "2026-10-26",
+    "weekRule": "A product counts in an ISO week if seen on at least 5 days of it; its value is the low median of its daily values. A week needs at least 5 counted products.",
+    "minProducts": 5,
+    "minDays": 5,
+    "unitRule": "Unit price as posted; 100g and 100ml converted to kg and l; each staple uses its most common unit; other products left out."
+  },
+  "staples": [
+    {
+      "id": "milk",
+      "name": "Milk",
+      "basis": "GBP per litre",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 1,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 12,
+          "medianUnitPrice": 1.01
+        },
+        {
+          "week": "2026-W41",
+          "n": 12,
+          "medianUnitPrice": 1.01
+        },
+        {
+          "week": "2026-W42",
+          "n": 12,
+          "medianUnitPrice": 1.01
+        },
+        {
+          "week": "2026-W43",
+          "n": 11,
+          "medianUnitPrice": 1.06
+        }
+      ]
+    },
+    {
+      "id": "bread",
+      "name": "Bread",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 1,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 12,
+          "medianUnitPrice": 1.95
+        },
+        {
+          "week": "2026-W41",
+          "n": 12,
+          "medianUnitPrice": 1.95
+        },
+        {
+          "week": "2026-W42",
+          "n": 11,
+          "medianUnitPrice": 2.0
+        },
+        {
+          "week": "2026-W43",
+          "n": 12,
+          "medianUnitPrice": 2.25
+        }
+      ]
+    },
+    {
+      "id": "eggs",
+      "name": "Eggs",
+      "basis": "GBP per item",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 1,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 11,
+          "medianUnitPrice": 0.28
+        },
+        {
+          "week": "2026-W41",
+          "n": 11,
+          "medianUnitPrice": 0.28
+        },
+        {
+          "week": "2026-W42",
+          "n": 11,
+          "medianUnitPrice": 0.28
+        },
+        {
+          "week": "2026-W43",
+          "n": 11,
+          "medianUnitPrice": 0.28
+        }
+      ]
+    },
+    {
+      "id": "butter",
+      "name": "Butter",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 12,
+          "medianUnitPrice": 7.4
+        },
+        {
+          "week": "2026-W41",
+          "n": 12,
+          "medianUnitPrice": 7.4
+        },
+        {
+          "week": "2026-W42",
+          "n": 12,
+          "medianUnitPrice": 7.4
+        },
+        {
+          "week": "2026-W43",
+          "n": 12,
+          "medianUnitPrice": 7.4
+        }
+      ]
+    },
+    {
+      "id": "cheddar",
+      "name": "Cheddar",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 11,
+          "medianUnitPrice": 7.38
+        },
+        {
+          "week": "2026-W41",
+          "n": 12,
+          "medianUnitPrice": 7.38
+        },
+        {
+          "week": "2026-W42",
+          "n": 12,
+          "medianUnitPrice": 7.38
+        },
+        {
+          "week": "2026-W43",
+          "n": 12,
+          "medianUnitPrice": 8.0
+        }
+      ]
+    },
+    {
+      "id": "chicken-breast",
+      "name": "Chicken breast",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 12,
+          "medianUnitPrice": 7.21
+        },
+        {
+          "week": "2026-W41",
+          "n": 12,
+          "medianUnitPrice": 7.21
+        },
+        {
+          "week": "2026-W42",
+          "n": 12,
+          "medianUnitPrice": 7.21
+        },
+        {
+          "week": "2026-W43",
+          "n": 12,
+          "medianUnitPrice": 7.22
+        }
+      ]
+    },
+    {
+      "id": "bananas",
+      "name": "Bananas",
+      "basis": "GBP per item",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 2,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 8,
+          "medianUnitPrice": 0.16
+        },
+        {
+          "week": "2026-W41",
+          "n": 8,
+          "medianUnitPrice": 0.16
+        },
+        {
+          "week": "2026-W42",
+          "n": 8,
+          "medianUnitPrice": 0.16
+        },
+        {
+          "week": "2026-W43",
+          "n": 8,
+          "medianUnitPrice": 0.16
+        }
+      ]
+    },
+    {
+      "id": "apples",
+      "name": "Apples",
+      "basis": "GBP per item",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 12,
+          "medianUnitPrice": 0.37
+        },
+        {
+          "week": "2026-W41",
+          "n": 12,
+          "medianUnitPrice": 0.37
+        },
+        {
+          "week": "2026-W42",
+          "n": 12,
+          "medianUnitPrice": 0.43
+        },
+        {
+          "week": "2026-W43",
+          "n": 12,
+          "medianUnitPrice": 0.43
+        }
+      ]
+    },
+    {
+      "id": "potatoes",
+      "name": "Potatoes",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 8,
+          "medianUnitPrice": 0.91
+        },
+        {
+          "week": "2026-W41",
+          "n": 8,
+          "medianUnitPrice": 0.91
+        },
+        {
+          "week": "2026-W42",
+          "n": 8,
+          "medianUnitPrice": 0.91
+        },
+        {
+          "week": "2026-W43",
+          "n": 8,
+          "medianUnitPrice": 0.91
+        }
+      ]
+    },
+    {
+      "id": "onions",
+      "name": "Onions",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 7,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 7,
+          "medianUnitPrice": 0.95
+        },
+        {
+          "week": "2026-W41",
+          "n": 7,
+          "medianUnitPrice": 0.95
+        },
+        {
+          "week": "2026-W42",
+          "n": 6,
+          "medianUnitPrice": 0.95
+        },
+        {
+          "week": "2026-W43",
+          "n": 7,
+          "medianUnitPrice": 0.95
+        }
+      ]
+    },
+    {
+      "id": "tomatoes",
+      "name": "Tomatoes",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 4,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 9,
+          "medianUnitPrice": 3.33
+        },
+        {
+          "week": "2026-W41",
+          "n": 9,
+          "medianUnitPrice": 3.33
+        },
+        {
+          "week": "2026-W42",
+          "n": 9,
+          "medianUnitPrice": 3.38
+        },
+        {
+          "week": "2026-W43",
+          "n": 9,
+          "medianUnitPrice": 3.38
+        }
+      ]
+    },
+    {
+      "id": "pasta",
+      "name": "Pasta",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 1,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 12,
+          "medianUnitPrice": 1.38
+        },
+        {
+          "week": "2026-W41",
+          "n": 12,
+          "medianUnitPrice": 1.38
+        },
+        {
+          "week": "2026-W42",
+          "n": 11,
+          "medianUnitPrice": 1.38
+        },
+        {
+          "week": "2026-W43",
+          "n": 12,
+          "medianUnitPrice": 1.38
+        }
+      ]
+    },
+    {
+      "id": "rice",
+      "name": "Rice",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 5,
+          "medianUnitPrice": 1.79
+        },
+        {
+          "week": "2026-W41",
+          "n": 5,
+          "medianUnitPrice": 1.79
+        },
+        {
+          "week": "2026-W42",
+          "n": 5,
+          "medianUnitPrice": 1.79
+        },
+        {
+          "week": "2026-W43",
+          "n": 5,
+          "medianUnitPrice": 1.79
+        }
+      ]
+    },
+    {
+      "id": "baked-beans",
+      "name": "Baked beans",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 10,
+          "medianUnitPrice": 0.98
+        },
+        {
+          "week": "2026-W41",
+          "n": 10,
+          "medianUnitPrice": 0.93
+        },
+        {
+          "week": "2026-W42",
+          "n": 10,
+          "medianUnitPrice": 0.93
+        },
+        {
+          "week": "2026-W43",
+          "n": 10,
+          "medianUnitPrice": 0.93
+        }
+      ]
+    },
+    {
+      "id": "cereal",
+      "name": "Cereal",
+      "basis": "GBP per item",
+      "firstWeek": null,
+      "lastWeek": null,
+      "productsOnOtherUnit": 4,
+      "withheld": [
+        "2026-W39",
+        "2026-W40",
+        "2026-W41",
+        "2026-W42",
+        "2026-W43",
+        "2026-W44"
+      ],
+      "series": []
+    },
+    {
+      "id": "coffee",
+      "name": "Coffee",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 10,
+          "medianUnitPrice": 27.04
+        },
+        {
+          "week": "2026-W41",
+          "n": 10,
+          "medianUnitPrice": 24.95
+        },
+        {
+          "week": "2026-W42",
+          "n": 10,
+          "medianUnitPrice": 24.95
+        },
+        {
+          "week": "2026-W43",
+          "n": 10,
+          "medianUnitPrice": 24.95
+        }
+      ]
+    },
+    {
+      "id": "tea-bags",
+      "name": "Tea bags",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 2,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 11,
+          "medianUnitPrice": 9.1
+        },
+        {
+          "week": "2026-W41",
+          "n": 11,
+          "medianUnitPrice": 9.1
+        },
+        {
+          "week": "2026-W42",
+          "n": 9,
+          "medianUnitPrice": 9.13
+        },
+        {
+          "week": "2026-W43",
+          "n": 10,
+          "medianUnitPrice": 9.74
+        }
+      ]
+    },
+    {
+      "id": "sugar",
+      "name": "Sugar",
+      "basis": "GBP per kg",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 8,
+          "medianUnitPrice": 1.12
+        },
+        {
+          "week": "2026-W41",
+          "n": 8,
+          "medianUnitPrice": 1.12
+        },
+        {
+          "week": "2026-W42",
+          "n": 8,
+          "medianUnitPrice": 1.12
+        },
+        {
+          "week": "2026-W43",
+          "n": 8,
+          "medianUnitPrice": 1.12
+        }
+      ]
+    },
+    {
+      "id": "orange-juice",
+      "name": "Orange juice",
+      "basis": "GBP per litre",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 12,
+          "medianUnitPrice": 1.48
+        },
+        {
+          "week": "2026-W41",
+          "n": 12,
+          "medianUnitPrice": 1.48
+        },
+        {
+          "week": "2026-W42",
+          "n": 12,
+          "medianUnitPrice": 1.48
+        },
+        {
+          "week": "2026-W43",
+          "n": 12,
+          "medianUnitPrice": 1.48
+        }
+      ]
+    },
+    {
+      "id": "olive-oil",
+      "name": "Olive oil",
+      "basis": "GBP per litre",
+      "firstWeek": "2026-W40",
+      "lastWeek": "2026-W43",
+      "productsOnOtherUnit": 0,
+      "withheld": [
+        "2026-W39",
+        "2026-W44"
+      ],
+      "series": [
+        {
+          "week": "2026-W40",
+          "n": 11,
+          "medianUnitPrice": 7.75
+        },
+        {
+          "week": "2026-W41",
+          "n": 11,
+          "medianUnitPrice": 7.75
+        },
+        {
+          "week": "2026-W42",
+          "n": 11,
+          "medianUnitPrice": 7.75
+        },
+        {
+          "week": "2026-W43",
+          "n": 11,
+          "medianUnitPrice": 7.75
+        }
+      ]
+    }
+  ]
+}
