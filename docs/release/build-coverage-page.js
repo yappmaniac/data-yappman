@@ -20,7 +20,7 @@ const TEMPLATE = "notices/w41-skipped/index.html";
 const SITE = "https://data.yappman.com";
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const WEEK_RE = /^\d{4}-W(0[1-9]|[1-4]\d|5[0-3])$/;
-const MANDATORY = ["weekly-start", "daily-basket-start", "snapshot-rows", "actor-history-sentence"];
+const MANDATORY = ["weekly-start", "daily-basket-start", "snapshot-rows", "actor-history-sentence", "morrisons-no-price-history"];
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const num = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 const longDate = d => { if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) throw new Error(`bad date "${d}"`); const [y, m, dd] = d.split("-").map(Number); return `${dd} ${MONTHS[m - 1]} ${y}`; };
@@ -91,6 +91,10 @@ function load(root) {
         if (!r.heldFromClaim) throw new Error(`${REF}: ${r.id} is outside the index and needs a heldFromClaim`);
         need(r.heldFromClaim);
       }
+      if (r.heldThroughClaim) {
+        confirmed(r.heldThroughClaim);
+        if (!WEEK_RE.test(String(r.heldThrough)) || r.heldThrough < r.heldFrom) throw new Error(`${REF}: ${r.id} has a bad heldThrough`);
+      }
       if (r.notHeldClaim) {
         const ok = confirmed(r.notHeldClaim);
         for (const w of r.notHeld || []) {
@@ -123,8 +127,17 @@ function body(d) {
     const idx = r.inIndex ? String(heldWeeks(uk, r)) : "not in the index yet";
     let nh = "&mdash;";
     if (r.notHeldClaim && d.confirmed(r.notHeldClaim)) nh = r.notHeld.length ? r.notHeld.map(notice).join(", ") : "none";
+    else if (!r.inIndex && r.heldThroughClaim && d.confirmed(r.heldThroughClaim)) nh = "none";
     else dash = true;
-    return `<tr><td>${esc(r.name)}</td><td>${esc(r.heldFrom)}</td><td class="num">${idx}</td><td>${nh}</td></tr>`;
+    // weekly snapshots held: only from confirmed claims; otherwise a dash
+    let held = null;
+    if (r.inIndex) {
+      if (r.notHeldClaim && d.confirmed(r.notHeldClaim)) held = String(weeksBetween(r.heldFrom, uk.latest.week).filter(w => !new Set(r.notHeld).has(w)).length);
+    } else if (r.heldThroughClaim && d.confirmed(r.heldThroughClaim)) {
+      held = `${weeksBetween(r.heldFrom, r.heldThrough).length} (${esc(r.heldFrom)} to ${esc(r.heldThrough)})`;
+    }
+    if (held === null) { held = "&mdash;"; dash = true; }
+    return `<tr><td>${esc(r.name)}</td><td>${esc(r.heldFrom)}</td><td class="num">${held}</td><td class="num">${idx}</td><td>${nh}</td></tr>`;
   };
   const auRow = r => `<tr><td>${esc(r.name)}</td><td>${esc(r.heldFrom)}</td><td class="num">${heldWeeks(au, r)}</td></tr>`;
   const ukRows = ref.uk.retailers.map(ukRow).join("\n");
@@ -143,7 +156,7 @@ function body(d) {
   const outside = ref.uk.retailers.filter(r => !r.inIndex);
   const outsideSentence = outside.map(r => `${esc(r.name)} is held from week ${Number(r.heldFrom.slice(6))} of ${esc(r.heldFrom.slice(0, 4))}${r.inIndex ? "" : " and is not yet in the index"}.`).join(" ");
   const outsideShort = outside.map(r => `${esc(r.name)} is held from week ${Number(r.heldFrom.slice(6))} of ${esc(r.heldFrom.slice(0, 4))}.`).join(" ");
-  const actor = `With the includePriceHistory option, the search, category and product rows of our <a href="https://apify.com/yappman/uk-supermarket-price-scraper?utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=coverage">UK Supermarket &amp; Grocery Prices</a> Actor on the Apify Store carry the product&rsquo;s weekly snapshot prices, newest first, up to 52 weeks, from ISO week 39 of 2026 (week 41 is missing at Tesco, Sainsbury&rsquo;s and Asda; there are none for Morrisons). The Actor builds no weekly report.`;
+  const actor = `With the includePriceHistory option, the search, category and product rows of our <a href="https://apify.com/yappman/uk-supermarket-price-scraper?utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=coverage">UK Supermarket &amp; Grocery Prices</a> Actor on the Apify Store carry the product&rsquo;s weekly snapshot prices, newest first, up to 52 weeks, from ISO week 39 of 2026 (week 41 is missing at Tesco, Sainsbury&rsquo;s and Asda; there are none for Morrisons). The Actor builds no weekly report.${outside.length ? ` Price history is not offered for ${outside.map(r => esc(r.name)).join(" and ")} yet, so ${outside.length === 1 ? "its rows carry" : "their rows carry"} an empty price history and are never charged for it; the ${outside.map(r => esc(r.name)).join(" and ")} weekly snapshots we hold (from ${outside.map(r => esc(r.heldFrom)).join(" and ")}) are not yet part of that.` : ""}`;
   return `<header>
   <h1>How much history we hold</h1>
   <p class="sub">The weeks of shelf-price snapshots we hold, by retailer, and what exists before them. Weekly, not real time. These are posted online shelf prices, not prices paid.</p>
@@ -153,8 +166,8 @@ function body(d) {
 <p>Our weekly UK snapshots start with the collection of ${esc(start)} (ISO week ${esc(ref.uk.weeklyStart.week)}). The latest weekly release is ${esc(uk.latest.week)}, published ${esc(longDate(uk.latest.published))}. The Australian index starts with ${esc(au.first)}. The history is short: one week is added with each weekly release, and the tables below are rebuilt from the published index files, so this page cannot say more than the index does.</p>
 
 <h2 id="uk">UK weekly snapshots, by retailer</h2>
-<p><em>Held from</em> is the first weekly snapshot we hold for the retailer. <em>Weeks in the published index</em> counts the weeks that have figures for the retailer in the free index, up to ${esc(uk.latest.week)}.</p>
-<div class="table-wrap"><table><thead><tr><th>Retailer</th><th>Held from</th><th class="num">Weeks in the published index</th><th>Weekly snapshot not held</th></tr></thead><tbody>
+<p><em>Held from</em> is the first weekly snapshot we hold for the retailer. <em>Weekly snapshots held</em> counts the weekly snapshots we hold, up to ${esc(uk.latest.week)}. <em>Weeks in the published index</em> counts the weeks that have figures for the retailer in the free index; a snapshot can be held without being in the index.</p>
+<div class="table-wrap"><table><thead><tr><th>Retailer</th><th>Held from</th><th class="num">Weekly snapshots held</th><th class="num">Weeks in the published index</th><th>Weekly snapshot not held</th></tr></thead><tbody>
 ${ukRows}
 </tbody></table></div>
 ${dash ? "<p class=\"meta\">A dash means this page does not state the figure.</p>\n" : ""}<p>${gapSentence}${outsideSentence}</p>

@@ -27,8 +27,8 @@ const REFDATA = () => ({
   claims: {
     "weekly-start": { confirmed: true, source: "licences" }, "daily-basket-start": { confirmed: true, source: "methodology" },
     "snapshot-rows": { confirmed: true, source: "method" }, "morrisons-from-w44": { confirmed: true, source: "licences" },
-    "w41-three-retailers": { confirmed: true, source: "notice" }, "actor-history-sentence": { confirmed: true, source: "README" },
-    "aldi-w41": { confirmed: false, source: "" },
+    "w41-three-retailers": { confirmed: true, source: "notice" }, "actor-history-sentence": { confirmed: true, source: "README" }, "morrisons-no-price-history": { confirmed: true, source: "UK session code evidence" },
+    "aldi-w41": { confirmed: false, source: "" }, "morrisons-w44-w45": { confirmed: false, source: "" },
   },
   uk: {
     weeklyStart: { claim: "weekly-start", week: "2026-W39", date: "2026-09-27" }, dailyBasketStart: { claim: "daily-basket-start", date: "2026-09-24" },
@@ -38,7 +38,7 @@ const REFDATA = () => ({
       { id: "sainsburys", name: "Sainsbury's", inIndex: true, heldFrom: "2026-W39", notHeld: ["2026-W41"], notHeldClaim: "w41-three-retailers" },
       { id: "asda", name: "Asda", inIndex: true, heldFrom: "2026-W39", notHeld: ["2026-W41"], notHeldClaim: "w41-three-retailers" },
       { id: "aldi", name: "Aldi", inIndex: true, heldFrom: "2026-W39", notHeld: [], notHeldClaim: "aldi-w41" },
-      { id: "morrisons", name: "Morrisons", inIndex: false, heldFrom: "2026-W44", heldFromClaim: "morrisons-from-w44" },
+      { id: "morrisons", name: "Morrisons", inIndex: false, heldFrom: "2026-W44", heldFromClaim: "morrisons-from-w44", heldThrough: "2026-W45", heldThroughClaim: "morrisons-w44-w45" },
     ],
   },
   au: { retailers: [{ id: "coles", name: "Coles", inIndex: true, heldFrom: "2026-W41" }, { id: "woolworths", name: "Woolworths", inIndex: true, heldFrom: "2026-W41" }, { id: "aldi_au", name: "Aldi Australia", inIndex: true, heldFrom: "2026-W41" }] },
@@ -66,7 +66,7 @@ test("ISO week arithmetic needs no clock and handles year ends", () => {
 
 test("weeks and counts are computed from the index files", () => {
   const p = page(site());
-  assert.match(p, /<td>Tesco<\/td><td>2026-W39<\/td><td class="num">4<\/td><td><a href="\/notices\/w41-skipped\/">2026-W41<\/a><\/td>/);
+  assert.match(p, /<td>Tesco<\/td><td>2026-W39<\/td><td class="num">4<\/td><td class="num">4<\/td><td><a href="\/notices\/w41-skipped\/">2026-W41<\/a><\/td>/);
   assert.match(p, /<td>Coles<\/td><td>2026-W41<\/td><td class="num">3<\/td>/);
   assert.match(p, /latest weekly release is 2026-W43, published 26 October 2026/);
   assert.match(p, /UK Online Shelf-Price Index<\/a><\/td><td>2026-W39<\/td><td>2026-W43<\/td><td class="num">4<\/td><td><a href="\/notices\/w41-skipped\/">2026-W41<\/a><\/td><td>2 series: base 2026-W39 \(2026-W39 to 2026-W40\); base 2026-W42 \(2026-W42 to 2026-W43\)\. Levels in different series cannot be compared\./);
@@ -75,10 +75,10 @@ test("weeks and counts are computed from the index files", () => {
   assert.match(p, /<td>2026-W41<\/td><td class="num">&mdash;<\/td><td class="num">base week<\/td>/);
 });
 
-test("an unconfirmed claim is never printed: Aldi's week 41 is a dash and Morrisons has no count", () => {
+test("an unconfirmed claim is never printed: Aldi's week 41 and Morrisons' held weeks are dashes", () => {
   const p = page(site());
-  assert.match(p, /<td>Aldi<\/td><td>2026-W39<\/td><td class="num">4<\/td><td>&mdash;<\/td>/);
-  assert.match(p, /<td>Morrisons<\/td><td>2026-W44<\/td><td class="num">not in the index yet<\/td><td>&mdash;<\/td>/);
+  assert.match(p, /<td>Aldi<\/td><td>2026-W39<\/td><td class="num">&mdash;<\/td><td class="num">4<\/td><td>&mdash;<\/td>/);
+  assert.match(p, /<td>Morrisons<\/td><td>2026-W44<\/td><td class="num">&mdash;<\/td><td class="num">not in the index yet<\/td><td>&mdash;<\/td>/);
   assert.match(p, /A dash means this page does not state the figure\./);
   assert.match(p, /Morrisons is held from week 44 of 2026 and is not yet in the index\./);
   assert.doesNotMatch(p, /week 45/i);
@@ -86,9 +86,18 @@ test("an unconfirmed claim is never printed: Aldi's week 41 is a dash and Morris
 
 test("once Aldi's week 41 is confirmed the cell is printed", () => {
   const ref = REFDATA(); ref.claims["aldi-w41"] = { confirmed: true, source: "UK session evidence" }; ref.uk.retailers[3].notHeld = [];
-  assert.match(page(site(ref)), /<td>Aldi<\/td><td>2026-W39<\/td><td class="num">4<\/td><td>none<\/td>/);
+  assert.match(page(site(ref)), /<td>Aldi<\/td><td>2026-W39<\/td><td class="num">5<\/td><td class="num">4<\/td><td>none<\/td>/);
   const ref2 = REFDATA(); ref2.claims["aldi-w41"] = { confirmed: true, source: "UK session evidence" }; ref2.uk.retailers[3].notHeld = ["2026-W41"];
   assert.match(page(site(ref2)), /<td>Aldi<\/td>[^\n]*<a href="\/notices\/w41-skipped\/">2026-W41<\/a>/);
+});
+
+test("once Morrisons' weeks 44 and 45 are confirmed the held count is printed, with the weeks it covers", () => {
+  const ref = REFDATA(); ref.claims["morrisons-w44-w45"] = { confirmed: true, source: "dataset metadata" };
+  const p = page(site(ref));
+  assert.match(p, /<td>Morrisons<\/td><td>2026-W44<\/td><td class="num">2 \(2026-W44 to 2026-W45\)<\/td><td class="num">not in the index yet<\/td><td>none<\/td>/);
+  assert.match(p, /<td>Aldi<\/td>[^\n]*&mdash;<\/td><\/tr>/);                         // Aldi is still a dash while its claim is unconfirmed
+  const bad = REFDATA(); bad.claims["morrisons-w44-w45"] = { confirmed: true, source: "dataset metadata" }; bad.uk.retailers[4].heldThrough = "2026-W43";
+  assert.throws(() => build(site(bad)), /morrisons has a bad heldThrough/);
 });
 
 test("a claim marked confirmed without a source stops the build", () => {
@@ -97,7 +106,7 @@ test("a claim marked confirmed without a source stops the build", () => {
 });
 
 test("a mandatory claim that is not confirmed stops the build", () => {
-  for (const id of ["weekly-start", "daily-basket-start", "snapshot-rows", "actor-history-sentence"]) {
+  for (const id of ["weekly-start", "daily-basket-start", "snapshot-rows", "actor-history-sentence", "morrisons-no-price-history"]) {
     const ref = REFDATA(); ref.claims[id] = { confirmed: false, source: "" };
     assert.throws(() => build(site(ref)), new RegExp(`claim ${id} is used on the page but is not confirmed`));
   }
@@ -141,6 +150,16 @@ test("the page says nothing earlier exists, makes no forward statement and keeps
   assert.match(p, /includePriceHistory option/); assert.match(p, /utm_campaign=coverage/);
 });
 
+test("the Actor paragraph keeps the supplied sentence and adds the clarifying clause about Morrisons", () => {
+  const p = page(site());
+  assert.match(p, /\(week 41 is missing at Tesco, Sainsbury&rsquo;s and Asda; there are none for Morrisons\)\. The Actor builds no weekly report\./);
+  assert.match(p, /Price history is not offered for Morrisons yet, so its rows carry an empty price history and are never charged for it; the Morrisons weekly snapshots we hold \(from 2026-W44\) are not yet part of that\./);
+  const ref = REFDATA(); ref.uk.retailers[4].heldFrom = "2026-W45";
+  assert.match(page(site(ref)), /weekly snapshots we hold \(from 2026-W45\)/);              // follows the reference file
+  ref.uk.retailers.pop();
+  assert.doesNotMatch(page(site(ref)), /Price history is not offered/);                       // no outside retailer, no clause
+});
+
 test("the page uses the site template and drops the active menu state", () => {
   const p = page(site());
   assert.match(p, /<title>How much history we hold — Yappman Data<\/title>/);
@@ -161,7 +180,7 @@ test("same inputs give a byte-identical page, --check passes after a build and f
 test("a new week in the index changes the page with no edit to the reference file", () => {
   const uk = ukItems(); uk.push(meta("2026-W44", "2026-W42", "2026-11-02", 74335)); for (const r of ["tesco", "sainsburys", "asda", "aldi"]) uk.push(ret("2026-W44", r));
   const p = page(site(REFDATA(), uk));
-  assert.match(p, /<td>Tesco<\/td><td>2026-W39<\/td><td class="num">5<\/td>/); assert.match(p, /latest weekly release is 2026-W44/);
+  assert.match(p, /<td>Tesco<\/td><td>2026-W39<\/td><td class="num">5<\/td><td class="num">5<\/td>/); assert.match(p, /latest weekly release is 2026-W44/);
 });
 
 test("the command line: write, check, and a clean refusal with nothing written", () => {

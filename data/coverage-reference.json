@@ -9,7 +9,9 @@
     "morrisons-from-w44": { "confirmed": true, "source": "https://data.yappman.com/licences/: Morrisons is held from week 44 of 2026" },
     "w41-three-retailers": { "confirmed": true, "source": "https://data.yappman.com/notices/w41-skipped/ and /licences/: week 41 has no complete data for Tesco, Sainsbury's and Asda" },
     "actor-history-sentence": { "confirmed": true, "source": "UK Actor README 0.2.36 as supplied by the UK session on 11 Nov 2026; the same sentence is live on /brand-price-tracker/" },
-    "aldi-w41": { "confirmed": false, "source": "" }
+    "aldi-w41": { "confirmed": true, "source": "Apify dataset metadata only (name, item count, created date; no items read), checked 12 Nov 2026: snapshot-aldi-2026-W41, 3,759 items, created 2026-10-11T03:00:26Z" },
+    "morrisons-no-price-history": { "confirmed": true, "source": "UK session code evidence, 12 Nov 2026: the Actor's price-history mode returns an empty priceHistory for every Morrisons row and never charges for it (src/history/__init__.py line 26, HISTORY_RETAILERS = tesco, sainsburys, asda, aldi; src/history/enrich.py line 48)" },
+    "morrisons-w44-w45": { "confirmed": true, "source": "Apify dataset metadata only, checked 12 Nov 2026: snapshot-morrisons-2026-W44, 26,549 items, created 2026-11-01T05:00:02Z; snapshot-morrisons-2026-W45, 26,513 items, created 2026-11-08T05:00:23Z" }
   },
   "uk": {
     "weeklyStart": { "claim": "weekly-start", "week": "2026-W39", "date": "2026-09-27" },
@@ -20,7 +22,7 @@
       { "id": "sainsburys", "name": "Sainsbury's", "inIndex": true, "heldFrom": "2026-W39", "notHeld": ["2026-W41"], "notHeldClaim": "w41-three-retailers" },
       { "id": "asda", "name": "Asda", "inIndex": true, "heldFrom": "2026-W39", "notHeld": ["2026-W41"], "notHeldClaim": "w41-three-retailers" },
       { "id": "aldi", "name": "Aldi", "inIndex": true, "heldFrom": "2026-W39", "notHeld": [], "notHeldClaim": "aldi-w41" },
-      { "id": "morrisons", "name": "Morrisons", "inIndex": false, "heldFrom": "2026-W44", "heldFromClaim": "morrisons-from-w44" }
+      { "id": "morrisons", "name": "Morrisons", "inIndex": false, "heldFrom": "2026-W44", "heldFromClaim": "morrisons-from-w44", "heldThrough": "2026-W45", "heldThroughClaim": "morrisons-w44-w45" }
     ]
   },
   "au": {
