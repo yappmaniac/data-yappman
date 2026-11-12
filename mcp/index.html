@@ -80,10 +80,12 @@
 </ul>
 <p>Every basket row carries a date, the retailer, the retailer's own product id and the barcode where there is one. The server does not serve product names, brands, descriptions, images or links: those are retailers' content.</p>
 
-<h2>The six tools</h2>
+<h2>The eight tools</h2>
 <ul>
   <li><code>get_shelf_price_index</code> returns an index vintage for the UK or Australia.</li>
   <li><code>list_index_vintages</code> says which vintages exist.</li>
+  <li><code>get_index_series</code> (from version 0.5.0) returns the UK or Australian index over time, oldest week first, up to 26 weeks: level, week-on-week and four-week change and matched counts. It returns headline rows unless <code>recordType</code> says otherwise; <code>retailer</code> and <code>class</code> narrow the other kinds. Posted online shelf prices, not prices paid; not a CPI. Levels are not price levels and do not show which retailer is cheaper. Product-level rows are not served.</li>
+  <li><code>get_class_movers</code> (from version 0.5.0) returns the product classes (for example dairy-eggs) whose index moved most, week on week, in one published week: the largest rises and falls, each with its matched-product count and a <code>thinBase</code> flag where a class rests on few products. Classes only: no retailers, no products, no prices. Index changes, not price changes paid; not a CPI. Omit <code>vintage</code> for the latest week.</li>
   <li><code>lookup_basket_prices</code> finds basket rows by barcode (<code>eans</code>) or retailer product id (<code>products</code>), up to 20 at a time, for one day; each result row lists its barcodes in <code>ean</code>. Aldi has no barcodes, so use product ids for Aldi.</li>
   <li><code>list_basket_products</code> (from version 0.2.5) lists the identifiers in the daily basket for one day, sorted, with paging: the retailer, the retailer product id and the barcodes in <code>ean</code> (empty where the basket holds none, as for Aldi). It returns no names, brands or prices; pass the ids or barcodes to <code>lookup_basket_prices</code>.</li>
   <li><code>get_christmas_basket_prices</code> (from version 0.3.0) returns one week of the UK Christmas dinner basket summary: the posted shelf prices of numbered items at Tesco, Sainsbury&rsquo;s, Asda and Aldi with flags, or each retailer&rsquo;s total over the items it priced. Item numbers only, no product names. It does not rank retailers, and the totals cover different items. Omit <code>week</code> for the latest week.</li>
