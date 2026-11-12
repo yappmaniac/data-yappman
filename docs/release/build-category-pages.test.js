@@ -101,9 +101,9 @@ test("the committed pages agree with the committed data (when the site has them)
   for (const c of load(top).classes) assert.ok(fs.existsSync(path.join(top, DIR, c, "index.html")), c);
 });
 
-test("the script uses only fs and path: no network, eval or child process", () => {
+test("the script uses only fs, path and the shared affiliate module: no network, eval or child process", () => {
   const src = fs.readFileSync(SCRIPT, "utf8");
   assert.doesNotMatch(src, /require\(["'](https?|net|dgram|dns|tls|child_process|vm|worker_threads)["']\)/);
   assert.doesNotMatch(src, /\beval\s*\(|new Function|fetch\s*\(|process\.env/);
-  assert.deepStrictEqual([...src.matchAll(/require\(["']([^"']+)["']\)/g)].map(m => m[1]).sort(), ["fs", "path"]);
+  assert.deepStrictEqual([...src.matchAll(/require\(["']([^"']+)["']\)/g)].map(m => m[1]).sort(), ["./affiliate.js", "fs", "path"]);
 });

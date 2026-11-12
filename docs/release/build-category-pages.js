@@ -13,6 +13,7 @@
 // 2026-W42) are not joined; categories are assigned by keyword rules and are approximate; shelf prices only, not CPI.
 "use strict";
 const fs = require("fs");
+const AFF = require("./affiliate.js");
 const path = require("path");
 
 const DIR = "shelf-price-index/categories";
@@ -110,6 +111,7 @@ function categoryBody(d, c) {
   <h1>UK shelf prices: ${esc(name)}</h1>
   <p class="sub">How the posted online shelf prices of ${esc(PHRASES[c])} moved at Tesco, Sainsbury&rsquo;s, Asda and Aldi, from the free <a href="/shelf-price-index/">UK Online Shelf-Price Index</a>.</p>
 </header>
+${AFF.DISCLOSURE_HTML}
 <p>${moved} Published ${esc(longDate(d.published[last.vintage]))}. Shelf prices only; it is not CPI and not a measure of prices paid.</p>
 ${SCOPE[c] ? `<p>${esc(SCOPE[c])}</p>\n` : ""}${chart(current, `${name}: index level by week, base 100 at ${d.base[d.latest]}`)}
 <p class="meta">The chart shows the current series only. Its vertical axis does not start at zero, so small moves look larger.</p>
@@ -127,7 +129,7 @@ ${retailerRows.map(r => `<tr><td>${RETAILERS[r.retailer]}</td><td class="num">${
   <li>Categories are assigned by keyword rules on the retailers&rsquo; category names and product names, so they are approximate, and a category can rest on fewer than four retailers (<a href="/shelf-price-index/method/">method</a>).</li>
   <li>Matched products are those priced in both weeks. A retailer cell with fewer than 20 usable products keeps the week before&rsquo;s level and is shown here as &ldquo;not updated&rdquo;. The figures are the free index&rsquo;s own; nothing is added.</li>
 </ul>
-<p>Released under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Cite as &ldquo;Yappman Data, UK Online Shelf-Price Index, ${esc(name)}, CC BY 4.0, vintage ${esc(last.vintage)}, ${SITE}/${DIR}/${c}/&rdquo;. The full series is on the <a href="/shelf-price-index/">index page</a>. Product-level shelf prices can be read on demand with <a href="https://apify.com/yappman/uk-supermarket-price-scraper?utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=categories">UK Supermarket &amp; Grocery Prices</a>, a pay-per-event Actor on the Apify Store.</p>
+<p>Released under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Cite as &ldquo;Yappman Data, UK Online Shelf-Price Index, ${esc(name)}, CC BY 4.0, vintage ${esc(last.vintage)}, ${SITE}/${DIR}/${c}/&rdquo;. The full series is on the <a href="/shelf-price-index/">index page</a>. Product-level shelf prices can be read on demand with <a href="${AFF.withParam("https://apify.com/yappman/uk-supermarket-price-scraper?utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=categories")}" rel="${AFF.REL}">UK Supermarket &amp; Grocery Prices</a>, a pay-per-event Actor on the Apify Store.</p>
 <p><a href="/${DIR}/">All categories</a></p>
 `;
 }

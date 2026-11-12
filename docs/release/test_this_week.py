@@ -310,10 +310,10 @@ class ThisWeekTests(unittest.TestCase):
 
     def test_the_pointers_are_the_sentences_on_their_source_pages(self) -> None:
         def plain(sentence: str) -> str:
-            return re.sub(r'\?utm_source=[^"]*', '', sentence)
+            return re.sub(r'\?(?:utm_source|fpr)=[^"]*', '', sentence)
         for relative, sentence in tw.POINTERS:
             source = (REPO / relative).read_text(encoding='utf-8')
-            self.assertIn('<p>' + plain(sentence) + '</p>', re.sub(r'\?utm_source=[^"]*', '', source), relative)
+            self.assertIn('<p>' + plain(sentence) + '</p>', re.sub(r'\?(?:utm_source|fpr)=[^"]*', '', source), relative)
             self.assertIn('utm_campaign=this-week', sentence)
 
     def test_the_caveats_are_the_sentences_of_their_sources(self) -> None:

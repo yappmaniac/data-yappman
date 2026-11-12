@@ -12,6 +12,7 @@
 // weeks) that is not confirmed is never printed (its cell shows a dash). A week missing from a published index needs a notice link in
 // the reference file, or the build stops: a gap is never left unexplained.
 const fs = require("fs");
+const AFF = require("./affiliate.js");
 const path = require("path");
 
 const OUT = "coverage/index.html";
@@ -156,11 +157,12 @@ function body(d) {
   const outside = ref.uk.retailers.filter(r => !r.inIndex);
   const outsideSentence = outside.map(r => `${esc(r.name)} is held from week ${Number(r.heldFrom.slice(6))} of ${esc(r.heldFrom.slice(0, 4))}${r.inIndex ? "" : " and is not yet in the index"}.`).join(" ");
   const outsideShort = outside.map(r => `${esc(r.name)} is held from week ${Number(r.heldFrom.slice(6))} of ${esc(r.heldFrom.slice(0, 4))}.`).join(" ");
-  const actor = `With the includePriceHistory option, the search, category and product rows of our <a href="https://apify.com/yappman/uk-supermarket-price-scraper?utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=coverage">UK Supermarket &amp; Grocery Prices</a> Actor on the Apify Store carry the product&rsquo;s weekly snapshot prices, newest first, up to 52 weeks, from ISO week 39 of 2026 (week 41 is missing at Tesco, Sainsbury&rsquo;s and Asda; there are none for Morrisons). The Actor builds no weekly report.${outside.length ? ` Price history is not offered for ${outside.map(r => esc(r.name)).join(" and ")} yet, so ${outside.length === 1 ? "its rows carry" : "their rows carry"} an empty price history and are never charged for it; the ${outside.map(r => esc(r.name)).join(" and ")} weekly snapshots we hold (from ${outside.map(r => esc(r.heldFrom)).join(" and ")}) are not yet part of that.` : ""}`;
+  const actor = `With the includePriceHistory option, the search, category and product rows of our <a href="${AFF.withParam("https://apify.com/yappman/uk-supermarket-price-scraper?utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=coverage")}" rel="${AFF.REL}">UK Supermarket &amp; Grocery Prices</a> Actor on the Apify Store carry the product&rsquo;s weekly snapshot prices, newest first, up to 52 weeks, from ISO week 39 of 2026 (week 41 is missing at Tesco, Sainsbury&rsquo;s and Asda; there are none for Morrisons). The Actor builds no weekly report.${outside.length ? ` Price history is not offered for ${outside.map(r => esc(r.name)).join(" and ")} yet, so ${outside.length === 1 ? "its rows carry" : "their rows carry"} an empty price history and are never charged for it; the ${outside.map(r => esc(r.name)).join(" and ")} weekly snapshots we hold (from ${outside.map(r => esc(r.heldFrom)).join(" and ")}) are not yet part of that.` : ""}`;
   return `<header>
   <h1>How much history we hold</h1>
   <p class="sub">The weeks of shelf-price snapshots we hold, by retailer, and what exists before them. Weekly, not real time. These are posted online shelf prices, not prices paid.</p>
 </header>
+${AFF.DISCLOSURE_HTML}
 
 <h2 id="short">The short answer</h2>
 <p>Our weekly UK snapshots start with the collection of ${esc(start)} (ISO week ${esc(ref.uk.weeklyStart.week)}). The latest weekly release is ${esc(uk.latest.week)}, published ${esc(longDate(uk.latest.published))}. The Australian index starts with ${esc(au.first)}. The history is short: one week is added with each weekly release, and the tables below are rebuilt from the published index files, so this page cannot say more than the index does.</p>

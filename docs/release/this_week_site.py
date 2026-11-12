@@ -62,18 +62,20 @@ CLASS_RE = re.compile(r'[a-z]+(?:-[a-z]+)*')
 UK_ATTRIBUTION = 'Yappman Data, UK Online Shelf-Price Index, CC BY 4.0, https://data.yappman.com/shelf-price-index/'
 BASKET_ATTRIBUTION = 'Yappman Data, UK Christmas Dinner Basket 2026, CC BY 4.0, https://data.yappman.com/christmas-basket/'
 UTM = 'utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=this-week'
+# The Apify affiliate parameter and rel on these links (the token and rule live in docs/release/affiliate.js; check-affiliate-disclosure.js compares).
+AFFIX = '&amp;fpr=wy5pu7" rel="sponsored"'
 # The pointer sentences, word for word as they stand on the source pages (a test compares each with its page).
 POINTERS = (
     ('christmas-basket/index.html',
      'Product-level shelf prices for these retailers can be read on demand with '
-     '<a href="https://apify.com/yappman/uk-supermarket-price-scraper?' + UTM + '">UK Supermarket &amp; Grocery Prices</a>, '
+     '<a href="https://apify.com/yappman/uk-supermarket-price-scraper?' + UTM + AFFIX + '>UK Supermarket &amp; Grocery Prices</a>, '
      'a pay-per-event Actor on the Apify Store.'),
     ('sold-prices/index.html',
      'For current asking prices in a district, and a free rental yield summary by outcode, use the '
-     '<a href="https://apify.com/yappman/uk-property-listings?' + UTM + '">UK Property Listings Actor</a>.'),
+     '<a href="https://apify.com/yappman/uk-property-listings?' + UTM + AFFIX + '>UK Property Listings Actor</a>.'),
     ('rental-yield/index.html',
      'For outcode and bedroom level from current listings, use the '
-     '<a href="https://apify.com/yappman/uk-property-listings?' + UTM + '">UK Property Listings Actor</a>&rsquo;s rentalYield summary.'),
+     '<a href="https://apify.com/yappman/uk-property-listings?' + UTM + AFFIX + '>UK Property Listings Actor</a>&rsquo;s rentalYield summary.'),
 )
 # The caveats shown with the rental-yield table, word for word as they stand on its page (a test compares each with it).
 YIELD_CAVEATS = (
