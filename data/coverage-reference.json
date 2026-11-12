@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "retrievedOn": "2026-11-12",
+  "note": "Facts for /coverage/ that the index files cannot show. Each one is a claim with a source. A claim marked confirmed:false is never printed. Mandatory claims must be confirmed or the build stops. Edit by hand when a fact changes, then run docs/release/build-coverage-page.js.",
+  "claims": {
+    "weekly-start": { "confirmed": true, "source": "https://data.yappman.com/licences/ and /methodology/: UK weekly catalogue history from 27 Sep 2026" },
+    "daily-basket-start": { "confirmed": true, "source": "https://data.yappman.com/methodology/: daily basket history from 24 Sep 2026; the Kaggle metadata records no run on 25 Sep 2026" },
+    "snapshot-rows": { "confirmed": true, "source": "https://data.yappman.com/shelf-price-index/method/: over 75,000 products a week, 75,835 in the week 43 snapshot of 25 October 2026" },
+    "morrisons-from-w44": { "confirmed": true, "source": "https://data.yappman.com/licences/: Morrisons is held from week 44 of 2026" },
+    "w41-three-retailers": { "confirmed": true, "source": "https://data.yappman.com/notices/w41-skipped/ and /licences/: week 41 has no complete data for Tesco, Sainsbury's and Asda" },
+    "actor-history-sentence": { "confirmed": true, "source": "UK Actor README 0.2.36 as supplied by the UK session on 11 Nov 2026; the same sentence is live on /brand-price-tracker/" },
+    "aldi-w41": { "confirmed": false, "source": "" }
+  },
+  "uk": {
+    "weeklyStart": { "claim": "weekly-start", "week": "2026-W39", "date": "2026-09-27" },
+    "dailyBasketStart": { "claim": "daily-basket-start", "date": "2026-09-24" },
+    "snapshotRows": { "claim": "snapshot-rows", "sentence": "Over 75,000 products a week in the weekly snapshots (75,835 in the week 43 snapshot of 25 October 2026)." },
+    "retailers": [
+      { "id": "tesco", "name": "Tesco", "inIndex": true, "heldFrom": "2026-W39", "notHeld": ["2026-W41"], "notHeldClaim": "w41-three-retailers" },
+      { "id": "sainsburys", "name": "Sainsbury's", "inIndex": true, "heldFrom": "2026-W39", "notHeld": ["2026-W41"], "notHeldClaim": "w41-three-retailers" },
+      { "id": "asda", "name": "Asda", "inIndex": true, "heldFrom": "2026-W39", "notHeld": ["2026-W41"], "notHeldClaim": "w41-three-retailers" },
+      { "id": "aldi", "name": "Aldi", "inIndex": true, "heldFrom": "2026-W39", "notHeld": [], "notHeldClaim": "aldi-w41" },
+      { "id": "morrisons", "name": "Morrisons", "inIndex": false, "heldFrom": "2026-W44", "heldFromClaim": "morrisons-from-w44" }
+    ]
+  },
+  "au": {
+    "retailers": [
+      { "id": "coles", "name": "Coles", "inIndex": true, "heldFrom": "2026-W41" },
+      { "id": "woolworths", "name": "Woolworths", "inIndex": true, "heldFrom": "2026-W41" },
+      { "id": "aldi_au", "name": "Aldi Australia", "inIndex": true, "heldFrom": "2026-W41" }
+    ]
+  },
+  "notices": { "2026-W41": "/notices/w41-skipped/" }
+}
