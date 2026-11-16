@@ -111,6 +111,21 @@
     });
   }
 
+  // ---------- Count a click on an affiliate link to one of our Actors as an Umami event. It sends only the page it was on and the
+  // Actor page it led to: no cookie, no identifier. Umami itself skips it when the visitor sends Do Not Track, and nothing runs
+  // if its script is blocked. (docs/release/affiliate.js holds the token; check-affiliate-disclosure.test.js keeps the two equal.)
+  var trackReferral = function (e) {
+    if (!window.umami || typeof window.umami.track !== 'function') return;
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var u;
+    try { u = new URL(a.href, location.href); } catch (err) { return; }
+    if (u.hostname !== 'apify.com' || u.searchParams.get('fpr') !== 'wy5pu7') return;
+    window.umami.track('apify-referral-click', { path: location.pathname, target: u.pathname });
+  };
+  document.addEventListener('click', trackReferral);
+  document.addEventListener('auxclick', function (e) { if (e.button === 1) trackReferral(e); }); // middle click opens a new tab
+
   // ---------- Old home-page anchors now live on their own pages.
   if (location.pathname === '/' || location.pathname === '/index.html') {
     var moved = { '#demos': '/demos/', '#notices': '/notices/', '#sample': '/methodology/#sample', '#fields': '/methodology/#fields', '#series': '/methodology/#series' };
