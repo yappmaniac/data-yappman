@@ -6,11 +6,20 @@
 The list changes only when a person re-pins an item (the page's method text says so). Item numbers `n` are permanent: never reused or
 renumbered; a new item takes the next number, a retired item keeps its number (list "retired"). Display names are ours: the pinned
 list has only slot ids. No network.
+
+Two entries are never set here: they are carried over from the file being replaced (--out), because a person set them.
+  removedShops  a shop taken off the page (docs/release/basket-remove-shop.js). It stays removed, and its product entries are left
+                out of the new list too. To put a shop back, run basket-remove-shop.js --restore SHOP first, then this.
+  statements    the page sentences switched on once a person confirmed them.
+If the file being replaced exists but cannot be read, or its removedShops is not a list of our shops, nothing is written.
 """
 import argparse
 import json
+import os
 import re
 import sys
+
+SHOPS = ['aldi', 'asda', 'sainsburys', 'tesco']
 
 GROUPS = [('dairy-eggs', 'Dairy and eggs'), ('bakery', 'Bakery'), ('meat', 'Meat'), ('fish', 'Fish'), ('fruit-veg', 'Fruit and vegetables'),
           ('cupboard', 'Cupboard'), ('frozen', 'Frozen'), ('drinks', 'Drinks'), ('household', 'Household'), ('personal-care', 'Personal care')]
@@ -76,10 +85,25 @@ def main():
     missing = [i['slot'] for i in src if i['slot'] not in NAMES]
     if missing:
         raise SystemExit(f'no display name for: {missing}')
+    # carried over from the file being replaced: a regenerated list must never put a removed shop back
+    removed, statements = [], {'storeSetting': True, 'dailyRead': False}
+    if os.path.exists(a.out):
+        try:
+            old = json.load(open(a.out, encoding='utf-8'))
+        except (OSError, ValueError) as e:
+            raise SystemExit(f'NOTHING WRITTEN. {a.out} exists but cannot be read ({type(e).__name__}); its removedShops would be lost')
+        removed = old.get('removedShops', [])
+        if not isinstance(removed, list) or any(s not in SHOPS for s in removed) or len(set(removed)) != len(removed):
+            raise SystemExit(f'NOTHING WRITTEN. {a.out}: removedShops is not a list of our shops')
+        removed = [s for s in SHOPS if s in removed]
+        if isinstance(old.get('statements'), dict):
+            statements = old['statements']
     items = []
     for n, it in enumerate(src):
         cells = {}
         for c in it['cells']:
+            if c['shop'] in removed:
+                continue                      # a removed shop's product entries stay out
             code, extra = label(c['quality'])
             cell = {'id': str(c['id']), 'name': c['name'], 'pack': c.get('pack') or '', 'url': c['url'], 'q': code}
             if extra:
@@ -92,15 +116,15 @@ def main():
     items.sort(key=lambda x: (order[x['g']], x['n']))
     out = {'schema': 1, 'version': '2026-11-17',
            'groups': [{'id': g, 'name': n} for g, n in GROUPS],
-           'shops': ['aldi', 'asda', 'sainsburys', 'tesco'],
+           'shops': SHOPS,
            'checkedOn': '2026-11-17', 'checkedOnSource': 'Orchestrator message 08:15Z 17 Nov 2026: Russell approved the quality read; the record itself was not seen by the Data Website session',
-           'statements': {'storeSetting': True, 'dailyRead': False},   # page sentences held back until a person confirms them (see build-basket-page.js)
-           'removedShops': [],   # a shop named here is taken off the page (docs/release/basket-remove-shop.js sets it)
-           'retired': [], 'items': items}
+           'retired': [], 'items': items,
+           'statements': statements,       # page sentences held back until a person confirms them (see build-basket-page.js)
+           'removedShops': removed}        # a shop named here is off the page (docs/release/basket-remove-shop.js sets it)
     with open(a.out, 'w', encoding='utf-8', newline='') as f:
         json.dump(out, f, ensure_ascii=False, separators=(',', ':'))
         f.write('\n')
-    print(f'{len(items)} items, {sum(len(i["cells"]) for i in items)} cells -> {a.out}')
+    print(f'{len(items)} items, {sum(len(i["cells"]) for i in items)} cells -> {a.out}' + (f'; removed shops kept out: {", ".join(removed)}' if removed else ''))
 
 
 if __name__ == '__main__':

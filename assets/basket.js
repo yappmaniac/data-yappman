@@ -16,6 +16,10 @@
     ALL_SHOPS.forEach(function (s) { if (REMOVED.indexOf(s) < 0) SHOPS.push(s); });
     return SHOPS;
   }
+  // A product link is used only if it is an https address on that shop's own site; anything else is shown as plain text.
+  var HOST = { aldi: 'www.aldi.co.uk', asda: 'www.asda.com', sainsburys: 'www.sainsburys.co.uk', tesco: 'www.tesco.com' };
+  function shopUrl(shop, url) { var m = /^https:\/\/([^\/?#@:]+)\//.exec(String(url || '')); return m && HOST[shop] && m[1].toLowerCase() === HOST[shop] ? String(url) : ''; }
+  function allWord(k) { return k === 2 ? 'both' : 'all ' + WORD[k]; }
   function joinNames(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
   var NAME ={ aldi: 'Aldi', asda: 'Asda', sainsburys: "Sainsbury's", tesco: 'Tesco' };
   var SCHEME = { tesco: 'Clubcard Price', sainsburys: 'Nectar Price' };
@@ -163,7 +167,7 @@
     return out.join('\n') + '\n';
   }
 
-  return { SHOPS: SHOPS, ALL_SHOPS: ALL_SHOPS, WORD: WORD, setRemoved: setRemoved, joinNames: joinNames, NAME: NAME, SCHEME: SCHEME, MAX_QTY: MAX_QTY, fmt: fmt, dateText: dateText, shortDate: shortDate, timeWindow: timeWindow, unitText: unitText, cellInfo: cellInfo,
+  return { SHOPS: SHOPS, ALL_SHOPS: ALL_SHOPS, WORD: WORD, setRemoved: setRemoved, joinNames: joinNames, shopUrl: shopUrl, allWord: allWord, NAME: NAME, SCHEME: SCHEME, MAX_QTY: MAX_QTY, fmt: fmt, dateText: dateText, shortDate: shortDate, timeWindow: timeWindow, unitText: unitText, cellInfo: cellInfo,
     compute: compute, coverage: coverage, encodeShare: encodeShare, decodeShare: decodeShare, toCsv: toCsv, toText: toText, basisText: basisText, notice: notice, csvCell: csvCell };
 });
 
@@ -184,7 +188,7 @@
     var p = data.prices, c = B.coverage(data.list, p), n = data.list.items.length, k = S.length, W = B.WORD, fewer = [];
     for (var j = k - 1; j >= 2; j--) fewer.push(c[j] + ' at ' + W[j]);
     $('bk-head').textContent = 'Pick items from our list of ' + n + ' and see each shop\'s total. Prices were read by our software, without signing in, on ' + B.dateText(p.readTo) + ', ' + B.timeWindow(p.readFrom, p.readTo) + '. Today ' +
-      c[k] + ' items are priced at all ' + W[k] + ' shops' + (fewer.length ? ', ' + fewer.join(' and ') : '') + (c[1] ? ' (and ' + c[1] + ' at one shop only, which cannot be compared)' : '') + '. This is ' + W[k] + ' shops and ' + n + ' items, not the whole market and not everything a shop sells.';
+      c[k] + ' items are priced at ' + B.allWord(k) + ' shops' + (fewer.length ? ', ' + fewer.join(' and ') : '') + (c[1] ? ' (and ' + c[1] + ' at one shop only, which cannot be compared)' : '') + '. This is ' + W[k] + ' shops and ' + n + ' items, not the whole market and not everything a shop sells.';
     if (Date.now() - Date.parse(p.readTo) > 2 * 24 * 3600 * 1000) { $('bk-stale').hidden = false; $('bk-stale').textContent = 'These prices were read on ' + B.shortDate(p.readTo) + ' and may be out of date. The lowest-total mark is not shown.'; }
   }
 
@@ -195,7 +199,7 @@
       if (ci.unit) td.appendChild(el('span', ' ' + ci.unit, 'meta'));
     } else td.appendChild(el('span', ci.text, 'meta'));
     if (pin) {
-      var a = el('a', pin.name + (pin.pack ? ', ' + pin.pack : '')); a.href = pin.url; a.rel = 'noopener nofollow'; a.target = '_blank';
+      var href = B.shopUrl(shop, pin.url), a = el(href ? 'a' : 'span', pin.name + (pin.pack ? ', ' + pin.pack : '')); if (href) { a.href = href; a.rel = 'noopener nofollow'; a.target = '_blank'; }
       var d = el('div', null, 'meta'); d.appendChild(a); td.appendChild(d);
       var LAB = { s: 'Same product', o: 'Comparable own-label', d: 'Comparable own-label, size differs', v: 'Comparable own-label, value range', u: 'Match being checked' };
       td.appendChild(el('div', LAB[pin.q], 'bk-label bk-' + pin.q));
@@ -254,7 +258,7 @@
     });
     var wrap = el('div', null, 'table-wrap'); wrap.appendChild(tb); box.appendChild(wrap);
     if (r.common.length && r.common.length !== r.chosen.length) {
-      box.appendChild(el('p', 'Over the ' + r.common.length + ' items all ' + B.WORD[S.length] + ' shops priced on ' + date + ', ' + basis + ': ' + S.map(function (s) { return N[s] + ' ' + B.fmt(r.commonTotals[s]); }).join(', ') + '.'));
+      box.appendChild(el('p', 'Over the ' + r.common.length + ' items ' + B.allWord(S.length) + ' shops priced on ' + date + ', ' + basis + ': ' + S.map(function (s) { return N[s] + ' ' + B.fmt(r.commonTotals[s]); }).join(', ') + '.'));
     }
     if (!(opts.schemes.tesco || opts.schemes.sainsburys) && (r.memberNotUsed.tesco || r.memberNotUsed.sainsburys)) {
       var ms = ['tesco', 'sainsburys'].filter(function (s) { return S.indexOf(s) >= 0; });

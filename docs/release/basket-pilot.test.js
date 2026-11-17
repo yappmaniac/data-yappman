@@ -318,7 +318,14 @@ test("the Where sentence appears only when the list file says the store setting 
 const remover = require("./basket-remove-shop.js");
 const LISTR = (removed = []) => ({ ...LIST, statements: { storeSetting: true, dailyRead: false }, removedShops: removed });
 const textOf = html => html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<[^>]*>/g, " ");
-const siteR = (removed = []) => { const root = site(LISTR(removed), prices()); fs.mkdirSync(path.join(root, "basket"), { recursive: true }); return root; };
+const siteR = (removed = []) => { const root = site(LISTR(removed), prices()); fs.mkdirSync(path.join(root, "basket"), { recursive: true }); fs.writeFileSync(path.join(root, pageBuilder.OUT), pageBuilder.build(root).get(pageBuilder.OUT)); return root; };
+const PUBLIC = [pilot.LIST, pilot.OUT, pageBuilder.OUT];
+// every product name, id and link of one shop in a list; a name that another shop's entry also carries is not that shop's alone
+function productStrings(list, shop) {
+  const others = new Set(); for (const it of list.items) for (const [s, c] of Object.entries(it.cells)) if (s !== shop) others.add(c.name);
+  const out = []; for (const it of list.items) { const c = it.cells[shop]; if (c) { out.push(`"id":"${c.id}"`, c.url); if (!others.has(c.name)) out.push(c.name); } }
+  return out;
+}
 
 test("with no shop removed the page and the script behave exactly as before", () => {
   assert.strictEqual(pageBuilder.build(site(LISTR())).get(pageBuilder.OUT), pageBuilder.build(site({ ...LIST, statements: { storeSetting: true, dailyRead: false } })).get(pageBuilder.OUT));
@@ -337,6 +344,7 @@ test("a removed shop is named nowhere on the page except as not included", () =>
   assert.match(t, /Aldi, Sainsbury&rsquo;s and Tesco are named only to say where each price was read\. Asda and Morrisons are named only to say they are not included\./);
   assert.strictEqual((t.match(/Asda/g) || []).length, 2, "Asda appears only in the two not-included sentences");
   assert.doesNotMatch(p.match(/<meta name="description"[^>]*>/)[0], /Asda/);
+  assert.match(p, /shows every product and size\. Asda and Morrisons are not in this comparison\.<\/p>/);   // the sentence gives no reason
 });
 
 test("removing a scheme shop drops its scheme name; removing Aldi drops the Aldi-only notes", () => {
@@ -375,25 +383,45 @@ test("the page script leaves a removed shop out of totals, the lowest-total mark
   assert.deepStrictEqual(Object.keys(B.compute(LIST, p, picks, o(), NOW).per), ["aldi", "asda", "sainsburys", "tesco"]);
 });
 
-test("the removal script changes the one list entry, clears that shop's prices and rebuilds the page; the checks still pass", () => {
+test("the removal script takes the shop's product entries and cells out, rebuilds the page, and the checks still pass", () => {
   const root = siteR();
-  const listBefore = fs.readFileSync(path.join(root, pilot.LIST), "utf8");
+  const asda = productStrings(LISTR(), "asda");
+  assert.ok(asda.length >= 8);
   const r = remover.apply(root, "asda", false);
-  assert.deepStrictEqual(r.after, ["asda"]); assert.strictEqual(r.cells, 4); assert.strictEqual(r.changed, true);
-  const listAfter = fs.readFileSync(path.join(root, pilot.LIST), "utf8");
-  assert.strictEqual(listAfter, listBefore.replace('"removedShops":[]', '"removedShops":["asda"]'));   // one entry, nothing else
+  assert.deepStrictEqual(r.after, ["asda"]); assert.strictEqual(r.entries, 4); assert.strictEqual(r.cells, 4); assert.strictEqual(r.changed, true);
+  const list = JSON.parse(fs.readFileSync(path.join(root, pilot.LIST), "utf8"));
+  const want = JSON.parse(JSON.stringify(LISTR(["asda"]))); for (const it of want.items) delete it.cells.asda;   // a copy: LIST is shared
+  assert.deepStrictEqual(list, want);                               // the list less Asda, and nothing else
   const d = JSON.parse(fs.readFileSync(path.join(root, pilot.OUT), "utf8"));
-  for (const c of Object.values(d.cells)) if (c.asda) assert.deepStrictEqual(c.asda, { s: "x" });
+  assert.ok(Object.values(d.cells).every(o => !("asda" in o)));
   assert.ok(d.cells[0].tesco.p > 0 && d.cells[0].aldi.p > 0);                                   // the other shops are untouched
   assert.deepStrictEqual(pilot.check(root), []); assert.deepStrictEqual(pageBuilder.check(root), []);
   assert.match(fs.readFileSync(path.join(root, pageBuilder.OUT), "utf8"), /everyday items at Aldi, Sainsbury&rsquo;s and Tesco<\/h1>/);
-  assert.strictEqual(remover.apply(root, "asda", false).changed, false);                        // a second run changes nothing
-  assert.strictEqual(fs.readFileSync(path.join(root, pilot.LIST), "utf8"), listAfter);
+  const again = remover.apply(root, "asda", false);                                              // a second run changes nothing
+  assert.strictEqual(again.changed, false); assert.strictEqual(again.entries, 0);
+  assert.deepStrictEqual(JSON.parse(fs.readFileSync(path.join(root, pilot.LIST), "utf8")), list);
 });
 
-test("the removal script refuses an unknown shop or a third removal and changes nothing; restore puts the shop back on the page", () => {
+test("after a removal no public file holds any product name, id or link of the removed shop", () => {
+  for (const shop of ["aldi", "asda", "sainsburys", "tesco"]) {
+    const root = siteR(), strings = productStrings(LISTR(), shop);
+    const before = PUBLIC.map(f => fs.readFileSync(path.join(root, f), "utf8")).join("\n");
+    assert.ok(strings.some(s => before.includes(s)), "the fixture holds the shop's entries before the removal");
+    remover.apply(root, shop, false);
+    for (const f of PUBLIC) {
+      const text = fs.readFileSync(path.join(root, f), "utf8");
+      for (const s of strings) assert.ok(!text.includes(s), `${f} still holds ${JSON.stringify(s)} of ${shop}`);
+    }
+    const listText = fs.readFileSync(path.join(root, pilot.LIST), "utf8");
+    assert.strictEqual((listText.match(new RegExp(`"${shop}"`, "g")) || []).length, 2);         // only in "shops" and "removedShops"
+    const dataText = fs.readFileSync(path.join(root, pilot.OUT), "utf8");
+    assert.ok(!dataText.includes(`"${shop}"`), "the data file has no cell for the shop");
+  }
+});
+
+test("the removal script refuses an unknown shop or a third removal and changes nothing; restore only reopens the column", () => {
   const root = siteR();
-  const snap = () => [pilot.LIST, pilot.OUT].map(f => fs.readFileSync(path.join(root, f), "utf8")).join("|");
+  const snap = () => PUBLIC.map(f => fs.readFileSync(path.join(root, f), "utf8")).join("|");
   const s0 = snap();
   assert.throws(() => remover.apply(root, "lidl", false), /is not one of the shops/); assert.strictEqual(snap(), s0);
   remover.apply(root, "asda", false); remover.apply(root, "aldi", false);
@@ -402,13 +430,61 @@ test("the removal script refuses an unknown shop or a third removal and changes 
   const r = remover.apply(root, "asda", true);
   assert.deepStrictEqual(r.after, ["aldi"]);
   assert.match(fs.readFileSync(path.join(root, pageBuilder.OUT), "utf8"), /everyday items at Asda, Sainsbury&rsquo;s and Tesco<\/h1>/);
-  assert.deepStrictEqual(JSON.parse(fs.readFileSync(path.join(root, pilot.OUT), "utf8")).cells[0].asda, { s: "x" });   // prices return with the next daily read
+  const list = JSON.parse(fs.readFileSync(path.join(root, pilot.LIST), "utf8"));
+  assert.ok(list.items.every(it => !it.cells.asda), "restore does not put the product entries back: the list is regenerated by a person");
+  assert.deepStrictEqual(pilot.check(root), []);
   const noEntry = site(LIST, prices());
   assert.throws(() => remover.apply(noEntry, "asda", false), /expected exactly one "removedShops"/);
 });
 
-test("the live list file carries the removedShops entry, empty, exactly once", () => {
-  const s = fs.readFileSync(path.join(ROOT, pilot.LIST), "utf8");
-  assert.strictEqual((s.match(/"removedShops":\[\]/g) || []).length, 1);
-  assert.deepStrictEqual(JSON.parse(s).removedShops, []);
+test("a product entry the script cannot take out cleanly stops it with nothing changed", () => {
+  const odd = LISTR(); odd.items = JSON.parse(JSON.stringify(odd.items)); odd.items[0].cells.asda.name = "Asda {odd} name";
+  const root = site(odd, prices()); fs.mkdirSync(path.join(root, "basket"), { recursive: true });
+  const before = fs.readFileSync(path.join(root, pilot.LIST), "utf8");
+  assert.throws(() => remover.apply(root, "asda", false), /nothing changed/);
+  assert.strictEqual(fs.readFileSync(path.join(root, pilot.LIST), "utf8"), before);
+});
+
+test("the live list file is valid in either state: removedShops lists known shops once each and leaves at least two", () => {
+  const s = fs.readFileSync(path.join(ROOT, pilot.LIST), "utf8"), list = JSON.parse(s);
+  assert.strictEqual((s.match(/"removedShops":\[[^\]]*\]/g) || []).length, 1);                  // the entry the removal script edits
+  const removed = list.removedShops;
+  assert.ok(Array.isArray(removed) && removed.every(x => list.shops.includes(x)) && new Set(removed).size === removed.length);
+  assert.ok(list.shops.length - removed.length >= 2);
+  for (const it of list.items) for (const x of removed) assert.ok(!it.cells[x], `${it.id} still has an entry for removed shop ${x}`);
+  if (fs.existsSync(path.join(ROOT, pilot.OUT))) {
+    const d = JSON.parse(fs.readFileSync(path.join(ROOT, pilot.OUT), "utf8"));
+    for (const o of Object.values(d.cells)) for (const x of removed) assert.ok(!(x in o), `the data file still has a cell for removed shop ${x}`);
+  }
+  assert.deepStrictEqual(pageBuilder.check(ROOT), []);                                           // the page agrees with the list in either state
+});
+
+test("regenerating the list keeps a removed shop out and keeps the switched-on statements", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "bk-gen-")), pinned = path.join(dir, "pinned.json"), out = path.join(dir, "list.json");
+  const c = (shop, id) => ({ shop, id, name: `${shop} milk`, pack: "2L", url: `https://example.com/${shop}/${id}`, quality: "comparable own-label", size_value: 2000, size_unit: "ml" });
+  fs.writeFileSync(pinned, JSON.stringify([{ slot: "milk-semi-2l", category: "dairy-eggs", variant: "own-label", cells: [c("aldi", "1"), c("asda", "2"), c("sainsburys", "3"), c("tesco", "4")] }]));
+  const gen = () => cp.spawnSync("python", ["-I", path.join(ROOT, "docs/release/make_basket_pilot_list.py"), pinned, "--out", out], { encoding: "utf8" });
+  let r = gen(); assert.strictEqual(r.status, 0, r.stderr);
+  let list = JSON.parse(fs.readFileSync(out, "utf8"));
+  assert.deepStrictEqual(list.removedShops, []); assert.deepStrictEqual(Object.keys(list.items[0].cells), ["aldi", "asda", "sainsburys", "tesco"]);
+  list.removedShops = ["asda"]; list.statements.dailyRead = true; delete list.items[0].cells.asda;
+  fs.writeFileSync(out, JSON.stringify(list));
+  r = gen(); assert.strictEqual(r.status, 0, r.stderr); assert.match(r.stdout, /removed shops kept out: asda/);
+  list = JSON.parse(fs.readFileSync(out, "utf8"));
+  assert.deepStrictEqual(list.removedShops, ["asda"]); assert.strictEqual(list.statements.dailyRead, true);
+  assert.deepStrictEqual(Object.keys(list.items[0].cells), ["aldi", "sainsburys", "tesco"]);     // the entry does not come back
+  assert.ok(!fs.readFileSync(out, "utf8").includes("example.com/asda"));
+  for (const bad of ['{"removedShops":["lidl"]}', "not json"]) {
+    fs.writeFileSync(out, bad);
+    r = gen(); assert.strictEqual(r.status, 1); assert.match(r.stderr, /NOTHING WRITTEN/); assert.strictEqual(fs.readFileSync(out, "utf8"), bad);
+  }
+});
+
+test("a product link is used only if it is https on that shop's own site; two shops read as 'both'", () => {
+  assert.strictEqual(B.shopUrl("asda", "https://www.asda.com/groceries/product/x/1"), "https://www.asda.com/groceries/product/x/1");
+  for (const u of ["http://www.asda.com/x", "https://www.asda.com.evil.example/x", "https://evil@www.asda.com/x", "https://www.asda.com:8443/x", "javascript:alert(1)", "//www.asda.com/x", "", null, "https://www.tesco.com/x"]) assert.strictEqual(B.shopUrl("asda", u), "");
+  assert.strictEqual(B.shopUrl("lidl", "https://www.lidl.co.uk/x"), "");
+  const live = JSON.parse(fs.readFileSync(path.join(ROOT, pilot.LIST), "utf8"));
+  for (const it of live.items) for (const [s, c] of Object.entries(it.cells)) assert.ok(B.shopUrl(s, c.url), `${it.id}/${s} link refused`);
+  assert.strictEqual(B.allWord(2), "both"); assert.strictEqual(B.allWord(3), "all three"); assert.strictEqual(B.allWord(4), "all four");
 });
