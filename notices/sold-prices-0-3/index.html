@@ -39,7 +39,7 @@
 <main id="main" tabindex="-1">
 <header>
   <h1>Notice: sold-prices mode changes in version 0.3 (not before 27 November 2026)</h1>
-  <p class="sub">UK Property Listings on the Apify Store. First posted 5 October 2026. Amended 27 October 2026.</p>
+  <p class="sub">UK Property Listings on the Apify Store. First posted 5 October 2026. Amended 27 October 2026. Price line corrected 17 November 2026.</p>
 </header>
 <p class="meta" id="affiliate-disclosure">Some links to Apify are affiliate links: if you sign up through them we may earn a commission.</p>
 
@@ -57,7 +57,7 @@
   <li><strong>Every registered sale</strong> in the chosen category (standard-price sales by default), with no per-area limit. The 1,000-rows-per-run ceiling and <code>maxItems</code> stay. HM Land Registry registers sales weeks to months after completion, so the newest months are always incomplete.</li>
   <li><strong>Standard sales by default</strong> (HM Land Registry's category A, the sales Rightmove's sold pages show). <code>saleCategory: "additional"</code> (repossessions, buy-to-let and company purchases, and transfers not at market value) or <code>"any"</code> widens it.</li>
   <li><strong>Bedrooms and bathrooms are opt-in</strong> (<code>includeBedsBaths</code>, off by default), filled only where a sale matches Rightmove's sold record exactly, so they are often empty.</li>
-  <li><strong>Price.</strong> From version 0.3, <code>sold-price</code> falls from $3.00 to $2.00 per 1,000 rows (higher plans $1.80, $1.60 and $1.40 per 1,000), plus the per-run start event, only when rows are returned. Until 0.3 is released, sold-price rows stay at $3.00 per 1,000.</li>
+  <li><strong>Price.</strong> <code>sold-price</code> rows already cost $2.00 per 1,000 (higher plans $1.80, $1.60 and $1.40 per 1,000), plus the per-run start event, only when rows are returned. The price fell from $3.00 on 9 November 2026, ahead of 0.3; 0.3 brings the Actor&rsquo;s own description into line with it. (Corrected 17 November 2026: this line said the $3.00 price stayed until 0.3.)</li>
 </ul>
 
 <h2>What does not change</h2>
