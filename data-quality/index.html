@@ -162,7 +162,7 @@
   <ul>
     <li>Aldi publishes no stock status (<code>inStock</code> is null).</li>
     <li>Coles answers about 80 requests per run, so a run returns at most a few thousand Coles products (about 75 with barcode lookup on), not the whole range; the weekly Coles snapshot behind the AU index reads staples first.</li>
-    <li>Woolworths prices are for the store Woolworths assigns to a logged-out session: usually 1101, sometimes a regional store, which changes the range (4 of 21 scheduled canary runs from 26 September to 16 October 2026, all before AU 0.1.13, which retries for the national store). Every row records its store in <code>storeId</code>; the weekly snapshot and the AU index use store 1101 only.</li>
+    <li>Woolworths prices are for the store Woolworths assigns to a session that sends no login, account or loyalty credential: usually 1101, sometimes a regional store, which changes the range (4 of 21 scheduled canary runs from 26 September to 16 October 2026, all before AU 0.1.13, which retries for the national store). Every row records its store in <code>storeId</code>; the weekly snapshot and the AU index use store 1101 only.</li>
     <li>Special Buys are returned by their own mode; the weekly Aldi snapshot behind the AU index covers the regular range only.</li>
   </ul>
 </div></section>
