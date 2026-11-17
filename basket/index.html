@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Basket check: everyday items at Aldi, Asda, Sainsbury's and Tesco — Yappman Data</title>
+<meta name="description" content="A pilot: pick items from a list of 98 and see each shop's total at Aldi, Asda, Sainsbury's and Tesco, with the date the prices were read and how the items were matched.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/basket.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="Basket check: everyday items at Aldi, Asda, Sainsbury's and Tesco — Yappman Data">
+<meta property="og:description" content="A pilot: pick items from a list of 98 and see each shop's total at Aldi, Asda, Sainsbury's and Tesco, with the date the prices were read and how the items were matched.">
+<meta property="og:url" content="https://data.yappman.com/basket/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://data.yappman.com/basket/">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main" class="mainnav">
+  <a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <ul class="nav-list" id="site-menu">
+    <li class="nav-group mega"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-data" aria-haspopup="true">Data<span class="caret" aria-hidden="true"></span></button><div class="panel panel-mega" id="panel-data"><div class="panel-cols"><div class="panel-col"><h3 class="panel-h">Price data</h3><ul><li><a class="mi" href="https://apify.com/yappman/uk-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK supermarket prices</span><span class="badge live">Latest</span></span><span class="mi-desc">Weekly catalogue and a daily 212-item basket.</span></a></li><li><a class="mi" href="https://apify.com/yappman/au-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">AU supermarket prices</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Aldi Australia shelf prices by keyword, category or product page.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-property-listings" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK property listings</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Rightmove and OnTheMarket listings, plus Rightmove sold prices.</span></a></li><li><a class="mi" href="https://apify.com/yappman/google-hotels-prices" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Google Hotels rates</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Google Hotels results and per-booking-site rates, by city or hotel.</span></a></li></ul></div><div class="panel-col"><h3 class="panel-h">Open data</h3><ul><li><a class="mi" href="https://apify.com/yappman/contracts-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Public contracts</span><span class="badge live">Latest</span></span><span class="mi-desc">Search UK public procurement notices. $0.005 a notice ($5.00 per 1,000) plus $0.005 a run.</span></a></li><li><a class="mi" href="https://apify.com/yappman/lei-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">LEI lookup</span><span class="badge live">Latest</span></span><span class="mi-desc">Legal Entity Identifier records by LEI, name or registration status. $0.002 an entity ($2.00 per 1,000), no start fee.</span></a></li><li><a class="mi" href="https://apify.com/yappman/cricos-register" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">CRICOS register lookup (Australia)</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Australian education providers registered to enrol overseas students: one row each with type, state, postcode, city, capacity and course counts. $0.002 a row ($2.00 per 1,000), no start fee. Not affiliated with the Department of Education.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-importers-exporters" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK importers and exporters</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">HMRC trade lists by month, under the Open Government Licence. $0.005 a run plus $0.002 a trader row. Not affiliated with HMRC.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-sponsor-register-changes" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK sponsor register changes</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Dated changes to the UK register of licensed sponsors, one row per change. $0.003 a change row ($3.00 per 1,000), no start fee. Not affiliated with the Home Office or UK Visas and Immigration.</span></a></li><li><a class="mi" href="https://apify.com/yappman/cqc-register" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">CQC England care locations</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Search and look up care locations in the CQC directory for England, and list what changed between its files. $0.005 a run plus $0.004 a location or $0.003 a change. Not affiliated with the Care Quality Commission.</span></a></li></ul></div></div><div class="panel-foot"><a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener">Free basket snapshot, monthly (Kaggle)</a><a href="/methodology/#delivery">Delivery &amp; formats</a></div></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-indices" aria-haspopup="true">Indices<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-indices"><ul><li><a class="mi" href="/shelf-price-index/"><span class="mi-top"><span class="mi-name">UK Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/au-shelf-price-index/"><span class="mi-top"><span class="mi-name">AU Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/methodology/#indices"><span class="mi-top"><span class="mi-name">How the indices are built</span></span></a></li></ul></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-trust" aria-haspopup="true">Trust<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-trust"><ul><li><a class="mi" href="/data-quality/"><span class="mi-top"><span class="mi-name">Data quality</span></span></a></li><li><a class="mi" href="/methodology/"><span class="mi-top"><span class="mi-name">Methodology</span></span></a></li><li><a class="mi" href="/notices/"><span class="mi-top"><span class="mi-name">Notices (change log)</span></span></a></li><li><a class="mi" href="/press/#licence"><span class="mi-top"><span class="mi-name">Licence &amp; reuse</span></span></a></li><li><a class="mi" href="/#trust"><span class="mi-top"><span class="mi-name">Check schedule</span></span></a></li></ul></div></li>
+    <li class="nav-plain"><a href="/#pricing">Pricing</a></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-resources" aria-haspopup="true">Resources<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-resources"><ul><li><a class="mi" href="/demos/"><span class="mi-top"><span class="mi-name">Demos</span></span></a></li><li><a class="mi" href="https://github.com/yappmaniac/yappman-examples" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Examples (GitHub)</span></span></a></li><li><a class="mi" href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Kaggle dataset</span></span></a></li><li><a class="mi" href="/sold-prices/"><span class="mi-top"><span class="mi-name">Median sold prices by postcode district</span></span></a></li><li><a class="mi" href="/rental-yield/"><span class="mi-top"><span class="mi-name">Gross rental yield by local authority</span></span></a></li><li><a class="mi" href="https://yappman.substack.com/" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Newsletter (Substack)</span></span></a></li><li><a class="mi" href="https://dev.to/yappman" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Articles (dev.to)</span></span></a></li><li><a class="mi" href="/press/"><span class="mi-top"><span class="mi-name">Press</span></span></a></li></ul></div></li>
+    <li class="nav-cta"><a class="btn btn-primary" href="/#contact">Request a sample</a></li>
+  </ul>
+</nav>
+</div></div>
+<main id="main" tabindex="-1">
+<header>
+  <h1>Basket check: everyday items at Aldi, Asda, Sainsbury&rsquo;s and Tesco</h1>
+  <p class="sub">A pilot. Pick items and see each shop&rsquo;s total for your list.</p>
+</header>
+
+<div id="bk-root">
+<p id="bk-status" role="status">Loading prices&hellip;</p>
+<noscript><p>This page needs JavaScript to show the list and the totals. Nothing is sent anywhere and no cookies are set.</p></noscript>
+<p id="bk-head"></p>
+<div class="box notice" id="bk-stale" hidden></div>
+<p>Aldi, Asda, Sainsbury&rsquo;s and Tesco are listed in alphabetical order; the order is not a ranking. <a href="#how-this-works">How this works</a> explains how we compare and shows every product and size. Morrisons is not in this comparison.</p>
+<p class="meta" id="bk-share-note" hidden></p>
+
+<h2 id="your-list">Your list</h2>
+<label for="bk-search"><strong>Search the list</strong> (item, group or brand)</label><br>
+<input id="bk-search" type="search" autocomplete="off">
+<div id="bk-opts"></div>
+<p><label><input type="checkbox" id="bk-remember"> Remember my list and settings on this device (kept in your browser only; nothing is sent anywhere)</label></p>
+<div id="bk-result" aria-live="polite"></div>
+<div id="bk-tools"></div>
+<pre id="bk-printsheet"></pre>
+
+<h2 id="items">The list, item by item</h2>
+<div id="bk-list"></div>
+</div>
+
+<h2 id="how-this-works">How this works</h2>
+<p><strong>What this is.</strong> A like-for-like check of 98 everyday items that we chose, at four shops. It is not a survey of every product and it does not show which shop is lowest overall.</p>
+<p id="matching"><strong>How items were chosen.</strong> We wrote the list by hand: common staples at common sizes. Premium, organic, free-from and flavoured lines are left out. Products were never chosen by price. Each item is either the same branded product at each shop (&ldquo;same product&rdquo;) or each shop&rsquo;s own standard product of the same kind and size (&ldquo;comparable own-label&rdquo;). Comparable own-label is our judgement about the kind of product, not its quality or recipe. A person checked every match on 17 November 2026. The full list, with each product&rsquo;s name and pack size at each shop, is above.</p>
+<p><strong>Prices.</strong> Each price is for one item without a loyalty card, as read without signing in. A temporary price cut is already included. Multi-buy offers, vouchers and personal offers are never applied. Loyalty-card prices are left out unless you switch them on on this page. An Aldi price may be a cut that is not marked. Where an offer is listed for an item, the cell says so. Totals are for goods only: no delivery, collection or bag charges and no minimum spend. Unit prices are worked out by us from the price and the pack size shown.</p>
+<p><strong>Where.</strong> Tesco and Sainsbury&rsquo;s: prices are read with no store chosen. Asda and Aldi: prices are read for one fixed store or service area, so they may differ from the price at your local store. Prices in smaller-format stores or for your address can differ. Aldi stock is not shown in our data.</p>
+
+<p><strong>When.</strong> Shops change prices during the day. The shop&rsquo;s own price at the till or checkout is the one that counts.</p>
+<p><strong>Sizes.</strong> Same-product packs are within 3% in size. Comparable own-label packs are the same stated size; where a size differs the cell says so and is left out of totals unless you choose to include it.</p>
+<p><strong>Changes.</strong> If a product disappears we show &ldquo;no matching product&rdquo; until a person picks a replacement; replacements and corrections are listed with dates below. Corrections so far: none.</p>
+<p><strong>Who we are and how this is paid for.</strong> We are Yappman Data; the company name, number and registered office are in the footer of every page, and our email address is info@yappman.com. The page is free. No shop pays us or supplies us, and there are no shop affiliate links here. We sell data tools and data licences, described on the <a href="/licences/">licences page</a>.</p>
+<p>Not advice, not a government statistic, not a measure of what people paid.</p>
+
+<p class="meta">Aldi, Asda, Sainsbury&rsquo;s and Tesco are named only to say where each price was read. Morrisons is named only to say it is not included. We are not affiliated with, endorsed by or supplied by any of them, and we do not have their permission. Clubcard Prices and Nectar Prices are the shops&rsquo; own scheme names. Product and brand names belong to their owners.</p>
+<p class="meta">To correct a price or match, write to <a href="mailto:info@yappman.com">info@yappman.com</a>; we normally reply within one working day. If a shop asks us in writing to stop, we stop collecting and showing its prices the day we read the message.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a><p>Price data kept as first published.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a><a href="/actors/">Our Actors</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a><a href="https://www.youtube.com/@yappmandata" rel="noopener">YouTube</a><a href="https://bsky.app/profile/yappmandata.bsky.social" rel="noopener">Bluesky</a></div>
+  </div>
+  <div class="foot-legal">
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/assets/site.js" defer></script>
+<script src="/assets/basket.js" defer></script>
+</body>
+</html>

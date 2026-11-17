@@ -1,0 +1,18 @@
+/* Basket check page. Uses the site's own colours; no external fonts or images. */
+#bk-root .bk-cell { min-width: 11rem; vertical-align: top; }
+#bk-root .bk-label { font-size: .8rem; margin-top: .2rem; }
+#bk-root .bk-u, #bk-root .bk-v, #bk-root .bk-d { font-style: italic; }
+#bk-root input[type=number], #bk-root input[type=search] { background: transparent; color: inherit; border: 1px solid currentColor; border-radius: 4px; }
+#bk-root input[type=number] { width: 4.5rem; padding: .25rem; }
+#bk-root #bk-search { width: 100%; max-width: 28rem; padding: .5rem; font: inherit; }
+#bk-result { border: 1px solid currentColor; border-radius: 6px; padding: .75rem 1rem; margin: 1rem 0; }
+#bk-result .bk-mark { font-weight: 700; }
+#bk-opts label { display: inline-block; margin: .15rem 0; }
+#bk-tools .btn { margin: .25rem .5rem .25rem 0; }
+#bk-printsheet { display: none; white-space: pre-wrap; font-family: inherit; }
+@media (min-width: 900px) { #bk-result { position: sticky; top: 0; background: var(--bg, Canvas); z-index: 2; } }
+@media print {
+  body * { display: none !important; }
+  #bk-printsheet, #bk-printsheet * { display: block !important; }
+  #bk-printsheet { margin: 0; font-size: 11pt; }
+}
