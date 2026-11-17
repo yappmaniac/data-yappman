@@ -27,11 +27,11 @@ const REFDATA = () => ({
   claims: {
     "weekly-start": { confirmed: true, source: "licences" }, "daily-basket-start": { confirmed: true, source: "methodology" },
     "snapshot-rows": { confirmed: true, source: "method" }, "morrisons-from-w44": { confirmed: true, source: "licences" },
-    "w41-three-retailers": { confirmed: true, source: "notice" }, "actor-history-sentence": { confirmed: true, source: "README" }, "morrisons-no-price-history": { confirmed: true, source: "UK session code evidence" },
+    "w41-three-retailers": { confirmed: true, source: "notice" }, "actor-history-sentence": { confirmed: true, source: "README" }, "morrisons-no-price-history": { confirmed: true, source: "UK session code evidence" }, "supply-floor": { confirmed: true, source: "decision 17 Nov" },
     "aldi-w41": { confirmed: false, source: "" }, "morrisons-w44-w45": { confirmed: false, source: "" },
   },
   uk: {
-    weeklyStart: { claim: "weekly-start", week: "2026-W39", date: "2026-09-27" }, dailyBasketStart: { claim: "daily-basket-start", date: "2026-09-24" },
+    weeklyStart: { claim: "weekly-start", week: "2026-W39", date: "2026-09-27" }, supplyFrom: { claim: "supply-floor", week: "2026-W42", date: "2026-10-18" }, dailyBasketStart: { claim: "daily-basket-start", date: "2026-09-24" },
     snapshotRows: { claim: "snapshot-rows", sentence: "Over 75,000 products a week in the weekly snapshots (75,835 in the week 43 snapshot of 25 October 2026)." },
     retailers: [
       { id: "tesco", name: "Tesco", inIndex: true, heldFrom: "2026-W39", notHeld: ["2026-W41"], notHeldClaim: "w41-three-retailers" },
@@ -106,7 +106,7 @@ test("a claim marked confirmed without a source stops the build", () => {
 });
 
 test("a mandatory claim that is not confirmed stops the build", () => {
-  for (const id of ["weekly-start", "daily-basket-start", "snapshot-rows", "actor-history-sentence", "morrisons-no-price-history"]) {
+  for (const id of ["weekly-start", "daily-basket-start", "snapshot-rows", "actor-history-sentence", "morrisons-no-price-history", "supply-floor"]) {
     const ref = REFDATA(); ref.claims[id] = { confirmed: false, source: "" };
     assert.throws(() => build(site(ref)), new RegExp(`claim ${id} is used on the page but is not confirmed`));
   }
@@ -142,7 +142,8 @@ test("a confirmed not-held week needs a notice link", () => {
 
 test("the page says nothing earlier exists, makes no forward statement and keeps the rights wording", () => {
   const p = page(site());
-  assert.match(p, /Nothing was collected before those dates, so there are no earlier weeks to supply, and we do not estimate or backfill them\./);
+  assert.match(p, /Nothing was collected before those dates, and we do not estimate or backfill them\. The licensed weekly files and the Actor&rsquo;s price history start at week 42 of 2026 \(the collection of 18 October 2026\) for Tesco, Sainsbury&rsquo;s, Asda and Aldi\. The weeks before it are held but not supplied: the run records for those weeks no longer exist, so we cannot show whether a proxy was used, and we supply raw files only for retailers read direct\. Morrisons is held from week 44 of 2026 and is not part of the licensed files for now\./);
+  assert.doesNotMatch(p, /no earlier weeks to supply|from ISO week 39/);
   assert.match(p, /27 September 2026 and the daily basket on 24 September 2026 \(it has no run on 25 September\)/);
   assert.doesNotMatch(p, /2027/); assert.doesNotMatch(p, /official|cheapest|complete data/i);
   assert.match(p, /no affiliation, endorsement or partnership is claimed/); assert.match(p, /not CPI and not a measure of prices paid/);
@@ -152,7 +153,7 @@ test("the page says nothing earlier exists, makes no forward statement and keeps
 
 test("the Actor paragraph keeps the supplied sentence and adds the clarifying clause about Morrisons", () => {
   const p = page(site());
-  assert.match(p, /\(week 41 is missing at Tesco, Sainsbury&rsquo;s and Asda; there are none for Morrisons\)\. The Actor builds no weekly report\./);
+  assert.match(p, /from ISO week 42 of 2026 \(there are none for Morrisons\)\. Earlier weeks are not returned: the run records for those weeks no longer exist, so we cannot show whether a proxy was used\. The Actor builds no weekly report\./);
   assert.match(p, /Price history is not offered for Morrisons yet, so its rows carry an empty price history and are never charged for it; the Morrisons weekly snapshots we hold \(from 2026-W44\) are not yet part of that\./);
   const ref = REFDATA(); ref.uk.retailers[4].heldFrom = "2026-W45";
   assert.match(page(site(ref)), /weekly snapshots we hold \(from 2026-W45\)/);              // follows the reference file
@@ -196,4 +197,14 @@ test("the command line: write, check, and a clean refusal with nothing written",
 test("no network is used", () => {
   const src = fs.readFileSync(SCRIPT, "utf8");
   assert.doesNotMatch(src, /require\("(https?|net|dns)"\)|fetch\(|XMLHttpRequest|Date\.now\(|new Date\(\)/);
+});
+
+
+test("the supply floor is checked: a missing claim or a week before collection began stops the build", () => {
+  const ref = REFDATA(); ref.claims["supply-floor"].confirmed = false;
+  assert.throws(() => build(site(ref)), /supply-floor/);
+  const ref2 = REFDATA(); ref2.uk.supplyFrom.week = "2026-W38";
+  assert.throws(() => build(site(ref2)), /supplyFrom 2026-W38 is not a week on or after the weekly start/);
+  const ref3 = REFDATA(); ref3.uk.supplyFrom = { claim: "supply-floor", week: "2026-W43", date: "2026-10-25" };
+  assert.match(page(site(ref3)), /start at week 43 of 2026 \(the collection of 25 October 2026\)/);
 });

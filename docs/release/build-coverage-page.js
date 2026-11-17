@@ -21,7 +21,7 @@ const TEMPLATE = "notices/w41-skipped/index.html";
 const SITE = "https://data.yappman.com";
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const WEEK_RE = /^\d{4}-W(0[1-9]|[1-4]\d|5[0-3])$/;
-const MANDATORY = ["weekly-start", "daily-basket-start", "snapshot-rows", "actor-history-sentence", "morrisons-no-price-history"];
+const MANDATORY = ["weekly-start", "daily-basket-start", "snapshot-rows", "actor-history-sentence", "morrisons-no-price-history", "supply-floor"];
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const num = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 const longDate = d => { if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) throw new Error(`bad date "${d}"`); const [y, m, dd] = d.split("-").map(Number); return `${dd} ${MONTHS[m - 1]} ${y}`; };
@@ -77,8 +77,9 @@ function load(root) {
   const confirmed = id => { if (!(id in ref.claims)) throw new Error(`${REF}: claim ${id} does not exist`); return ref.claims[id].confirmed === true; };
   const need = id => { if (!confirmed(id)) throw new Error(`${REF}: claim ${id} is used on the page but is not confirmed with a source`); };
   for (const id of MANDATORY) need(id);
-  need(ref.uk.weeklyStart.claim); need(ref.uk.dailyBasketStart.claim); need(ref.uk.snapshotRows.claim);
-  longDate(ref.uk.weeklyStart.date); longDate(ref.uk.dailyBasketStart.date);
+  need(ref.uk.weeklyStart.claim); need(ref.uk.dailyBasketStart.claim); need(ref.uk.snapshotRows.claim); need(ref.uk.supplyFrom.claim);
+  longDate(ref.uk.weeklyStart.date); longDate(ref.uk.dailyBasketStart.date); longDate(ref.uk.supplyFrom.date);
+  if (!WEEK_RE.test(ref.uk.supplyFrom.week) || ref.uk.supplyFrom.week < ref.uk.weeklyStart.week) throw new Error(`${REF}: supplyFrom ${ref.uk.supplyFrom.week} is not a week on or after the weekly start`);
   if (!WEEK_RE.test(ref.uk.weeklyStart.week) || ref.uk.weeklyStart.week !== uk.first) throw new Error(`${REF}: weeklyStart ${ref.uk.weeklyStart.week} is not the first UK index week ${uk.first}`);
   for (const [mk, m] of [["uk", uk], ["au", au]]) {
     for (const r of ref[mk].retailers) {
@@ -151,13 +152,17 @@ function body(d) {
   const cell = (m, w) => { const x = m.weeks.find(v => v.week === w); return x ? (x.matched === null ? "base week" : num(x.matched)) : "&mdash;"; };
   const matchRows = allWeeks.map(w => `<tr><td>${esc(w)}</td><td class="num">${cell(uk, w)}</td><td class="num">${cell(au, w)}</td></tr>`).join("\n");
   const start = longDate(ref.uk.weeklyStart.date), daily = longDate(ref.uk.dailyBasketStart.date);
+  const sf = ref.uk.supplyFrom, sfWeek = `week ${Number(sf.week.slice(6))} of ${sf.week.slice(0, 4)}`;
+  const whyRecords = "the run records for those weeks no longer exist, so we cannot show whether a proxy was used";
+  const whyFiles = `${whyRecords}, and we supply raw files only for retailers read direct`;
   // sentences that follow the reference file, so they cannot go stale when a fact changes
   const gapWeeks = [...new Set(ref.uk.retailers.filter(r => r.notHeldClaim && d.confirmed(r.notHeldClaim)).flatMap(r => r.notHeld))].sort();
   const gapSentence = gapWeeks.length ? `The ${gapWeeks.length === 1 ? "gap" : "gaps"} in ${gapWeeks.map(notice).join(" and ")} ${gapWeeks.length === 1 ? "is" : "are"} explained in the linked ${gapWeeks.length === 1 ? "notice" : "notices"}. ` : "";
   const outside = ref.uk.retailers.filter(r => !r.inIndex);
   const outsideSentence = outside.map(r => `${esc(r.name)} is held from week ${Number(r.heldFrom.slice(6))} of ${esc(r.heldFrom.slice(0, 4))}${r.inIndex ? "" : " and is not yet in the index"}.`).join(" ");
   const outsideShort = outside.map(r => `${esc(r.name)} is held from week ${Number(r.heldFrom.slice(6))} of ${esc(r.heldFrom.slice(0, 4))}.`).join(" ");
-  const actor = `With the includePriceHistory option, the search, category and product rows of our <a href="${AFF.withParam("https://apify.com/yappman/uk-supermarket-price-scraper?utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=coverage")}" rel="${AFF.REL}">UK Supermarket &amp; Grocery Prices</a> Actor on the Apify Store carry the product&rsquo;s weekly snapshot prices, newest first, up to 52 weeks, from ISO week 39 of 2026 (week 41 is missing at Tesco, Sainsbury&rsquo;s and Asda; there are none for Morrisons). The Actor builds no weekly report.${outside.length ? ` Price history is not offered for ${outside.map(r => esc(r.name)).join(" and ")} yet, so ${outside.length === 1 ? "its rows carry" : "their rows carry"} an empty price history and are never charged for it; the ${outside.map(r => esc(r.name)).join(" and ")} weekly snapshots we hold (from ${outside.map(r => esc(r.heldFrom)).join(" and ")}) are not yet part of that.` : ""}`;
+  const outsideSupply = outside.map(r => `${esc(r.name)} is held from week ${Number(r.heldFrom.slice(6))} of ${esc(r.heldFrom.slice(0, 4))} and is not part of the licensed files for now.`).join(" ");
+  const actor = `With the includePriceHistory option, the search, category and product rows of our <a href="${AFF.withParam("https://apify.com/yappman/uk-supermarket-price-scraper?utm_source=data.yappman.com&amp;utm_medium=referral&amp;utm_campaign=coverage")}" rel="${AFF.REL}">UK Supermarket &amp; Grocery Prices</a> Actor on the Apify Store carry the product&rsquo;s weekly snapshot prices, newest first, up to 52 weeks, from ISO ${esc(sfWeek)} (there are none for Morrisons). Earlier weeks are not returned: ${whyRecords}. The Actor builds no weekly report.${outside.length ? ` Price history is not offered for ${outside.map(r => esc(r.name)).join(" and ")} yet, so ${outside.length === 1 ? "its rows carry" : "their rows carry"} an empty price history and are never charged for it; the ${outside.map(r => esc(r.name)).join(" and ")} weekly snapshots we hold (from ${outside.map(r => esc(r.heldFrom)).join(" and ")}) are not yet part of that.` : ""}`;
   return `<header>
   <h1>How much history we hold</h1>
   <p class="sub">The weeks of shelf-price snapshots we hold, by retailer, and what exists before them. Weekly, not real time. These are posted online shelf prices, not prices paid.</p>
@@ -193,7 +198,7 @@ ${matchRows}
 </tbody></table></div>
 
 <h2 id="before">Why there is nothing earlier</h2>
-<p>We began collecting the weekly UK snapshots on ${esc(start)} and the daily basket on ${esc(daily)} (it has no run on 25 September). Nothing was collected before those dates, so there are no earlier weeks to supply, and we do not estimate or backfill them. ${outsideShort}</p>
+<p>We began collecting the weekly UK snapshots on ${esc(start)} and the daily basket on ${esc(daily)} (it has no run on 25 September). Nothing was collected before those dates, and we do not estimate or backfill them. The licensed weekly files and the Actor&rsquo;s price history start at ${esc(sfWeek)} (the collection of ${esc(longDate(sf.date))}) for Tesco, Sainsbury&rsquo;s, Asda and Aldi. The weeks before it are held but not supplied: ${whyFiles}. ${outsideSupply}</p>
 
 <h2 id="daily">The daily basket</h2>
 <p>The daily 212-item basket is a public dataset under CC BY 4.0, with history from ${esc(daily)}; a monthly snapshot of it is also on Kaggle.</p>
