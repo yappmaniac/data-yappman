@@ -21,6 +21,9 @@ const TEMPLATE = "notices/w41-skipped/index.html";
 const SITE = "https://data.yappman.com";
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const WEEK_RE = /^\d{4}-W(0[1-9]|[1-4]\d|5[0-3])$/;
+// The Sunday (last day) of an ISO week, as yyyy-mm-dd. Week 1 is the week with 4 January in it.
+const sundayOf = wk => { const y = Number(wk.slice(0, 4)), w = Number(wk.slice(6)); const jan4 = Date.UTC(y, 0, 4); const dow = (new Date(jan4).getUTCDay() + 6) % 7;
+  return new Date(jan4 - dow * 86400000 + (w - 1) * 7 * 86400000 + 6 * 86400000).toISOString().slice(0, 10); };
 const MANDATORY = ["weekly-start", "daily-basket-start", "snapshot-rows", "actor-history-sentence", "morrisons-no-price-history", "supply-floor"];
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const num = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -80,6 +83,7 @@ function load(root) {
   need(ref.uk.weeklyStart.claim); need(ref.uk.dailyBasketStart.claim); need(ref.uk.snapshotRows.claim); need(ref.uk.supplyFrom.claim);
   longDate(ref.uk.weeklyStart.date); longDate(ref.uk.dailyBasketStart.date); longDate(ref.uk.supplyFrom.date);
   if (!WEEK_RE.test(ref.uk.supplyFrom.week) || ref.uk.supplyFrom.week < ref.uk.weeklyStart.week) throw new Error(`${REF}: supplyFrom ${ref.uk.supplyFrom.week} is not a week on or after the weekly start`);
+  if (sundayOf(ref.uk.supplyFrom.week) !== ref.uk.supplyFrom.date) throw new Error(`${REF}: supplyFrom date ${ref.uk.supplyFrom.date} is not the Sunday of ${ref.uk.supplyFrom.week} (${sundayOf(ref.uk.supplyFrom.week)})`);
   if (!WEEK_RE.test(ref.uk.weeklyStart.week) || ref.uk.weeklyStart.week !== uk.first) throw new Error(`${REF}: weeklyStart ${ref.uk.weeklyStart.week} is not the first UK index week ${uk.first}`);
   for (const [mk, m] of [["uk", uk], ["au", au]]) {
     for (const r of ref[mk].retailers) {
@@ -198,7 +202,7 @@ ${matchRows}
 </tbody></table></div>
 
 <h2 id="before">Why there is nothing earlier</h2>
-<p>We began collecting the weekly UK snapshots on ${esc(start)} and the daily basket on ${esc(daily)} (it has no run on 25 September). Nothing was collected before those dates, and we do not estimate or backfill them. The licensed weekly files and the Actor&rsquo;s price history start at ${esc(sfWeek)} (the collection of ${esc(longDate(sf.date))}) for Tesco, Sainsbury&rsquo;s, Asda and Aldi. The weeks before it are held but not supplied: ${whyFiles}. ${outsideSupply}</p>
+<p>We began collecting the weekly UK snapshots on ${esc(start)} and the daily basket on ${esc(daily)} (it has no run on 25 September). Nothing was collected before those dates, and we do not estimate or backfill them. The licensed weekly files and the Actor&rsquo;s price history start at ${esc(sfWeek)} (the collection of ${esc(longDate(sf.date))}) for Tesco, Sainsbury&rsquo;s, Asda and Aldi. The earlier weeks we hold are not supplied: ${whyFiles}. ${outsideSupply}</p>
 
 <h2 id="daily">The daily basket</h2>
 <p>The daily 212-item basket is a public dataset under CC BY 4.0, with history from ${esc(daily)}; a monthly snapshot of it is also on Kaggle.</p>

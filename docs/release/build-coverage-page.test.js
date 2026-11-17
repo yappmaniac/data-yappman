@@ -142,7 +142,7 @@ test("a confirmed not-held week needs a notice link", () => {
 
 test("the page says nothing earlier exists, makes no forward statement and keeps the rights wording", () => {
   const p = page(site());
-  assert.match(p, /Nothing was collected before those dates, and we do not estimate or backfill them\. The licensed weekly files and the Actor&rsquo;s price history start at week 42 of 2026 \(the collection of 18 October 2026\) for Tesco, Sainsbury&rsquo;s, Asda and Aldi\. The weeks before it are held but not supplied: the run records for those weeks no longer exist, so we cannot show whether a proxy was used, and we supply raw files only for retailers read direct\. Morrisons is held from week 44 of 2026 and is not part of the licensed files for now\./);
+  assert.match(p, /Nothing was collected before those dates, and we do not estimate or backfill them\. The licensed weekly files and the Actor&rsquo;s price history start at week 42 of 2026 \(the collection of 18 October 2026\) for Tesco, Sainsbury&rsquo;s, Asda and Aldi\. The earlier weeks we hold are not supplied: the run records for those weeks no longer exist, so we cannot show whether a proxy was used, and we supply raw files only for retailers read direct\. Morrisons is held from week 44 of 2026 and is not part of the licensed files for now\./);
   assert.doesNotMatch(p, /no earlier weeks to supply|from ISO week 39/);
   assert.match(p, /27 September 2026 and the daily basket on 24 September 2026 \(it has no run on 25 September\)/);
   assert.doesNotMatch(p, /2027/); assert.doesNotMatch(p, /official|cheapest|complete data/i);
@@ -205,6 +205,8 @@ test("the supply floor is checked: a missing claim or a week before collection b
   assert.throws(() => build(site(ref)), /supply-floor/);
   const ref2 = REFDATA(); ref2.uk.supplyFrom.week = "2026-W38";
   assert.throws(() => build(site(ref2)), /supplyFrom 2026-W38 is not a week on or after the weekly start/);
+  const ref4 = REFDATA(); ref4.uk.supplyFrom.date = "2026-10-12";
+  assert.throws(() => build(site(ref4)), /supplyFrom date 2026-10-12 is not the Sunday of 2026-W42 \(2026-10-18\)/);
   const ref3 = REFDATA(); ref3.uk.supplyFrom = { claim: "supply-floor", week: "2026-W43", date: "2026-10-25" };
   assert.match(page(site(ref3)), /start at week 43 of 2026 \(the collection of 25 October 2026\)/);
 });
