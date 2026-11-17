@@ -128,7 +128,7 @@
   </details>
   <p style="margin-top:14px">Weekly UK Online Shelf-Price Index: <a href="https://data.yappman.com/shelf-price-index">https://data.yappman.com/shelf-price-index</a></p>
   <p>Weekly AU Online Shelf-Price Index: <a href="/au-shelf-price-index/">https://data.yappman.com/au-shelf-price-index</a>.</p>
-  <p class="sub">Licensed files start at week 42 of 2026 (the collection of 18 October 2026) and grow by one week each week. Weeks 39 to 41 were collected but are not supplied: the run records for those weeks no longer exist, so we cannot show whether a proxy was used, and we supply raw files only for retailers read direct; week 41 is also incomplete for Tesco, Sainsbury&rsquo;s and Asda (<a href="/notices/w41-skipped/">see the notice</a>). Morrisons is not part of the licensed files for now. Published index values are not revised except to correct an error. A one-month paid pilot is offered in the same files as the paid product (see <a href="/licences/#pilot">licences</a>).</p>
+  <p class="sub">Licensed files start at week 42 of 2026 (the collection of 18 October 2026) and grow by one week each week. Weeks 39 and 40 were collected at the four shops; in week 41 only the Aldi collection completed (<a href="/notices/w41-skipped/">see the notice</a>). None of weeks 39 to 41 is supplied: the run records for those weeks no longer exist, so we cannot show whether a proxy was used, and we supply raw files only for retailers read direct. Morrisons is not part of the licensed files for now. Published index values are not revised except to correct an error. A one-month paid pilot is offered in the same files as the paid product (see <a href="/licences/#pilot">licences</a>).</p>
   <h3 class="sample-h" id="sample">What a row looks like</h3>
   <p class="section-sub">One row per product per retailer per period. Four real rows from the free daily-basket sample, scraped on 8 October 2026.</p>
   <div class="table-wrap"><table>
@@ -140,19 +140,19 @@
       <tr><td>Aldi</td><td>Medium Sliced White Bread</td><td class="ean">—</td><td class="num">£0.55</td><td class="num">—</td><td class="num">—</td></tr>
     </tbody>
   </table></div>
-  <p class="meta">Shelf price is always the price a non-member pays. Aldi publishes no barcodes. <a href="#fields">See all fields</a> · <a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket">Free sample on Kaggle</a></p>
+  <p class="meta">Shelf price is always the price returned without a loyalty scheme; it is not a price paid. Aldi publishes no barcodes. <a href="#fields">See all fields</a> · <a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket">Free sample on Kaggle</a></p>
 </div></section>
 
 <section class="band"><div class="wrap">
   <h2 id="fields">Fields <span class="badge plan">Supermarket data</span></h2>
-  <p>One row per product per retailer per period: retailer, retailer product id, EAN, name, brand, pack size, shelf price, was-price, unit price and measure, loyalty price, promotion text and end date, stock flag, category path, URL, image URL; rating and review count where the retailer shows them; timestamp; and, in the Australian series, currency, market and store id. Loyalty price where the retailer publishes one: Tesco Clubcard, Sainsbury's Nectar and Morrisons More Card. Asda, Aldi, Coles, Woolworths and Aldi Australia publish no loyalty price, so the field is empty for them. Shelf price is always the price a non-member pays; loyalty pricing is never folded into it.</p>
+  <p>One row per product per retailer per period: retailer, retailer product id, EAN, name, brand, pack size, shelf price, was-price, unit price and measure, loyalty price, promotion text and end date, stock flag, category path, URL, image URL; timestamp; and, in the Australian series, currency, market and store id. Loyalty price where the retailer publishes one: Tesco Clubcard and Sainsbury's Nectar. Asda, Aldi, Coles, Woolworths and Aldi Australia publish no loyalty price, so the field is empty for them. Rows read with the Actor on the Apify Store also carry a rating and review count where the retailer shows them, and the Morrisons More Card price; those are Actor fields and are not in the licensed weekly files, which do not include Morrisons. Shelf price is always the price returned without a loyalty scheme, not a price paid; loyalty pricing is never folded into it.</p>
 </div></section>
 
 <section class="band tint"><div class="wrap">
   <h2>How it is collected <span class="badge plan">Supermarket data</span></h2>
   <div class="grid4 steps" style="margin-top:14px">
-    <div class="card"><span class="num">1</span><p><strong>Source.</strong> The retailers' own public websites, read logged out. No accounts and no baskets. The grocery data products hold product and price fields, with no reviewer, seller, account, shopping-basket or delivery-slot fields.</p></div>
-    <div class="card"><span class="num">2</span><p><strong>Method.</strong> Automated reads of retailer web pages and the JSON they serve. Requests are made one at a time, at no more than two a second per retailer (one a second for Morrisons); in practice about 0.6 to 1.5 a second on average.</p></div>
+    <div class="card"><span class="num">1</span><p><strong>Source.</strong> The retailers' online services. The collector sends no login, account or loyalty credential and completes no login, terms, consent or CAPTCHA step. It fills no basket. The grocery data products hold product and price fields, with no reviewer, seller, account, shopping-basket or delivery-slot fields.</p></div>
+    <div class="card"><span class="num">2</span><p><strong>Method.</strong> Automated reads of retailer web pages and the JSON they serve. Requests are made one at a time per retailer: at most one a second for Tesco and Aldi, at most two a second for Sainsbury's and Asda, and one a second for Morrisons; in practice about 0.6 to 1.5 a second on average.</p></div>
     <div class="card"><span class="num">3</span><p><strong>Quality.</strong> Daily canary runs for every retailer, an automated weekly health review of every canary, snapshot and index build, and email alerts on failed runs. Weekly reconciliation of each retailer's product count against the previous week and the first full week; a drop of more than 10% is flagged. Parsers that fail loudly rather than emit partial rows; missed periods recorded as gaps, never interpolated.</p></div>
     <div class="card"><span class="num">4</span><p><strong>Change control.</strong> A change log ships with every delivery; schema and coverage changes are announced ahead, with the earliest ship date on each notice, under <a href="/notices/">Notices</a>.</p></div>
   </div>
@@ -160,13 +160,13 @@
 
 <section class="band"><div class="wrap">
   <h2 id="delivery">Delivery <span class="badge plan">Supermarket data</span></h2>
-  <p>Weekly (and, for the basket, daily) CSV files, one per retailer per period. Delivery is set up when a licence is ordered, as a private shared folder for your organisation. Other routes, such as an S3-compatible bucket or SFTP, are not set up today; ask if you need one. The latest data can also be read on demand with the Actor on the Apify Store. A basket-pricing endpoint (price a list of barcodes across all retailers in one call) is in preparation. The weekly catalogue is collected each Sunday and delivered by the Monday after collection. The daily basket is collected each morning.</p>
+  <p>The licensed weekly catalogue is delivered as CSV, one file per retailer per week, with a data dictionary and change log, by email attachment or to an upload point you host; an Excel workbook on request. It is collected each Sunday and normally sent by the Monday after collection. The daily basket is collected each morning. The latest data can also be read on demand with the Actor on the Apify Store, which also prices a shopping list in one call (its <code>POST /basket</code> endpoint, charged per matched line; see the Actor&rsquo;s Store page).</p>
 </div></section>
 
 <section class="band tint"><div class="wrap">
   <h2>Due diligence <span class="badge plan">Supermarket data</span></h2>
   <div class="box">
-    <p>A methodology and due-diligence document is available on request. It covers provenance, collection method, the terms-of-service position, database-right and copyright treatment, personal data, anti-bot handling, audit fields, coverage limits, accuracy checks, retention and corporate details. We make no claim that any retailer permits this use. This is not legal advice. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
+    <p>We answer due-diligence questions in writing: write to <a href="mailto:info@yappman.com">info@yappman.com</a>. We have no permission from any retailer and claim none. We give no view on whether a retailer&rsquo;s terms apply to your use, and no warranty of rights. This is not legal advice. Retailer names are used only to describe the source of public product information; no affiliation, endorsement or partnership is claimed.</p>
   </div>
 </div></section>
 </main>
