@@ -95,6 +95,7 @@ def main():
            'shops': ['aldi', 'asda', 'sainsburys', 'tesco'],
            'checkedOn': '2026-11-17', 'checkedOnSource': 'Orchestrator message 08:15Z 17 Nov 2026: Russell approved the quality read; the record itself was not seen by the Data Website session',
            'statements': {'storeSetting': True, 'dailyRead': False},   # page sentences held back until a person confirms them (see build-basket-page.js)
+           'removedShops': [],   # a shop named here is taken off the page (docs/release/basket-remove-shop.js sets it)
            'retired': [], 'items': items}
     with open(a.out, 'w', encoding='utf-8', newline='') as f:
         json.dump(out, f, ensure_ascii=False, separators=(',', ':'))

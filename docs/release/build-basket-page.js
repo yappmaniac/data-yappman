@@ -23,10 +23,30 @@ const longDate = d => { if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) throw new Error(`bad
 const BANNED = [/cheapest/i, /\bbest\b/i, /\bsav(e|es|ing|ings)\b/i, /\blive\b/i, /real-time/i, /\bofficial\b/i, /\baccurate\b/i, /guarantee/i, /public data/i, /publicly available/i,
   /\bpermitted\b/i, /\ballowed\b/i, /\bcompliant\b/i, /\blicensed\b/i, /with permission/i, /robots/i, /\bpartner/i, /coming soon/i, /\bcoming\b/i, /CC BY/i, /creative commons/i];
 
+// The shops shown: the list's shops less any named in removedShops (one line in the list file takes a shop off the page).
+const SHOP_NAMES = { aldi: "Aldi", asda: "Asda", sainsburys: "Sainsbury's", tesco: "Tesco" };
+const WORD = ["no", "one", "two", "three", "four"];
+const join = a => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
+const H = s => esc(s).replace(/'/g, "&rsquo;");
+function shopsOf(list) {
+  const all = Object.keys(SHOP_NAMES), removed = list.removedShops === undefined ? [] : list.removedShops;
+  if (!Array.isArray(list.shops) || list.shops.join() !== all.join()) throw new Error(`${LIST}: shops must be ${all.join(", ")}`);
+  if (!Array.isArray(removed) || removed.some(s => !all.includes(s)) || new Set(removed).size !== removed.length) throw new Error(`${LIST}: removedShops must name shops from the list, once each`);
+  const shown = all.filter(s => !removed.includes(s));
+  if (shown.length < 2) throw new Error(`${LIST}: at least two shops must stay on the page`);
+  return { shown, removed: all.filter(s => removed.includes(s)), names: shown.map(s => SHOP_NAMES[s]), out: ["Morrisons", ...removed.map(s => SHOP_NAMES[s])].sort() };
+}
+
 function body(list) {
   const n = list.items.length, checked = longDate(list.checkedOn);
+  const sh = shopsOf(list), has = s => sh.shown.includes(s), names = H(join(sh.names)), out = H(join(sh.out)), many = sh.out.length > 1;
+  const noStore = ["tesco", "sainsburys"].filter(has).map(s => SHOP_NAMES[s]), fixed = ["asda", "aldi"].filter(has).map(s => SHOP_NAMES[s]);
+  const where = [noStore.length ? `${H(join(noStore))}: prices are read with no store chosen.` : "",
+    fixed.length ? `${H(join(fixed))}: prices are read for one fixed store or service area, so they may differ from the price at your local store.` : "",
+    "Prices in smaller-format stores or for your address can differ.", has("aldi") ? "Aldi stock is not shown in our data." : ""].filter(Boolean).join(" ");
+  const schemes = [has("tesco") ? "Clubcard Prices" : "", has("sainsburys") ? "Nectar Prices" : ""].filter(Boolean);
   return `<header>
-  <h1>Basket check: everyday items at Aldi, Asda, Sainsbury&rsquo;s and Tesco</h1>
+  <h1>Basket check: everyday items at ${names}</h1>
   <p class="sub">A pilot. Pick items and see each shop&rsquo;s total for your list.</p>
 </header>
 
@@ -35,7 +55,7 @@ function body(list) {
 <noscript><p>This page needs JavaScript to show the list and the totals. Nothing is sent anywhere and no cookies are set.</p></noscript>
 <p id="bk-head"></p>
 <div class="box notice" id="bk-stale" hidden></div>
-<p>Aldi, Asda, Sainsbury&rsquo;s and Tesco are listed in alphabetical order; the order is not a ranking. <a href="#how-this-works">How this works</a> explains how we compare and shows every product and size. Morrisons is not in this comparison.</p>
+<p>${names} are listed in alphabetical order; the order is not a ranking. <a href="#how-this-works">How this works</a> explains how we compare and shows every product and size. ${out} ${many ? "are" : "is"} not in this comparison.</p>
 <p class="meta" id="bk-share-note" hidden></p>
 
 <h2 id="your-list">Your list</h2>
@@ -52,10 +72,10 @@ function body(list) {
 </div>
 
 <h2 id="how-this-works">How this works</h2>
-<p><strong>What this is.</strong> A like-for-like check of ${n} everyday items that we chose, at four shops. It is not a survey of every product and it does not show which shop is lowest overall.</p>
+<p><strong>What this is.</strong> A like-for-like check of ${n} everyday items that we chose, at ${WORD[sh.shown.length]} shops. It is not a survey of every product and it does not show which shop is lowest overall.</p>
 <p id="matching"><strong>How items were chosen.</strong> We wrote the list by hand: common staples at common sizes. Premium, organic, free-from and flavoured lines are left out. Products were never chosen by price. Each item is either the same branded product at each shop (&ldquo;same product&rdquo;) or each shop&rsquo;s own standard product of the same kind and size (&ldquo;comparable own-label&rdquo;). Comparable own-label is our judgement about the kind of product, not its quality or recipe. A person checked every match on ${esc(checked)}. The full list, with each product&rsquo;s name and pack size at each shop, is above.</p>
-<p><strong>Prices.</strong> Each price is for one item without a loyalty card, as read without signing in. A temporary price cut is already included. Multi-buy offers, vouchers and personal offers are never applied. Loyalty-card prices are left out unless you switch them on on this page. An Aldi price may be a cut that is not marked. Where an offer is listed for an item, the cell says so. Totals are for goods only: no delivery, collection or bag charges and no minimum spend. Unit prices are worked out by us from the price and the pack size shown.</p>
-${list.statements && list.statements.storeSetting ? `<p><strong>Where.</strong> Tesco and Sainsbury&rsquo;s: prices are read with no store chosen. Asda and Aldi: prices are read for one fixed store or service area, so they may differ from the price at your local store. Prices in smaller-format stores or for your address can differ. Aldi stock is not shown in our data.</p>
+<p><strong>Prices.</strong> Each price is for one item without a loyalty card, as read without signing in. A temporary price cut is already included. Multi-buy offers, vouchers and personal offers are never applied. Loyalty-card prices are left out unless you switch them on on this page.${has("aldi") ? " An Aldi price may be a cut that is not marked." : ""} Where an offer is listed for an item, the cell says so. Totals are for goods only: no delivery, collection or bag charges and no minimum spend. Unit prices are worked out by us from the price and the pack size shown.</p>
+${list.statements && list.statements.storeSetting ? `<p><strong>Where.</strong> ${where}</p>
 ` : ""}
 <p><strong>When.</strong> ${list.statements && list.statements.dailyRead ? "Prices are read once a day, early morning UK time. Every price shows the date it was read. " : ""}Shops change prices during the day. The shop&rsquo;s own price at the till or checkout is the one that counts.</p>
 <p><strong>Sizes.</strong> Same-product packs are within 3% in size. Comparable own-label packs are the same stated size; where a size differs the cell says so and is left out of totals unless you choose to include it.</p>
@@ -63,7 +83,7 @@ ${list.statements && list.statements.storeSetting ? `<p><strong>Where.</strong> 
 <p><strong>Who we are and how this is paid for.</strong> We are Yappman Data; the company name, number and registered office are in the footer of every page, and our email address is info@yappman.com. The page is free. No shop pays us or supplies us, and there are no shop affiliate links here. We sell data tools and data licences, described on the <a href="/licences/">licences page</a>.</p>
 <p>Not advice, not a government statistic, not a measure of what people paid.</p>
 
-<p class="meta">Aldi, Asda, Sainsbury&rsquo;s and Tesco are named only to say where each price was read. Morrisons is named only to say it is not included. We are not affiliated with, endorsed by or supplied by any of them, and we do not have their permission. Clubcard Prices and Nectar Prices are the shops&rsquo; own scheme names. Product and brand names belong to their owners.</p>
+<p class="meta">${names} are named only to say where each price was read. ${out} ${many ? "are named only to say they are" : "is named only to say it is"} not included. We are not affiliated with, endorsed by or supplied by any of them, and we do not have their permission.${schemes.length ? ` ${schemes.join(" and ")} ${schemes.length > 1 ? "are the shops&rsquo; own scheme names" : "is the shop&rsquo;s own scheme name"}.` : ""} Product and brand names belong to their owners.</p>
 <p class="meta">To correct a price or match, write to <a href="mailto:info@yappman.com">info@yappman.com</a>; we normally reply within one working day. If a shop asks us in writing to stop, we stop collecting and showing its prices the day we read the message.</p>
 `;
 }
@@ -78,8 +98,9 @@ function build(root) {
   const [head0, rest] = raw.split("<main id=\"main\" tabindex=\"-1\">\n");
   if (!rest || !rest.includes("</main>\n")) throw new Error(`${TEMPLATE}: not the expected page shape`);
   const foot = rest.split("</main>\n").slice(1).join("</main>\n");
-  const title = "Basket check: everyday items at Aldi, Asda, Sainsbury's and Tesco";
-  const desc = `A pilot: pick items from a list of ${list.items.length} and see each shop's total at Aldi, Asda, Sainsbury's and Tesco, with the date the prices were read and how the items were matched.`;
+  const shopNames = join(shopsOf(list).names);
+  const title = `Basket check: everyday items at ${shopNames}`;
+  const desc = `A pilot: pick items from a list of ${list.items.length} and see each shop's total at ${shopNames}, with the date the prices were read and how the items were matched.`;
   const lines = head0.split("\n");
   const set = (start, v) => { const i = lines.findIndex(l => l.startsWith(start)); if (i < 0) throw new Error("template line missing: " + start); lines[i] = v; };
   set("<title>", `<title>${esc(title)} — Yappman Data</title>`);
@@ -115,7 +136,7 @@ function write(root, files) {
   } finally { for (const [, t] of tmp) { try { if (fs.existsSync(t)) fs.unlinkSync(t); } catch { /* shows in git status */ } } }
 }
 
-module.exports = { build, check, write, BANNED, OUT };
+module.exports = { build, check, write, shopsOf, BANNED, OUT, LIST };
 
 if (require.main === module) {
   const args = process.argv.slice(2);

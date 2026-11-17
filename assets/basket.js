@@ -5,8 +5,19 @@
   else root.Basket = factory();
 })(this, function () {
   'use strict';
-  var SHOPS = ['aldi', 'asda', 'sainsburys', 'tesco'];
-  var NAME = { aldi: 'Aldi', asda: 'Asda', sainsburys: "Sainsbury's", tesco: 'Tesco' };
+  var ALL_SHOPS = ['aldi', 'asda', 'sainsburys', 'tesco'];
+  var SHOPS = ALL_SHOPS.slice(), REMOVED = [];
+  var WORD = ['no', 'one', 'two', 'three', 'four'];
+  // A shop named in the list file's removedShops is taken out of every column, total, note and download. SHOPS keeps its identity
+  // (it is emptied and refilled), so code holding the array sees the change.
+  function setRemoved(removed) {
+    REMOVED = ALL_SHOPS.filter(function (s) { return (removed || []).indexOf(s) >= 0; });
+    SHOPS.length = 0;
+    ALL_SHOPS.forEach(function (s) { if (REMOVED.indexOf(s) < 0) SHOPS.push(s); });
+    return SHOPS;
+  }
+  function joinNames(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
+  var NAME ={ aldi: 'Aldi', asda: 'Asda', sainsburys: "Sainsbury's", tesco: 'Tesco' };
   var SCHEME = { tesco: 'Clubcard Price', sainsburys: 'Nectar Price' };
   var MAX_QTY = 20, STALE_MS = 2 * 24 * 3600 * 1000;
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -81,7 +92,7 @@
     var split = { s: 0, o: 0 };
     chosen.forEach(function (x) { var k = x.item.kind; split[k] = (split[k] || 0) + 1; });
     var memberNotUsed = { tesco: 0, sainsburys: 0 };
-    chosen.forEach(function (x) { ['tesco', 'sainsburys'].forEach(function (s) { var ci = cellInfo(x.item, s, prices, Object.assign({}, opts, { schemes: {} }), readDate); if (ci.state === 'priced' && (prices.cells[x.item.n][s] || {}).m && !(opts.schemes && opts.schemes[s])) memberNotUsed[s]++; }); });
+    chosen.forEach(function (x) { ['tesco', 'sainsburys'].filter(function (s) { return SHOPS.indexOf(s) >= 0; }).forEach(function (s) { var ci = cellInfo(x.item, s, prices, Object.assign({}, opts, { schemes: {} }), readDate); if (ci.state === 'priced' && (prices.cells[x.item.n][s] || {}).m && !(opts.schemes && opts.schemes[s])) memberNotUsed[s]++; }); });
     return { per: per, chosen: chosen, mark: mark, stale: stale, common: common, commonTotals: commonTotals, split: split, memberNotUsed: memberNotUsed, readDate: readDate };
   }
 
@@ -117,8 +128,10 @@
   // CSV of the visitor's own list only. Row 1 is one notice cell, row 2 the column names. Cells that could be read as formulas are neutralised.
   function csvCell(v) { var s = String(v === undefined || v === null ? '' : v); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
   function notice(prices, opts) {
+    var out = ['Morrisons'].concat(REMOVED.map(function (s) { return NAME[s]; })).sort();
     return 'Prices read by our software, without signing in, ' + dateText(prices.readTo) + ' ' + timeWindow(prices.readFrom, prices.readTo) + '. Basis: ' + basisText(opts) +
-      '. Method: https://data.yappman.com/basket/#how-this-works . Aldi, Asda, Sainsbury\'s and Tesco are named only to say where each price was read. Morrisons is named only to say it is not included. We are not affiliated with, endorsed by or supplied by any of them, and we do not have their permission. Questions or corrections: info@yappman.com. Not shopping advice.';
+      '. Method: https://data.yappman.com/basket/#how-this-works . ' + joinNames(SHOPS.map(function (s) { return NAME[s]; })) + ' are named only to say where each price was read. ' +
+      joinNames(out) + (out.length > 1 ? ' are named only to say they are not included.' : ' is named only to say it is not included.') + ' We are not affiliated with, endorsed by or supplied by any of them, and we do not have their permission. Questions or corrections: info@yappman.com. Not shopping advice.';
   }
   function basisText(opts) { var s = []; if (opts.schemes && opts.schemes.tesco) s.push('Tesco Clubcard Prices'); if (opts.schemes && opts.schemes.sainsburys) s.push("Sainsbury's Nectar Prices"); return s.length ? 'regular prices, plus ' + s.join(' and ') + ' where shown' : 'regular prices'; }
   function toCsv(list, prices, picks, opts) {
@@ -150,7 +163,7 @@
     return out.join('\n') + '\n';
   }
 
-  return { SHOPS: SHOPS, NAME: NAME, SCHEME: SCHEME, MAX_QTY: MAX_QTY, fmt: fmt, dateText: dateText, shortDate: shortDate, timeWindow: timeWindow, unitText: unitText, cellInfo: cellInfo,
+  return { SHOPS: SHOPS, ALL_SHOPS: ALL_SHOPS, WORD: WORD, setRemoved: setRemoved, joinNames: joinNames, NAME: NAME, SCHEME: SCHEME, MAX_QTY: MAX_QTY, fmt: fmt, dateText: dateText, shortDate: shortDate, timeWindow: timeWindow, unitText: unitText, cellInfo: cellInfo,
     compute: compute, coverage: coverage, encodeShare: encodeShare, decodeShare: decodeShare, toCsv: toCsv, toText: toText, basisText: basisText, notice: notice, csvCell: csvCell };
 });
 
@@ -168,9 +181,10 @@
   function load() { try { var s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s && s.picks) { picks = s.picks; opts = s.opts || opts; if ($('bk-remember')) $('bk-remember').checked = true; } } catch (e) { /* ignore */ } }
 
   function renderHeader() {
-    var p = data.prices, c = B.coverage(data.list, p), n = data.list.items.length;
+    var p = data.prices, c = B.coverage(data.list, p), n = data.list.items.length, k = S.length, W = B.WORD, fewer = [];
+    for (var j = k - 1; j >= 2; j--) fewer.push(c[j] + ' at ' + W[j]);
     $('bk-head').textContent = 'Pick items from our list of ' + n + ' and see each shop\'s total. Prices were read by our software, without signing in, on ' + B.dateText(p.readTo) + ', ' + B.timeWindow(p.readFrom, p.readTo) + '. Today ' +
-      c[4] + ' items are priced at all four shops, ' + c[3] + ' at three and ' + c[2] + ' at two' + (c[1] ? ' (and ' + c[1] + ' at one shop only, which cannot be compared)' : '') + '. This is four shops and ' + n + ' items, not the whole market and not everything a shop sells.';
+      c[k] + ' items are priced at all ' + W[k] + ' shops' + (fewer.length ? ', ' + fewer.join(' and ') : '') + (c[1] ? ' (and ' + c[1] + ' at one shop only, which cannot be compared)' : '') + '. This is ' + W[k] + ' shops and ' + n + ' items, not the whole market and not everything a shop sells.';
     if (Date.now() - Date.parse(p.readTo) > 2 * 24 * 3600 * 1000) { $('bk-stale').hidden = false; $('bk-stale').textContent = 'These prices were read on ' + B.shortDate(p.readTo) + ' and may be out of date. The lowest-total mark is not shown.'; }
   }
 
@@ -240,10 +254,12 @@
     });
     var wrap = el('div', null, 'table-wrap'); wrap.appendChild(tb); box.appendChild(wrap);
     if (r.common.length && r.common.length !== r.chosen.length) {
-      box.appendChild(el('p', 'Over the ' + r.common.length + ' items all four shops priced on ' + date + ', ' + basis + ': ' + S.map(function (s) { return N[s] + ' ' + B.fmt(r.commonTotals[s]); }).join(', ') + '.'));
+      box.appendChild(el('p', 'Over the ' + r.common.length + ' items all ' + B.WORD[S.length] + ' shops priced on ' + date + ', ' + basis + ': ' + S.map(function (s) { return N[s] + ' ' + B.fmt(r.commonTotals[s]); }).join(', ') + '.'));
     }
     if (!(opts.schemes.tesco || opts.schemes.sainsburys) && (r.memberNotUsed.tesco || r.memberNotUsed.sainsburys)) {
-      box.appendChild(el('p', r.memberNotUsed.tesco + ' of your items showed a lower Clubcard Price and ' + r.memberNotUsed.sainsburys + ' a lower Nectar Price. They are not in these totals.', 'meta'));
+      var ms = ['tesco', 'sainsburys'].filter(function (s) { return S.indexOf(s) >= 0; });
+      box.appendChild(el('p', ms.length === 2 ? r.memberNotUsed.tesco + ' of your items showed a lower Clubcard Price and ' + r.memberNotUsed.sainsburys + ' a lower Nectar Price. They are not in these totals.'
+        : r.memberNotUsed[ms[0]] + ' of your items showed a lower ' + B.SCHEME[ms[0]] + '. They are not in these totals.', 'meta'));
     }
   }
 
@@ -265,9 +281,10 @@
     var o = clear($('bk-opts'));
     var chk = function (id, label, checked, fn) { var l = el('label'), i = el('input'); i.type = 'checkbox'; i.id = id; i.checked = checked; i.addEventListener('change', function () { fn(i.checked); save(); renderAll(); }); l.appendChild(i); l.appendChild(document.createTextNode(' ' + label)); o.appendChild(l); o.appendChild(el('br')); };
     o.appendChild(el('p', 'Price basis: Regular prices (as read without signing in and without a loyalty card).'));
-    chk('bk-club', 'Include Tesco Clubcard Prices: you need a Clubcard.', opts.schemes.tesco, function (v) { opts.schemes.tesco = v; });
-    chk('bk-nectar', "Include Sainsbury's Nectar Prices: you need a Nectar card or the app.", opts.schemes.sainsburys, function (v) { opts.schemes.sainsburys = v; });
-    o.appendChild(el('p', 'We hold no member prices for Aldi or Asda. Member prices are counted only where one was shown without signing in. We never sign in. Offers personal to you are not included. Schemes change.', 'meta'));
+    if (S.indexOf('tesco') >= 0) chk('bk-club', 'Include Tesco Clubcard Prices: you need a Clubcard.', opts.schemes.tesco, function (v) { opts.schemes.tesco = v; });
+    if (S.indexOf('sainsburys') >= 0) chk('bk-nectar', "Include Sainsbury's Nectar Prices: you need a Nectar card or the app.", opts.schemes.sainsburys, function (v) { opts.schemes.sainsburys = v; });
+    var plain = S.filter(function (s) { return !B.SCHEME[s]; }).map(function (s) { return N[s]; });
+    o.appendChild(el('p', (plain.length ? 'We hold no member prices for ' + plain.join(' or ') + '. ' : '') + 'Member prices are counted only where one was shown without signing in. We never sign in. Offers personal to you are not included. Schemes change.', 'meta'));
     chk('bk-diff', 'Include items whose pack size differs or that are a value-range product (shown with a note; left out by default).', opts.includeDiff, function (v) { opts.includeDiff = v; });
     var b = el('button', 'Reset to regular prices'); b.type = 'button'; b.className = 'btn btn-ghost'; b.addEventListener('click', function () { opts = { schemes: { tesco: false, sainsburys: false }, includeDiff: false }; save(); renderAll(); }); o.appendChild(b);
   }
@@ -276,9 +293,13 @@
 
   function start(list, prices) {
     data = { list: list, prices: prices };
+    B.setRemoved(list.removedShops);                       // a shop taken out in the list file is not shown anywhere on the page
+    if (S.length < 2) { fail(); return; }
     load();
     var shared = B.decodeShare(location.hash, list);
-    if (shared) { picks = shared.picks; opts = shared.opts; var n = shared.unknown + shared.retired; if (n) { var w = $('bk-share-note'); w.hidden = false; w.textContent = n + ' item' + (n > 1 ? 's' : '') + ' in this link ' + (n > 1 ? 'are' : 'is') + ' no longer in our list and ' + (n > 1 ? 'were' : 'was') + ' left out.'; } }
+    if (shared) { picks = shared.picks; opts = shared.opts; }
+    ['tesco', 'sainsburys'].forEach(function (s) { if (S.indexOf(s) < 0) opts.schemes[s] = false; });   // no member prices for a shop that is not shown
+    if (shared) { var n = shared.unknown + shared.retired; if (n) { var w = $('bk-share-note'); w.hidden = false; w.textContent = n + ' item' + (n > 1 ? 's' : '') + ' in this link ' + (n > 1 ? 'are' : 'is') + ' no longer in our list and ' + (n > 1 ? 'were' : 'was') + ' left out.'; } }
     $('bk-search').addEventListener('input', renderList);
     if ($('bk-remember')) $('bk-remember').addEventListener('change', save);
     renderAll();

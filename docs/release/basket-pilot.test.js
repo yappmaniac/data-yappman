@@ -312,3 +312,103 @@ test("the Where sentence appears only when the list file says the store setting 
   const on = pageBuilder.build(site({ ...LIST, statements: { storeSetting: true, dailyRead: false } })).get(pageBuilder.OUT);
   assert.match(on, /Tesco and Sainsbury&rsquo;s: prices are read with no store chosen\. Asda and Aldi: prices are read for one fixed store or service area, so they may differ from the price at your local store\./);
 });
+
+// ---- taking one shop off the page (removedShops in the list file; docs/release/basket-remove-shop.js) -------------------------------
+
+const remover = require("./basket-remove-shop.js");
+const LISTR = (removed = []) => ({ ...LIST, statements: { storeSetting: true, dailyRead: false }, removedShops: removed });
+const textOf = html => html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<[^>]*>/g, " ");
+const siteR = (removed = []) => { const root = site(LISTR(removed), prices()); fs.mkdirSync(path.join(root, "basket"), { recursive: true }); return root; };
+
+test("with no shop removed the page and the script behave exactly as before", () => {
+  assert.strictEqual(pageBuilder.build(site(LISTR())).get(pageBuilder.OUT), pageBuilder.build(site({ ...LIST, statements: { storeSetting: true, dailyRead: false } })).get(pageBuilder.OUT));
+  assert.deepStrictEqual(B.setRemoved([]), ["aldi", "asda", "sainsburys", "tesco"]);
+  assert.deepStrictEqual(B.setRemoved(undefined), ["aldi", "asda", "sainsburys", "tesco"]);
+});
+
+test("a removed shop is named nowhere on the page except as not included", () => {
+  const p = pageBuilder.build(site(LISTR(["asda"]))).get(pageBuilder.OUT), t = textOf(p);
+  assert.match(p, /<title>Basket check: everyday items at Aldi, Sainsbury&#39;s and Tesco|<title>Basket check: everyday items at Aldi, Sainsbury's and Tesco/);
+  assert.match(p, /<h1>Basket check: everyday items at Aldi, Sainsbury&rsquo;s and Tesco<\/h1>/);
+  assert.match(t, /Aldi, Sainsbury&rsquo;s and Tesco are listed in alphabetical order/);
+  assert.match(t, /Asda and Morrisons are not in this comparison\./);
+  assert.match(t, /at three shops\./);
+  assert.match(t, /Tesco and Sainsbury&rsquo;s: prices are read with no store chosen\. Aldi: prices are read for one fixed store or service area/);
+  assert.match(t, /Aldi, Sainsbury&rsquo;s and Tesco are named only to say where each price was read\. Asda and Morrisons are named only to say they are not included\./);
+  assert.strictEqual((t.match(/Asda/g) || []).length, 2, "Asda appears only in the two not-included sentences");
+  assert.doesNotMatch(p.match(/<meta name="description"[^>]*>/)[0], /Asda/);
+});
+
+test("removing a scheme shop drops its scheme name; removing Aldi drops the Aldi-only notes", () => {
+  const noTesco = textOf(pageBuilder.build(site(LISTR(["tesco"]))).get(pageBuilder.OUT));
+  assert.match(noTesco, /Nectar Prices is the shop&rsquo;s own scheme name\./); assert.doesNotMatch(noTesco, /Clubcard/);
+  assert.match(noTesco, /Sainsbury&rsquo;s: prices are read with no store chosen\. Asda and Aldi: prices are read/);
+  const noAldi = textOf(pageBuilder.build(site(LISTR(["aldi"]))).get(pageBuilder.OUT));
+  assert.doesNotMatch(noAldi, /An Aldi price may be a cut|Aldi stock is not shown/);
+  assert.match(noAldi, /Asda: prices are read for one fixed store or service area/);
+});
+
+test("the list file is refused if removedShops is not a list of its own shops, or fewer than two shops would stay", () => {
+  assert.throws(() => pageBuilder.build(site(LISTR(["lidl"]))), /removedShops must name shops from the list/);
+  assert.throws(() => pageBuilder.build(site(LISTR(["asda", "asda"]))), /once each/);
+  assert.throws(() => pageBuilder.build(site(LISTR(["aldi", "asda", "tesco"]))), /at least two shops must stay/);
+  assert.match(textOf(pageBuilder.build(site(LISTR(["aldi", "asda"]))).get(pageBuilder.OUT)), /at two shops\./);
+});
+
+test("the page script leaves a removed shop out of totals, the lowest-total mark, the CSV and the copied text", () => {
+  const p = prices(), picks = { 0: 1, 1: 2 }, o = () => ({ schemes: { tesco: false, sainsburys: false }, includeDiff: false });
+  try {
+    B.setRemoved(["aldi"]);
+    assert.deepStrictEqual(B.SHOPS, ["asda", "sainsburys", "tesco"]);
+    const r = B.compute(LIST, p, picks, o(), NOW);
+    assert.deepStrictEqual(Object.keys(r.per), ["asda", "sainsburys", "tesco"]);
+    assert.strictEqual(r.mark.kind, "lowest"); assert.strictEqual(r.mark.count, 3); assert.deepStrictEqual(r.mark.shops, ["asda"]);
+    const csv = B.toCsv(LIST, p, picks, o()), txt = B.toText(LIST, p, picks, o());
+    assert.doesNotMatch(csv.split("\r\n").slice(1).join("\n"), /Aldi/);                       // no Aldi row or total
+    assert.match(csv.split("\r\n")[0], /Asda, Sainsbury's and Tesco are named only to say where each price was read\. Aldi and Morrisons are named only to say they are not included\./);
+    assert.doesNotMatch(txt.split("\n").slice(2).join("\n"), /Aldi/);
+    const cov = B.coverage(LIST, p);
+    assert.strictEqual(cov[4], 0); assert.strictEqual(cov[3] + cov[2] + cov[1], 4);          // counted over the three shops shown
+    B.setRemoved(["tesco"]);
+    assert.strictEqual(B.compute(LIST, p, picks, o(), NOW).memberNotUsed.tesco, 0);
+  } finally { B.setRemoved([]); }
+  assert.deepStrictEqual(Object.keys(B.compute(LIST, p, picks, o(), NOW).per), ["aldi", "asda", "sainsburys", "tesco"]);
+});
+
+test("the removal script changes the one list entry, clears that shop's prices and rebuilds the page; the checks still pass", () => {
+  const root = siteR();
+  const listBefore = fs.readFileSync(path.join(root, pilot.LIST), "utf8");
+  const r = remover.apply(root, "asda", false);
+  assert.deepStrictEqual(r.after, ["asda"]); assert.strictEqual(r.cells, 4); assert.strictEqual(r.changed, true);
+  const listAfter = fs.readFileSync(path.join(root, pilot.LIST), "utf8");
+  assert.strictEqual(listAfter, listBefore.replace('"removedShops":[]', '"removedShops":["asda"]'));   // one entry, nothing else
+  const d = JSON.parse(fs.readFileSync(path.join(root, pilot.OUT), "utf8"));
+  for (const c of Object.values(d.cells)) if (c.asda) assert.deepStrictEqual(c.asda, { s: "x" });
+  assert.ok(d.cells[0].tesco.p > 0 && d.cells[0].aldi.p > 0);                                   // the other shops are untouched
+  assert.deepStrictEqual(pilot.check(root), []); assert.deepStrictEqual(pageBuilder.check(root), []);
+  assert.match(fs.readFileSync(path.join(root, pageBuilder.OUT), "utf8"), /everyday items at Aldi, Sainsbury&rsquo;s and Tesco<\/h1>/);
+  assert.strictEqual(remover.apply(root, "asda", false).changed, false);                        // a second run changes nothing
+  assert.strictEqual(fs.readFileSync(path.join(root, pilot.LIST), "utf8"), listAfter);
+});
+
+test("the removal script refuses an unknown shop or a third removal and changes nothing; restore puts the shop back on the page", () => {
+  const root = siteR();
+  const snap = () => [pilot.LIST, pilot.OUT].map(f => fs.readFileSync(path.join(root, f), "utf8")).join("|");
+  const s0 = snap();
+  assert.throws(() => remover.apply(root, "lidl", false), /is not one of the shops/); assert.strictEqual(snap(), s0);
+  remover.apply(root, "asda", false); remover.apply(root, "aldi", false);
+  const s2 = snap();
+  assert.throws(() => remover.apply(root, "tesco", false), /at least two shops must stay/); assert.strictEqual(snap(), s2);
+  const r = remover.apply(root, "asda", true);
+  assert.deepStrictEqual(r.after, ["aldi"]);
+  assert.match(fs.readFileSync(path.join(root, pageBuilder.OUT), "utf8"), /everyday items at Asda, Sainsbury&rsquo;s and Tesco<\/h1>/);
+  assert.deepStrictEqual(JSON.parse(fs.readFileSync(path.join(root, pilot.OUT), "utf8")).cells[0].asda, { s: "x" });   // prices return with the next daily read
+  const noEntry = site(LIST, prices());
+  assert.throws(() => remover.apply(noEntry, "asda", false), /expected exactly one "removedShops"/);
+});
+
+test("the live list file carries the removedShops entry, empty, exactly once", () => {
+  const s = fs.readFileSync(path.join(ROOT, pilot.LIST), "utf8");
+  assert.strictEqual((s.match(/"removedShops":\[\]/g) || []).length, 1);
+  assert.deepStrictEqual(JSON.parse(s).removedShops, []);
+});
