@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free sample: EU airport and port traffic data (Eurostat) — Yappman Data</title>
+<meta name="description" content="Free sample of Eurostat EU airport passengers (12 airports, August 2026) and Dutch port goods and passengers by quarter, as two CSV files with a data dictionary. Source: Eurostat; airport codes from OurAirports.">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="preload" href="/assets/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Yappman Data">
+<meta property="og:title" content="Free sample: EU airport and port traffic data (Eurostat) — Yappman Data">
+<meta property="og:description" content="Free sample of Eurostat EU airport passengers (12 airports, August 2026) and Dutch port goods and passengers by quarter, as two CSV files with a data dictionary. Source: Eurostat; airport codes from OurAirports.">
+<meta property="og:url" content="https://data.yappman.com/eu-air-sea-traffic-sample/">
+<meta property="og:image" content="https://data.yappman.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://data.yappman.com/eu-air-sea-traffic-sample/">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar"><div class="wrap">
+<nav aria-label="Main" class="mainnav">
+  <a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a>
+  <button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-menu">Menu</button>
+  <ul class="nav-list" id="site-menu">
+    <li class="nav-group mega"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-data" aria-haspopup="true">Data<span class="caret" aria-hidden="true"></span></button><div class="panel panel-mega" id="panel-data"><div class="panel-cols"><div class="panel-col"><h3 class="panel-h">Price data</h3><ul><li><a class="mi" href="https://apify.com/yappman/uk-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK supermarket prices</span><span class="badge live">Latest</span></span><span class="mi-desc">Weekly catalogue and a daily 212-item basket.</span></a></li><li><a class="mi" href="https://apify.com/yappman/au-supermarket-price-scraper" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">AU supermarket prices</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Aldi Australia shelf prices by keyword, category or product page.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-property-listings" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK property listings</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Rightmove and OnTheMarket listings, plus Rightmove sold prices.</span></a></li><li><a class="mi" href="https://apify.com/yappman/google-hotels-prices" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Google Hotels rates</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Google Hotels results and per-booking-site rates, by city or hotel.</span></a></li></ul></div><div class="panel-col"><h3 class="panel-h">Open data</h3><ul><li><a class="mi" href="https://apify.com/yappman/contracts-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Public contracts</span><span class="badge live">Latest</span></span><span class="mi-desc">Search UK public procurement notices. $0.005 a notice ($5.00 per 1,000) plus $0.005 a run.</span></a></li><li><a class="mi" href="https://apify.com/yappman/lei-lookup" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">LEI lookup</span><span class="badge live">Latest</span></span><span class="mi-desc">Legal Entity Identifier records by LEI, name or registration status. $0.002 an entity ($2.00 per 1,000), no start fee.</span></a></li><li><a class="mi" href="https://apify.com/yappman/cricos-register" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">CRICOS register lookup (Australia)</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Australian education providers registered to enrol overseas students: one row each with type, state, postcode, city, capacity and course counts. $0.002 a row ($2.00 per 1,000), no start fee. Not affiliated with the Department of Education.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-importers-exporters" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK importers and exporters</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">HMRC trade lists by month, under the Open Government Licence. $0.005 a run plus $0.002 a trader row. Not affiliated with HMRC.</span></a></li><li><a class="mi" href="https://apify.com/yappman/uk-sponsor-register-changes" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">UK sponsor register changes</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Dated changes to the UK register of licensed sponsors, one row per change. $0.003 a change row ($3.00 per 1,000), no start fee. Not affiliated with the Home Office or UK Visas and Immigration.</span></a></li><li><a class="mi" href="https://apify.com/yappman/cqc-register" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">CQC England care locations</span><span class="badge live">On the Apify Store</span></span><span class="mi-desc">Search and look up care locations in the CQC directory for England, and list what changed between its files. $0.005 a run plus $0.004 a location or $0.003 a change. Not affiliated with the Care Quality Commission.</span></a></li></ul></div></div><div class="panel-foot"><a href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener">Free basket snapshot, monthly (Kaggle)</a><a href="/methodology/#delivery">Delivery &amp; formats</a></div></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-indices" aria-haspopup="true">Indices<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-indices"><ul><li><a class="mi" href="/shelf-price-index/"><span class="mi-top"><span class="mi-name">UK Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/au-shelf-price-index/"><span class="mi-top"><span class="mi-name">AU Online Shelf-Price Index</span></span></a></li><li><a class="mi" href="/methodology/#indices"><span class="mi-top"><span class="mi-name">How the indices are built</span></span></a></li></ul></div></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-trust" aria-haspopup="true">Trust<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-trust"><ul><li><a class="mi" href="/data-quality/"><span class="mi-top"><span class="mi-name">Data quality</span></span></a></li><li><a class="mi" href="/methodology/"><span class="mi-top"><span class="mi-name">Methodology</span></span></a></li><li><a class="mi" href="/notices/"><span class="mi-top"><span class="mi-name">Notices (change log)</span></span></a></li><li><a class="mi" href="/press/#licence"><span class="mi-top"><span class="mi-name">Licence &amp; reuse</span></span></a></li><li><a class="mi" href="/#trust"><span class="mi-top"><span class="mi-name">Check schedule</span></span></a></li></ul></div></li>
+    <li class="nav-plain"><a href="/#pricing">Pricing</a></li>
+    <li class="nav-group"><button type="button" class="nav-top" aria-expanded="false" aria-controls="panel-resources" aria-haspopup="true">Resources<span class="caret" aria-hidden="true"></span></button><div class="panel" id="panel-resources"><ul><li><a class="mi" href="/demos/"><span class="mi-top"><span class="mi-name">Demos</span></span></a></li><li><a class="mi" href="https://github.com/yappmaniac/yappman-examples" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Examples (GitHub)</span></span></a></li><li><a class="mi" href="https://www.kaggle.com/datasets/russellyapp/uk-supermarket-prices-daily-212-item-basket" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Kaggle dataset</span></span></a></li><li><a class="mi" href="/sold-prices/"><span class="mi-top"><span class="mi-name">Median sold prices by postcode district</span></span></a></li><li><a class="mi" href="/rental-yield/"><span class="mi-top"><span class="mi-name">Gross rental yield by local authority</span></span></a></li><li><a class="mi" href="https://yappman.substack.com/" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Newsletter (Substack)</span></span></a></li><li><a class="mi" href="https://dev.to/yappman" target="_blank" rel="noopener"><span class="mi-top"><span class="mi-name">Articles (dev.to)</span></span></a></li><li><a class="mi" href="/press/"><span class="mi-top"><span class="mi-name">Press</span></span></a></li></ul></div></li>
+    <li class="nav-cta"><a class="btn btn-primary" href="/#contact">Request a sample</a></li>
+  </ul>
+</nav>
+</div></div>
+<main id="main" tabindex="-1">
+<header>
+  <h1>Free sample: EU airport months and port quarters (Eurostat)</h1>
+  <p class="sub">Two small CSV files: a dated copy of what Eurostat had published on 19 November 2026, in the columns the Actor returns.</p>
+</header>
+
+<div class="dl-row"><a class="btn btn-solid" href="/eu-air-sea-traffic-sample/airport_months_sample.csv">Airport months CSV (12 rows, about 5 KB)</a> <a class="btn btn-solid" href="/eu-air-sea-traffic-sample/port_quarters_sample.csv">Port quarters CSV (32 rows, about 11 KB)</a></div>
+<p>SHA-256 of airport_months_sample.csv: <code>16b53d3db3a6afb343e110f251013600791a30e2f652133e2728e1dddeb6d0b2</code>.<br>SHA-256 of port_quarters_sample.csv: <code>58be73c6434d0d6944358e4796efcaf387be4d7611ade1c8643dd1adafb3af39</code>.</p>
+
+<h2 id="source">What the sample is</h2>
+<ul>
+  <li><strong>airport_months_sample.csv:</strong> 12 of the busiest airports among the countries that had values for August 2026 (13 countries; Germany, Spain, France and Italy had none for that month yet), one row per airport, month 2026-08. Source dataset: avia_paoa.</li>
+  <li><strong>port_quarters_sample.csv:</strong> Dutch ports, goods (thousand tonnes) for 2025-Q4 and 2026-Q1 and passengers (thousand, cruise passengers excluded) for 2026-Q1 and 2026-Q2. Source datasets: mar_go_qm_nl and mar_pa_qm_nl.</li>
+</ul>
+<p>The files are a snapshot, not a feed. Values can be revised by Eurostat, and a blank cell means Eurostat had no value, not zero. They do not cover every airport or port.</p>
+
+<h2 id="columns">Columns</h2>
+<h3>Both files</h3>
+<div class="table-wrap"><table><thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>name</code></td><td>Airport or port name (OurAirports for airports, Eurostat label for ports)</td></tr>
+<tr><td><code>country</code></td><td>Eurostat country code (two letters; EL is Greece, UK the United Kingdom)</td></tr>
+<tr><td><code>period</code></td><td>Month <code>YYYY-MM</code> (airports) or quarter <code>YYYY-Qn</code> (ports)</td></tr>
+<tr><td><code>flags</code></td><td>Eurostat observation flag, blank if none (none were present in these answers)</td></tr>
+<tr><td><code>sourceDataset</code></td><td>Eurostat dataset code</td></tr>
+<tr><td><code>sourceDoi</code></td><td>Eurostat DOI of the dataset</td></tr>
+<tr><td><code>releaseDate</code></td><td>Date Eurostat last updated the dataset</td></tr>
+<tr><td><code>retrievedAt</code></td><td>Date and time of the read (UTC)</td></tr>
+<tr><td><code>attribution</code></td><td>Source and modification statement to keep with the data</td></tr>
+</tbody></table></div>
+<h3>Airport file</h3>
+<div class="table-wrap"><table><thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>airportKey</code></td><td>Eurostat airport key, country code and ICAO code, for example AT_LOWW</td></tr>
+<tr><td><code>icao, iata</code></td><td>Airport codes (OurAirports)</td></tr>
+<tr><td><code>passengersCarried</code></td><td>Passengers carried, all schedule types, total coverage</td></tr>
+<tr><td><code>passengersArrivals, passengersDepartures</code></td><td>Passengers carried, arrivals and departures</td></tr>
+<tr><td><code>passengersDomestic</code></td><td>National transport</td></tr>
+<tr><td><code>passengersInternational</code></td><td>International transport</td></tr>
+<tr><td><code>passengersIntraEu, passengersExtraEu</code></td><td>International transport within the EU27 and outside it</td></tr>
+<tr><td><code>passengersScheduled, passengersNonScheduled</code></td><td>By type of schedule</td></tr>
+<tr><td><code>flightsPassenger, flightsArrivals, flightsDepartures</code></td><td>Commercial passenger air flights, total, arrivals, departures</td></tr>
+</tbody></table></div>
+<h3>Port file</h3>
+<div class="table-wrap"><table><thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>portKey</code></td><td>Eurostat port key, country code then 0 and the five-letter location code</td></tr>
+<tr><td><code>locode</code></td><td>Five-letter location code</td></tr>
+<tr><td><code>measure</code></td><td>goods (gross weight) or passengers (excluding cruise passengers)</td></tr>
+<tr><td><code>frequency</code></td><td>Q quarterly</td></tr>
+<tr><td><code>valueInbound, valueOutbound, valueTotal</code></td><td>Inwards, outwards and total</td></tr>
+<tr><td><code>unit</code></td><td>Thousand tonnes (goods) or Thousand (passengers)</td></tr>
+</tbody></table></div>
+<p>The Actor's full rows also carry year-on-year change, a rank in ranking modes and other fields described in its README.</p>
+
+<h2 id="licence">Source and attribution</h2>
+<p>Source: Eurostat. Eurostat's copyright notice authorises reuse of its statistical data for commercial or non-commercial purposes provided the source is acknowledged (its editorial content is licensed CC BY 4.0). Airport names and codes: OurAirports, public domain. Keep the <code>attribution</code> column, or this line, with any copy:</p>
+<blockquote><p>Source: Eurostat, datasets avia_paoa, mar_go_qm_nl and mar_pa_qm_nl, accessed 19 November 2026. Data reformatted, filtered and, for airports, joined to OurAirports reference data (public domain) by Yappman Data; not endorsed by Eurostat or the European Commission.</p></blockquote>
+<p>Yappman Data is not affiliated with Eurostat or the European Commission.</p>
+
+<h2 id="actor">Maintained version</h2>
+<p>The Apify Actor <a href="https://apify.com/yappman/aviation-airport-traffic-eu" rel="noopener">EU Air and Sea Traffic: Eurostat Passenger and Freight Data</a> returns other months, other countries, route pairs and a change feed, pay per event. Our other Actors are at <a href="https://apify.com/yappman" rel="noopener">apify.com/yappman</a>.</p>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+  <div class="foot-grid">
+    <div><a class="brand" href="/"><span class="mark" aria-hidden="true">Y</span>Yappman Data</a><p>Price data kept as first published.</p></div>
+    <div><h4>Data</h4><a href="/shelf-price-index/">Shelf-Price Index</a><a href="/au-shelf-price-index/">AU Shelf-Price Index</a><a href="/data-quality/">Data quality</a><a href="/methodology/">Methodology</a><a href="/demos/">Demos</a><a href="/actors/">Our Actors</a></div>
+    <div><h4>Notices</h4><a href="/notices/">All notices</a><a href="/privacy/">Privacy</a></div>
+    <div><h4>Contact</h4><a href="mailto:info@yappman.com">info@yappman.com</a><a href="/#pricing">Pricing</a><a href="/press/">Press</a><a href="https://www.youtube.com/@yappmandata" rel="noopener">YouTube</a><a href="https://bsky.app/profile/yappmandata.bsky.social" rel="noopener">Bluesky</a></div>
+  </div>
+  <div class="foot-legal">
+    <p class="co">Yappman Data is a trading name of Abley-Yapp Consulting Limited, registered in England and Wales (company no. 16120444), registered office High Trees Trystings Close, Claygate, Esher, England, KT10 0TF.</p>
+    <p>Source: Eurostat (reuse authorised with the source acknowledged); airport names and codes from OurAirports (public domain). Not affiliated with Eurostat or the European Commission.</p>
+    <p><a href="#top">Back to top &uarr;</a></p>
+  </div>
+</div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>
