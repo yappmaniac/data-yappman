@@ -45,3 +45,4 @@
 
 ## Optional
 - [Demos](https://data.yappman.com/demos/): Short screen recordings of the Yappman Data Actors on the Apify Store: UK and Australian supermarkets and property listings.
+- [Tools we are considering](https://data.yappman.com/ideas/): Five tools we are thinking about building, each with a short page; nothing is built, and the way to answer is by email.
