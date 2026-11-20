@@ -112,7 +112,9 @@ function build(root) {
   const ci = lines.findIndex(l => l.startsWith("<link rel=\"stylesheet\""));
   if (ci < 0) throw new Error("template stylesheet line missing");
   lines.splice(ci + 1, 0, "<link rel=\"stylesheet\" href=\"/assets/basket.css\">");
-  const head = lines.join("\n").replace("class=\"nav-top active\" aria-current=\"true\"", "class=\"nav-top\"");
+  // the page's own menu group is the active one (the 19 Nov menu has a group per section): strip the template's, then mark this page's
+  const head = lines.join("\n").replace("class=\"nav-top active\" aria-current=\"true\"", "class=\"nav-top\"")
+    .replace("class=\"nav-top\" aria-expanded=\"false\" aria-controls=\"panel-free\"", "class=\"nav-top active\" aria-current=\"true\" aria-expanded=\"false\" aria-controls=\"panel-free\"");
   const tail = foot.replace("</body>", "<script src=\"/assets/basket.js\" defer></script>\n</body>");
   if (tail === foot) throw new Error("template has no </body>");
   return new Map([[OUT, head + "<main id=\"main\" tabindex=\"-1\">\n" + html + "</main>\n" + tail]]);
