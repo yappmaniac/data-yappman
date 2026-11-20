@@ -8,7 +8,7 @@
 //
 // Source (not served: the folder starts with an underscore):  _template/nav.tpl (the menu, with no group active) and _template/footer.tpl
 // (the footer, with a `<!-- site:notes -->` place for each page's own legal note). In a page:
-//     <!-- site:nav active=free -->   ...the <nav> block...   <!-- /site:nav -->        active= is indices, trust, free, data, resources or none; "home" marks the brand link
+//     <!-- site:nav active=free -->   ...the <nav> block...   <!-- /site:nav -->        active= is free, actors, institutions, resources or none; "home" marks the brand link
 //     <!-- site:footer -->            ...the <footer> block... <!-- /site:footer -->     its <!-- site:notes --> region is the page's own and is never rewritten
 // The pages stay plain static HTML in place (IndexNow, the sitemap and the URLs are unchanged). The four page builders call setActive() so the
 // pages they write carry the same markers. No network, no clock. A page is changed only inside its two marked regions.
@@ -18,7 +18,7 @@ const path = require("path");
 const TEMPLATE_DIR = "_template";
 const SKIP_DIRS = new Set([".git", ".claude", "_incoming", "_template", "node_modules", "docs"]);
 const NOT_PAGES = new Set(["google428db29621210fc5.html"]);           // a search-console verification file: no menu, no footer
-const GROUPS = ["data", "indices", "free", "trust", "resources"];
+const GROUPS = ["free", "actors", "institutions", "resources"];
 const NAV_MARK = /<!-- site:nav((?: [a-z]+(?:=[a-z]+)?)*) -->\n/;
 const NAV_END = "<!-- /site:nav -->\n";
 const FOOT_MARK = "<!-- site:footer -->\n";

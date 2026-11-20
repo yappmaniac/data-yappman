@@ -96,7 +96,7 @@ function page(tpl, title, desc, url, body, keyword) {
   set("<meta property=\"og:url\"", `<meta property="og:url" content="${url}">`);
   set("<link rel=\"canonical\"", `<link rel="canonical" href="${url}">`);
   // the menu is the template page's (one source: _template/); this page's own group is marked active
-  const menu = setActive(lines.join("\n"), "indices");
+  const menu = setActive(lines.join("\n"), "free");
   const head = menu.replace("</head>\n", datasetLd(title, desc, url, keyword) + "</head>\n");
   if (head === menu) throw new Error("the template page has no </head> line");
   return head + "<main id=\"main\" tabindex=\"-1\">\n" + body + "</main>\n" + tpl.foot;

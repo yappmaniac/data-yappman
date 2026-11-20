@@ -8,7 +8,7 @@ const cp = require("child_process");
 const { build, check, write, load, LABELS, DIR, SRC } = require("./build-category-pages.js");
 
 const SCRIPT = path.join(__dirname, "build-category-pages.js");
-const TPL = '<!DOCTYPE html>\n<html lang="en-GB">\n<head>\n<title>x</title>\n<meta name="description" content="x">\n<meta property="og:title" content="x">\n<meta property="og:description" content="x">\n<meta property="og:url" content="x">\n<link rel="canonical" href="x">\n</head>\n<body>\n<!-- site:nav active=trust -->\n<nav aria-label="Main"><button class="nav-top" aria-expanded="false" aria-controls="panel-indices">indices</button><button class="nav-top" aria-expanded="false" aria-controls="panel-free">free</button><button class="nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-trust">trust</button></nav>\n<!-- /site:nav -->\n<main id="main" tabindex="-1">\n<h1>t</h1>\n</main>\n<footer>f</footer>\n</body></html>\n';
+const TPL = '<!DOCTYPE html>\n<html lang="en-GB">\n<head>\n<title>x</title>\n<meta name="description" content="x">\n<meta property="og:title" content="x">\n<meta property="og:description" content="x">\n<meta property="og:url" content="x">\n<link rel="canonical" href="x">\n</head>\n<body>\n<!-- site:nav active=institutions -->\n<nav aria-label="Main"><button class="nav-top" aria-expanded="false" aria-controls="panel-actors">actors</button><button class="nav-top" aria-expanded="false" aria-controls="panel-free">free</button><button class="nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-institutions">institutions</button></nav>\n<!-- /site:nav -->\n<main id="main" tabindex="-1">\n<h1>t</h1>\n</main>\n<footer>f</footer>\n</body></html>\n';
 const CLASSES = Object.keys(LABELS);
 const meta = (v, base, classes = CLASSES) => ({ vintage: v, publishedAt: v === "2026-W45" ? "2026-11-09T12:00:00Z" : "2026-11-02T12:00:00Z", revision: 1, recordType: "meta", base, classes });
 const crow = (v, c, level, status = "ok") => ({ vintage: v, recordType: "class", retailer: "", class: c, level, weekOnWeekPct: 0.05, matched: 1234, status });
@@ -31,7 +31,7 @@ test("one page per class plus an index, each with the chart, tables, history not
   assert.match(pet, /<h1>UK shelf prices: Pet<\/h1>/); assert.match(pet, /<svg viewBox/); assert.match(pet, /level 100\.5, \+0\.05% on the week before/);
   assert.match(pet, /history starts on 27 September 2026/); assert.match(pet, /Week 41 has no data/); assert.match(pet, /CC BY 4\.0/);
   assert.match(pet, /canonical" href="https:\/\/data\.yappman\.com\/shelf-price-index\/categories\/pet\/"/);
-  assert.equal((pet.match(/nav-top active/g) || []).length, 1); assert.match(pet, /nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-indices"/); assert.match(pet, /<!-- site:nav active=indices -->/);
+  assert.equal((pet.match(/nav-top active/g) || []).length, 1); assert.match(pet, /nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-free"/); assert.match(pet, /<!-- site:nav active=free -->/);
   assert.match(files.get(`${DIR}/index.html`), /href="\/shelf-price-index\/categories\/dairy-eggs\/"/);
 });
 

@@ -30,7 +30,7 @@ function plainSite() {
   const root = sourceRoot(), src = T.partials(root);
   put(root, "index.html", plainPage(src, "none", true, ""));
   put(root, "free/index.html", plainPage(src, "free", false, NOTE));
-  put(root, "indices/index.html", plainPage(src, "indices", false, "").replace(/\n/g, "\r\n"));      // a CRLF page
+  put(root, "indices/index.html", plainPage(src, "actors", false, "").replace(/\n/g, "\r\n"));      // a CRLF page
   put(root, "google428db29621210fc5.html", "google-site-verification: google428db29621210fc5.html\n");  // not a page
   put(root, "_incoming/skipped/index.html", "<html>not a page of the site</html>\n");
   return { root, src };
@@ -109,12 +109,12 @@ test("migrate refuses, and writes nothing at all, when any page's menu or footer
 test("setActive: the page builders mark their own group, keep the markers, and refuse a template without them", () => {
   const { root } = plainSite(); T.migrate(root);
   const tpl = get(root, "free/index.html").replace(/\n<main[\s\S]*$/, "\n");
-  const out = T.setActive(tpl, "trust");
-  assert.match(out, /<!-- site:nav active=trust -->/);
+  const out = T.setActive(tpl, "institutions");
+  assert.match(out, /<!-- site:nav active=institutions -->/);
   assert.equal((out.match(/nav-top active/g) || []).length, 1);
-  assert.match(out, /nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-trust"/);
-  assert.equal(T.setActive(T.setActive(tpl, "indices"), "trust"), out, "re-marking is stable");
-  assert.throws(() => T.setActive("<html></html>", "trust"), /no site:nav marker/);
+  assert.match(out, /nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-institutions"/);
+  assert.equal(T.setActive(T.setActive(tpl, "actors"), "institutions"), out, "re-marking is stable");
+  assert.throws(() => T.setActive("<html></html>", "institutions"), /no site:nav marker/);
   assert.throws(() => T.setActive(tpl, "nonsense"), /no "nonsense" group/);
 });
 

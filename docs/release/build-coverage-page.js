@@ -231,7 +231,7 @@ function build(root) {
   set("<meta property=\"og:url\"", `<meta property="og:url" content="${SITE}/coverage/">`);
   set("<link rel=\"canonical\"", `<link rel="canonical" href="${SITE}/coverage/">`);
   // the menu is the template page's (one source: _template/); this page's own group is marked active
-  const head = setActive(lines.join("\n"), "trust");
+  const head = setActive(lines.join("\n"), "institutions");
   return new Map([[OUT, head + "<main id=\"main\" tabindex=\"-1\">\n" + body(d) + "</main>\n" + foot]]);
 }
 
