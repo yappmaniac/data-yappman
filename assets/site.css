@@ -354,3 +354,5 @@ html:not(.js) .nav-group:hover>.panel,html:not(.js) .nav-group:focus-within>.pan
 .od-inline a{color:inherit}
 .od-inline li{flex-wrap:wrap}
 @media (max-width:600px){.od-inline{flex-direction:column;gap:12px}.od-inline .od-price{flex-basis:100%}}
+/* long unbroken strings (a SHA-256, a file URL) wrap instead of widening the page on a phone */
+main p,main li{overflow-wrap:break-word}

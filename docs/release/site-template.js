@@ -6,7 +6,7 @@
 //   node docs/release/site-template.js --write [--root DIR]     rewrite the marked regions of the pages that differ (nothing else in a page is touched)
 //   node docs/release/site-template.js --migrate [--root DIR]   ONE-OFF: add the markers to a page that has none, only if its menu and footer already equal the source
 //
-// Source (not served: the folder starts with an underscore):  _template/nav.part (the menu, with no group active) and _template/footer.part
+// Source (not served: the folder starts with an underscore):  _template/nav.tpl (the menu, with no group active) and _template/footer.tpl
 // (the footer, with a `<!-- site:notes -->` place for each page's own legal note). In a page:
 //     <!-- site:nav active=free -->   ...the <nav> block...   <!-- /site:nav -->        active= is indices, trust, free, data, resources or none; "home" marks the brand link
 //     <!-- site:footer -->            ...the <footer> block... <!-- /site:footer -->     its <!-- site:notes --> region is the page's own and is never rewritten
@@ -32,12 +32,12 @@ const lf = s => s.replace(/\r\n/g, "\n");
 const read = p => fs.readFileSync(p, "utf8");
 
 function partials(root) {
-  const nav = lf(read(path.join(root, TEMPLATE_DIR, "nav.part")));
-  const footer = lf(read(path.join(root, TEMPLATE_DIR, "footer.part")));
-  if (!nav.startsWith('<nav aria-label="Main"') || !nav.endsWith("</nav>\n")) throw new Error(`${TEMPLATE_DIR}/nav.part: not a <nav> block`);
-  if (nav.includes(ACTIVE)) throw new Error(`${TEMPLATE_DIR}/nav.part: no group may be active in the source`);
+  const nav = lf(read(path.join(root, TEMPLATE_DIR, "nav.tpl")));
+  const footer = lf(read(path.join(root, TEMPLATE_DIR, "footer.tpl")));
+  if (!nav.startsWith('<nav aria-label="Main"') || !nav.endsWith("</nav>\n")) throw new Error(`${TEMPLATE_DIR}/nav.tpl: not a <nav> block`);
+  if (nav.includes(ACTIVE)) throw new Error(`${TEMPLATE_DIR}/nav.tpl: no group may be active in the source`);
   if (!footer.startsWith('<footer class="site-footer">') || !footer.endsWith("</footer>\n") || footer.split(NOTES_START).length !== 2 || footer.split(NOTES_END).length !== 2)
-    throw new Error(`${TEMPLATE_DIR}/footer.part: not a <footer> block with one notes place`);
+    throw new Error(`${TEMPLATE_DIR}/footer.tpl: not a <footer> block with one notes place`);
   return { nav, footer };
 }
 

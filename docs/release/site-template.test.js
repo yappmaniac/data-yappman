@@ -18,7 +18,7 @@ function put(root, rel, text) { fs.mkdirSync(path.dirname(path.join(root, rel)),
 function get(root, rel) { return fs.readFileSync(path.join(root, rel), "utf8"); }
 function sourceRoot() {
   const root = tmp();
-  for (const f of ["nav.part", "footer.part"]) put(root, `${T.TEMPLATE_DIR}/${f}`, fs.readFileSync(path.join(REPO, T.TEMPLATE_DIR, f), "utf8"));
+  for (const f of ["nav.tpl", "footer.tpl"]) put(root, `${T.TEMPLATE_DIR}/${f}`, fs.readFileSync(path.join(REPO, T.TEMPLATE_DIR, f), "utf8"));
   return root;
 }
 // A page as the site had it before the markers: the menu for its group, then the footer with its own note.
@@ -75,7 +75,7 @@ test("check fails when one menu link in one page is edited, and --write puts it 
 
 test("a footer edit and a menu change in the source reach every page, each keeping its own note, active group and line endings", () => {
   const { root } = plainSite(); T.migrate(root);
-  const nav = path.join(root, T.TEMPLATE_DIR, "nav.part");
+  const nav = path.join(root, T.TEMPLATE_DIR, "nav.tpl");
   fs.writeFileSync(nav, fs.readFileSync(nav, "utf8").replace("/methodology/", "/how-it-works/"));
   assert.equal(T.check(root).length, 3);
   assert.equal(T.write(root).length, 3);
