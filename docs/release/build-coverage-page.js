@@ -12,6 +12,7 @@
 // weeks) that is not confirmed is never printed (its cell shows a dash). A week missing from a published index needs a notice link in
 // the reference file, or the build stops: a gap is never left unexplained.
 const fs = require("fs");
+const { setActive } = require("./site-template.js");
 const AFF = require("./affiliate.js");
 const path = require("path");
 
@@ -229,9 +230,8 @@ function build(root) {
   set("<meta property=\"og:description\"", `<meta property="og:description" content="${esc(desc)}">`);
   set("<meta property=\"og:url\"", `<meta property="og:url" content="${SITE}/coverage/">`);
   set("<link rel=\"canonical\"", `<link rel="canonical" href="${SITE}/coverage/">`);
-  // the page's own menu group is the active one (the 19 Nov menu has a group per section): strip the template's, then mark this page's
-  const head = lines.join("\n").replace("class=\"nav-top active\" aria-current=\"true\"", "class=\"nav-top\"")
-    .replace("class=\"nav-top\" aria-expanded=\"false\" aria-controls=\"panel-trust\"", "class=\"nav-top active\" aria-current=\"true\" aria-expanded=\"false\" aria-controls=\"panel-trust\"");
+  // the menu is the template page's (one source: _template/); this page's own group is marked active
+  const head = setActive(lines.join("\n"), "trust");
   return new Map([[OUT, head + "<main id=\"main\" tabindex=\"-1\">\n" + body(d) + "</main>\n" + foot]]);
 }
 

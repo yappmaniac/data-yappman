@@ -10,7 +10,7 @@ const pilot = require("./build-basket-pilot.js");
 const pageBuilder = require("./build-basket-page.js");
 
 const ROOT = path.join(__dirname, "..", "..");
-const TPL = '<!DOCTYPE html>\n<html>\n<head>\n<title>x</title>\n<meta name="description" content="x">\n<meta property="og:title" content="x">\n<meta property="og:description" content="x">\n<meta property="og:url" content="x">\n<link rel="canonical" href="x">\n<link rel="stylesheet" href="/assets/site.css">\n</head>\n<body>\n<a class="nav-top active" aria-current="true">Trust</a>\n<main id="main" tabindex="-1">\nold\n</main>\n<footer>f</footer>\n</body>\n</html>\n';
+const TPL = '<!DOCTYPE html>\n<html>\n<head>\n<title>x</title>\n<meta name="description" content="x">\n<meta property="og:title" content="x">\n<meta property="og:description" content="x">\n<meta property="og:url" content="x">\n<link rel="canonical" href="x">\n<link rel="stylesheet" href="/assets/site.css">\n</head>\n<body>\n<!-- site:nav active=trust -->\n<nav aria-label="Main"><button class="nav-top" aria-expanded="false" aria-controls="panel-indices">indices</button><button class="nav-top" aria-expanded="false" aria-controls="panel-free">free</button><button class="nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-trust">trust</button></nav>\n<!-- /site:nav -->\n<main id="main" tabindex="-1">\nold\n</main>\n<footer>f</footer>\n</body>\n</html>\n';
 
 // a small list: item 0 priced at all four shops, item 1 at three (not Aldi), item 2 with a size-differs cell, item 3 unconfirmed at Tesco
 const cell = (id, name, q, extra = {}) => ({ id, name, pack: "1kg", url: "https://example.com/" + id, q, sz: 1000, su: "g", ...extra });
@@ -140,7 +140,7 @@ test("the page is built from the template, names the four shops alphabetically, 
   assert.match(p, /A person checked every match on 17 November 2026\./);
   assert.match(p, /write to <a href="mailto:info@yappman\.com">info@yappman\.com<\/a>; we normally reply within one working day\. If a shop asks us in writing to stop, we stop collecting and showing its prices the day we read the message\./);
   assert.match(p, /<link rel="stylesheet" href="\/assets\/basket\.css">/); assert.match(p, /<script src="\/assets\/basket\.js" defer><\/script>/);
-  assert.doesNotMatch(p, /£\d|&pound;\d/); assert.doesNotMatch(p, /nav-top active/);
+  assert.doesNotMatch(p, /£\d|&pound;\d/); assert.equal((p.match(/nav-top active/g) || []).length, 1); assert.match(p, /nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-free"/);
   assert.match(p, /like-for-like check of 4 everyday items/);
 });
 

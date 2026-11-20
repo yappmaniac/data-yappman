@@ -8,7 +8,7 @@ const cp = require("child_process");
 const { build, check, write, OUT, CPI } = require("./build-cpi-page.js");
 
 const SCRIPT = path.join(__dirname, "build-cpi-page.js");
-const TPL = '<!DOCTYPE html>\n<html>\n<head>\n<title>x</title>\n<meta name="description" content="x">\n<meta property="og:title" content="x">\n<meta property="og:description" content="x">\n<meta property="og:url" content="x">\n<link rel="canonical" href="x">\n</head>\n<body><nav><button class="nav-top active" aria-current="true">T</button></nav>\n<main id="main" tabindex="-1">\n<h1>t</h1>\n</main>\n<footer>f</footer>\n</body></html>\n';
+const TPL = '<!DOCTYPE html>\n<html>\n<head>\n<title>x</title>\n<meta name="description" content="x">\n<meta property="og:title" content="x">\n<meta property="og:description" content="x">\n<meta property="og:url" content="x">\n<link rel="canonical" href="x">\n</head>\n<body>\n<!-- site:nav active=trust -->\n<nav aria-label="Main"><button class="nav-top" aria-expanded="false" aria-controls="panel-indices">indices</button><button class="nav-top" aria-expanded="false" aria-controls="panel-free">free</button><button class="nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-trust">trust</button></nav>\n<!-- /site:nav -->\n<main id="main" tabindex="-1">\n<h1>t</h1>\n</main>\n<footer>f</footer>\n</body></html>\n';
 const meta = (v, base) => ({ vintage: v, publishedAt: "2026-11-09T12:49:02Z", revision: 1, recordType: "meta", base });
 const row = (v, rt, cls, level, wow, status = "ok") => ({ vintage: v, recordType: rt, retailer: "", class: cls, level, weekOnWeekPct: wow, status });
 const REF = { schema: 1, retrievedOn: "2026-11-11", series: [
@@ -81,9 +81,9 @@ test("the committed page and reference file agree (when the site has them)", () 
   assert.deepStrictEqual(check(top), []);
 });
 
-test("the script uses only fs and path: no network, eval or child process", () => {
+test("the script uses only fs, path and the shared site template: no network, eval or child process", () => {
   const src = fs.readFileSync(SCRIPT, "utf8");
   assert.doesNotMatch(src, /require\(["'](https?|net|dgram|dns|tls|child_process|vm|worker_threads)["']\)/);
   assert.doesNotMatch(src, /\beval\s*\(|new Function|fetch\s*\(|process\.env/);
-  assert.deepStrictEqual([...src.matchAll(/require\(["']([^"']+)["']\)/g)].map(m => m[1]).sort(), ["fs", "path"]);
+  assert.deepStrictEqual([...src.matchAll(/require\(["']([^"']+)["']\)/g)].map(m => m[1]).sort(), ["./site-template.js", "fs", "path"]);
 });

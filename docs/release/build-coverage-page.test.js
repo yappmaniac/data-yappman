@@ -8,7 +8,7 @@ const cp = require("child_process");
 const { build, check, write, weekOf, weekMonday, weeksBetween, OUT, REF } = require("./build-coverage-page.js");
 
 const SCRIPT = path.join(__dirname, "build-coverage-page.js");
-const TPL = '<!DOCTYPE html>\n<html>\n<head>\n<title>x</title>\n<meta name="description" content="x">\n<meta property="og:title" content="x">\n<meta property="og:description" content="x">\n<meta property="og:url" content="x">\n<link rel="canonical" href="x">\n</head>\n<body>\n<a class="nav-top active" aria-current="true">Trust</a>\n<main id="main" tabindex="-1">\nold\n</main>\n<footer>f</footer>\n</body>\n</html>\n';
+const TPL = '<!DOCTYPE html>\n<html>\n<head>\n<title>x</title>\n<meta name="description" content="x">\n<meta property="og:title" content="x">\n<meta property="og:description" content="x">\n<meta property="og:url" content="x">\n<link rel="canonical" href="x">\n</head>\n<body>\n<!-- site:nav active=free -->\n<nav aria-label="Main"><button class="nav-top" aria-expanded="false" aria-controls="panel-indices">indices</button><button class="nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-free">free</button><button class="nav-top" aria-expanded="false" aria-controls="panel-trust">trust</button></nav>\n<!-- /site:nav -->\n<main id="main" tabindex="-1">\nold\n</main>\n<footer>f</footer>\n</body>\n</html>\n';
 const meta = (v, base, pub, matched) => ({ vintage: v, publishedAt: pub + "T07:00:00Z", revision: 1, recordType: "meta", base, matchedTotal: matched });
 const ret = (v, r) => ({ vintage: v, recordType: "retailer", retailer: r, class: "", level: 100 });
 function ukItems() {
@@ -165,7 +165,7 @@ test("the page uses the site template and drops the active menu state", () => {
   const p = page(site());
   assert.match(p, /<title>How much history we hold — Yappman Data<\/title>/);
   assert.match(p, /<link rel="canonical" href="https:\/\/data\.yappman\.com\/coverage\/">/);
-  assert.doesNotMatch(p, /nav-top active/); assert.match(p, /<footer>f<\/footer>/);
+  assert.equal((p.match(/nav-top active/g) || []).length, 1); assert.match(p, /nav-top active" aria-current="true" aria-expanded="false" aria-controls="panel-trust"/); assert.match(p, /<footer>f<\/footer>/);
 });
 
 test("same inputs give a byte-identical page, --check passes after a build and fails after a change", () => {

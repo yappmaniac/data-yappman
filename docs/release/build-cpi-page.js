@@ -14,6 +14,7 @@
 // the build stops, so the sentence is rewritten by hand (with the overlap stated for that month) instead of going stale silently.
 const PERIOD_MONTH = "2026-09";
 const fs = require("fs");
+const { setActive } = require("./site-template.js");
 const path = require("path");
 
 const OUT = "shelf-price-index/vs-cpi/index.html";
@@ -108,9 +109,8 @@ function build(root) {
   set("<meta property=\"og:description\"", `<meta property="og:description" content="${esc(desc)}">`);
   set("<meta property=\"og:url\"", `<meta property="og:url" content="${SITE}/shelf-price-index/vs-cpi/">`);
   set("<link rel=\"canonical\"", `<link rel="canonical" href="${SITE}/shelf-price-index/vs-cpi/">`);
-  // the page's own menu group is the active one (the 19 Nov menu has a group per section): strip the template's, then mark this page's
-  const head = lines.join("\n").replace("class=\"nav-top active\" aria-current=\"true\"", "class=\"nav-top\"")
-    .replace("class=\"nav-top\" aria-expanded=\"false\" aria-controls=\"panel-indices\"", "class=\"nav-top active\" aria-current=\"true\" aria-expanded=\"false\" aria-controls=\"panel-indices\"");
+  // the menu is the template page's (one source: _template/); this page's own group is marked active
+  const head = setActive(lines.join("\n"), "indices");
   return new Map([[OUT, head + "<main id=\"main\" tabindex=\"-1\">\n" + body(d) + "</main>\n" + foot]]);
 }
 

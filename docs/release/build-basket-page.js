@@ -10,6 +10,7 @@
 // document are checked here and in the tests. The page itself holds NO prices: they come from data/basket-pilot.json at view time, so
 // the daily refresh changes no HTML. No network, no clock.
 const fs = require("fs");
+const { setActive } = require("./site-template.js");
 const path = require("path");
 
 const OUT = "basket/index.html";
@@ -112,9 +113,8 @@ function build(root) {
   const ci = lines.findIndex(l => l.startsWith("<link rel=\"stylesheet\""));
   if (ci < 0) throw new Error("template stylesheet line missing");
   lines.splice(ci + 1, 0, "<link rel=\"stylesheet\" href=\"/assets/basket.css\">");
-  // the page's own menu group is the active one (the 19 Nov menu has a group per section): strip the template's, then mark this page's
-  const head = lines.join("\n").replace("class=\"nav-top active\" aria-current=\"true\"", "class=\"nav-top\"")
-    .replace("class=\"nav-top\" aria-expanded=\"false\" aria-controls=\"panel-free\"", "class=\"nav-top active\" aria-current=\"true\" aria-expanded=\"false\" aria-controls=\"panel-free\"");
+  // the menu is the template page's (one source: _template/); this page's own group is marked active
+  const head = setActive(lines.join("\n"), "free");
   const tail = foot.replace("</body>", "<script src=\"/assets/basket.js\" defer></script>\n</body>");
   if (tail === foot) throw new Error("template has no </body>");
   return new Map([[OUT, head + "<main id=\"main\" tabindex=\"-1\">\n" + html + "</main>\n" + tail]]);

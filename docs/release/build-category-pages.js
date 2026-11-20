@@ -13,6 +13,7 @@
 // 2026-W42) are not joined; categories are assigned by keyword rules and are approximate; shelf prices only, not CPI.
 "use strict";
 const fs = require("fs");
+const { setActive } = require("./site-template.js");
 const AFF = require("./affiliate.js");
 const path = require("path");
 
@@ -81,9 +82,8 @@ function page(tpl, title, desc, url, body) {
   set("<meta property=\"og:description\"", `<meta property="og:description" content="${esc(desc)}">`);
   set("<meta property=\"og:url\"", `<meta property="og:url" content="${url}">`);
   set("<link rel=\"canonical\"", `<link rel="canonical" href="${url}">`);
-  // the page's own menu group is the active one (the 19 Nov menu has a group per section): strip the template's, then mark this page's
-  const head = lines.join("\n").replace("class=\"nav-top active\" aria-current=\"true\"", "class=\"nav-top\"")
-    .replace("class=\"nav-top\" aria-expanded=\"false\" aria-controls=\"panel-indices\"", "class=\"nav-top active\" aria-current=\"true\" aria-expanded=\"false\" aria-controls=\"panel-indices\"");
+  // the menu is the template page's (one source: _template/); this page's own group is marked active
+  const head = setActive(lines.join("\n"), "indices");
   return head + "<main id=\"main\" tabindex=\"-1\">\n" + body + "</main>\n" + tpl.foot;
 }
 
