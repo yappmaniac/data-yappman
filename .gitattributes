@@ -1,0 +1,2 @@
+# the 360Giving sample CSV is kept byte for byte (its row ends are CRLF, as published in the pack): no line-ending conversion
+/360giving-grants-sample/*.csv -text
