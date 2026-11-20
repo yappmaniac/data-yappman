@@ -36,7 +36,15 @@ test("one page per class plus an index, each with the chart, tables, history not
 });
 
 test("only the free index's own figures: no product, image, description or script", () => {
-  for (const s of build(site()).values()) assert.doesNotMatch(s, /<img|\bEAN\b|image|retailerProductId|productName|<script/i);
+  for (const s of build(site()).values()) {
+    const ld = s.match(/<script type="application\/ld\+json">\n([\s\S]*?)\n<\/script>\n/);              // the one Dataset block is the only script
+    assert.ok(ld, "each page carries its Dataset block");
+    assert.doesNotMatch(s.replace(ld[0], ""), /<img|\bEAN\b|image|retailerProductId|productName|<script/i);
+    const doc = JSON.parse(ld[1]);
+    assert.equal(doc["@type"], "Dataset"); assert.equal(doc.license, "https://creativecommons.org/licenses/by/4.0/");
+    assert.deepStrictEqual(doc.distribution.map(d => d.contentUrl), ["https://data.yappman.com/data/uk-shelf-price-index.csv", "https://data.yappman.com/data/uk-shelf-price-index.json"]);
+    assert.doesNotMatch(ld[1], /fpr=|utm_|apify\.com|dateModified|image|retailerProductId|productName/i);
+  }
 });
 
 test("deterministic: a rebuild is byte-identical; --check passes, and fails when a page is edited, missing, or the data moves", () => {

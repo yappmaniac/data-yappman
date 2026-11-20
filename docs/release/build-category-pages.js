@@ -73,7 +73,20 @@ function load(root) {
   return { classes, cls, rc, base, published, latest, weeks: metas.map(m => m.vintage) };
 }
 
-function page(tpl, title, desc, url, body) {
+// Dataset structured data: facts the page already states (the free index it is cut from, its licence, its files); no date that would drift.
+function datasetLd(title, desc, url, keyword) {
+  return "<script type=\"application/ld+json\">\n" + JSON.stringify({
+    "@context": "https://schema.org", "@type": "Dataset", name: title, description: desc, url,
+    license: "https://creativecommons.org/licenses/by/4.0/", isAccessibleForFree: true,
+    creator: { "@type": "Organization", name: "Yappman Data", url: SITE + "/", sameAs: ["https://www.youtube.com/@yappmandata", "https://bsky.app/profile/yappmandata.bsky.social"] },
+    keywords: ["UK", "supermarket", "shelf prices", "price index", keyword], spatialCoverage: "United Kingdom", temporalCoverage: "2026-09-27/..",
+    isBasedOn: SITE + "/shelf-price-index/",
+    distribution: [{ "@type": "DataDownload", name: "Every published week of the UK index, CSV (site copy)", encodingFormat: "text/csv", contentUrl: SITE + "/data/uk-shelf-price-index.csv" },
+      { "@type": "DataDownload", name: "Every published week of the UK index, JSON (site copy)", encodingFormat: "application/json", contentUrl: SITE + "/data/uk-shelf-price-index.json" }],
+  }, null, 2) + "\n</script>\n";
+}
+
+function page(tpl, title, desc, url, body, keyword) {
   const lines = tpl.head.split("\n");
   const set = (start, v) => { const i = lines.findIndex(l => l.startsWith(start)); if (i < 0) throw new Error("template line missing: " + start); lines[i] = v; };
   set("<title>", `<title>${esc(title)} — Yappman Data</title>`);
@@ -83,7 +96,9 @@ function page(tpl, title, desc, url, body) {
   set("<meta property=\"og:url\"", `<meta property="og:url" content="${url}">`);
   set("<link rel=\"canonical\"", `<link rel="canonical" href="${url}">`);
   // the menu is the template page's (one source: _template/); this page's own group is marked active
-  const head = setActive(lines.join("\n"), "indices");
+  const menu = setActive(lines.join("\n"), "indices");
+  const head = menu.replace("</head>\n", datasetLd(title, desc, url, keyword) + "</head>\n");
+  if (head === menu) throw new Error("the template page has no </head> line");
   return head + "<main id=\"main\" tabindex=\"-1\">\n" + body + "</main>\n" + tpl.foot;
 }
 
@@ -156,10 +171,10 @@ function build(root) {
   if (!rest || !rest.includes("</main>\n")) throw new Error(`${TEMPLATE}: not the expected page shape`);
   const tpl = { head, foot: rest.split("</main>\n").slice(1).join("</main>\n") };
   const out = new Map();
-  out.set(`${DIR}/index.html`, page(tpl, "UK shelf prices by category", "The 16 categories of the free UK Online Shelf-Price Index with the latest week, the change on the week before and the number of matched products. Shelf prices only; not CPI.", `${SITE}/${DIR}/`, indexBody(d)));
+  out.set(`${DIR}/index.html`, page(tpl, "UK shelf prices by category", "The 16 categories of the free UK Online Shelf-Price Index with the latest week, the change on the week before and the number of matched products. Shelf prices only; not CPI.", `${SITE}/${DIR}/`, indexBody(d), "categories"));
   for (const c of d.classes) {
     const name = LABELS[c];
-    out.set(`${DIR}/${c}/index.html`, page(tpl, `UK shelf prices: ${name}`, `How the posted online shelf prices of ${PHRASES[c]} moved at Tesco, Sainsbury's, Asda and Aldi, by week, from the free UK Online Shelf-Price Index. Not CPI.`, `${SITE}/${DIR}/${c}/`, categoryBody(d, c)));
+    out.set(`${DIR}/${c}/index.html`, page(tpl, `UK shelf prices: ${name}`, `How the posted online shelf prices of ${PHRASES[c]} moved at Tesco, Sainsbury's, Asda and Aldi, by week, from the free UK Online Shelf-Price Index. Not CPI.`, `${SITE}/${DIR}/${c}/`, categoryBody(d, c), name));
   }
   return out;
 }
