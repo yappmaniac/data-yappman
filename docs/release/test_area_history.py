@@ -207,6 +207,20 @@ def test_every_check_holds_the_build_and_writes_nothing(root, capsys, name):
     assert 'check' in out or out.get('code') == 'template-broken'
 
 
+def test_unknown_extra_fields_in_the_state_index_entries_totals_and_documents_are_ignored_but_a_missing_one_holds(root, capsys):
+    files = fx.make()
+    edit_json(files, 'AH_STATE.json', lambda d: d.update(buildKind='incremental', chainLength=2))
+    edit_json(files, 'ah_index.json', lambda d: (d.update(lastFullBuildAt='2026-11-01T00:00:00Z'), d['totals'].update(unassignedByYear={'2025': 1}),
+                                                  d['files'][0].update(yearDigests={'1995': 'x'})))
+    edit_json(files, 'ah_E12000001_year.json', lambda d: d.update(reusedBefore='2024'))
+    put_incoming(root, files)
+    assert run(root, '--check', '--first-publish') == 0
+    capsys.readouterr()
+    missing = fx.make()
+    edit_json(missing, 'AH_STATE.json', lambda d: d.pop('lastQuarter'))
+    held(root, missing, capsys)
+
+
 def test_a_file_missing_from_the_folder_is_refused_with_nothing_written(root, capsys):
     files = fx.make()
     del files['ah_E12000005_qtr_1995-2009.csv']

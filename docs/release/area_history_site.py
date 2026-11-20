@@ -13,6 +13,8 @@ docs/release/history_table_site.py) and the monthly table are NOT touched; this 
 reviewed helpers.
 
 What it does:
+- Unknown EXTRA fields in the state, the index (and its entries and totals) and each file's document are ignored (the Actor may add fields,
+  for example an incremental build's buildKind or yearDigests); every required key is still checked, and rows stay exact (eleven fields).
 - Reads the saved files and publishes only when every check passes; otherwise it writes nothing and what is live stays live
   (exit 3). Only the files the index lists are used (an older file left in the folder is ignored). Checks:
     versions all 1 (state, index, every file); month, lastYear, lastQuarter, postcodeRelease and builtAt equal in AH_STATE,
@@ -163,10 +165,10 @@ def check_area_history(raws: dict[str, bytes], live: dict[str, Any] | None, firs
         raise CheckFailed(1, 'AH_STATE.json or ah_index.json is missing', refused=True)
     state = _load_json(raws[STATE_FILE], 1, 'AH_STATE')
     index = _load_json(raws[INDEX_FILE], 1, 'ah_index.json')
-    if not isinstance(state, dict) or set(state) != STATE_KEYS:
-        raise CheckFailed(1, 'AH_STATE does not have exactly its eleven keys')
-    if not isinstance(index, dict) or set(index) != INDEX_KEYS:
-        raise CheckFailed(1, 'ah_index.json does not have exactly its keys')
+    if not isinstance(state, dict) or not STATE_KEYS <= set(state):
+        raise CheckFailed(1, 'AH_STATE lacks one of its eleven keys')
+    if not isinstance(index, dict) or not INDEX_KEYS <= set(index):
+        raise CheckFailed(1, 'ah_index.json lacks one of its keys')
 
     # 1. versions and columns
     for name, document in (('AH_STATE', state), ('the index', index)):
@@ -203,9 +205,9 @@ def check_area_history(raws: dict[str, bytes], live: dict[str, Any] | None, firs
     # 3. the file list and the counts
     entries = index['files']
     totals = index['totals']
-    if not isinstance(entries, list) or not 0 < len(entries) <= MAX_FILES or any(not isinstance(e, dict) or set(e) != ENTRY_KEYS for e in entries):
+    if not isinstance(entries, list) or not 0 < len(entries) <= MAX_FILES or any(not isinstance(e, dict) or not ENTRY_KEYS <= set(e) for e in entries):
         raise CheckFailed(3, 'the index files are not a list of {key, region, regionName, kind, block, rows, authorities}')
-    if not isinstance(totals, dict) or set(totals) != TOTALS_KEYS or not all(_is_count(totals[k]) for k in TOTALS_KEYS):
+    if not isinstance(totals, dict) or not TOTALS_KEYS <= set(totals) or not all(_is_count(totals[k]) for k in TOTALS_KEYS):
         raise CheckFailed(3, 'the index totals are not exactly their six whole numbers')
     keys = [e['key'] for e in entries]
     if sorted(keys) != sorted(expected_keys()):
@@ -247,8 +249,8 @@ def check_area_history(raws: dict[str, bytes], live: dict[str, Any] | None, firs
         if json_name not in raws or csv_name not in raws:
             raise CheckFailed(1, f'the files of {key} are missing', refused=True)
         document = _load_json(raws[json_name], 1, json_name)
-        if not isinstance(document, dict) or set(document) != FILE_KEYS:
-            raise CheckFailed(1, f'{json_name} does not have exactly its keys')
+        if not isinstance(document, dict) or not FILE_KEYS <= set(document):
+            raise CheckFailed(1, f'{json_name} lacks one of its keys')
         if type(document['v']) is not int or document['v'] != AREA_VERSION:
             raise CheckFailed(1, f'{json_name} v must be {AREA_VERSION}')
         shared = {k: document[k] for k in ('month', 'lastYear', 'lastQuarter', 'postcodeRelease', 'builtAt', 'firstYear', 'title', 'licence', 'method')}
