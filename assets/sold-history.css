@@ -1,0 +1,4 @@
+.sh-controls{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:12px 0}
+.sh-controls select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+#sh-table caption{text-align:left;font-weight:600;padding:6px 0}
+.method{color:var(--muted);font-size:14px}
