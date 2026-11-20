@@ -3,6 +3,7 @@
 > Dated grocery shelf-price indices for the UK and Australia, free under CC BY 4.0, with data extracts. Not CPI; not affiliated with any retailer.
 
 ## Free data
+- [Free data catalogue](https://data.yappman.com/free-data/): Every free dataset on data.yappman.com in one table, with its licence as its own page states it, how often it changes and links to its page and files.
 - [UK Online Shelf-Price Index](https://data.yappman.com/shelf-price-index/): Weekly index of posted online shelf prices at Tesco, Sainsbury's, Asda and Aldi. Base 100 at 2026-W42 after the skipped week 41. CC BY 4.0.
 - [UK Online Shelf-Price Index: how it is measured](https://data.yappman.com/shelf-price-index/method/): How the UK Online Shelf-Price Index is built: matched products at Tesco, Sainsbury's, Asda and Aldi, a Jevons index chained week on week, the ratio-3 rule, base weeks, cadence and changelog.
 - [UK Online Shelf-Price Index: data dictionary](https://data.yappman.com/shelf-price-index/data-dictionary/): Fields, record types, statuses and meta of the UK Online Shelf-Price Index dataset (uk-shelf-price-index), with the CSV and JSON download links. Licensed CC BY 4.0.
@@ -44,7 +45,7 @@
 - [Press](https://data.yappman.com/press/): For journalists and writers: what the UK Online Shelf-Price Index is, how to cite it, what CC BY 4.0 allows, the latest finding, and who to contact.
 - [Where to get UK supermarket price data: free and paid, compared](https://data.yappman.com/guides/uk-supermarket-price-data/): UK supermarket price data compared: ONS statistics, the Warwick and LSE research data, a Kaggle time series, the Which? and Trolley trackers, and our weekly CC BY 4.0 index. What each covers and whether you can download it.
 - [Privacy](https://data.yappman.com/privacy/): What personal data the Yappman Data website collects, why, and your choices, including analytics, server logs and what we keep if you email us; and, for people whose details appear in the public registers our feeds and lookups use, what we hold, why, and how to ask for it to be removed.
-- Contact: info@yappman.com
+- [Contact](https://data.yappman.com/contact/): One address for questions, samples and corrections (info@yappman.com); organisations and research teams start with a sample.
 
 ## Optional
 - [Demos](https://data.yappman.com/demos/): Short screen recordings of the Yappman Data Actors on the Apify Store: UK and Australian supermarkets and property listings.

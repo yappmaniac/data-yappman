@@ -14,10 +14,12 @@ const path = require("path");
 
 const SITE = "https://data.yappman.com";
 const LICENCES = new Set(["https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/", "https://creativecommons.org/licenses/by/4.0/"]);
-const NO_LICENCE_URL = new Set(["eu-air-sea-traffic-sample/index.html"]);       // the page names Eurostat's own copyright notice, not a licence URL
+// Eurostat publishes a reuse notice, not a licence: the EU sample page carries exactly the line Russell approved (20 Nov 2026) and that notice.
+const EUROSTAT = { page: "eu-air-sea-traffic-sample/index.html", name: "reuse authorised provided the source is acknowledged", url: "https://ec.europa.eu/eurostat/web/main/help/copyright-notice" };
 const REQUIRED = ["shelf-price-index/index.html", "au-shelf-price-index/index.html", "shelf-price-index/categories/index.html", "data/v1/index.html",
   "sold-prices/index.html", "sold-prices/history/index.html", "rental-yield/index.html", "council-tax/index.html", "christmas-basket/index.html",
   "gender-pay-gap/index.html", "recalls-sample/index.html", "eu-air-sea-traffic-sample/index.html", "360giving-grants-sample/index.html"];
+const CATALOGUE = "free-data/index.html";     // when it exists, it must carry a DataCatalog whose datasets and files are real
 const ALLOWED = new Set(["@context", "@type", "name", "description", "url", "license", "isAccessibleForFree", "dateModified", "creator", "keywords", "spatialCoverage",
   "temporalCoverage", "distribution", "variableMeasured", "measurementTechnique", "creditText", "sameAs", "isBasedOn", "citation"]);
 const BLOCK = /<script type="application\/ld\+json">\n([\s\S]*?)\n<\/script>/g;
@@ -43,6 +45,19 @@ function check(root) {
     const text = fs.readFileSync(path.join(root, rel), "utf8").replace(/\r\n/g, "\n");
     const docs = [];
     for (const m of text.matchAll(BLOCK)) { try { docs.push(JSON.parse(m[1])); } catch (e) { problems.push(`${rel}: a JSON-LD block is not valid JSON`); } }
+    for (const cat of docs.filter(d => d && d["@type"] === "DataCatalog")) {        // the catalogue: every listed dataset points at a real page and real files
+      const say = msg => problems.push(`${rel}: catalogue: ${msg}`);
+      if (!Array.isArray(cat.dataset) || !cat.dataset.length) { say("no datasets"); continue; }
+      for (const d of cat.dataset) {
+        const u = d.url || "";
+        if (!u.startsWith(SITE + "/") || !fs.existsSync(path.join(root, u.slice(SITE.length + 1), "index.html"))) say(`dataset page does not exist: ${u}`);
+        const lic = d.license === undefined ? [] : Array.isArray(d.license) ? d.license : [d.license];
+        if (!lic.every(l => LICENCES.has(l))) say(`${d.name}: license is not made of the licence URLs the pages state`);
+        for (const dist of d.distribution || []) if (!(dist.contentUrl || "").startsWith(SITE + "/") || !fs.existsSync(path.join(root, dist.contentUrl.slice(SITE.length + 1)))) say(`file does not exist: ${dist.contentUrl}`);
+      }
+      if (/fpr=|utm_|ref=|https:\/\/apify\.com\//.test(JSON.stringify(cat))) say("an affiliate parameter or a Store link is in the structured data");
+    }
+    if (rel === CATALOGUE) { seen.add(rel); if (!docs.some(d => d && d["@type"] === "DataCatalog")) problems.push(`${rel}: expected a DataCatalog block`); }
     const sets = docs.filter(d => d && d["@type"] === "Dataset");
     if (REQUIRED.includes(rel)) { seen.add(rel); if (sets.length !== 1) { problems.push(`${rel}: expected exactly one Dataset block, found ${sets.length}`); continue; } }
     if (!sets.length) continue;
@@ -54,8 +69,13 @@ function check(root) {
     if (typeof d.name !== "string" || !d.name.trim()) say("no name");
     if (typeof d.description !== "string" || d.description.length < 50) say("no real description");
     if (!canonical || d.url !== canonical) say(`url ${d.url} is not the canonical link ${canonical}`);
-    const lic = Array.isArray(d.license) ? d.license : [d.license];
-    if (!NO_LICENCE_URL.has(rel) && !(lic.length && lic.every(l => LICENCES.has(l)))) say(`license is not made of the licence URLs the pages state (${lic.join(", ")})`);
+    if (rel === EUROSTAT.page) {
+      const l = d.license || {};
+      if (l["@type"] !== "CreativeWork" || l.name !== EUROSTAT.name || l.url !== EUROSTAT.url || Object.keys(l).length !== 3) say("license is not the approved Eurostat reuse line");
+    } else {
+      const lic = Array.isArray(d.license) ? d.license : [d.license];
+      if (!(lic.length && lic.every(l => LICENCES.has(l)))) say(`license is not made of the licence URLs the pages state (${lic.join(", ")})`);
+    }
     if (d.isAccessibleForFree !== true) say("isAccessibleForFree is not true");
     if (!d.creator || d.creator.name !== "Yappman Data") say("creator is not Yappman Data");
     if (d.dateModified !== undefined && !isoDate(d.dateModified)) say("dateModified is not an ISO date");
@@ -70,6 +90,7 @@ function check(root) {
     if (/https:\/\/apify\.com\//.test(flat)) say("an Apify Store link is in the structured data");
   }
   for (const rel of REQUIRED) if (!seen.has(rel)) problems.push(`${rel}: required page is missing`);
+  if (fs.existsSync(path.join(root, CATALOGUE)) && !seen.has(CATALOGUE)) problems.push(`${CATALOGUE}: not checked`);
   return problems;
 }
 

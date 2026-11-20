@@ -21,7 +21,7 @@ function site(mutate) {
   for (const rel of C.REQUIRED) {
     const slug = rel.replace(/\/index\.html$/, "");
     let doc = good(slug);
-    if (rel === "eu-air-sea-traffic-sample/index.html") delete doc.license;
+    if (rel === "eu-air-sea-traffic-sample/index.html") doc.license = { "@type": "CreativeWork", name: "reuse authorised provided the source is acknowledged", url: "https://ec.europa.eu/eurostat/web/main/help/copyright-notice" };
     if (mutate) doc = mutate(rel, doc) || doc;
     fs.mkdirSync(path.join(root, slug), { recursive: true });
     fs.writeFileSync(path.join(root, slug, "f.csv"), "a\n");
@@ -51,13 +51,15 @@ test("each rule fails the page that breaks it", () => {
   assert.match(one(R, d => { d.license = ["https://creativecommons.org/licenses/by/4.0/", "https://example.com/x"]; }), /licence URLs/);
 });
 
-test("a required page without a Dataset block, or with invalid JSON, is reported; the EU page may omit the licence URL only", () => {
+test("a required page without a Dataset block, or with invalid JSON, is reported; the EU page carries exactly the approved Eurostat line", () => {
   const root = site();
   fs.writeFileSync(path.join(root, "rental-yield/index.html"), "<head></head>\n");
   fs.writeFileSync(path.join(root, "basket-x.html"), '<script type="application/ld+json">\n{bad\n</script>\n');
   const out = first(root);
   assert.match(out, /rental-yield\/index\.html: expected exactly one Dataset block, found 0/); assert.match(out, /not valid JSON/);
   assert.doesNotMatch(first(site()), /eu-air/);
+  assert.match(first(site((r, d) => { if (r.startsWith("eu-air")) delete d.license; })), /approved Eurostat reuse line/);
+  assert.match(first(site((r, d) => { if (r.startsWith("eu-air")) d.license.name = "free to use"; })), /approved Eurostat reuse line/);
   assert.match(first(site((r, d) => { if (r === "recalls-sample/index.html") delete d.license; })), /recalls-sample.*licence/);
 });
 
@@ -67,4 +69,17 @@ test("command line: exit 1 with problems, 0 clean, 2 on a usage error; the real 
   assert.equal(spawnSync(process.execPath, [SCRIPT, "--nonsense"], { encoding: "utf8" }).status, 2);
   assert.deepStrictEqual(C.check(ROOT), []);
   assert.ok(C.count(ROOT) >= 30);
+});
+
+test("the catalogue, when present, must carry a DataCatalog whose pages and files exist and whose licences are the stated ones", () => {
+  const withCat = (cat) => { const root = site(); fs.mkdirSync(path.join(root, "free-data")); fs.writeFileSync(path.join(root, "free-data/index.html"), cat === null ? "<head></head>\n" : `<script type="application/ld+json">\n${JSON.stringify(cat)}\n</script>\n`); return root; };
+  const ok = { "@context": "https://schema.org", "@type": "DataCatalog", dataset: [{ "@type": "Dataset", name: "x", url: "https://data.yappman.com/council-tax/", license: "https://creativecommons.org/licenses/by/4.0/", distribution: [{ contentUrl: "https://data.yappman.com/council-tax/f.csv" }] }] };
+  assert.deepStrictEqual(C.check(withCat(ok)), []);
+  assert.match(first(withCat(null)), /expected a DataCatalog block/);
+  const bad = JSON.parse(JSON.stringify(ok)); bad.dataset[0].distribution[0].contentUrl = "https://data.yappman.com/council-tax/none.csv";
+  assert.match(first(withCat(bad)), /file does not exist/);
+  const page = JSON.parse(JSON.stringify(ok)); page.dataset[0].url = "https://data.yappman.com/nowhere/";
+  assert.match(first(withCat(page)), /dataset page does not exist/);
+  const lic = JSON.parse(JSON.stringify(ok)); lic.dataset[0].license = "https://example.com/";
+  assert.match(first(withCat(lic)), /licence URLs/);
 });
