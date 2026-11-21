@@ -107,6 +107,25 @@ METHOD = (
     'area. Regions are the English regions of the ONS lookup; Wales is one area. England and Wales only. Not an '
     'index: the mix of homes sold changes from period to period.'
 )
+# The incremental build (Property, price_paid area_history.py on branch price-paid-area-incremental, 20 Nov 2026) states that
+# periods more than two years old are as at the last full rebuild. Both sentences are the Actor's own; either is accepted, and
+# every file of one build must carry the same one as its index.
+METHOD_INCREMENTAL = (
+    'Category A (standard price paid) sales only, by transfer date, one row per local authority or region, period '
+    '(calendar year or calendar quarter) and split (a split is one grouping at a time: all sales, one property type, '
+    'one tenure, or new-build or existing; they are not combined; quarters have all sales and the four property types '
+    'only). Medians and quartiles (inclusive method) in whole pounds, nominal and not adjusted for inflation; null '
+    'when a period has fewer than 5 sales (a quality threshold: every sale is already published by HM Land '
+    'Registry). Rows with no sales are left out. Only complete periods are shown. The latest periods are as at the '
+    'month the file was built, and sales registered later are added when the file is next rebuilt (when a new quarter '
+    'has ended or the postcode release changes). Periods more than two years old are as at the last full rebuild of '
+    'the file (lastFullBuildAt in the index); the newer periods are read again at every build. Authorities are the current authorities of the ONS Postcode Directory '
+    'release named in the file, applied back to 1995: a sale counts in the authority its postcode is in today, not '
+    'the authority it was in at the time. Sales whose postcode could not be placed in an authority are counted in no '
+    'area. Regions are the English regions of the ONS lookup; Wales is one area. England and Wales only. Not an '
+    'index: the mix of homes sold changes from period to period.'
+)
+METHODS = (METHOD, METHOD_INCREMENTAL)
 
 REPO = Path(__file__).resolve().parents[2]
 INCOMING = Path('_incoming/sold-prices-area-history')
@@ -196,7 +215,7 @@ def check_area_history(raws: dict[str, bytes], live: dict[str, Any] | None, firs
         raise CheckFailed(2, 'the index month, builtAt, postcodeRelease, lastYear or lastQuarter differs from AH_STATE')
     if type(index['firstYear']) is not int or index['firstYear'] != FIRST_YEAR:
         raise CheckFailed(2, f'the index firstYear is not {FIRST_YEAR}')
-    if index['title'] != TITLE or index['licence'] != LICENCE or index['method'] != METHOD:
+    if index['title'] != TITLE or index['licence'] != LICENCE or index['method'] not in METHODS:
         raise CheckFailed(2, 'the index title, licence or method is not the expected one')
     expected_attribution = _expected_attribution(built_at[:4])
     if index['attribution'] != expected_attribution:
@@ -255,7 +274,7 @@ def check_area_history(raws: dict[str, bytes], live: dict[str, Any] | None, firs
             raise CheckFailed(1, f'{json_name} v must be {AREA_VERSION}')
         shared = {k: document[k] for k in ('month', 'lastYear', 'lastQuarter', 'postcodeRelease', 'builtAt', 'firstYear', 'title', 'licence', 'method')}
         if (shared != {'month': month, 'lastYear': last_year, 'lastQuarter': last_quarter, 'postcodeRelease': release, 'builtAt': built_at,
-                       'firstYear': FIRST_YEAR, 'title': TITLE, 'licence': LICENCE, 'method': METHOD}
+                       'firstYear': FIRST_YEAR, 'title': TITLE, 'licence': LICENCE, 'method': index['method']}
                 or document['area'] != entry['region'] or document['kind'] != entry['kind'] or document['block'] != entry['block']):
             raise CheckFailed(2, f'{json_name}: month, lastYear, lastQuarter, postcodeRelease, builtAt, area, kind, block or text differs from the index '
                                  f'(a run failed midway: wait for the next run)')

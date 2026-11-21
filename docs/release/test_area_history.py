@@ -221,6 +221,19 @@ def test_unknown_extra_fields_in_the_state_index_entries_totals_and_documents_ar
     held(root, missing, capsys)
 
 
+def test_the_incremental_method_sentence_is_accepted_when_every_file_carries_it_and_shown_on_the_page(root, capsys):
+    files = fx.make()
+    for name in [n for n in files if n.endswith('.json') and n != 'AH_STATE.json']:
+        edit_json(files, name, lambda d: d.update(method=ah.METHOD_INCREMENTAL))
+    put_incoming(root, files)
+    assert run(root, '--publish', '--first-publish') == 0
+    assert 'lastFullBuildAt in the index' in (root / ah.PAGE).read_text(encoding='utf-8')
+    capsys.readouterr()
+    mixed = fx.make()
+    edit_json(mixed, 'ah_index.json', lambda d: d.update(method=ah.METHOD_INCREMENTAL))       # the files still carry the other sentence
+    held(make_root(root.parent / 'second'), mixed, capsys)
+
+
 def test_a_file_missing_from_the_folder_is_refused_with_nothing_written(root, capsys):
     files = fx.make()
     del files['ah_E12000005_qtr_1995-2009.csv']
