@@ -2,3 +2,7 @@
 /360giving-grants-sample/*.csv -text
 # the gender pay gap sample CSV likewise: its row ends are CRLF and some cells hold line breaks; the page states the SHA-256 of these exact bytes
 /gender-pay-gap/*.csv -text
+# data files are served as the store wrote them (LF); keep the working tree byte-identical too, so local byte checks match the site
+/data/**/*.csv -text
+/data/**/*.json -text
+/data/**/*.txt -text
