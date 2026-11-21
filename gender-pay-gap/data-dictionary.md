@@ -1,6 +1,6 @@
 # Data dictionary: gender-pay-gap-2025-26-sample-2000-rows.csv
 
-Source: https://gender-pay-gap.service.gov.uk/viewing/download-data/2025 | Retrieved: 19 Nov 2026 | Rows: 2,000 | Selection: random sample, seed 19, of the 11,202 source rows that have a CompanyNumber. A sample of the public file.
+Source: https://gender-pay-gap.service.gov.uk/viewing/download-data/2025 | Retrieved: 19 Nov 2026 | Rows: 2,000 | Selection: random sample, seed 19, of the roughly 9,700 source rows that have a CompanyNumber (about 11,200 employer rows in the file). A sample of the public file.
 
 | Column | Meaning |
 |---|---|

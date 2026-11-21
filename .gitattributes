@@ -1,2 +1,4 @@
 # the 360Giving sample CSV is kept byte for byte (its row ends are CRLF, as published in the pack): no line-ending conversion
 /360giving-grants-sample/*.csv -text
+# the gender pay gap sample CSV likewise: its row ends are CRLF and some cells hold line breaks; the page states the SHA-256 of these exact bytes
+/gender-pay-gap/*.csv -text
