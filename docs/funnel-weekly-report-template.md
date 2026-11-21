@@ -22,14 +22,15 @@ Read each Monday for the week before (Monday to Sunday). Counts only: never a na
 | /contracts-sample/ | contracts-sample | UK Government Contracts: Contracts Finder, Find a Tender |
 | /lei-sample/ | lei-sample | LEI Lookup: GLEIF Legal Entity Identifier Search & Watch |
 | /fsa-sample/ | fsa-sample | FSA Approved Food Establishments: England, Wales, NI |
-Pages with no Actor link have no Store clicks to count: /gender-pay-gap/ and /360giving-grants-sample/ (their texts name no Actor: none fits), and the profile link `apify.com/yappman` on the sample pages (the affiliate rule covers links to Actor pages only).
+| /gender-pay-gap/ | gender-pay-gap | uk-gender-pay-gap |
+Pages with no Actor link have no Store clicks to count: /360giving-grants-sample/ (its text names no Actor: none fits), and the profile link `apify.com/yappman` on the sample pages (the affiliate rule covers links to Actor pages only).
 
 ## The report (copy this block, fill the counts)
 ```
 Sample-to-paid funnel, week YYYY-Www (Mon dd Mmm to Sun dd Mmm). Counts only. Do Not Track visitors are not counted.
 
 Page                              Views  From Kaggle  From HF  From YouTube  Store clicks  Target Actor (most clicked)
-/gender-pay-gap/                    n         n          n          n             -          -
+/gender-pay-gap/                    n         n          n          n             n          uk-gender-pay-gap
 /360giving-grants-sample/           n         n          n          n             -          -
 /recalls-sample/                    n         n          n          n             n          uk-eu-recalls-feed
 /eu-air-sea-traffic-sample/         n         n          n          n             n          aviation-airport-traffic-eu
