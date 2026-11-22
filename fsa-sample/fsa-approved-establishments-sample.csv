@@ -1,0 +1,1000 @@
+approvalNumber,tradingName,area,postcodeDistrict,localAuthority,competentAuthority,activityCodes,observedAt
+1000,Ahmed Brothers Halal Ltd,england-wales,B66,Sandwell,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+1003,Kinda Foods Ltd,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A4 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+1004,Newby Foods Ltd,england-wales,DL7,North Yorkshire Council,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mechanically_separated_meat_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+1006,Aubrey Allen Limited,england-wales,CV3,Warwick District,Food Standards Agency,A0 A1 A2 A4 A5 A6 A9 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+1014,Trendy Foods Ltd,england-wales,EN9,Epping Forest District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+1019,Fairfax Meadow Europe Limited,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+1025,Gilders Transport Ltd (T/A Martins Meats),england-wales,GL54,Tewkesbury,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+1028,Swandean Fresh Meats Limited,england-wales,BN13,Worthing,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+1037,Parkers Foodservice Ltd,england-wales,BN18,Arun District,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+1040,Vantage Foods Limited,england-wales,BH12,Bournemouth Christchurch and Poole Council,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+1052,Freshasia Foods Ltd,england-wales,DA18,Bexley (London Borough),Food Standards Agency,A0 A1 A5 A8 T:cold_store T:cutting_plant T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+1057,Roofe Catering Butchers Ltd,england-wales,NR4,Norwich,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+1060,Ashlyns Catering Limited,england-wales,CM5,Epping Forest District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+1065,Traymoor Ltd,england-wales,CM6,Uttlesford District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+1069,Philip Dennis FoodService Limited (T/A Philip Dennis Foodservice),england-wales,EX31,North Devon District,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+1072,Kazon Limited,england-wales,E17,Waltham Forest (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+1073,Clark & Son (Long Melford) Limited,england-wales,CO10,Babergh District,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+1080,C & P (Meat Sales) Limited,england-wales,GL4,Gloucester,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+1090,Cleveleys Foods Limited,england-wales,IP19,East Suffolk Council,Food Standards Agency,A0 A1 A2 A3 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+1099,Anna's Happy Trotters Limited T/A Anna's Happy Trotters,england-wales,DN14,East Riding of Yorkshire,Food Standards Agency,A1 A5 A6 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+2001,DECKERS TRADING LTD,england-wales,OL11,Rochdale,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2006,TCR Food Services Limited,england-wales,B24,Birmingham City Council,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2014,Hazel's Butcher sLtd,england-wales,NR7,Broadland District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2018,The London Meat Company Limited,england-wales,UB7,Hillingdon (London Borough),Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2019,HCF Poultry Ltd,england-wales,BD13,Bradford City,Food Standards Agency,A2 A5 S:poultry T:cutting_plant T:meat_preparation_establishment T:mechanically_separated_meat_establishment T:mince_meat_establishment T:slaughterhouse,2026-11-20
+2020,M I B United Meat Ltd,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2028,James Hall & Co Ltd T/A Spar Distribution Centre,england-wales,PR2,Preston,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+2031,JB Foods (Yorkshire) Limited,england-wales,BD4,Bradford City,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2032,Supreme Halal Poultry UK Ltd,england-wales,B8,Birmingham City Council,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2035,PMJ Foods UK Ltd.,england-wales,TN12,Tunbridge Wells,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2037,2 Sisters Food Group Ltd,england-wales,DN15,North Lincolnshire,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+2045,Dovecote Park Ltd,england-wales,WF8,Selby District,Food Standards Agency,A0 A1 A12 A13 A3 A4 A5 S:bovine S:caprine T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+2057,County Foods Ltd,england-wales,BH15,Bournemouth Christchurch and Poole Council,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2060,Karro Food Limited (T/A Malton Bacon Factory),england-wales,YO17,Ryedale District,Food Standards Agency,A0 A1 A13 A5 A6 S:porcine T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+2067,JAK Food Services Limited,england-wales,IP6,Mid Suffolk District,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2078,R & P Meats Ltd,england-wales,PE2,Peterborough,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2093,Cranswick Country Foods Plc,england-wales,HU12,East Riding of Yorkshire,Food Standards Agency,A0 A1 A13 A5 S:porcine T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:slaughterhouse,2026-11-20
+2110,Osborne Poultry Ltd,england-wales,B11,Birmingham City Council,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2118,Grove Foods Ltd,england-wales,UB2,Ealing (London Borough),Food Standards Agency,A1 A5 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2119,Umutet Limited,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2138,West Scottish Lamb Limited,england-wales,CA3,Cumberland Council,Food Standards Agency,A0 A1 A13 S:bovine S:ovine T:cold_store T:cutting_plant T:processing_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+2139,Western Meats Limited,england-wales,LA11,Westmorland and Furness Council,Food Standards Agency,A0 A1 A5 S:bovine S:caprine S:ovine T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+2144,Island Foods Limited,england-wales,PO33,Isle of Wight,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2166,Block and Cleaver Limited,england-wales,BR8,Sevenoaks District,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2189,The Quality Meat Company Limited,england-wales,GU20,Surrey Heath,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2191,Premium Poultry Products Limited,england-wales,BL3,Bolton Metropolitan Borough,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2229,Link Foods Ltd,england-wales,WV2,Wolverhampton,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2241,Woolley Bros (Wholesale Meats) Ltd,england-wales,S20,Sheffield,Food Standards Agency,A0 A1 S:bovine T:cold_store T:cutting_plant T:slaughterhouse,2026-11-20
+2246,William White Meats Limited,england-wales,RM15,Thurrock,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2253,Zabihah Ltd,england-wales,NW10,Brent (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2263,Handcross Butchers Ltd,england-wales,RH17,Mid Sussex District,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2270,Select Poultry and Meat Ltd,england-wales,IG6,Redbridge (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2284,Walter Rose and Son Limited,england-wales,SN10,Wiltshire,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2289,Lancashire Direct Halal Meat Ltd,england-wales,BB1,Blackburn with Darwen,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2296,THE EDEN VALLEY MEAT COMPANY LTD,england-wales,CA11,Eden District,Food Standards Agency,A0 A1 A2 A3 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2316,The Original Chicken Co. Ltd.,england-wales,PR2,Preston,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2318,Al-Haq Poultry Wholesale Limited,england-wales,M24,Oldham,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2324,Adam Halal Foods Limited,england-wales,B6,Birmingham City Council,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2343,J & E Medcalf Ltd,england-wales,HX4,Calderdale,Food Standards Agency,A0 A1 S:bovine S:caprine S:ovine S:porcine T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+2368,J S Quality Meats Limited,england-wales,ST14,East Staffordshire,Food Standards Agency,A0 A1 A3 A5 A6 S:bovine S:caprine S:ovine S:porcine T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:slaughterhouse,2026-11-20
+2397,Rowland Agar (Wholesale Butchers) Limited,england-wales,LS29,Bradford City,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant,2026-11-20
+2399,Chai Meats Limited,england-wales,BD3,Bradford City,Food Standards Agency,A0 A1 A2 S:poultry T:cutting_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+2410,Ravendale Foods Ltd,england-wales,DH8,County Durham,Food Standards Agency,A0 A1 A12 A5 A6 T:cutting_plant T:meat_preparation_establishment T:mechanically_separated_meat_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2443,HDV Food Limited T/A SS Meat Wholesale Carrolla Products Daniels Refrigerated Transport,england-wales,DL14,County Durham,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant,2026-11-20
+2444,Pak Poultry Products Limited,england-wales,HD1,Kirklees,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2452,Country Valley Foods Ltd,england-wales,TS23,Stockton-on-Tees,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2453,Barkers Yorkshire Butchers Limited,england-wales,BD23,Craven District,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+2457,Yorkshire Dales Meat Co Ltd,england-wales,DL8,North Yorkshire Council,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+2484,Warren Butterworth Catering Butchers Limited,england-wales,NE15,Newcastle upon Tyne,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2487,Best Meat (UK) Limited,england-wales,S25,Rotherham,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2489,Sykes House Farm Ltd,england-wales,LS23,Leeds,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+2494,Thompsons Food Service Ltd,england-wales,NR30,Great Yarmouth,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2496,KHT (UK) Ltd,england-wales,SM3,Sutton (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2500,JLP Meat Trading Limited,england-wales,NW2,Brent (London Borough),Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2513,Hackney Meat Traders Ltd,england-wales,RM8,Barking and Dagenham (London Borough),Food Standards Agency,A0 A1 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2517,Majestic Meat Ltd,england-wales,BD8,Bradford City,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2523,Herb Fed Ltd,england-wales,YO61,Hambleton District,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2535,Stoke Chicken Limited,england-wales,ST3,Stoke-on-Trent,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2536,Pickstock Telford Limited,england-wales,TF1,Telford and Wrekin,Food Standards Agency,A1 A13 A5 S:bovine T:cutting_plant T:mince_meat_establishment T:processing_plant T:slaughterhouse,2026-11-20
+2537,Noor Halal Foods Limited,england-wales,DY4,Sandwell,Food Standards Agency,A0 A2 T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2541,Burts Catering Butchers Limited,england-wales,TN39,Rother District,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2544,Swaledale Butchers Ltd,england-wales,BD23,Craven District,Food Standards Agency,A0 A1 A2 A3 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2546,Elite Poultry Limited,england-wales,BS5,Bristol,Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant,2026-11-20
+2551,Takbeer Poultry and Products Ltd,england-wales,BD8,Bradford City,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2553,Haq Bahu Meat and Poultry Limited,england-wales,B12,Birmingham City Council,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2563,Al-Noor Poultry Limited,england-wales,B12,Birmingham City Council,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2564,Huntsham Heritage Meats Ltd,england-wales,HR9,Herefordshire Council,Food Standards Agency,A1 A5 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2569,Severn Valley Lamb Limited,england-wales,WS6,South Staffordshire District,Food Standards Agency,A1 S:bovine S:caprine S:ovine T:slaughterhouse,2026-11-20
+2575,P J Poultry Limited,england-wales,B11,Birmingham City Council,Food Standards Agency,A2 A5 T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2584,Steakout Meat Company Limited,england-wales,CR0,Sutton (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2589,Lakes and Dales Limited,england-wales,FY6,Wyre,Food Standards Agency,A0 A1 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2595,Lincolnshire Game Ltd,england-wales,PE20,Boston,Food Standards Agency,A0 A2 A3 A4 A5 S:wild_lagomorphs S:wild_land_mammals_other_than_wild_ungulates_and_wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2597,Woodhouse Butchery South East Limited,england-wales,RH16,Mid Sussex District,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2605,Taste Tradition Limited,england-wales,HG4,Harrogate,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2616,Jolly Foods (Oxon) Limited,england-wales,OX18,West Oxfordshire District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2622,Buxton Butchers Ltd,england-wales,BS20,North Somerset,Food Standards Agency,A0 A1 A2 A3 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2624,Bolton Halal Meat & Poultry Limited,england-wales,BL3,Bolton Metropolitan Borough,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2628,MCB Butchers Ltd,england-wales,CR0,Sutton (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2633,Cesur Meat Limited,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2634,David Broster Limited,england-wales,HD3,Kirklees,Food Standards Agency,A1 T:cutting_plant,2026-11-20
+2636,Rehman & Sons Meat Wholesale Ltd,england-wales,BB9,Pendle,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2638,Derya Meat Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2639,H&M Best Meat Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2641,Pepperell's Meats Ltd,england-wales,IP20,South Norfolk District,Food Standards Agency,A0 A1 A2 A3 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2646,Goodwood Estate Company Limited (The),england-wales,PO18,Chichester District,Food Standards Agency,A1 A5 A6 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+2650,Manningham Poultry Ltd,england-wales,BD8,Bradford City,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2654,Cootehill Poultry Products Limited,england-wales,DE24,Derby,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2660,Riley Foods Limited,england-wales,BB11,Burnley,Food Standards Agency,A1 A13 S:bovine S:caprine S:ovine T:cutting_plant T:processing_plant T:slaughterhouse,2026-11-20
+2666,Yeni Pinar Meat Centre Limited,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2675,K.T.M. Meats Limited,england-wales,DA12,Gravesham,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2677,Ali's Raw Meat Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2682,M & J Pyne (Wholesale Division) Limited,england-wales,TA6,Somerset Council,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2683,A and D Meats Limited,england-wales,BB5,Hyndburn,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2684,Carnivore FMC Limited,england-wales,CV22,Rugby,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2687,P.F.D (Carlisle) Limited,england-wales,CA1,Carlisle,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2691,M & K Halal Meat & Poultry Ltd,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2692,Etchi Ltd,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2698,Al Barakah Meats Ltd,england-wales,LE4,Leicester,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2702,D Parker & Son Ltd,england-wales,SM6,Sutton (London Borough),Food Standards Agency,A0 A1 T:cold_store T:cutting_plant,2026-11-20
+2705,Farnsworth Fresh Foods (Whalley) Limited,england-wales,BB7,Ribble Valley,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2707,Meat Direct 2 U Limited,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2709,A & R Meats (NW) Limited,england-wales,M7,Salford,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2710,S.Khan Poultry Ltd,england-wales,DE23,Derby,Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant,2026-11-20
+2711,Premium Quality Meats Ltd,england-wales,BS15,South Gloucestershire,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2715,Oriental Food Express Limited,england-wales,SY1,Shropshire,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2716,Bell Wholesale Limited,england-wales,SE6,Lewisham (London Borough),Food Standards Agency,A0 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2720,A & F Meats Limited,england-wales,CM3,Maldon,Food Standards Agency,A1 T:cutting_plant,2026-11-20
+2722,Glenfields Foods Limited,england-wales,NN3,West Northamptonshire Council,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2726,Prime Halal Poultry UK Ltd,england-wales,B12,Birmingham City Council,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2728,Premium Halal Meat Poultry limited,england-wales,B11,Birmingham City Council,Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2730,Stephens Fresh Foods Limited,england-wales,ME5,Medway,Food Standards Agency,A0 A1 A6 T:cold_store T:cutting_plant T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2733,Mamo Meat Ltd,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2734,313 National Halal Limited,england-wales,B11,Birmingham City Council,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2736,Shariah Poultry Ltd,england-wales,WF13,Kirklees,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2738,Caterite Food and Wineservice Limited,england-wales,CA13,Allerdale Borough,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2742,Abbis Meat Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2743,Derman Meat Ltd,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2749,Round Green Farm Meats Ltd,england-wales,S75,Barnsley Metropolitan Borough,Food Standards Agency,A2 T:cutting_plant,2026-11-20
+2753,As-Safwah Foods Ltd,england-wales,WV14,Wolverhampton,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant,2026-11-20
+2755,Field to Fork Game Ltd,england-wales,YO62,Ryedale District,Food Standards Agency,A0 A4 A5 S:wild_land_mammals_other_than_wild_ungulates_and_wild_lagomorphs T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2756,Khanjra International Foods Limited,england-wales,BB1,Blackburn with Darwen,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2757,Beyran Meat Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2759,B & B Meat Ltd,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2760,Northamptonshire Food services Ltd,england-wales,NN4,West Northamptonshire Council,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2762,H M Venison Ltd,england-wales,S75,Barnsley Metropolitan Borough,Food Standards Agency,A1 A3 A4 S:bovine T:cutting_plant T:game_handling_establishment T:slaughterhouse,2026-11-20
+2763,Pickstock Foods Ltd,england-wales,DE11,South Derbyshire District,Food Standards Agency,A0 A1 A5 S:caprine S:ovine T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:slaughterhouse,2026-11-20
+2764,Feedex Ltd,england-wales,BL4,,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2765,Philip Warren and Son Ltd,england-wales,PL15,Cornwall,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2771,Eastern Halal Poultry Ltd,england-wales,OL9,Oldham,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2775,Sheikh Halal Limited,england-wales,LU1,Luton,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2777,Westmorland Limited,england-wales,CA10,Eden District,Food Standards Agency,A0 A1 A4 A5 S:wild_ungulates T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2779,W. Wing Yip PLC,england-wales,B7,Birmingham City Council,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant,2026-11-20
+2784,Top Tier Poultry Ltd,england-wales,B11,Birmingham City Council,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2789,R Owton (Wholesale) Butchers Limited,england-wales,SO30,Eastleigh,Food Standards Agency,A0 A1 A12 A2 A3 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2791,Bailey and Sons Torbay Limited,england-wales,TQ4,Torbay,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2792,Meadow Meats Limited,england-wales,S75,Barnsley Metropolitan Borough,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2793,Bingol Meat Limited,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2795,Goosemoor Foodservice Limited,england-wales,EX3,East Devon District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2800,BS Meat Trading Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2801,Pasture Farm Foods Limited,england-wales,BB8,Pendle,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2805,Coastal Cuisine Ltd,england-wales,NR33,East Suffolk Council,Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2806,H P Westwood Limited,england-wales,WS6,South Staffordshire District,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2807,Merkez Meat Ltd,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2810,Bernard Matthews Foods (Derby) Limited,england-wales,DE23,Derby,Food Standards Agency,A2 A5 T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2811,Direct Table Foods Limited,england-wales,IP28,West Suffolk Council,Food Standards Agency,A0 A1 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2813,Deer Box Ltd,england-wales,SN8,Wiltshire,Food Standards Agency,A0 A1 A4 A5 A6 S:bovine S:wild_land_mammals_other_than_wild_ungulates_and_wild_lagomorphs T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2816,Fosse Meadows Ltd,england-wales,LE17,Harborough District,Food Standards Agency,A0 A2 A5 S:poultry T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+2818,Freemans of Newent Limited (T/A Avara Foods),england-wales,WS10,Sandwell,Food Standards Agency,A2 A5 T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2819,DUA Wholesale Ltd,england-wales,PE2,Peterborough,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2822,Beech Ridge Farm Limited,england-wales,TA21,Mid Devon District,Food Standards Agency,A0 A2 S:poultry T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+2825,Warrendale Wagyu Limited,england-wales,YO42,East Riding of Yorkshire,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2826,Clarkes Farmers Butchery Ltd,england-wales,IP19,East Suffolk Council,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2827,KB Food Services Limited,england-wales,UB5,Ealing (London Borough),Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2828,The Meat Men Limited,england-wales,TA2,Taunton Deane,Food Standards Agency,A0 A1 A2 A3 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2831,IRC Cucina Limited,england-wales,M17,Trafford,Food Standards Agency,A0 A1 A2 A5 A6 A8 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2835,The Freedown Food Company Limited,england-wales,SW8,Wandsworth (London Borough),Food Standards Agency,A0 A1 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2841,Asko Foods Limited,england-wales,SG8,South Cambridgeshire District,Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2851,Dong Fang Foods Ltd,england-wales,E10,Waltham Forest (London Borough),Food Standards Agency,A0 A1 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2853,AJ Food Packers Ltd,england-wales,B11,Birmingham City Council,Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant,2026-11-20
+2854,The Aurox Meat Company Ltd,england-wales,PO15,Fareham,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2855,Gece Meat Ltd,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2859,Finclass Limited,england-wales,SE1,Lambeth (London Borough),Food Standards Agency,A0 A1 A2 A3 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2860,Highlands Quality Limited,england-wales,N9,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2863,Glenn Lewin Butchers Limited,england-wales,LE7,Charnwood,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2864,Walesby Top Ltd,england-wales,LN8,West Lindsey District,Food Standards Agency,A3 A5 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:slaughterhouse,2026-11-20
+2868,Standard Plus Limited,england-wales,DY2,Dudley,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2869,Simply Prime Meat Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2871,Meat Giant UK Limited,england-wales,CR0,Croydon (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2872,Capital Meats Limited,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2873,Korea Foods Company Limited,england-wales,CR4,Merton (London Borough),Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2875,Meat Fest Ltd,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2876,Curtis Pitts Deer Services Ltd,england-wales,EX15,Mid Devon District,Food Standards Agency,A0 A4 A5 S:wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2877,RSS Fast Food Supplies Ltd,england-wales,CR2,Croydon (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2878,Dipwood Storage & Distribution Limited,england-wales,DH8,County Durham,Food Standards Agency,A1 A5 T:cutting_plant T:mince_meat_establishment,2026-11-20
+2879,Swaran Food Service Ltd,england-wales,WS10,Sandwell,Food Standards Agency,A0 A2 A5 T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2881,The Village Butchers Limited,england-wales,CM3,Braintree District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2883,RR Alden Oxford Limited,england-wales,OX26,Cherwell District,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2884,H&M Meats Limited,england-wales,SE27,Lambeth (London Borough),Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2885,Golden Meat & Poultry Ltd,england-wales,DE24,Derby,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+2889,Cesur Meats Limited,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2891,Medina Poultry Products Ltd,england-wales,BB9,Pendle,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2892,New Century Foods Limited,england-wales,DN15,North Lincolnshire,Food Standards Agency,A0 A1 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2893,DTC Foods Limited,england-wales,EX20,West Devon,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2894,Hill Farm Finest Limited,england-wales,MK17,Central Bedfordshire,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2895,Graham Meat Ltd,england-wales,N15,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2897,Kin of Meat Ltd,england-wales,W13,Ealing (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2898,Severn Valley Foodservice Limited,england-wales,SY1,Shropshire,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2905,Baran Meat Ltd,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2906,Haye Farm Ltd,england-wales,EX13,East Devon District,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2910,Kalan Meat and Chicken Limited,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2911,Ridgeway Poultry Products Ltd,england-wales,B8,Birmingham City Council,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2912,Hertfordshire Meat Ltd,england-wales,EN11,Broxbourne,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2914,A 1 Diamond Halal Limited,england-wales,BD4,Bradford City,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2920,Chef's Farms Ltd,england-wales,GU28,Chichester District,Food Standards Agency,A4 A5 S:wild_ungulates T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+2921,DPH Ozolins Limited,england-wales,LN3,Lincoln,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant,2026-11-20
+2925,Sam Blunt Bespoke Butchering Ltd,england-wales,EX15,Mid Devon District,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2926,Dost Meat Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2927,Efes Group Limited,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2928,Ritter-Courivaud Limited,england-wales,OX26,Cherwell District,Cherwell District,A0 A1 A3 A4 A5 A8 T:cold_store T:cutting_plant T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2929,KMCR Ltd,england-wales,M13,Manchester,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2930,Lidgate Farm Shops Limited,england-wales,SL6,Windsor and Maidenhead,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2931,SK Foods Limited,england-wales,HA4,Hillingdon (London Borough),Food Standards Agency,A1 A2 A5 T:cutting_plant T:mince_meat_establishment,2026-11-20
+2932,Midlands Meat Processors Limited,england-wales,B5,Birmingham City Council,Food Standards Agency,A0 A1 S:bovine S:caprine S:ovine T:cold_store T:cutting_plant T:slaughterhouse,2026-11-20
+2934,S & M Halal Meat and Poultry Limited,england-wales,M40,Manchester,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2935,Lancashire Game Limited,england-wales,PR3,Preston,Food Standards Agency,A0 A4 A5 S:wild_birds S:wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment,2026-11-20
+2936,Oncu Meat Centre Ltd,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2937,SMS Food Group Limited,england-wales,OX29,West Oxfordshire District,Food Standards Agency,A0 A1 S:bovine S:caprine S:ovine T:cold_store T:slaughterhouse,2026-11-20
+2938,Thatcham Butchers Limited,england-wales,RG14,West Berkshire,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2939,B Raj & Sons Wholesale Meat Ltd,england-wales,WV13,Wolverhampton,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant,2026-11-20
+2940,R.D. Johns Limited,england-wales,SP10,Test Valley District,Food Standards Agency,A0 A1 A2 A4 A5 A8 T:cold_store T:cutting_plant T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2941,HAS Butchers Ltd,england-wales,N15,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2942,La Chasse Limited,england-wales,SP8,Dorset Council,Food Standards Agency,A0 A4 T:cold_store T:cutting_plant T:game_handling_establishment,2026-11-20
+2943,Midlands Halal Distribution Ltd,england-wales,B7,Birmingham City Council,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+2944,Lavin Meat Ltd,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2946,MFS Global Ltd,england-wales,S3,Sheffield,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2947,H G Walter Limited,england-wales,NW10,Brent (London Borough),Food Standards Agency,A0 A1 A2 A3 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2948,Nasons Farm Fresh Limited,england-wales,LU4,Luton,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2949,ACS Meat Ltd,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2951,Ijaz Halal Poultry Ltd,england-wales,BD4,Bradford City,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2953,Pacific Seafood Limited,england-wales,SL1,Slough,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2956,Sam Browne Foods Limited,england-wales,YO25,East Riding of Yorkshire,Food Standards Agency,A0 A1 A2 A5 A6 T:cutting_plant T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2957,Haji Baba Limited,england-wales,PE13,Fenland District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2958,Onur Meat Ltd,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2959,Jones The Butchers Ltd,england-wales,SE24,Lambeth (London Borough),Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2961,Al Madina Halal Meat & Poultry Limited,england-wales,CV1,Coventry,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+2962,Medina Abattoir Services Ltd,england-wales,HX4,Calderdale,Food Standards Agency,A1 S:caprine S:ovine T:slaughterhouse,2026-11-20
+2963,Rose Halal Meat & Poultry Limited,england-wales,B21,Birmingham City Council,Food Standards Agency,A2 T:cutting_plant,2026-11-20
+2964,Enkay Raw Meat Ltd,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2965,Atlas Doner Co Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2966,TreestoneUK Limited,england-wales,KT3,Kingston upon Thames (London Borough),Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2967,T & S Enterprises (London) Limited,england-wales,NW11,Barnet (London Borough),Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+2968,Charles Saunders Limited,england-wales,BS37,South Gloucestershire,Food Standards Agency,A0 A1 A2 A5 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2971,PHP Distribution Ltd,england-wales,B11,Birmingham City Council,Food Standards Agency,A5 T:meat_preparation_establishment,2026-11-20
+2973,EMC Meat Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2974,Chefs Cut Butchery Ltd,england-wales,NG10,Erewash,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2976,Fast Track Food Ltd,england-wales,WV10,South Staffordshire District,Food Standards Agency,A1 A2 T:cutting_plant,2026-11-20
+2979,Tariq Halal Meat Wholesale Limited,england-wales,HA0,Brent (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2980,Metro Meats Limited,england-wales,EN3,Enfield (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2981,Saffron Alley Ltd,england-wales,RG30,Reading,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+2982,W E Botterill & Son Limited,england-wales,NG32,Melton,Food Standards Agency,A2 A5 S:poultry T:cutting_plant T:meat_preparation_establishment T:slaughterhouse,2026-11-20
+2983,The Clean Food Co Ltd,england-wales,CB10,Uttlesford District,Food Standards Agency,A4 S:wild_ungulates T:game_handling_establishment,2026-11-20
+2987,G&G Farm Produce Ltd,england-wales,NR10,,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+3003,Faccenda Foods (Lincs) Ltd (T/A Avara Foods),england-wales,LN7,West Lindsey District,Food Standards Agency,A0 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+3007,Faccenda Foods Limited (T/A Avara Foods),england-wales,NN13,West Northamptonshire Council,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+3008,Noble Foods Limited,england-wales,DN21,West Lindsey District,Food Standards Agency,A2 A5 S:poultry T:cutting_plant T:meat_preparation_establishment T:mechanically_separated_meat_establishment T:mince_meat_establishment T:slaughterhouse,2026-11-20
+3011,Moy Park Limited,england-wales,NG34,North Kesteven District,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:mechanically_separated_meat_establishment T:slaughterhouse,2026-11-20
+4014,Freemans of Newent Limited (T/A Avara Foods),england-wales,HR4,Herefordshire Council,Food Standards Agency,A0 A2 A5 A6 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:processing_plant T:slaughterhouse,2026-11-20
+4015,Shafa Farm Limited,england-wales,CV35,Warwick District,Food Standards Agency,A2 S:poultry T:cutting_plant T:slaughterhouse,2026-11-20
+4026,Faccenda Foods Limited (T/A Avara Foods),england-wales,DE65,South Derbyshire District,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+4133,Farmers Fresh Ltd,england-wales,CV8,Warwick District,Food Standards Agency,A1 A13 S:caprine S:ovine T:cutting_plant T:processing_plant T:slaughterhouse,2026-11-20
+4163,Arthur J Granby & Sons (Liverpool) Ltd,england-wales,L3,Liverpool,Food Standards Agency,A0 A1 A2 A5 A6 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+4195,W Barton & Sons Limited,england-wales,PR9,Sefton,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+4227,Manchester Abattoir Ltd,england-wales,SK4,Stockport,Food Standards Agency,A0 A1 S:caprine S:ovine T:cold_store T:slaughterhouse,2026-11-20
+4241,Cleaver Meats Ltd,england-wales,DE24,Derby,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4242,Peter Coates (Alrewas) Limited,england-wales,DE13,Lichfield District,Food Standards Agency,A1 A3 A4 S:bovine S:caprine S:ovine S:porcine S:wild_ungulates T:game_handling_establishment T:slaughterhouse,2026-11-20
+4256,H.P. Westwood Limited,england-wales,WS7,Lichfield District,Food Standards Agency,A0 A1 S:bovine S:caprine S:ovine S:porcine T:cold_store T:cutting_plant T:slaughterhouse,2026-11-20
+4265,Fairfax Meadow Europe Limited,england-wales,DE24,Derby,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4327,Joseph Morris Butchers Limited,england-wales,LE17,Harborough District,Food Standards Agency,A1 S:bovine S:caprine S:ovine S:porcine T:slaughterhouse,2026-11-20
+4333,University of Nottingham,england-wales,LE12,Rushcliffe,Food Standards Agency,A1 A5 S:bovine S:caprine S:ovine S:porcine T:cutting_plant T:mince_meat_establishment T:slaughterhouse,2026-11-20
+4349,Perry's of Eccleshall Limited,england-wales,ST21,Stafford,Food Standards Agency,A1 A3 S:bovine S:caprine S:ovine S:porcine T:cutting_plant T:slaughterhouse,2026-11-20
+4373,Staffordshire Meat Packers Ltd,england-wales,ST2,Stoke-on-Trent,Food Standards Agency,A0 A1 S:bovine S:caprine S:ovine S:porcine T:cold_store T:cutting_plant T:slaughterhouse,2026-11-20
+4379,Higginshaw Abattoir Ltd,england-wales,OL2,Oldham,Food Standards Agency,A0 A1 S:caprine S:ovine T:cold_store T:cutting_plant T:slaughterhouse,2026-11-20
+4396,Weddel Swift Distribution Limited,england-wales,CH1,Cheshire West and Chester,Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+4398,Weddel Swift Distribution Ltd,england-wales,OL11,Rochdale,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+4420,W & G Yates (Yieldfields) Limited,england-wales,WS3,Walsall,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4451,Corvedale Fresh Limited,england-wales,SY7,Shropshire,Food Standards Agency,A0 A1 A13 A5 S:bovine S:caprine S:ovine T:cold_store T:cutting_plant T:mince_meat_establishment T:processing_plant T:slaughterhouse,2026-11-20
+4514,S&D Halal Meat & Poultry Limited,england-wales,B18,Birmingham City Council,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+4529,Underwood Meat Company Limited,england-wales,S42,North East Derbyshire District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4561,Direct Poultry Supply (Inskip) Limited,england-wales,PR4,Wyre,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4633,Faccenda Foods Limited (T/A Avara Foods),england-wales,DY5,Dudley,Food Standards Agency,A0 A2 A5 A6 T:cutting_plant T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+4637,Halal Poultry and Meat Products Ltd,england-wales,B66,Sandwell,Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+4649,M Najib and Sons Ltd,england-wales,DE65,South Derbyshire District,Food Standards Agency,A0 A1 S:caprine S:ovine T:cold_store T:cutting_plant T:slaughterhouse,2026-11-20
+4650,Matthews Meats Limited,england-wales,OL16,Rochdale,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4667,Faccenda Foods Limited (T/A Avara Foods),england-wales,TF1,Telford and Wrekin,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mechanically_separated_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4674,Superchick Poultry Ltd,england-wales,LE5,Leicester,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+4703,KNK Poultry Products Ltd,england-wales,B8,Birmingham City Council,Food Standards Agency,A2 T:cutting_plant,2026-11-20
+4723,Willo Game Ltd,england-wales,SY9,Shropshire,Food Standards Agency,A0 A1 A2 A4 A5 S:wild_birds S:wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4744,Adlington Limited,england-wales,GL54,Tewkesbury,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+4759,James Connolly Wholesale Limited,england-wales,NN6,West Northamptonshire Council,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4761,L.D.A. Meats Limited,england-wales,HR8,Herefordshire Council,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+4764,Smithfield Murray Ltd,england-wales,M17,Trafford,Food Standards Agency,A0 A2 T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+4765,Kosher Poultry Limited,england-wales,M8,Manchester,Food Standards Agency,A2 S:poultry T:cutting_plant T:slaughterhouse,2026-11-20
+4770,Medina Pure Halal UK Ltd,england-wales,B69,Sandwell,Food Standards Agency,A2 S:poultry T:slaughterhouse,2026-11-20
+4773,Bowland Foods Limited,england-wales,PR2,Preston,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:mince_meat_establishment,2026-11-20
+4792,TMC (Midlands) Limited,england-wales,DE23,Derby,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+4793,2 Sisters Food Group Ltd,england-wales,B70,Sandwell,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4794,Lake District Farmers Ltd,england-wales,LA12,Eden District,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+4798,Theos Food Co Limited,england-wales,WS9,Walsall,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+4806,Ashik Chicken Kebabs Limited,england-wales,WV14,Wolverhampton,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+4828,Mega Chicken Ltd,england-wales,NG18,Mansfield District,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+4837,Cartmel Valley Game Suppliers Limited,england-wales,LA11,South Lakeland District,Food Standards Agency,A0 A1 A2 A4 A5 A6 A8 S:wild_birds S:wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+4844,Midland Foods Ltd,england-wales,B60,Bromsgrove District,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4847,Halal Services Company Limited,england-wales,LA1,Lancaster,Food Standards Agency,A0 A1 A13 S:bovine S:caprine S:ovine T:cold_store T:cutting_plant T:processing_plant T:slaughterhouse,2026-11-20
+4857,Country Food Services Ltd,england-wales,M17,Trafford,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4858,McTurk Catering Supplies Limited,england-wales,DE23,Derby,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4863,Pennys Meats Ltd,england-wales,BB5,Hyndburn,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+4869,Ashfold Quality Meats Limited,england-wales,OL16,Rochdale,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant,2026-11-20
+4873,Udale Speciality Foods Ltd,england-wales,LA4,Lancaster,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+4875,Central Food Service Ltd,england-wales,ST6,Stoke-on-Trent,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+4878,Plumgarths of Kendal Ltd,england-wales,LA9,South Lakeland District,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+5003,Diaper Poultry Limited,england-wales,IP14,Mid Suffolk District,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:slaughterhouse,2026-11-20
+5008,Shazan Foods Limited,england-wales,IP23,Mid Suffolk District,Food Standards Agency,A0 A1 A2 A5 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+5011,2 Sisters Food Group Ltd,england-wales,NR35,East Suffolk Council,Food Standards Agency,A2 A5 A6 S:poultry T:cutting_plant T:meat_preparation_establishment T:processing_plant T:slaughterhouse,2026-11-20
+5023,Leonard Ames (Ampthill) Ltd,england-wales,MK45,Central Bedfordshire,Food Standards Agency,A0 A1 A10 A2 A5 A6 A8 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+5041,K Poultry Limited,england-wales,E3,Tower Hamlets (London Borough),Food Standards Agency,A2 S:poultry T:slaughterhouse,2026-11-20
+5049,Bernard Matthews Foods Limited,england-wales,IP19,East Suffolk Council,Food Standards Agency,A0 A2 A5 A6 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:mechanically_separated_meat_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+5067,IHP LImited,england-wales,HP3,Dacorum,Food Standards Agency,A0 A2 S:poultry T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+5091,Pilgrim’s Pride Ltd T/A Dalehead Foods Spalding,england-wales,PE12,South Holland District,Food Standards Agency,A0 A1 A13 S:porcine T:cold_store T:cutting_plant T:processing_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+5105,Rayleigh Cold Store Limited,england-wales,SS7,Castle Point,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+5204,L Brown & Son Wholesale Butchers Ltd,england-wales,LN3,Lincoln,Food Standards Agency,A0 A1 S:bovine S:caprine S:ovine S:porcine T:cold_store T:cutting_plant T:slaughterhouse,2026-11-20
+5207,H G Blake (Costessey) Ltd,england-wales,NR10,Broadland District,Food Standards Agency,A0 A1 A3 A4 S:bovine S:caprine S:ovine S:porcine S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:slaughterhouse,2026-11-20
+5213,Cranswick Country Foods PLC,england-wales,IP25,Breckland District,Food Standards Agency,A0 A1 A13 A5 S:porcine T:cutting_plant T:meat_preparation_establishment T:mechanically_separated_meat_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+5260,Bramfield Meats Ltd,england-wales,IP19,East Suffolk Council,Food Standards Agency,A0 A1 A6 T:cold_store T:cutting_plant T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+5280,Fowler Bros (Latchingdon) Ltd,england-wales,CM0,Maldon,Food Standards Agency,A0 A1 S:bovine S:caprine S:ovine S:porcine T:cold_store T:cutting_plant T:slaughterhouse,2026-11-20
+5319,Romford Halal Meats Ltd,england-wales,RM14,Havering (London Borough),Food Standards Agency,A0 A1 A3 A5 S:bovine S:caprine S:ovine T:cold_store T:cutting_plant T:mince_meat_establishment T:slaughterhouse,2026-11-20
+5345,Larchwood Farm Ltd,england-wales,CM7,Braintree District,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+5388,Kelly Turkey Farms Limited,england-wales,CM2,Chelmsford,Food Standards Agency,A2 A5 A6 S:poultry T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:slaughterhouse,2026-11-20
+5416,Hilton Foods UK Limited,england-wales,PE29,Huntingdonshire District,Food Standards Agency,A0 A1 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+5430,Ben Rigby Game Ltd,england-wales,CM9,Maldon,Food Standards Agency,A0 A1 A2 A3 A4 A5 S:wild_birds S:wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+5443,Direct Meats (Knights Farm) Ltd T/A Blackwell & Co,england-wales,CO6,Colchester,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+5464,Banham Poultry (2018) Ltd,england-wales,NR17,Breckland District,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:mechanically_separated_meat_establishment T:mince_meat_establishment T:slaughterhouse,2026-11-20
+5478,Vatan Catering Limited,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+5488,Kosher Deli (UK) Limited,england-wales,LU1,Luton,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+5500,Peterborough Game Company Ltd,england-wales,PE10,South Kesteven District,Food Standards Agency,A0 A1 A2 A4 S:wild_birds S:wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment,2026-11-20
+5503,The Rare Breed Meat Company Limited,england-wales,CO6,Braintree District,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+5517,UK Poultry Limited,england-wales,IP1,Ipswich,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+5519,C & K Meats Ltd,england-wales,IP23,Mid Suffolk District,Food Standards Agency,A0 A1 A5 S:porcine T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+5522,British Premium Meats Limited,england-wales,AL7,Welwyn Hatfield,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+5528,Marbec Meats Limited,england-wales,NW2,Brent (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+5530,Frank Godfrey Limited,england-wales,N4,Islington (London Borough),Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+6057,Pilgrim's UK Lamb Ltd.,england-wales,SP11,Test Valley District,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6118,Blakes Meats Limited,england-wales,BN1,Brighton and Hove,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6141,Weddel Swift Distribution Limited,england-wales,CT1,Canterbury,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+6156,Berkshire Meat Traders Limited,england-wales,RG30,Reading,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6206,Gilberts Kosher Foods Limited,england-wales,MK1,Milton Keynes,Food Standards Agency,A0 A1 A5 A6 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+6222,Weddel Swift Distribution Limited,england-wales,PO3,Portsmouth,Food Standards Agency,A0 A1 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+6240,Cherryfield (Croydon) Ltd,england-wales,RH10,Crawley,Food Standards Agency,A0 A1 A6 T:cold_store T:cutting_plant T:processing_plant,2026-11-20
+6304,R P Meats Wholesale Limited,england-wales,BN1,Brighton and Hove,Food Standards Agency,A1 T:cutting_plant,2026-11-20
+6337,Field Farm Fresh Limited,england-wales,OX13,Vale of White Horse District,Food Standards Agency,A0 A1 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6338,Winterton Bros Limited,england-wales,SL7,Buckinghamshire Council,Food Standards Agency,A0 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment,2026-11-20
+6342,Down Land Traditional Meats Ltd,england-wales,BN5,Horsham District,Food Standards Agency,A0 A1 A5 A6 S:bovine S:caprine S:ovine S:porcine T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+6343,Berkshire Meat Traders Ltd,england-wales,RG30,Reading,Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+6344,Vicars Game Limited,england-wales,RG8,West Berkshire,Food Standards Agency,A0 A1 A2 A4 A5 A6 S:wild_birds S:wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+6358,Billfields of London Limited,england-wales,N7,Islington (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6360,Medstead Meats Ltd,england-wales,GU34,East Hampshire District,Food Standards Agency,A0 A4 A5 T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+6368,Chanctonbury Game Limited,england-wales,RH20,Horsham District,Food Standards Agency,A0 A3 A4 A5 S:wild_birds S:wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6372,Man Foods LImited,england-wales,E10,Waltham Forest (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6374,Kartal Meats Ltd,england-wales,N18,Enfield (London Borough),Food Standards Agency,A0 A1 A2 T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+6381,Butcher & Edmonds Limited,england-wales,SE1,Lambeth (London Borough),Food Standards Agency,A0 A1 A2 A4 A5 T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6383,Sultan Et Limited,england-wales,N17,Haringey (London Borough),Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6386,Lea Valley Meat Ltd,england-wales,EN9,Broxbourne,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6388,Woburn Country Foods Limited,england-wales,MK45,Central Bedfordshire,Food Standards Agency,A0 A1 A2 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+6389,CMB Foods Ltd,england-wales,RH19,Mid Sussex District,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6399,Salvatori Food Services Ltd,england-wales,CT1,Canterbury,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6400,IMS of Smithfield Ltd,england-wales,EN8,Broxbourne,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+6403,Walton Meats Limited,england-wales,TW15,Spelthorne,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+7009,2 Sisters Food Group Limited T/A 2 Sisters Sandycroft,england-wales,CH5,Sir y Fflint - Flintshire,Food Standards Agency,A2 A5 A6 S:poultry T:cutting_plant T:meat_preparation_establishment T:processing_plant T:slaughterhouse,2026-11-20
+7013,Faccenda Foods Limited (T/A Avara Foods),england-wales,NP7,Sir Fynwy - Monmouthshire,Food Standards Agency,A0 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+7047,Maelor Foods Limited,england-wales,LL13,Wrecsam - Wrexham,Food Standards Agency,A2 A5 S:poultry T:cutting_plant T:meat_preparation_establishment T:slaughterhouse,2026-11-20
+7062,Farmers Pantry Ltd,england-wales,CF61,Bro Morgannwg - the Vale of Glamorgan,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+7085,Direct Meat Supplies Ltd,england-wales,SA15,Sir Gaerfyrddin - Carmarthenshire,Food Standards Agency,A0 A1 A5 A6 T:cold_store T:cutting_plant T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+7135,Pilgrim's UK Lamb Ltd.,england-wales,SY18,Powys,Food Standards Agency,A0 A1 A13 A6 S:caprine S:ovine T:cold_store T:cutting_plant T:processing_plant T:slaughterhouse,2026-11-20
+7161,Capestone Organic Poultry Limited,england-wales,SA62,Sir Benfro - Pembrokeshire,Food Standards Agency,A0 A2 A5 A6 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:slaughterhouse,2026-11-20
+7176,Kepak Food Group Limited,england-wales,CF48,Merthyr Tudful - Merthyr Tydfil,Food Standards Agency,A0 A1 A13 A3 A4 A5 S:bovine S:ovine T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+7185,Dalziel Ltd,england-wales,NP10,Casnewydd - Newport,Casnewydd - Newport,A0 T:cold_store,2026-11-20
+7208,S.R Davis Limited,england-wales,CF63,Bro Morgannwg - the Vale of Glamorgan,Food Standards Agency,A0 A2 T:cold_store T:cutting_plant,2026-11-20
+7212,Douglas Willis Ltd T/A Croesllan Catering,england-wales,NP44,Tor-faen - Torfaen,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+7222,Howels Butchers Limited,england-wales,SA4,Abertawe - Swansea,Food Standards Agency,A0 A1 A2 A3 A4 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+7223,Euro Foods (UK) Limited,england-wales,NP44,Tor-faen - Torfaen,Food Standards Agency,A1 A5 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+7224,Iman Casing & Foods UK Limited,england-wales,LD1,Powys,Food Standards Agency,A0 A1 A13 T:cold_store T:cutting_plant T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+7228,CK's Supermarket Limited,england-wales,SA15,Sir Gaerfyrddin - Carmarthenshire,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+7230,Lloyd West Ltd,england-wales,SA65,Sir Benfro - Pembrokeshire,Food Standards Agency,A0 A1 A5 S:caprine S:ovine S:porcine T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+7232,A.J. Rees & Son's Ltd,england-wales,SA67,Sir Benfro - Pembrokeshire,Food Standards Agency,A0 A1 A2 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+8004,M C Kelly Limited,england-wales,EX17,Mid Devon District,Food Standards Agency,A0 A1 A2 A3 A4 A5 A6 S:wild_birds S:wild_lagomorphs S:wild_ungulates T:cold_store T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:slaughterhouse,2026-11-20
+8005,2 Sisters Food Group Ltd,england-wales,EX15,Mid Devon District,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:meat_preparation_establishment T:slaughterhouse,2026-11-20
+8013,Creedy Carver Limited,england-wales,EX17,Mid Devon District,Food Standards Agency,A0 A2 S:poultry T:cold_store T:cutting_plant T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+8019,OTTER VALLEY POULTRY LIMITED,england-wales,EX14,East Devon District,Food Standards Agency,A0 A2 A5 S:poultry T:cold_store T:cutting_plant T:mince_meat_establishment T:re_wrappingand_repackaging_establishment T:slaughterhouse,2026-11-20
+8070,P J Hayman Abattoir Ltd,england-wales,EX11,East Devon District,Food Standards Agency,A1 A3 S:bovine S:caprine S:ovine S:porcine S:solipeds T:cutting_plant T:slaughterhouse,2026-11-20
+8073,Kepak Group Limited,england-wales,PL31,Cornwall,Food Standards Agency,A1 A13 A5 S:bovine T:cutting_plant T:meat_preparation_establishment T:processing_plant T:slaughterhouse,2026-11-20
+8118,M Yates and Sons Limited,england-wales,TR7,Cornwall,Food Standards Agency,A1 A2 A5 A6 T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+8119,Alec Jarrett Limited,england-wales,BS30,South Gloucestershire,Food Standards Agency,A1 A5 S:bovine T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:slaughterhouse,2026-11-20
+8342,The Cornish Farmhouse Bacon Co Ltd,england-wales,EX22,Cornwall,Food Standards Agency,A0 A1 A5 A6 S:porcine T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:slaughterhouse,2026-11-20
+8354,C and S Meats Limited,england-wales,DT9,Dorset Council,Food Standards Agency,A1 A2 A3 A4 A5 A6 S:bovine S:caprine S:ovine S:porcine S:wild_ungulates T:cutting_plant T:game_handling_establishment T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:slaughterhouse,2026-11-20
+8355,John Sheppard Butchers Limited,england-wales,BS2,Bristol,Food Standards Agency,A0 A1 A2 A3 A4 A5 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+8374,Creed Foodservice Limited,england-wales,GL51,Tewkesbury,Food Standards Agency,A0 A1 A2 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+8383,Weddel Swift Distribution Ltd,england-wales,EX5,East Devon District,Food Standards Agency,A0 A1 A5 A6 T:cold_store T:cutting_plant T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+OG19,Welsh Egg (Porthcawl) Limited,england-wales,CF36,Pen-y-bont ar Ogwr - Bridgend,Pen-y-bont ar Ogwr - Bridgend,A10 T:packing_centre,2026-11-20
+RW07,Hambleton Farms Ltd,england-wales,LE15,Rutland,Rutland,A6 T:processing_plant,2026-11-20
+AE006,Grants Oak Smoked Ltd,england-wales,CA15,Allerdale Borough,Cumberland Council,A8 T:processing_plant,2026-11-20
+AE032,Guest House Dining Ltd,england-wales,CA15,Cumberland Council,Cumberland Council,A5 A6 A8 T:meat_preparation_establishment T:processing_plant,2026-11-20
+AE034,Highland Farms Ltd,england-wales,CA15,Cumberland Council,Cumberland Council,A0 A8 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AE036,Snif-Snax UK PRD Ltd,england-wales,CA15,Cumberland Council,Cumberland Council,A8 T:processing_plant,2026-11-20
+AE101,First Milk Cheese Company Limited,england-wales,CA7,Cumberland Council,Cumberland Council,A9 T:collection_centre T:processing_plant,2026-11-20
+AE203,Caterite Food & Wines Services Ltd,england-wales,CA13,Allerdale Borough,Cumberland Council,A0 T:cold_store,2026-11-20
+AF001,Alan Woodard Limited,england-wales,BH11,Bournemouth Christchurch and Poole Council,"Bournemouth, Christchurch and Poole Council",A0 A7 A8 T:cold_store T:dispatch_centre T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+AF002,Lion Catering Ltd,england-wales,BH17,Bournemouth Christchurch and Poole Council,"Bournemouth, Christchurch and Poole Council",A0 T:cold_store,2026-11-20
+AF007,Renowned Catering Ltd,england-wales,BH14,Bournemouth Christchurch and Poole Council,"Bournemouth, Christchurch and Poole Council",A6 A8 T:processing_plant,2026-11-20
+AF023,Forerunner Personal Catering Ltd,england-wales,BH6,Bournemouth Christchurch and Poole Council,"Bournemouth, Christchurch and Poole Council",A10 A5 A6 A8 A9 T:mince_meat_establishment T:processing_plant,2026-11-20
+AG007,Pilgrim's Food Masters UK Limited,england-wales,UB2,Ealing (London Borough),Ealing (London Borough),A6 A8 T:processing_plant,2026-11-20
+AG014,Imagefarm Ltd (T/A Wilson's of Sloane Street),england-wales,NW10,Ealing (London Borough),Ealing (London Borough),A5 A6 A8 T:meat_preparation_establishment T:processing_plant,2026-11-20
+AG016,Bombay Halwa Ltd,england-wales,UB2,Ealing (London Borough),Ealing (London Borough),A6 A8 A9 T:processing_plant,2026-11-20
+AG051,Hypergood Ltd T/A Royal Gourmet,england-wales,NW10,Ealing (London Borough),Ealing (London Borough),A5 A6 A8 T:meat_preparation_establishment T:processing_plant,2026-11-20
+AG053,Freshway-Nijjar Dairies Ltd,england-wales,W3,Ealing (London Borough),Ealing (London Borough),A9 T:processing_plant,2026-11-20
+AG069,Dina Foods Ltd,england-wales,NW10,Ealing (London Borough),Ealing (London Borough),A6 T:processing_plant,2026-11-20
+AG070,Pineglade Ltd T/A Good Earth,england-wales,NW10,Ealing (London Borough),Ealing (London Borough),A5 A6 A8 T:meat_preparation_establishment T:processing_plant,2026-11-20
+AG082,Treats and Snax Ltd,england-wales,W3,Ealing (London Borough),Ealing (London Borough),A6 T:processing_plant,2026-11-20
+AG087,Rubys Food Products Ltd,england-wales,UB6,Ealing (London Borough),Ealing (London Borough),A6 A8 T:processing_plant,2026-11-20
+AG091,Canapes Direct Ltd,england-wales,UB6,Ealing (London Borough),Ealing (London Borough),A5 A6 A8 T:meat_preparation_establishment T:processing_plant,2026-11-20
+AG107,Pure Foods of London Ltd,england-wales,UB6,Ealing (London Borough),Ealing (London Borough),A6 T:processing_plant,2026-11-20
+AG122,Wagamama Limited,england-wales,W3,Ealing (London Borough),Ealing (London Borough),A5 A8 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+AG130,Taiko Foods (UK) Ltd,england-wales,W3,Ealing (London Borough),Ealing (London Borough),A6 A8 T:processing_plant,2026-11-20
+AG133,Noon Products Limited,england-wales,UB2,Ealing (London Borough),Ealing (London Borough),A6 A8 T:processing_plant,2026-11-20
+AG149,True World Foods (UK) Ltd,england-wales,UB2,Ealing (London Borough),Ealing (London Borough),A0 A8 T:cold_store T:fresh_fishery_products_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AG157,Haldiram Overseas Limited,england-wales,UB2,Ealing (London Borough),Ealing (London Borough),A9 T:processing_plant,2026-11-20
+AG181,Savour Bespoke Foods Ltd,england-wales,NW10,Ealing (London Borough),Ealing (London Borough),A6 T:processing_plant,2026-11-20
+AG184,Caviar De Beluga Ltd,england-wales,NW10,Ealing (London Borough),Ealing (London Borough),A0 T:cold_store,2026-11-20
+AG191,Langham Foods Limited,england-wales,NW10,Ealing (London Borough),Ealing (London Borough),A6 T:processing_plant,2026-11-20
+AG196,Empire Bespoke Foods Limited,england-wales,UB5,Ealing (London Borough),Ealing (London Borough),A0 T:cold_store,2026-11-20
+AG200,United Cater Ltd,england-wales,UB6,Ealing (London Borough),Ealing (London Borough),A0 A8 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AG203,Apres At Home Ltd,england-wales,NW10,Ealing (London Borough),Ealing (London Borough),A6 A8 T:processing_plant,2026-11-20
+AG204,Shree Sweets Limited,england-wales,UB2,Ealing (London Borough),Ealing (London Borough),A0 A9 T:cold_store T:processing_plant,2026-11-20
+AG207,Jaffa Falafel Ltd,england-wales,NW10,Ealing (London Borough),Ealing (London Borough),A6 T:processing_plant,2026-11-20
+AG214,Azuma Foods UK Ltd,england-wales,W3,Ealing (London Borough),Ealing (London Borough),A0 T:cold_store,2026-11-20
+AG216,Good Eating Company Ltd,england-wales,W3,Ealing (London Borough),Ealing (London Borough),A6 A8 T:processing_plant,2026-11-20
+AG243,Meat Land Ltd,england-wales,W3,Ealing (London Borough),Ealing (London Borough),A6 T:processing_plant,2026-11-20
+AH020,Hillfields Limited,england-wales,NR17,Breckland District,Breckland District,A9 T:processing_plant,2026-11-20
+AH029,P J Southgate Ltd,england-wales,NR17,Breckland District,Breckland District,A10 T:packing_centre,2026-11-20
+AH037,StoreLogs Ltd,england-wales,IP24,Breckland District,Breckland District,A0 T:cold_store,2026-11-20
+AH040,Burwell Hatchery Ltd,england-wales,NR20,Breckland District,Breckland District,A10 T:packing_centre,2026-11-20
+AH048,Pilgrim's Food Masters UK Limited,england-wales,NR17,Breckland District,Breckland District,A10 A14 A5 A6 A8 A9 T:meat_preparation_establishment T:processing_plant,2026-11-20
+AH049,Greenheath Storage Limited,england-wales,IP24,Breckland District,Breckland District,A0 T:cold_store,2026-11-20
+AH052,Hope Seafood Limited,england-wales,IP25,Breckland District,Breckland District,A7 A8 T:dispatch_centre T:processing_plant,2026-11-20
+AH053,Norfolk and Better Limited,england-wales,IP25,Breckland District,Breckland District,A9 T:processing_plant,2026-11-20
+AH054,SAM Meats Ltd,england-wales,IP25,Breckland District,Breckland District,A5 T:meat_preparation_establishment,2026-11-20
+AH055,Davis &Son (Davies and)Ltd,england-wales,NR20,Breckland District,Breckland District,A10 T:packing_centre,2026-11-20
+AI714,Belwood Foods Limited,england-wales,NG17,Ashfield District,Ashfield District,A0 A5 T:mechanically_separated_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+AK132,Coquet Island Shellfish Ltdr,england-wales,NE65,Northumberland,Northumberland,A7 A8 T:dispatch_centre T:processing_plant,2026-11-20
+AK141,Flannigan Seafoods Ltd,england-wales,TD15,Northumberland,Northumberland,A7 A8 T:dispatch_centre T:processing_plant,2026-11-20
+AM012,Tim's Dairy Ltd,england-wales,SL9,Buckinghamshire Council,Buckinghamshire Council,A9 T:processing_plant,2026-11-20
+AM022,M.F. Penfold Limited,england-wales,HP9,Buckinghamshire Council,Buckinghamshire Council,A10 T:packing_centre,2026-11-20
+AN016,Turners Pies Ltd,england-wales,BN17,Arun District,Arun District,A6 T:processing_plant,2026-11-20
+AN021,Mopani Trading Ltd,england-wales,BN18,Arun District,Arun District,A5 T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+AN022,Acorn Food Services Ltd,england-wales,BN17,Arun District,Arun District,A0 T:cold_store,2026-11-20
+AN026,Coastal Catering UK Ltd,england-wales,BN17,Arun District,Arun District,A0 T:cold_store,2026-11-20
+AN027,The Fab Food Bakery Co Ltd,england-wales,PO22,Arun District,Arun District,A10 A9 T:processing_plant,2026-11-20
+AO004,Powters Ltd,england-wales,CB8,West Suffolk Council,East Cambridgeshire District,A5 T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+AO011,Turners (Soham) Ltd,england-wales,CB8,East Cambridgeshire District,East Cambridgeshire District,A0 A9 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AO021,Cambridge Commodities Ltd,england-wales,CB6,East Cambridgeshire District,East Cambridgeshire District,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+AO023,Gourmet Brownie Ltd,england-wales,CB67,East Cambridgeshire District,East Cambridgeshire District,A10 T:processing_plant,2026-11-20
+AQ005,Valerio Ltd,england-wales,MK41,Bedford Borough,Bedford Borough,A6 A9 T:processing_plant,2026-11-20
+AQ023,Riverside Dairy Ltd,england-wales,MK43,Bedford Borough,Bedford Borough,A9 T:processing_plant,2026-11-20
+AQ025,Central Pharma (Contract Packing) Limited,england-wales,MK41,Bedford Borough,Bedford Borough,A0 A8 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AQ031,Smokehouse Deli Ltd,england-wales,MK44,Bedford Borough,Bedford Borough,A0 T:cold_store,2026-11-20
+AQ034,A. B. Fruits Ltd,england-wales,MK41,Bedford Borough,Bedford Borough,A0 T:cold_store,2026-11-20
+AQ035,Traditional Agean Food Ltd,england-wales,MK42,Bedford Borough,Bedford Borough,A0 T:cold_store,2026-11-20
+AQ036,Grumpy Cow Biltong Ltd,england-wales,MK41,Bedford Borough,Bedford Borough,A6 T:processing_plant,2026-11-20
+AR001,Monteum Ltd,england-wales,BN43,Adur District,Adur District,A7 T:dispatch_centre,2026-11-20
+AR012,The Lewes Pastry Company Ltd,england-wales,BN15,Adur District,Adur District,A6 T:processing_plant,2026-11-20
+AS103,Korker Sausages Ltd,england-wales,TN17,Ashford Borough Council,Ashford Borough Council,A5 T:meat_preparation_establishment,2026-11-20
+AS110,Moons Green Charcuterie Ltd,england-wales,TN30,Ashford Borough Council,Ashford Borough Council,A6 T:processing_plant,2026-11-20
+AS113,Shila's Kitchen Ltd,england-wales,TN24,Ashford Borough Council,Ashford Borough Council,A5 A6 T:mince_meat_establishment T:processing_plant,2026-11-20
+AS114,Goat Nutrition Ltd,england-wales,TN27,Ashford Borough Council,Ashford Borough Council,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+AS116,Supplement Factory Ltd,england-wales,TN24,Ashford Borough Council,Ashford Borough Council,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+AS121,Simply Ice Cream Ltd,england-wales,TN25,Ashford Borough Council,Ashford Borough Council,A9 T:processing_plant,2026-11-20
+AS122,Arena Health Ltd,england-wales,TN23,Ashford Borough Council,Ashford Borough Council,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+AT024,LA Food Distribution Ltd,england-wales,B78,North Warwickshire,North Warwickshire,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:processing_plant,2026-11-20
+AT025,Whitacre Gold Butter Ltd,england-wales,B46,North Warwickshire,North Warwickshire,A9 T:processing_plant,2026-11-20
+AU001,Pilgrim’s Food Masters UK Limited,england-wales,SK14,Tameside,Tameside,A5 A6 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+AU010,TC Meats Ltd,england-wales,M34,Tameside,Tameside,A6 T:processing_plant,2026-11-20
+AU019,Graviss UK PVT Ltd,england-wales,OL7,Tameside,Tameside,A9 T:processing_plant,2026-11-20
+AU020,B & A Susca Ltd,england-wales,SK14,Tameside,Tameside,A9 T:processing_plant,2026-11-20
+AU021,Aytac Foods Distribution Limited,england-wales,OL6,Tameside,Tameside,A0 A9 T:cold_store T:processing_plant,2026-11-20
+AV018,H & S Food Service Limited,england-wales,DE5,Amber Valley Borough,Amber Valley Borough,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:processing_plant,2026-11-20
+AV030,Owen Taylor and Sons Ltd,england-wales,DE55,Amber Valley Borough,Amber Valley Borough,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+AX004,Hayfields Dairy Limited,england-wales,CW3,Cheshire East,Cheshire East,A9 T:processing_plant,2026-11-20
+AX007,Dairygold Ingredients Ltd,england-wales,CW1,Cheshire East,Cheshire East,A9 T:processing_plant,2026-11-20
+AX009,Ornua Ingredients Europe (UK) Ltd,england-wales,CW5,Cheshire East,Cheshire East,A0 A9 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AX022,Joseph Heler Ltd,england-wales,CW5,Cheshire East,Cheshire East,A0 A9 T:cold_store T:collection_centre T:processing_plant,2026-11-20
+AX055,Quality Cuts Ltd,england-wales,CW11,Cheshire East,Cheshire East,A5 A6 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+AX063,Fayrefield Foods Ltd,england-wales,CW2,Cheshire East,Cheshire East,A0 A9 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AX065,Burts Cheese Limited,england-wales,CW4,Cheshire East,Cheshire East,A9 T:processing_plant,2026-11-20
+AX072,The Weston Biltong Company Ltd,england-wales,CW2,Cheshire East,Cheshire East,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+AX074,Harry's Milkshake and Munchies Limited,england-wales,CW5,Cheshire East,Cheshire East,A9 T:processing_plant,2026-11-20
+AX075,The Estate Dairy Ltd,england-wales,SY14,Cheshire East,Cheshire East,A9 T:processing_plant,2026-11-20
+AX078,Halton Farms Ltd,england-wales,CW12,Cheshire East,Cheshire East,A9 T:processing_plant,2026-11-20
+AX082,Unette Nutrition Limited,england-wales,CW5,Cheshire East,Cheshire East,A0 A15 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AX086,Grocers Brokers Limited,england-wales,CW12,Cheshire East,Cheshire East,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+AX090,Brupac Drinks and Machine Co Ltd,england-wales,CW2,Cheshire East,Cheshire East,A0 A9 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AX092,AYK Meats Ltd,england-wales,CW1,Cheshire East,Cheshire East,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AX093,Sachet Factory Limited,england-wales,CW12,Cheshire East,Cheshire East,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+AY023,Arla Foods Limited,england-wales,HP22,Buckinghamshire Council,Buckinghamshire Council,A9 T:processing_plant,2026-11-20
+AY029,Mursley Free-Range Egg Supplies Ltd,england-wales,MK17,Buckinghamshire Council,Buckinghamshire Council,A10 T:packing_centre,2026-11-20
+AY036,Bloom Valley Ltd,england-wales,OX27,Buckinghamshire Council,Buckinghamshire Council,A10 T:packing_centre,2026-11-20
+AY039,McCormick (UK) Limited,england-wales,HP17,Buckinghamshire Council,Buckinghamshire Council,A0 A10 A9 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+AY043,Ghee Appetit Ltd,england-wales,MK17,Buckinghamshire Council,Buckinghamshire Council,A9 T:processing_plant,2026-11-20
+AY048,Instant Delights Ltd,england-wales,HP20,Buckinghamshire Council,Buckinghamshire Council,A6 A8 T:processing_plant,2026-11-20
+AY050,Sufan Limited,england-wales,LU7,Buckinghamshire Council,Buckinghamshire Council,A5 T:meat_preparation_establishment,2026-11-20
+AY052,Lemberg Caviar UK Ltd.,england-wales,HP6,Buckinghamshire Council,Buckinghamshire Council,A0 T:cold_store,2026-11-20
+AY053,Varina Ltd,england-wales,HP10,Buckinghamshire Council,Buckinghamshire Council,A0 T:cold_store,2026-11-20
+BG020,R P Meats (Wholesale) Ltd,england-wales,BN1,Brighton and Hove,Brighton and Hove,A0 T:cold_store,2026-11-20
+BG025,Fish Galore Ltd,england-wales,BN3,Brighton and Hove,Brighton and Hove,A0 A7 A8 T:cold_store T:dispatch_centre T:fresh_fishery_products_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+BG026,Curing Rebels Ltd,england-wales,BN41,Brighton and Hove,Brighton and Hove,A6 A8 T:processing_plant,2026-11-20
+BI002,WS Scott & Co Ltd,england-wales,B6,Birmingham City Council,Birmingham City Council,A8 T:processing_plant,2026-11-20
+BI004,Fish Co Midlands Ltd,england-wales,B6,Birmingham City Council,Birmingham City Council,A8 T:processing_plant,2026-11-20
+BI011,Salmon Incorporated Ltd,england-wales,B6,Birmingham City Council,Birmingham City Council,A8 T:processing_plant,2026-11-20
+BI020,J Vickerstaff & Co Ltd,england-wales,B6,Birmingham City Council,Birmingham City Council,A8 T:processing_plant,2026-11-20
+BI032,Kamal & Sons UK Limited,england-wales,B6,Birmingham City Council,Birmingham City Council,A0 A8 T:cold_store T:processing_plant,2026-11-20
+BI066,Maharani Food & Drinks Limited,england-wales,B10,Birmingham City Council,Birmingham City Council,A9 T:processing_plant,2026-11-20
+BI068,Tofu King (UK) Ltd,england-wales,B7,Birmingham City Council,Birmingham City Council,A10 T:processing_plant,2026-11-20
+BI102,Molls Bacon Ltd,england-wales,B11,Birmingham City Council,Birmingham City Council,A6 T:processing_plant,2026-11-20
+BI134,A W Lashford & Sons Ltd,england-wales,B30,Birmingham City Council,Birmingham City Council,A5 T:meat_preparation_establishment,2026-11-20
+BI168,Serious Food Distribution Ltd,england-wales,B24,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI171,Keyani & Sons Ltd,england-wales,B9,Birmingham City Council,Birmingham City Council,A0 A5 T:cold_store T:meat_preparation_establishment,2026-11-20
+BI174,Creating Taste Ltd,england-wales,B18,Birmingham City Council,Birmingham City Council,A5 T:meat_preparation_establishment,2026-11-20
+BI185,Tasty Pastry Trade Ltd,england-wales,B18,Birmingham City Council,Birmingham City Council,A6 T:processing_plant,2026-11-20
+BI186,Aryana Frozen Foods Ltd,england-wales,B12,Birmingham City Council,Birmingham City Council,A6 T:processing_plant,2026-11-20
+BI195,Saffron International Catering Ltd t/a Eastern Spice,england-wales,B5,Birmingham City Council,Birmingham City Council,A6 T:processing_plant,2026-11-20
+BI202,Ali Brothers Ltd,england-wales,B12,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI210,Barretts Sausages Ltd,england-wales,B33,Birmingham City Council,Birmingham City Council,A5 T:meat_preparation_establishment,2026-11-20
+BI216,Delight Foods UK Limited,england-wales,B6,Birmingham City Council,Birmingham City Council,A8 T:processing_plant,2026-11-20
+BI217,Meadow Dairies Limited,england-wales,B6,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI219,Top Oriental Limited,england-wales,B18,Birmingham City Council,Birmingham City Council,A5 A6 A8 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BI225,Ghanim International UK Ltd,england-wales,B8,Birmingham City Council,Birmingham City Council,A8 T:processing_plant,2026-11-20
+BI227,Asia Combo Food Limited,england-wales,B5,Birmingham City Council,Birmingham City Council,A6 A8 T:processing_plant,2026-11-20
+BI228,UK Halal Foods Ltd,england-wales,B11,Birmingham City Council,Birmingham City Council,A0 A6 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+BI229,Manor Lodge Dairy Products Limited,england-wales,B6,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI233,Kiswa Foods Ltd,england-wales,B11,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI239,PFDS Birmingham Ltd,england-wales,B11,Birmingham City Council,Birmingham City Council,A5 T:meat_preparation_establishment,2026-11-20
+BI241,Damascena Distribution Ltd,england-wales,B5,Birmingham City Council,Birmingham City Council,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BI246,T. Quality Limited,england-wales,B7,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI249,Ilco Ltd,england-wales,B8,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI250,HNW UK LTd,england-wales,B11,Birmingham City Council,Birmingham City Council,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+BI251,Marion Trading Ltd,england-wales,B8,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI262,Khyber Foods Ltd,england-wales,B9,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI266,Leading Fresh Limited,england-wales,B5,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI270,M S Foods Walsall Ltd,england-wales,B6,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI271,New Harvest Wholesale Ltd,england-wales,B7,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI274,W. Wing Yip Plc,england-wales,B7,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI276,Caspian Foods Cash & Carry Ltd,england-wales,B11,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI278,Rosa Chicken Ltd,england-wales,B12,Birmingham City Council,Birmingham City Council,A0 A5 T:cold_store T:meat_preparation_establishment,2026-11-20
+BI282,RYK Halal Ltd,england-wales,B11,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI284,Primal Jerky Ltd,england-wales,B7,Birmingham City Council,Birmingham City Council,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BI285,EggCo Ltd,england-wales,B6,Birmingham City Council,Birmingham City Council,A10 T:packing_centre,2026-11-20
+BI286,Dairyfresh Ltd,england-wales,B6,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI287,Akram Food Supplies Limited,england-wales,B9,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI288,Dragon Star Enterprises Limited,england-wales,B5,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI289,Tiny Tasters Catering Ltd,england-wales,B6,Birmingham City Council,Birmingham City Council,A6 T:processing_plant,2026-11-20
+BI291,Nehrain UK Trading Ltd,england-wales,B10,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI292,Mazza Of Asia Ltd,england-wales,B19,Birmingham City Council,Birmingham City Council,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BI298,Midland Meat & Poultry Limited,england-wales,B11,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI299,Madina Frozen Food Ltd,england-wales,B19,Birmingham City Council,Birmingham City Council,A6 T:processing_plant,2026-11-20
+BI300,Rightway Foods Ltd,england-wales,B9,Birmingham City Council,Birmingham City Council,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+BI301,No.1 Distribution Ltd,england-wales,B21,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI303,Norooz Trading Ltd,england-wales,B19,Birmingham City Council,Birmingham City Council,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+BI306,Giro Food Ltd,england-wales,B9,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI308,Bangla Station Wholesale Limited,england-wales,B19,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI313,Millat Halal Poultry Ltd,england-wales,B11,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BI314,Apex Food Distribution Ltd,england-wales,B6,Birmingham City Council,Birmingham City Council,A0 T:cold_store,2026-11-20
+BL016,Fielding Cottage Limited,england-wales,NR9,Broadland District,Broadland District,A9 T:processing_plant,2026-11-20
+BL028,Kiki Limited,england-wales,NR11,Broadland District,Broadland District,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+BL029,Farmyard Frozen Limited,england-wales,NR9,Broadland District,Broadland District,A0 A6 A8 T:cold_store T:processing_plant,2026-11-20
+BL030,Dyvine Ltd,england-wales,NR6,Broadland District,Broadland District,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+BL032,Prepking Limited,england-wales,NR9,Broadland District,Broadland District,A0 A6 T:cold_store T:processing_plant,2026-11-20
+BL034,Urcnac Limited,england-wales,NR13,Broadland District,Broadland District,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+BM007,Air Culinaire Worldwide UK Limited,england-wales,TN16,Bromley (London Borough),Bromley (London Borough),A10 A6 A8 T:processing_plant,2026-11-20
+BN055,Azalea Foods Ltd,england-wales,BB2,Blackburn with Darwen,Blackburn with Darwen,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BN061,The Moorings Bakery Ltd,england-wales,BB2,Blackburn with Darwen,Blackburn with Darwen,A10 A6 A9 T:processing_plant,2026-11-20
+BN064,Farid Foods Limited,england-wales,BB1,Blackburn with Darwen,Blackburn with Darwen,A6 T:processing_plant,2026-11-20
+BN065,My Grab n Go Ltd,england-wales,BB1,Blackburn with Darwen,Blackburn with Darwen,A6 T:processing_plant,2026-11-20
+BN072,Kadas Aris Ltd,england-wales,BB3,Blackburn with Darwen,Blackburn with Darwen,A9 T:processing_plant,2026-11-20
+BN073,Marsden Packaging Ltd,england-wales,BB1,Blackburn with Darwen,Blackburn with Darwen,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+BO001,Tayto Group Ltd,england-wales,BL5,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A6 T:processing_plant,2026-11-20
+BO006,David Wood Baking Ltd,england-wales,BL4,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BO026,Greenhalgh's Craft Bakery Ltd,england-wales,BL6,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A6 T:processing_plant,2026-11-20
+BO032,Carrs Pasties Ltd,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A6 T:processing_plant,2026-11-20
+BO033,Sultan Meat Products Limited,england-wales,BL6,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BO038,Divan Meat Products Ltd,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BO042,Nasip Meats Ltd,england-wales,BL4,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BO050,JDM Quality Foods Ltd,england-wales,BL6,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 A6 A8 A9 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BO057,Happy Belly Ltd,england-wales,BL1,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A10 A6 T:processing_plant,2026-11-20
+BO058,Kinza Foods Limited,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+BO061,Halal Kitchen Limited,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A6 T:processing_plant,2026-11-20
+BO064,Albion Cooked Meats Limited,england-wales,BL5,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store,2026-11-20
+BO065,B&B Foods Limited,england-wales,BL6,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store,2026-11-20
+BO068,Rivington Cooked Meats Ltd,england-wales,BL6,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store,2026-11-20
+BO069,The Original Pasha Foods Limited,england-wales,BL6,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store,2026-11-20
+BO071,Fine Fresh Foods Ltd,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store,2026-11-20
+BO072,Chenab Foods Limited,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A6 T:processing_plant,2026-11-20
+BO073,ADZ Food Distribution Limited,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store,2026-11-20
+BO077,Medina Catering Ltd,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A6 T:processing_plant,2026-11-20
+BO078,Xpress Frozen Food Ltd,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 A6 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+BO080,Umar Quality Foods Ltd,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 T:meat_preparation_establishment,2026-11-20
+BO082,Sanson Foods Limited,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+BO083,Pasha Meat Group Limited,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BO084,HM Foods Supplier Ltd,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A6 A8 T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+BO085,Berivan Foods Limited,england-wales,BL1,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A9 T:processing_plant,2026-11-20
+BO088,Shawarma Express Food Ltd,england-wales,BL4,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BO089,Anadolu Meat Products Limited,england-wales,BL2,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store,2026-11-20
+BO091,Pasha Meat Product Ltd,england-wales,BL6,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 T:meat_preparation_establishment,2026-11-20
+BO092,J Y Frozen Foods Ltd,england-wales,BL1,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A6 T:processing_plant,2026-11-20
+BO093,Aryana Food Distribution Limited,england-wales,BL4,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 T:cold_store,2026-11-20
+BO094,Pasha Meat Products Ltd,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A0 A5 T:cold_store T:meat_preparation_establishment,2026-11-20
+BO095,Karachist’s Foods and Services Limited,england-wales,BL3,Bolton Metropolitan Borough,Bolton Metropolitan Borough,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BP008,John Jackson (Bacon) Ltd,england-wales,FY4,Blackpool,Blackpool,A6 T:processing_plant,2026-11-20
+BQ003,Reeves Butchers Ltd,england-wales,RG12,Bracknell Forest,Bracknell Forest,A0 T:cold_store,2026-11-20
+BR001,Bumblehole Foods Ltd,england-wales,B61,Bromsgrove District,Bromsgrove District,A10 T:liquid_egg_plant T:packing_centre T:processing_plant,2026-11-20
+BR009,Adams Food Services Ltd,england-wales,B45,Bromsgrove District,Bromsgrove District,A0 T:cold_store,2026-11-20
+BR102,Oakland International Ltd,england-wales,B98,Bromsgrove District,Bromsgrove District,A0 A9 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+BS026,Martin-Brower UK Ltd,england-wales,RG21,Basingstoke and Deane,Basingstoke and Deane,A0 T:cold_store,2026-11-20
+BS039,Hungry Moose Catering Ltd,england-wales,RG26,Basingstoke and Deane,Basingstoke and Deane,A10 A5 A6 A8 A9 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+BS042,Wandering Feathers Limited,england-wales,RG26,Basingstoke and Deane,Basingstoke and Deane,A10 T:packing_centre,2026-11-20
+BT012,Gail's Ltd,england-wales,NW9,Barnet (London Borough),Barnet (London Borough),A10 A5 A6 A9 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BT019,LDN Foods Ltd,england-wales,N2,Barnet (London Borough),Barnet (London Borough),A0 T:cold_store,2026-11-20
+BT020,Après At Home Ltd,england-wales,N3,Barnet (London Borough),Barnet (London Borough),A6 A8 T:processing_plant,2026-11-20
+BT026,Pastation Services Limited,england-wales,N3,Barnet (London Borough),Barnet (London Borough),A6 A8 T:processing_plant,2026-11-20
+BU009,The Bury Black Pudding Company Ltd,england-wales,BL9,Bury,Bury,A6 T:processing_plant,2026-11-20
+BU016,Cranswick Continental Foods PLC,england-wales,BL9,Bury,Bury,A0 A10 A14 A5 A6 A9 T:cold_store T:meat_preparation_establishment T:processing_plant,2026-11-20
+BU017,B Davies & Son Ltd,england-wales,BL9,Bury,Bury,A6 T:processing_plant,2026-11-20
+BU019,Aurora Food Marketing Ltd,england-wales,BL3,Bury,Bury,A5 A6 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+BW026,Refrigerated Delivery Services Ltd T/A Flying Fridge,england-wales,S81,Bassetlaw District,Bassetlaw District,A0 T:cold_store,2026-11-20
+BW029,K H Taylor Limited,england-wales,S81,Bassetlaw District,Bassetlaw District,A0 T:cold_store,2026-11-20
+BX002,Ferndale Foods Limited,england-wales,DA18,Bexley (London Borough),Bexley (London Borough),A10 A14 A5 A6 A8 A9 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BX020,Freshasia Foods Ltd,england-wales,DA18,Bexley (London Borough),Bexley (London Borough),A0 A10 A5 A8 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+BY010,York House (Meat Products) Limited,england-wales,SG19,Central Bedfordshire,Central Bedfordshire,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BY015,Hartwood Foods Ltd,england-wales,LU7,Central Bedfordshire,Central Bedfordshire,A5 A6 T:mince_meat_establishment T:processing_plant,2026-11-20
+BY021,Golden Saffron Ltd,england-wales,LU6,Central Bedfordshire,Central Bedfordshire,A9 T:processing_plant,2026-11-20
+BY023,Unisnacks Europe Ltd,england-wales,SG18,Central Bedfordshire,Central Bedfordshire,A0 T:cold_store,2026-11-20
+BY024,J Pao & Co Ltd,england-wales,LU5,Central Bedfordshire,Central Bedfordshire,B1 T:producing_plant,2026-11-20
+BY025,The Ojos Foods Ltd,england-wales,LU6,Central Bedfordshire,Central Bedfordshire,A0 T:cold_store,2026-11-20
+BY026,Fusion Targeted Nutrition Ltd,england-wales,SG19,Central Bedfordshire,Central Bedfordshire,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+BY027,Hemel Eggs and Dairy Ltd,england-wales,LU5,Central Bedfordshire,Central Bedfordshire,A0 A10 T:cold_store T:packing_centre,2026-11-20
+BY028,Abbey Cheese Company Ltd,england-wales,LU7,Central Bedfordshire,Central Bedfordshire,A0 A5 A6 T:cold_store T:mince_meat_establishment T:processing_plant,2026-11-20
+BY030,AP Dairies Limited,england-wales,LU5,Central Bedfordshire,Central Bedfordshire,A0 T:cold_store,2026-11-20
+BZ040,Pieminister Ltd,england-wales,BS10,Bristol,Bristol,A5 A6 A8 T:meat_preparation_establishment T:processing_plant,2026-11-20
+BZ041,M & M Catering Supplies Ltd,england-wales,BS11,Bristol,Bristol,A0 A5 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+BZ049,Parsons Bakery Limited,england-wales,BS3,Bristol,Bristol,A0 A5 T:cold_store T:meat_preparation_establishment,2026-11-20
+BZ053,Mini-Meals Ltd,england-wales,BS4,Bristol,Bristol,A6 A8 T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+BZ055,Plant-Ex Ingredients Ltd,england-wales,BS11,Bristol,Bristol,A16 A6 A9 T:processing_plant,2026-11-20
+BZ056,Admiral Harding Ltd,england-wales,BS11,Bristol,Bristol,A0 T:cold_store,2026-11-20
+BZ057,BM Foods Ltd,england-wales,BS11,Bristol,Bristol,A0 T:cold_store,2026-11-20
+BZ058,Mevalco (Fine Foods From Spain) Ltd,england-wales,BS11,Bristol,Bristol,A0 T:cold_store,2026-11-20
+BZ071,Friars Pride Ltd,england-wales,BS5,Bristol,Bristol,A0 T:cold_store,2026-11-20
+BZ073,Mercanti Imports Ltd,england-wales,BS2,Bristol,Bristol,A0 T:cold_store,2026-11-20
+BZ074,Plant-Ex Ingredients Ltd,england-wales,BS11,Bristol,Bristol,A6 A9 T:processing_plant,2026-11-20
+BZ075,T Quality Ltd,england-wales,BS11,Bristol,Bristol,A0 T:cold_store,2026-11-20
+BZ076,GXO Logistics FST Limited,england-wales,BS11,Bristol,Bristol,A0 T:cold_store,2026-11-20
+BZ078,Saf Bristol Limited,england-wales,BS5,Bristol,Bristol,A0 T:cold_store,2026-11-20
+BZ079,RaviOllie Ltd,england-wales,BS2,Bristol,Bristol,A0 A10 A6 A8 A9 T:cold_store T:processing_plant,2026-11-20
+CI016,Babynov Chichester Ltd,england-wales,PO19,Chichester District,Chichester District,A6 A8 T:processing_plant,2026-11-20
+CI022,The Goodwood Estate Company Ltd,england-wales,PO18,Chichester District,Chichester District,A9 T:collection_centre T:processing_plant,2026-11-20
+CI024,Caroline's Dairy LLP,england-wales,PO20,Chichester District,Chichester District,A9 T:processing_plant,2026-11-20
+CI029,Nell Ball Farm Ltd,england-wales,RH14,Chichester District,Chichester District,A10 A6 T:packing_centre T:processing_plant,2026-11-20
+CI031,Southbourne Farmshop Ltd,england-wales,PO10,Chichester District,Chichester District,A10 T:packing_centre,2026-11-20
+CI037,Mud Foods Ltd,england-wales,PO19,Chichester District,Chichester District,A6 A8 T:processing_plant,2026-11-20
+CI045,Susana & Daughters Ltd,england-wales,GU29,Chichester District,Chichester District,A9 T:processing_plant,2026-11-20
+CJ001,Snowdon & Co (Cardiff) Limited,england-wales,CF10,Caerdydd - Cardiff,Caerdydd - Cardiff,A0 A8 T:cold_store T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+CJ043,Wild Water Storage Ltd,england-wales,CF10,Caerdydd - Cardiff,Caerdydd - Cardiff,A0 T:cold_store,2026-11-20
+CJ051,New Hap Shing Trading Company Ltd,england-wales,CF24,Caerdydd - Cardiff,Caerdydd - Cardiff,A0 T:cold_store,2026-11-20
+CJ058,Vin Sullivan Foods Ltd,england-wales,CF10,Caerdydd - Cardiff,Caerdydd - Cardiff,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+CJ062,Taylor's Handmade Faggot's Limited,england-wales,CF11,Caerdydd - Cardiff,Caerdydd - Cardiff,A0 A6 T:cold_store T:processing_plant,2026-11-20
+CJ067,Bestway Wholesale Limited,england-wales,CF11,Caerdydd - Cardiff,Caerdydd - Cardiff,A0 T:cold_store,2026-11-20
+CJ068,Coffi Lab Ltd,england-wales,CF3,Caerdydd - Cardiff,Caerdydd - Cardiff,A6 T:processing_plant,2026-11-20
+CJ070,Alpha Food Service Ltd,england-wales,CF11,Caerdydd - Cardiff,Caerdydd - Cardiff,A0 T:cold_store,2026-11-20
+CJ073,Global Foods Ltd,england-wales,CF11,Caerdydd - Cardiff,Caerdydd - Cardiff,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+CK010,Ray Gray Snacks Ltd,england-wales,WS15,Cannock Chase District,Cannock Chase District,A6 T:processing_plant,2026-11-20
+CK019,GXO Logistics UK Limited,england-wales,WS11,Cannock Chase District,Cannock Chase District,A0 T:cold_store,2026-11-20
+CK022,Lays Wholesale Meats Ltd,england-wales,WS15,Cannock Chase District,Cannock Chase District,A0 T:cold_store,2026-11-20
+CK024,CP Meats Limited,england-wales,WS15,Cannock Chase District,Cannock Chase District,A0 T:cold_store,2026-11-20
+CM015,Munns Distribution Limited,england-wales,CB24,South Cambridgeshire District,South Cambridgeshire District,A0 T:cold_store,2026-11-20
+CM017,Clover Free Range Eggs Ltd,england-wales,SG8,South Cambridgeshire District,South Cambridgeshire District,A10 T:packing_centre,2026-11-20
+CM144,Delifresh Ltd,england-wales,BD12,Bradford City,Bradford City,A0 T:cold_store,2026-11-20
+CO032,Dairy Farm Products Ltd,england-wales,CV6,Coventry,Coventry,A0 T:cold_store,2026-11-20
+CO033,Aegean Heritage Foods Ltd,england-wales,CV2,Coventry,Coventry,A0 A6 A9 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+CO038,Gainsborough Chilled Foods Ltd,england-wales,CV5,Coventry,Coventry,A0 T:cold_store,2026-11-20
+CO043,Nazar Wholesale Limited,england-wales,CV6,Coventry,Coventry,A0 T:cold_store,2026-11-20
+CO044,Martin Brower UK Ltd,england-wales,CV5,Coventry,Coventry,A0 T:cold_store,2026-11-20
+CO045,Freshways Ltd,england-wales,CV6,Coventry,Coventry,A0 T:cold_store,2026-11-20
+CO046,Premier Health Products Ltd,england-wales,CV4,Coventry,Coventry,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+CO048,Yummy Sausage Ltd,england-wales,CV3,Warwick District,Coventry,A6 T:processing_plant,2026-11-20
+CP021,Osborne & Sons (Shellfish) Ltd,england-wales,SS8,Castle Point,Castle Point,A0 A8 T:cold_store T:processing_plant,2026-11-20
+CP022,The Pescatarian Ltd,england-wales,SS7,Castle Point,Castle Point,A0 T:cold_store,2026-11-20
+CQ001,Pilgrims Pride Ltd,england-wales,TR15,Cornwall,Cornwall,A5 T:meat_preparation_establishment,2026-11-20
+CQ006,Lynher Dairies Cheese Company Ltd,england-wales,TR3,Cornwall,Cornwall,A9 T:processing_plant,2026-11-20
+CQ019,Falfish Limited,england-wales,TR15,Cornwall,Cornwall,A8 T:processing_plant,2026-11-20
+CQ027,Kernowsashimi Limited,england-wales,TR12,Cornwall,Cornwall,A8 T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+CQ033,The Real Cornish Crab Company Limited,england-wales,TR20,Cornwall,Cornwall,A8 T:processing_plant,2026-11-20
+CQ034,W. Harvey & Sons Limited,england-wales,TR18,Cornwall,Cornwall,A7 A8 T:dispatch_centre T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+CQ038,Celtic Fish and Game Ltd,england-wales,TR26,Cornwall,Cornwall,A5 A6 A8 A9 T:meat_preparation_establishment T:processing_plant,2026-11-20
+CQ039,St Ives Food Company Limited,england-wales,TR26,Cornwall,Cornwall,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+CQ045,W Stevenson & Sons Limited,england-wales,TR18,Cornwall,Cornwall,A7 A8 T:auction_hall T:dispatch_centre T:fresh_fishery_products_plant T:wholesale_market,2026-11-20
+CQ048,MooMaid of Zennor Ice Cream Ltd,england-wales,TR26,Cornwall,Cornwall,A9 T:processing_plant,2026-11-20
+CQ084,Prima Bakeries Ltd,england-wales,TR16,Cornwall,Cornwall,A5 A6 T:mince_meat_establishment T:processing_plant,2026-11-20
+CQ101,ATFB Ltd,england-wales,TR16,Cornwall,Cornwall,A5 T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+CQ105,Trink Dairy Ltd,england-wales,TR26,Cornwall,Cornwall,A9 T:processing_plant,2026-11-20
+CQ112,South Coast Fisheries Ltd,england-wales,TR16,Cornwall,Cornwall,A8 T:processing_plant,2026-11-20
+CQ113,Whitelink Seafoods Ltd,england-wales,TR18,Cornwall,Cornwall,A8 T:processing_plant,2026-11-20
+CQ115,Cornwall Fish Direct Limited,england-wales,TR18,Cornwall,Cornwall,A8 T:fresh_fishery_products_plant,2026-11-20
+CQ117,W. Harvey & Sons Limited,england-wales,TR18,Cornwall,Cornwall,A7 A8 T:dispatch_centre T:fresh_fishery_products_plant,2026-11-20
+CQ121,Falfish Limited,england-wales,TR15,Cornwall,Cornwall,A0 T:cold_store,2026-11-20
+CQ276,Conway Bailey Transport Ltd,england-wales,TR1,Cornwall,Cornwall,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+CQ279,Country Lane Foods Limited,england-wales,PL14,Cornwall,Cornwall,A10 T:packing_centre,2026-11-20
+CQ402,Ocean Fish Ltd,england-wales,PL26,Cornwall,Cornwall,A7 A8 T:dispatch_centre T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+CQ407,Cornish Premier Pasties Co Ltd,england-wales,TR9,Cornwall,Cornwall,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+CQ419,Niles Bakery Ltd,england-wales,PL25,Cornwall,Cornwall,A10 A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+CQ431,Just Cornish Ltd,england-wales,TR9,Cornwall,Cornwall,A10 A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+CQ504,Erhmann Cornish Dairy Ltd,england-wales,PL22,Cornwall,Cornwall,A9 T:processing_plant,2026-11-20
+CQ513,Pilgrims Pride Ltd,england-wales,PL31,Cornwall,Cornwall,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+CQ515,Proper Cornish Limited,england-wales,PL31,Cornwall,Cornwall,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+CQ526,Porthilly Shellfish Ltd,england-wales,PL27,Cornwall,Cornwall,A7 T:dispatch_centre T:purification_centre,2026-11-20
+CQ547,Camel Fish Limited,england-wales,PL27,Cornwall,Cornwall,A7 A8 T:dispatch_centre T:fresh_fishery_products_plant T:processing_plant T:purification_centre,2026-11-20
+CQ571,Conway Bailey Transport Ltd,england-wales,PL26,Cornwall,Cornwall,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+CQ575,Malcolm Barnecutt Bakery Ltd,england-wales,PL31,Cornwall,Cornwall,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+CQ605,Cornish Cheese Company Ltd,england-wales,PL14,Cornwall,Cornwall,A9 T:processing_plant,2026-11-20
+CQ643,Portreath Bakery Ltd,england-wales,TR15,Cornwall,Cornwall,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:processing_plant,2026-11-20
+CQ644,Made Marion Gluten Free Ltd,england-wales,TR15,Cornwall,Cornwall,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:processing_plant,2026-11-20
+CQ707,Bluesail FishLtd,england-wales,PL13,Cornwall,Cornwall,A7 A8 T:dispatch_centre T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+CQ708,West Country Mussels of Fowey Ltd,england-wales,PL23,Cornwall,Cornwall,A7 T:purification_centre,2026-11-20
+CQ726,Camel Fish Limited,england-wales,TR11,Cornwall,Cornwall,A7 A8 T:dispatch_centre T:fresh_fishery_products_plant T:processing_plant T:purification_centre,2026-11-20
+CQ731,Nippers Shellfish Limited,england-wales,PL13,Cornwall,Cornwall,A8 T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+CQ732,Helluva Pasties Ltd,england-wales,PL17,Cornwall,Cornwall,A5 T:meat_preparation_establishment,2026-11-20
+CQ734,Waterdance Trading Limited,england-wales,TR18,Cornwall,Cornwall,A8 T:fresh_fishery_products_plant,2026-11-20
+CQ735,Cornish Canning Co. Ltd,england-wales,TR11,Cornwall,Cornwall,A8 T:processing_plant,2026-11-20
+CQ738,Falfish Ltd,england-wales,TR15,Cornwall,Cornwall,A8 T:fresh_fishery_products_plant T:processing_plant,2026-11-20
+CQ742,M and W Meats (South West) Ltd,england-wales,PL26,Cornwall,Cornwall,A0 A5 T:cold_store T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+CQ746,Hunt’s Food Group Ltd,england-wales,TR16,Cornwall,Cornwall,A0 T:cold_store,2026-11-20
+CQ748,Tremore Dairy Limited,england-wales,PL30,Cornwall,Cornwall,A9 T:processing_plant,2026-11-20
+CQ750,Got Crabs Limited,england-wales,TR7,Cornwall,Cornwall,A8 T:processing_plant,2026-11-20
+CQ758,True Dairy Ltd,england-wales,PL24,Cornwall,Cornwall,A9 T:processing_plant,2026-11-20
+CQ759,The Cornish Oven Ltd,england-wales,TR15,Cornwall,Cornwall,A0 A5 T:cold_store T:meat_preparation_establishment,2026-11-20
+CQ761,My Bru Ltd,england-wales,TR4,Cornwall,Cornwall,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+CR012,Neatown Ltd,england-wales,CR0,Croydon (London Borough),Croydon (London Borough),A0 A10 A6 A8 T:cold_store T:processing_plant,2026-11-20
+CR013,AFC Food (UK) Ltd,england-wales,CR0,Croydon (London Borough),Croydon (London Borough),A0 T:cold_store,2026-11-20
+CT007,Soho Coffee Shops Ltd,england-wales,GL51,Cheltenham,Cheltenham,A6 A8 T:processing_plant,2026-11-20
+CU001,Geest Foods Ltd,england-wales,EN9,Broxbourne,Broxbourne,A6 T:processing_plant,2026-11-20
+CU007,Reynolds Catering Suppliers Ltd,england-wales,EN8,Broxbourne,Broxbourne,A0 A5 T:cold_store T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+CU010,Best Food Logistics Ltd,england-wales,EN11,Broxbourne,Broxbourne,A0 T:cold_store,2026-11-20
+CU011,Brook House Foods Limited,england-wales,EN8,Broxbourne,Broxbourne,A5 T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+CU013,Shoal Seafood Ltd,england-wales,EN11,Broxbourne,Broxbourne,A8 T:processing_plant,2026-11-20
+CW002,Llaeth Y Llan Cyf Village Dairy Ltd,england-wales,LL16,Conwy,Conwy,A9 T:processing_plant,2026-11-20
+CW022,V A Whitley & Co Ltd,england-wales,LL28,Conwy,Conwy,A0 T:cold_store,2026-11-20
+CW023,Edwards of Conwy Ltd,england-wales,LL32,Conwy,Conwy,A6 T:processing_plant,2026-11-20
+CX008,Cambridge Weight Plan Limited,england-wales,NN17,North Northamptonshire Council,North Northamptonshire Council,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+CY005,Meadow Foods Limited,england-wales,CH4,Cheshire West and Chester,Cheshire West and Chester,A9 T:processing_plant,2026-11-20
+CY006,Cheshire Farm Ice Cream Ltd,england-wales,CH3,Cheshire West and Chester,Cheshire West and Chester,A9 T:processing_plant,2026-11-20
+CY022,Beechdean Manufacturing Ltd,england-wales,CH3,Cheshire West and Chester,Cheshire West and Chester,A9 T:processing_plant,2026-11-20
+CY036,J Pao & Co Ltd,england-wales,WA16,Cheshire West and Chester,Cheshire West and Chester,B1 T:producing_plant,2026-11-20
+CY052,Nicol Hughes Foodservice Ltd,england-wales,CH1,Cheshire West and Chester,Cheshire West and Chester,A0 T:cold_store,2026-11-20
+DD022,Tagg Lane Dairy Limited,england-wales,DE45,Derbyshire Dales District,Derbyshire Dales District,A9 T:processing_plant,2026-11-20
+DE003,Arla Foods Limited,england-wales,EX20,West Devon,West Devon,A9 T:processing_plant,2026-11-20
+DE018,Country Cheeses Ltd,england-wales,EX20,West Devon,West Devon,A0 T:cold_store,2026-11-20
+DE030,Arla Foods Ingredients Taw Valley Limited.,england-wales,EX20,West Devon,West Devon,A9 T:processing_plant,2026-11-20
+DE042,Dartmoor Ice Cream Company Ltd,england-wales,EX20,West Devon,West Devon,A9 T:processing_plant,2026-11-20
+DE043,MJD Poultry Ltd,england-wales,EX19,West Devon,West Devon,A10 T:packing_centre,2026-11-20
+DE208,NS Oriental Limited,england-wales,PL20,West Devon,West Devon,A0 T:cold_store,2026-11-20
+DG011,Bonians Ltd,england-wales,RM10,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+DG021,Baboo (Wholesale Meats) Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 A6 T:cold_store T:processing_plant,2026-11-20
+DG027,CK Frozen Food Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 T:cold_store,2026-11-20
+DG028,Bangladesh Corporation UK Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 A8 T:cold_store T:processing_plant,2026-11-20
+DG029,Home of Sausages Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A5 A6 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+DG030,Anne-Mary's Bake Hut Ltd,england-wales,RM10,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A5 T:meat_preparation_establishment,2026-11-20
+DG033,Abiglobal Foods Wholesale Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+DG034,Denton Bros Limited,england-wales,RM9,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 T:cold_store,2026-11-20
+DG035,H. Smith (Smithfield) Ltd,england-wales,RM9,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 T:cold_store,2026-11-20
+DG036,Asko Foods Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 T:cold_store,2026-11-20
+DG037,Freshery UK Limited,england-wales,RM9,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 A8 T:cold_store T:processing_plant,2026-11-20
+DG038,Kashmir Halal Foods Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 T:cold_store,2026-11-20
+DG043,ACM Meat Factory Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 A5 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+DG044,Watson Farm Eggs Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A10 T:packing_centre,2026-11-20
+DG045,Shapla Prime UK Ltd,england-wales,RM8,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A9 T:processing_plant,2026-11-20
+DG046,TJ Trading London Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 T:cold_store,2026-11-20
+DG047,Dublin Meats Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A0 T:cold_store,2026-11-20
+DG049,Home of Sausages Ltd,england-wales,IG11,Barking and Dagenham (London Borough),Barking and Dagenham (London Borough),A5 T:meat_preparation_establishment,2026-11-20
+DH008,The Sausage Man UK Ltd,england-wales,DA4,Dartford,Dartford,A0 T:cold_store,2026-11-20
+DH009,Leathams Ltd,england-wales,DA1,Dartford,Dartford,A0 T:cold_store,2026-11-20
+DH011,Albion Fine Foods Ltd,england-wales,DA2,Dartford,Dartford,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+DH013,Prep Kitchen Ltd,england-wales,DA13,Dartford,Dartford,A10 A6 A8 A9 T:processing_plant,2026-11-20
+DI001,Birds (Derby) Ltd,england-wales,DE24,Derby,Derby,A6 T:processing_plant,2026-11-20
+DI004,Just Ice Cream Ltd,england-wales,DE22,Derby,Derby,A10 A9 T:processing_plant,2026-11-20
+DI005,SHP Poultry Ltd,england-wales,DE23,Derby,Derby,A0 T:cold_store,2026-11-20
+DI007,Bernard Matthews Foods (Derby) Limited,england-wales,DE23,Derby,Derby,A0 A5 A6 T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+DI009,Viswas Foods Ethnic Ltd,england-wales,DE24,Derby,Derby,A0 T:cold_store,2026-11-20
+DJ002,Martin Brower UK Ltd,england-wales,HP2,Dacorum,Dacorum,A0 T:cold_store,2026-11-20
+DJ011,Gist Limited,england-wales,HP2,Dacorum,Dacorum,A0 T:cold_store,2026-11-20
+DJ018,Iiaa Ltd,england-wales,HP2,Dacorum,Dacorum,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+DJ019,Cotteswold Dairy Ltd,england-wales,HP1,Dacorum,Dacorum,A0 T:cold_store,2026-11-20
+DK008,BBW (Foods) Ltd,england-wales,DN12,Doncaster,Doncaster,A0 A6 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+DK010,Nortech Saria Limited,england-wales,DN5,Doncaster,Doncaster,A12 T:collection_centre T:processing_plant,2026-11-20
+DK026,Warners Fish Merchants Ltd,england-wales,DN4,Doncaster,Doncaster,A0 T:cold_store,2026-11-20
+DK028,Paragon Food Service Limited,england-wales,DN4,Doncaster,Doncaster,A0 T:cold_store,2026-11-20
+DK029,Fresko Foods Limited,england-wales,DN4,Doncaster,Doncaster,A0 A6 T:cold_store T:processing_plant,2026-11-20
+DK031,Vestey Foods UK Ltd,england-wales,DN3,Doncaster,Doncaster,A5 A8 T:meat_preparation_establishment T:processing_plant,2026-11-20
+DL005,Thermotraffic Ltd,england-wales,DY5,Dudley,Dudley,A0 T:cold_store,2026-11-20
+DL046,Carrs Chilled Foods Ltd,england-wales,DY2,Dudley,Dudley,A0 T:cold_store,2026-11-20
+DL047,Central Supplies (Brierley Hill) Ltd,england-wales,B63,Dudley,Dudley,A0 A9 T:cold_store T:processing_plant,2026-11-20
+DL061,Alpha Food Distributions Ltd,england-wales,DY5,Dudley,Dudley,A0 T:cold_store,2026-11-20
+DL062,MX Food Products Ltd,england-wales,DY5,Dudley,Dudley,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+DL063,Chill Chow Frozen Foods Ltd,england-wales,B62,Dudley,Dudley,A0 T:cold_store,2026-11-20
+DL066,Prime Foods International Ltd,england-wales,WV14,Dudley,Dudley,A0 T:cold_store,2026-11-20
+DM010,Istanbul Meats Ltd,england-wales,DH2,County Durham,County Durham,A0 A5 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+DM015,Princes Ltd,england-wales,DH8,County Durham,County Durham,A10 A5 A6 A8 A9 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+DM016,Redemption Foods 2 Ltd,england-wales,DH8,County Durham,County Durham,A6 T:processing_plant,2026-11-20
+DM029,Stirling Meats Ltd,england-wales,SR7,County Durham,County Durham,A6 T:processing_plant,2026-11-20
+DM032,Lineage UK Warehousing Ltd,england-wales,SR7,County Durham,County Durham,A0 T:cold_store,2026-11-20
+DM052,Lintz Farm Ltd,england-wales,NE16,County Durham,County Durham,A10 T:packing_centre,2026-11-20
+DM059,Eden Farm Ltd,england-wales,SR8,County Durham,County Durham,A0 T:cold_store,2026-11-20
+DM060,Collins Seafoods North East Limited,england-wales,DL5,County Durham,County Durham,A0 T:cold_store,2026-11-20
+DM061,Wear Valley Foods (Durham) Ltd,england-wales,DL16,County Durham,County Durham,A0 T:cold_store,2026-11-20
+DM071,Bako Northern and Scotland Ltd,england-wales,DH7,County Durham,County Durham,A0 T:cold_store,2026-11-20
+DM072,Ravendale North West Limited,england-wales,DH8,County Durham,County Durham,A12 T:processing_plant,2026-11-20
+DM077,Prophecy Group Limited,england-wales,SR8,County Durham,County Durham,A0 A5 A6 T:cold_store T:meat_preparation_establishment T:processing_plant,2026-11-20
+DM078,Gibbons International Ltd,england-wales,SR7,County Durham,County Durham,A0 T:cold_store,2026-11-20
+DM083,Eden Farm Ltd,england-wales,SR8,County Durham,County Durham,A0 T:cold_store,2026-11-20
+DM085,Ox Close Farm Ltd,england-wales,DH6,County Durham,County Durham,A9 T:processing_plant,2026-11-20
+DM086,Paramount Foods International Ltd,england-wales,SR8,County Durham,County Durham,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+DM087,Foodro Limited,england-wales,DH8,County Durham,County Durham,A0 T:cold_store,2026-11-20
+DN026,Martin Brower UK Ltd,england-wales,DL1,Darlington,Darlington,A0 T:cold_store,2026-11-20
+DP001,South Caernarfon Creameries Ltd,england-wales,LL53,Gwynedd,Gwynedd,A9 T:processing_plant,2026-11-20
+DP020,Ready Foods Limited,england-wales,LL55,Gwynedd,Gwynedd,A0 A6 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+DP024,Roberts of Port Dinorwic Ltd,england-wales,LL55,Gwynedd,Gwynedd,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+DP030,Harlech Foodservices Limited,england-wales,LL52,Gwynedd,Gwynedd,A0 T:cold_store,2026-11-20
+DP063,Daffodil Foods Limited,england-wales,LL53,Gwynedd,Gwynedd,A9 T:processing_plant,2026-11-20
+DP071,Deepdock Ltd,england-wales,LL65,Sir Ynys Mon - Isle of Anglesey,Gwynedd,A7 T:dispatch_centre,2026-11-20
+DP077,Henbant Ltd,england-wales,LL54,Gwynedd,Gwynedd,A10 T:packing_centre,2026-11-20
+DP078,Myti Mussels Ltd,england-wales,LL57,Gwynedd,Gwynedd,A7 T:dispatch_centre T:purification_centre,2026-11-20
+DP079,Wacky Wedge Cheese Company Ltd,england-wales,LL55,Gwynedd,Gwynedd,A9 T:processing_plant,2026-11-20
+DP081,Harlech FoodService Ltd,england-wales,LL52,Gwynedd,Gwynedd,A0 A5 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+DQ001,Casa Di Vini Ltd,england-wales,BH21,Dorset Council,Dorset Council,A0 T:cold_store,2026-11-20
+DQ002,Liberty Dairy Limited,england-wales,BA22,Dorset Council,Dorset Council,A9 T:processing_plant,2026-11-20
+DQ006,Crab House Limited,england-wales,DT4,Dorset Council,Dorset Council,A7 T:dispatch_centre T:purification_centre,2026-11-20
+DQ010,SCT & SCT Ltd,england-wales,BH21,Dorset Council,Dorset Council,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+DQ013,Seaborough Manor Farm Ltd,england-wales,DT8,Dorset Council,Dorset Council,A9 T:processing_plant,2026-11-20
+DQ015,Fluffetts Farm Ltd,england-wales,BH21,Dorset Council,Dorset Council,A10 T:packing_centre,2026-11-20
+DQ016,Local Food Links Limited,england-wales,DT11,Dorset Council,Dorset Council,A10 A5 A6 A9 T:mince_meat_establishment T:processing_plant,2026-11-20
+DQ022,Charcuterie For Chefs Ltd,england-wales,DT2,Dorset Council,Dorset Council,A5 A6 T:mince_meat_establishment T:processing_plant,2026-11-20
+DQ025,Frampton and Babel Ltd,england-wales,DT10,Dorset Council,Dorset Council,A0 T:cold_store,2026-11-20
+DQ026,Kingswood Farm (Corfe Castle) Limited,england-wales,BH20,Dorset Council,Dorset Council,A10 T:packing_centre,2026-11-20
+DQ029,Brookfield Farm (Dorset) Ltd,england-wales,BH31,Dorset Council,Dorset Council,A0 T:cold_store,2026-11-20
+DQ032,RD Cooks Ltd,england-wales,BH22,Dorset Council,Dorset Council,A6 T:processing_plant,2026-11-20
+DQ034,Jurassic Seafarms Ltd,england-wales,DT5,Dorset Council,Dorset Council,A7 T:dispatch_centre T:purification_centre,2026-11-20
+DR001,Ashley Chase Estate Ltd,england-wales,DT2,Dorset Council,Dorset Council,A9 T:processing_plant,2026-11-20
+DR019,Local Food Links Ltd,england-wales,DT6,Dorset Council,Dorset Council,A6 T:processing_plant,2026-11-20
+DR045,Baboo Gelato Ltd,england-wales,DT2,Dorset Council,Dorset Council,A9 T:processing_plant,2026-11-20
+DR048,Outdoorfood Ltd,england-wales,DT6,Dorset Council,Dorset Council,A5 A6 T:mince_meat_establishment T:processing_plant,2026-11-20
+DR057,Hunt’s Foodservice Ltd,england-wales,DT9,Dorset Council,Dorset Council,A0 T:cold_store,2026-11-20
+DV005,Stef Langdons Ltd,england-wales,CT16,Dover District,Dover District,A0 T:cold_store,2026-11-20
+DY008,Nestle UK Ltd,england-wales,DE13,South Derbyshire District,South Derbyshire District,A9 T:processing_plant,2026-11-20
+DY021,M.P. Bio Science Limited,england-wales,DE65,South Derbyshire District,South Derbyshire District,A0 A9 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+DY023,The Pasty & Pie Company Limited,england-wales,DE12,South Derbyshire District,South Derbyshire District,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+DY025,Nestle UK Ltd,england-wales,DE13,South Derbyshire District,South Derbyshire District,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+DZ012,Tate & Lyle Mold UK Limited,england-wales,CH7,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A10 A14 A9 T:processing_plant,2026-11-20
+DZ024,What's Cooking Deeside UK Ltd,england-wales,CH5,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A6 A8 T:processing_plant,2026-11-20
+DZ028,Farmers Boy Deeside Limited,england-wales,CH5,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A6 T:processing_plant,2026-11-20
+DZ046,Fraser Blair Ltd,england-wales,CH5,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A0 A5 T:cold_store T:meat_preparation_establishment,2026-11-20
+DZ051,Barry Callebaut Beverages UK Ltd,england-wales,CH1,Cheshire West and Chester,Sir y Fflint - Flintshire,A9 T:processing_plant,2026-11-20
+DZ062,Snowdonia Cheese Company Limited,england-wales,CH5,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+DZ063,Blacks Pies Ltd,england-wales,CH6,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+DZ068,Well-Fed (Services) Ltd,england-wales,CH5,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A0 A6 A8 T:cold_store T:processing_plant,2026-11-20
+DZ076,River Dee Seafoods Ltd,england-wales,CH8,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A7 T:dispatch_centre,2026-11-20
+DZ077,Dougherty and Allen Ltd,england-wales,CH4,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A0 A6 A8 T:cold_store T:processing_plant T:re_wrappingand_repackaging_establishment T:wholesale_market,2026-11-20
+DZ078,DFDS Logistics Limited,england-wales,CH5,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+DZ079,Jinny B & Co Ltd,england-wales,CH6,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A9 T:processing_plant,2026-11-20
+DZ081,Dairlylike Foods Ltd,england-wales,CH4,Sir y Fflint - Flintshire,Sir y Fflint - Flintshire,A9 T:processing_plant,2026-11-20
+EF021,Suffolk Farms Ltd,england-wales,CM77,Braintree District,Epping Forest District,A5 T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+EF023,J & K Global Food Ltd,england-wales,RM4,Epping Forest District,Epping Forest District,A8 T:processing_plant,2026-11-20
+EF024,The Traditional Sausage Company Limited,england-wales,CM16,Epping Forest District,Epping Forest District,A0 A5 T:cold_store T:meat_preparation_establishment,2026-11-20
+EF025,Village Quality Products Ltd,england-wales,IG10,Epping Forest District,Epping Forest District,A0 T:cold_store,2026-11-20
+EF028,Ethos Greek Supplies Ltd,england-wales,EN9,Epping Forest District,Epping Forest District,A0 T:cold_store,2026-11-20
+EF030,Pushpa Seafoods Ltd,england-wales,EN9,Epping Forest District,Epping Forest District,A0 T:cold_store,2026-11-20
+EH013,Simply African Food Ltd,england-wales,GU35,East Hampshire District,East Hampshire District,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+EH019,Foods of Europe Ltd,england-wales,GU35,East Hampshire District,East Hampshire District,A0 T:cold_store,2026-11-20
+EH022,Laleham Health & Beauty Ltd,england-wales,GU34,East Hampshire District,East Hampshire District,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+EH024,Marmalada Ltd,england-wales,GU35,East Hampshire District,East Hampshire District,A10 T:processing_plant,2026-11-20
+EI005,Kokoro Trading Ltd,england-wales,KT12,Elmbridge,Elmbridge,A0 T:cold_store,2026-11-20
+EI006,Imperial Caviar UK Ltd,england-wales,KT13,Elmbridge,Elmbridge,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+EK012,Wild Water Cold Storage Ltd,england-wales,SO50,Eastleigh,Eastleigh,A0 T:cold_store,2026-11-20
+EK019,Adam’s Wholesale (Southampton) Ltd,england-wales,SO50,Eastleigh,Eastleigh,A0 T:cold_store,2026-11-20
+EK020,First Choice Gourmet Foods Ltd,england-wales,SO30,Eastleigh,Eastleigh,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+EL001,F W Read & Sons Ltd,england-wales,LN13,East Lindsey District,East Lindsey District,A9 T:processing_plant,2026-11-20
+EL033,Sukat Processing Ltd,england-wales,PE25,East Lindsey District,East Lindsey District,A8 T:processing_plant,2026-11-20
+EN010,Snowbird Foods Limited,england-wales,EN3,Enfield (London Borough),Enfield (London Borough),A5 A6 T:mince_meat_establishment T:processing_plant,2026-11-20
+EN040,XPO Supply Chain UK Ltd,england-wales,EN3,Enfield (London Borough),Enfield (London Borough),A0 T:cold_store,2026-11-20
+EN045,Tazaki Ltd,england-wales,EN3,Enfield (London Borough),Enfield (London Borough),A0 T:cold_store,2026-11-20
+EN046,Hakikat Halal Meat Limited,england-wales,N18,Enfield (London Borough),Enfield (London Borough),A0 T:cold_store,2026-11-20
+EN048,Metro Meats Limited,england-wales,EN3,Enfield (London Borough),Enfield (London Borough),A0 A5 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+EN053,Hollyfields Farm Fresh Eggs Ltd,england-wales,N18,Enfield (London Borough),Enfield (London Borough),A10 T:packing_centre,2026-11-20
+EN054,Benden Ltd,england-wales,EN3,Enfield (London Borough),Enfield (London Borough),A9 T:processing_plant,2026-11-20
+EN058,Derya Meat Ltd,england-wales,N18,Enfield (London Borough),Enfield (London Borough),A0 T:cold_store,2026-11-20
+EN059,Lider Meat Ltd,england-wales,N18,Enfield (London Borough),Enfield (London Borough),A0 A5 T:cold_store T:meat_preparation_establishment T:mince_meat_establishment,2026-11-20
+EN066,Beyran Meat Ltd,england-wales,N18,Enfield (London Borough),Enfield (London Borough),A0 A5 T:cold_store T:meat_preparation_establishment,2026-11-20
+EN069,Marathon Food Ltd,england-wales,N18,Enfield (London Borough),Enfield (London Borough),A0 T:cold_store,2026-11-20
+EO001,Keloglan Dairy Ltd,england-wales,SG13,East Hertfordshire District,East Hertfordshire District,A9 T:processing_plant,2026-11-20
+EO004,Brandon Cooked Meats Ltd,england-wales,CM23,East Hertfordshire District,East Hertfordshire District,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+EQ039,First Choice Wholesale Foods Ltd,england-wales,DE14,East Staffordshire,East Staffordshire,A0 T:cold_store,2026-11-20
+EQ040,Creative Foods Europe Ltd,england-wales,DE14,East Staffordshire,East Staffordshire,A0 A5 A6 A8 T:cold_store T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+EQ041,Lallemand UK Ltd T/A AB Vickers,england-wales,DE14,East Staffordshire,East Staffordshire,A16 T:processing_plant,2026-11-20
+EQ042,Harlaston (Packington) Ltd,england-wales,DE13,East Staffordshire,East Staffordshire,A10 T:packing_centre,2026-11-20
+EQ043,Field Supplies (Etwall) Ltd,england-wales,DE14,East Staffordshire,East Staffordshire,A0 T:cold_store,2026-11-20
+ER102,Orchardlea Foods Ltd,england-wales,EX2,Exeter,Exeter,A0 T:cold_store T:re_wrappingand_repackaging_establishment,2026-11-20
+ER105,Little & Cull Ltd,england-wales,EX2,Exeter,Exeter,A6 T:processing_plant,2026-11-20
+ES004,Thameside Shellfish Co Ltd,england-wales,SS9,Southend-on-Sea,Southend-on-Sea,A8 T:processing_plant,2026-11-20
+ES013,Osborne and Sons (Shellfish) Ltd,england-wales,SS9,Southend-on-Sea,Southend-on-Sea,A8 T:processing_plant,2026-11-20
+ES015,Fuud Ltd,england-wales,SS9,Southend-on-Sea,Southend-on-Sea,A6 T:processing_plant,2026-11-20
+ES022,Fruits of the Sea Ltd,england-wales,SS3,Southend-on-Sea,Southend-on-Sea,A8 T:processing_plant,2026-11-20
+ES024,Metrow Foods Ltd,england-wales,SS9,Southend-on-Sea,Southend-on-Sea,A0 T:cold_store,2026-11-20
+ES026,Familiar Foods Limited,england-wales,SS2,Southend-on-Sea,Southend-on-Sea,A0 A13 A15 A5 A6 T:cold_store T:meat_preparation_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+ET004,Wessex Country Gammon Ltd,england-wales,BH21,Dorset Council,Dorset Council,A6 T:processing_plant,2026-11-20
+ET009,Brookes Bacon Ltd,england-wales,BH21,Dorset Council,Dorset Council,A6 T:processing_plant,2026-11-20
+EV076,Varnier Ltd,england-wales,EX24,East Devon District,East Devon District,A10 A9 T:processing_plant,2026-11-20
+EV077,Devon Eel Company Ltd,england-wales,EX24,East Devon District,East Devon District,A8 T:processing_plant,2026-11-20
+EV093,Trading name Macduff Shellfish (Scotland) Ltd,england-wales,EX5,East Devon District,East Devon District,A8 T:fresh_fishery_products_plant,2026-11-20
+EV094,Oak Park Dairy Ltd,england-wales,EX15,East Devon District,East Devon District,A9 T:processing_plant,2026-11-20
+EV097,Exmouth Mussels Ltd,england-wales,EX8,East Devon District,East Devon District,A7 T:purification_centre,2026-11-20
+EV099,Lyme Bay Dived Scallops Limited,england-wales,EX13,East Devon District,East Devon District,A8 T:processing_plant,2026-11-20
+EW006,Bluebell Dairy Limited,england-wales,DE21,Erewash,Erewash,A9 T:processing_plant,2026-11-20
+EW010,Creed Foodservice Ltd,england-wales,DE7,Erewash,Erewash,A0 T:cold_store,2026-11-20
+EW011,Wepack Ltd,england-wales,DE7,Erewash,Erewash,A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+EX018,The Little Fish Company (Kelvedon) Ltd,england-wales,CO5,Braintree District,Braintree District,A8 T:fresh_fishery_products_plant,2026-11-20
+EX020,Wilkins Foods (Harlow) Limited,england-wales,CM7,Braintree District,Braintree District,A0 A10 T:packing_centre T:re_wrappingand_repackaging_establishment,2026-11-20
+EX022,National Seafood Limited,england-wales,CM7,Braintree District,Braintree District,A0 T:cold_store,2026-11-20
+EX023,Milkdale Limited,england-wales,CM8,Braintree District,Braintree District,A0 T:cold_store,2026-11-20
+EX024,Reynolds Catering Supplies Ltd,england-wales,CM7,Braintree District,Braintree District,A0 T:cold_store,2026-11-20
+EX025,National Star Trading Limited,england-wales,CM77,Braintree District,Braintree District,A0 T:cold_store,2026-11-20
+EX026,Tiptree Patisserie Ltd,england-wales,CM8,Braintree District,Braintree District,A10 T:processing_plant,2026-11-20
+EY013,St Helen's Farm Ltd,england-wales,YO42,East Riding of Yorkshire,East Riding of Yorkshire,A9 T:processing_plant,2026-11-20
+EY015,Primepak Foods Ltd,england-wales,YO25,East Riding of Yorkshire,East Riding of Yorkshire,A0 A6 A9 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+EY022,Sam Browne Foods Ltd,england-wales,YO25,East Riding of Yorkshire,East Riding of Yorkshire,A0 A6 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+EY038,Healan Ingredients Ltd,england-wales,YO43,East Riding of Yorkshire,East Riding of Yorkshire,A14 A15 A6 T:processing_plant,2026-11-20
+EY047,Independent Shellfishermans Co-operative (Bridlington) Ltd,england-wales,YO15,East Riding of Yorkshire,East Riding of Yorkshire,A8 T:fresh_fishery_products_plant,2026-11-20
+EY074,Knights Garth Eggs Ltd,england-wales,HU17,East Riding of Yorkshire,East Riding of Yorkshire,A10 T:packing_centre,2026-11-20
+EY079,Hello Eggs Ltd,england-wales,YO15,East Riding of Yorkshire,East Riding of Yorkshire,A10 T:packing_centre,2026-11-20
+EY080,Bee Health Ltd,england-wales,YO15,East Riding of Yorkshire,East Riding of Yorkshire,A0 A14 A15 A16 A8 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+EY081,Power Health Products Ltd,england-wales,YO42,East Riding of Yorkshire,East Riding of Yorkshire,A0 A14 A15 A16 A8 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+EY083,Bridlington Bay Shellfish Ltd,england-wales,YO15,East Riding of Yorkshire,East Riding of Yorkshire,A8 T:fresh_fishery_products_plant,2026-11-20
+EY085,T Quality Ltd,england-wales,YO15,East Riding of Yorkshire,East Riding of Yorkshire,A0 T:cold_store,2026-11-20
+EY088,Eggiton.com Ltd,england-wales,HU17,East Riding of Yorkshire,East Riding of Yorkshire,A10 T:packing_centre,2026-11-20
+EZ016,Dish Food Limited,england-wales,CM3,Chelmsford,Chelmsford,A10 A5 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+EZ017,M & P Trading & Importing Ltd,england-wales,CM3,Chelmsford,Chelmsford,A0 T:cold_store,2026-11-20
+EZ020,Spring Food Limited,england-wales,CM2,Chelmsford,Chelmsford,A6 T:processing_plant,2026-11-20
+EZ021,Robert Miller Ltd,england-wales,CM2,Chelmsford,Chelmsford,A0 A8 T:cold_store T:processing_plant,2026-11-20
+EZ024,Leathams Limited,england-wales,CM2,Chelmsford,Chelmsford,A0 T:cold_store,2026-11-20
+EZ025,Farmer Paul's Limited,england-wales,CM4,Chelmsford,Chelmsford,A9 T:processing_plant,2026-11-20
+EZ026,Reynolds Catering Supplies Ltd,england-wales,CM1,Chelmsford,Chelmsford,A0 T:cold_store,2026-11-20
+EZ027,Naslada Selection LTD,england-wales,CM2,Chelmsford,Chelmsford,A0 A5 T:meat_preparation_establishment T:mince_meat_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+EZ031,Product Fulfilment Ltd,england-wales,CM1,Chelmsford,Chelmsford,A0 A5 T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+EZ032,Pick Pack N Post Ltd,england-wales,CM1,Chelmsford,Chelmsford,A0 A5 T:meat_preparation_establishment T:re_wrappingand_repackaging_establishment,2026-11-20
+EZ033,Unique Food Service Limited,england-wales,CM3,Chelmsford,Chelmsford,A0 T:cold_store,2026-11-20
+FB038,CLS Airline Supplies Limited,england-wales,HA9,Brent (London Borough),Brent (London Borough),A10 A5 A6 A8 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+FB051,T & S Enterprises (London) Ltd,england-wales,NW10,Brent (London Borough),Brent (London Borough),A8 T:processing_plant,2026-11-20
+FB097,Soju Kitchen Limited T/a J Gourmet,england-wales,HA9,Brent (London Borough),Brent (London Borough),A6 A8 T:processing_plant,2026-11-20
+FB111,Fiorella's Kitchen Ltd,england-wales,NW10,Brent (London Borough),Brent (London Borough),A10 A5 A6 A8 A9 T:mince_meat_establishment T:processing_plant,2026-11-20
+FB123,Tajimaya UK Ltd,england-wales,NW10,Brent (London Borough),Brent (London Borough),A0 T:cold_store,2026-11-20
+FB124,JX Foods Limited,england-wales,NW10,Brent (London Borough),Brent (London Borough),A10 A6 T:processing_plant,2026-11-20
+FB134,M and S Foods Ltd,england-wales,HA0,Brent (London Borough),Brent (London Borough),A8 T:processing_plant,2026-11-20
+FB135,Scandinavian Kitchen Ltd,england-wales,NW10,Brent (London Borough),Brent (London Borough),A9 T:processing_plant,2026-11-20
+FB146,4 Seasons Wembley Ltd,england-wales,HA0,Brent (London Borough),Brent (London Borough),A9 T:processing_plant,2026-11-20
+FB148,Opus Provisions Limited,england-wales,NW10,Brent (London Borough),Brent (London Borough),A8 T:processing_plant,2026-11-20
+FB155,Raga’ Foods Limited,england-wales,HA0,Brent (London Borough),Brent (London Borough),A9 T:processing_plant,2026-11-20
+FB159,The Yum Yum Food Company Ltd,england-wales,NW9,Brent (London Borough),Brent (London Borough),A5 A9 T:meat_preparation_establishment T:processing_plant,2026-11-20
+FB161,Ammoura Ltd,england-wales,NW10,Brent (London Borough),Brent (London Borough),A10 A5 A9 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+FB162,Eight White Limited,england-wales,NW2,Brent (London Borough),Brent (London Borough),A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+FB163,Brasfood Limited,england-wales,NW10,Brent (London Borough),Brent (London Borough),A5 A9 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+FB168,Far East Food Ltd,england-wales,HA9,Brent (London Borough),Brent (London Borough),A5 A6 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant,2026-11-20
+FB170,B Bagel Trading Ltd,england-wales,HA0,Brent (London Borough),Brent (London Borough),A10 A6 A9 T:processing_plant,2026-11-20
+FB174,The English Cheesecake Ltd,england-wales,NW2,Brent (London Borough),Brent (London Borough),A0 T:re_wrappingand_repackaging_establishment,2026-11-20
+FB176,IV Season PVT Ltd,england-wales,HA0,Brent (London Borough),Brent (London Borough),A8 T:processing_plant,2026-11-20
+FB178,Gate Gourmet Heathrow Ltd,england-wales,NW9,Brent (London Borough),Brent (London Borough),A10 A6 A8 A9 T:processing_plant,2026-11-20
+FB180,Wright Bros/ Ltd,england-wales,NW10,Brent (London Borough),Brent (London Borough),A8 T:processing_plant,2026-11-20
+FC017,Glendale Foods Ltd,england-wales,M6,Salford,Salford,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+FC018,Hargreaves Quality Foods Limited,england-wales,M28,Salford,Salford,A0 A6 T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
+FC020,Creamline Dairies Ltd,england-wales,M30,Salford,Salford,A9 T:processing_plant,2026-11-20
+FC033,We Can Foods Limited,england-wales,M28,Salford,Salford,A6 T:processing_plant,2026-11-20
+FC035,SIS Ltd (Specialist Ingredients Solutions Ltd),england-wales,M5,Salford,Salford,A5 A6 T:meat_preparation_establishment T:processing_plant,2026-11-20
+FD019,The Pie House at Cinderhill Farm Ltd,england-wales,GL14,Forest of Dean District,Forest of Dean District,A10 A6 A9 T:processing_plant,2026-11-20
+FD020,Arbournes Country Kitchen Ltd,england-wales,GL17,Forest of Dean District,Forest of Dean District,A6 A8 A9 T:processing_plant,2026-11-20
+FD021,OMG Foods Ltd,england-wales,GL17,Forest of Dean District,Forest of Dean District,A9 T:processing_plant,2026-11-20
+FE002,StoreLogs Limited,england-wales,PE15,Fenland District,Fenland District,A0 T:cold_store,2026-11-20
+FE011,March Foods Limited,england-wales,PE15,Fenland District,Fenland District,A10 A14 A6 A9 T:processing_plant,2026-11-20
+FE019,Lineage UK Warehousing Ltd,england-wales,PE13,Fenland District,Fenland District,A0 T:cold_store,2026-11-20
+FE025,Fruitpig Company Ltd,england-wales,PE13,Fenland District,Fenland District,A0 A5 A6 T:meat_preparation_establishment T:mince_meat_establishment T:processing_plant T:re_wrappingand_repackaging_establishment,2026-11-20
