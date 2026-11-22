@@ -16,6 +16,7 @@ Read each Monday for the week before (Monday to Sunday). Counts only: never a na
 | /eu-air-sea-traffic-sample/ | eu-air-sea-traffic-sample | EU Air and Sea Traffic: Eurostat Passenger and Freight Data |
 | /sold-prices/history/ | sold-prices-history | UK Property Listings (sold-prices mode) |
 | /sold-prices/ | sold-prices | UK Property Listings |
+| /sold-prices/, /sold-prices/history/, /sold-prices/history/areas/, /rental-yield/ | (as each page) | UK Sold House Prices by Area (second link) |
 | /sold-prices/history/areas/ | sold-prices-areas | UK Property Listings |
 | /free-data/ | free-data | the Actor of each row (11 rows link one) |
 | /contracts-sample/ | contracts-sample | UK Government Contracts: Contracts Finder, Find a Tender |

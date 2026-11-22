@@ -110,9 +110,10 @@ def test_publish_writes_the_archive_the_latest_index_the_page_the_sitemap_and_ll
     main = page[page.index('<main'):page.index('</main>')]
     import re
     links = re.findall(r'href="(https://apify\.com/[^"]*)"', main)
-    assert 'fpr=' not in llms and len(links) <= 1                              # at most the one 'Maintained version' line
+    assert 'fpr=' not in llms and len(links) <= 2                              # at most the two 'Maintained version' lines
     for u in links:
-        assert u.startswith('https://apify.com/yappman/uk-property-listings?') and 'utm_campaign=sold-prices-areas' in u and 'fpr=' in u
+        assert u.split('?')[0] in ('https://apify.com/yappman/uk-property-listings', 'https://apify.com/yappman/uk-sold-house-prices-by-area')
+        assert 'utm_campaign=sold-prices-areas' in u and 'fpr=' in u
         assert 'id="affiliate-disclosure"' in main and 'rel="sponsored"' in main
 
 
