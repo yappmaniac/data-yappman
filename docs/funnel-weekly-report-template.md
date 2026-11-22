@@ -16,6 +16,8 @@ Read each Monday for the week before (Monday to Sunday). Counts only: never a na
 | /eu-air-sea-traffic-sample/ | eu-air-sea-traffic-sample | EU Air and Sea Traffic: Eurostat Passenger and Freight Data |
 | /sold-prices/history/ | sold-prices-history | UK Property Listings (sold-prices mode) |
 | /sold-prices/ | sold-prices | UK Property Listings |
+| /sold-prices/history/areas/ | sold-prices-areas | UK Property Listings |
+| /free-data/ | free-data | the Actor of each row (11 rows link one) |
 | /contracts-sample/ | contracts-sample | UK Government Contracts: Contracts Finder, Find a Tender |
 | /lei-sample/ | lei-sample | LEI Lookup: GLEIF Legal Entity Identifier Search & Watch |
 Pages with no Actor link have no Store clicks to count: /gender-pay-gap/ and /360giving-grants-sample/ (their texts name no Actor: none fits), and the profile link `apify.com/yappman` on the sample pages (the affiliate rule covers links to Actor pages only).

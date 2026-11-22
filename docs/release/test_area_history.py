@@ -108,7 +108,12 @@ def test_publish_writes_the_archive_the_latest_index_the_page_the_sitemap_and_ll
     llms = (root / 'llms.txt').read_text()
     assert llms.count('(https://data.yappman.com/sold-prices/history/areas/)') == 1
     main = page[page.index('<main'):page.index('</main>')]
-    assert 'fpr=' not in llms and 'fpr=' not in page and 'apify.com' not in main and 'affiliate' not in main
+    import re
+    links = re.findall(r'href="(https://apify\.com/[^"]*)"', main)
+    assert 'fpr=' not in llms and len(links) <= 1                              # at most the one 'Maintained version' line
+    for u in links:
+        assert u.startswith('https://apify.com/yappman/uk-property-listings?') and 'utm_campaign=sold-prices-areas' in u and 'fpr=' in u
+        assert 'id="affiliate-disclosure"' in main and 'rel="sponsored"' in main
 
 
 def test_a_second_run_with_the_same_files_does_nothing_and_a_newer_build_is_a_new_dated_folder(root, capsys):
