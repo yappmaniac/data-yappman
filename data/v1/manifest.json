@@ -5,40 +5,40 @@
   "datasets": [
     {
       "id": "uk-shelf-price-index",
-      "latestVintage": "2026-W45",
-      "publishedAt": "2026-11-09",
-      "vintages": 6,
-      "rows": 540,
+      "latestVintage": "2026-W47",
+      "publishedAt": "2026-11-23",
+      "vintages": 8,
+      "rows": 720,
       "files": [
         {
           "path": "/data/v1/uk-shelf-price-index.csv",
-          "bytes": 52807,
-          "sha256": "8c477e0e4828aff8fee134684b6b51920ae2978c7063b2126b5934e0a76f995b"
+          "bytes": 72563,
+          "sha256": "77739339fafa839fd91293a94cb4799e988728d4338b1d9f54506c31907710f2"
         },
         {
           "path": "/data/v1/uk-shelf-price-index.json",
-          "bytes": 149162,
-          "sha256": "2511a85c113b625cc3ef48c0f5a5fb6d0e7206f9ce7d71fac7ea2b49e5231e62"
+          "bytes": 207472,
+          "sha256": "be4da5d8a6d7702a665a0653daafa21c3e0b4dfcc51c066b67f0fe59998551dd"
         }
       ],
       "page": "https://data.yappman.com/shelf-price-index/"
     },
     {
       "id": "au-shelf-price-index",
-      "latestVintage": "2026-W45",
-      "publishedAt": "2026-11-09",
-      "vintages": 5,
-      "rows": 375,
+      "latestVintage": "2026-W46",
+      "publishedAt": "2026-11-16",
+      "vintages": 6,
+      "rows": 450,
       "files": [
         {
           "path": "/data/v1/au-shelf-price-index.csv",
-          "bytes": 36266,
-          "sha256": "476ef15dfc5a981bfdbba30b2410ac58aa848089fa04a58b7965de3158be80ed"
+          "bytes": 44020,
+          "sha256": "c510411e81fd9325c7cce1a0704b8d4c16d8827228616345840b06064eaebc09"
         },
         {
           "path": "/data/v1/au-shelf-price-index.json",
-          "bytes": 98975,
-          "sha256": "34a4b021e8cb7a6b0a7fd36dacd42c5b69b9af9865af75602f1e2d0b7696532a"
+          "bytes": 118911,
+          "sha256": "104fcbb6808692e7d2a53e6157eb8f4d1bec548e44974a170a68abfa1eac1f66"
         }
       ],
       "page": "https://data.yappman.com/au-shelf-price-index/"
