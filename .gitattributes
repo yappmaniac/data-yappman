@@ -10,3 +10,6 @@
 /contracts-sample/*.csv -text
 /lei-sample/*.csv -text
 /fsa-sample/*.csv -text
+/sponsor-changes-sample/*.csv -text
+/cqc-sample/*.csv -text
+/au-contracts-sample/*.csv -text

@@ -22,6 +22,9 @@ Read each Monday for the week before (Monday to Sunday). Counts only: never a na
 | /contracts-sample/ | contracts-sample | UK Government Contracts: Contracts Finder, Find a Tender |
 | /lei-sample/ | lei-sample | LEI Lookup: GLEIF Legal Entity Identifier Search & Watch |
 | /fsa-sample/ | fsa-sample | FSA Approved Food Establishments: England, Wales, NI |
+| /sponsor-changes-sample/ | sponsor-changes-sample | UK sponsor register changes |
+| /cqc-sample/ | cqc-sample | CQC England care locations |
+| /au-contracts-sample/ | au-contracts-sample | Australian contract notices (AusTender) |
 | /gender-pay-gap/ | gender-pay-gap | uk-gender-pay-gap |
 Pages with no Actor link have no Store clicks to count: /360giving-grants-sample/ (its text names no Actor: none fits), and the profile link `apify.com/yappman` on the sample pages (the affiliate rule covers links to Actor pages only).
 
