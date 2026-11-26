@@ -158,6 +158,8 @@ CENTRE_NOTES = {
         'note-lgv-cars',
         'DVSA lists Carlisle LGV (Cars) separately from Carlisle, and its notes do not explain the name.'),
 }
+LAST_UPDATED_MEANS = ('The date gov.uk shows the DVSA dataset page was last updated; not the date of the data. '
+                     'The DVSA release the data comes from is vintage.')
 NOT_MEASURED = ('source', 'licence', 'vintage')    # columns that describe the file, not what was measured (not in variableMeasured)
 NATIONAL_QUARTERS_SHOWN = 8       # the page lists every financial year and the latest 8 quarters; the files hold all
 JSON_MONTHS = 24                  # the centre JSON holds the latest 24 months only (served-tree size); the CSV holds all
@@ -362,7 +364,8 @@ def build_table(facts: dict[str, Any], files: dict[str, bytes]) -> Table:
     order = lambda r: (r.month, r.country, r.region, r.centre or '')           # noqa: E731
     centres.sort(key=order)
     regions.sort(key=order)
-    base = {'v': 1, 'month': month, 'vintage': vintage, 'lastUpdated': facts['lastUpdated'], 'builtAt': facts['readAt'],
+    base = {'v': 1, 'month': month, 'vintage': vintage, 'lastUpdated': facts['lastUpdated'], 'lastUpdatedMeans': LAST_UPDATED_MEANS,
+            'builtAt': facts['readAt'],
             'licence': LICENCE, 'attribution': list(ATTRIBUTION), 'method': METHOD}
     recent = {m for m in {r.month for r in centres} if m > dtw.month_minus(month, JSON_MONTHS)}
     c_all = [centre_record(r, vintage) for r in centres]
@@ -497,6 +500,12 @@ def _change(value: Any) -> str:
     return '0.0' if shown == 0 else f'{shown:+}'.replace('-', '&minus;')
 
 
+def _shown_change(row: dtw.WaitRow, attr: str) -> str:
+    """A change as the page shows it: rounded once, to 1 dp, from the unrounded difference (the files hold it to 2 dp)."""
+    exact = row.exact.get(attr)
+    return '&ndash;' if exact is None else _change(exact)
+
+
 def _mark(centre: str | None) -> str:
     """The footnote marker after a centre's name, when it has a note."""
     note = CENTRE_NOTES.get(centre or '')
@@ -573,7 +582,7 @@ def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
         provisional = '' if not r.provisional else ' <span class="meta">(provisional)</span>'
         rows.append(f'<tr><td>{r.rank if r.rank is not None else "&ndash;"}</td><td>{e(r.centre or "")}{_mark(r.centre)}</td><td>{e(r.region)}</td>'
                     f'<td>{_weeks(r.values["medianWaitWeeks"])}{provisional}</td><td>{_pct(r.values["shareWithin7Weeks"])}</td>'
-                    f'<td>{_change(r.change12m)}</td></tr>')
+                    f'<td>{_shown_change(r, "change12m")}</td></tr>')
     rows.append('</tbody></table></div>')
     rows.append(_footnotes(table, {r.centre for r in centres}).rstrip('\n'))
     closed = [r for r in latest if r.centreStatus == 'closed']
@@ -586,7 +595,7 @@ def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
     for r in sorted((r for r in table.regions if r.month == table.month), key=lambda r: (r.level != 'Country', r.region != 'Great Britain', r.country, r.region)):
         tests = r.values['testsConducted']
         reg.append(f'<tr><td>{e(r.region)}</td><td>{e(r.country)}</td><td>{_weeks(r.values["medianWaitWeeks"])}</td>'
-                   f'<td>{_pct(r.values["shareWithin7Weeks"])}</td><td>{_change(r.change12m)}</td>'
+                   f'<td>{_pct(r.values["shareWithin7Weeks"])}</td><td>{_shown_change(r, "change12m")}</td>'
                    f'<td>{"&ndash;" if tests is None else format(tests, ",")}</td><td>{_pct(r.values["passRatePct"])}</td></tr>')
     reg.append('</tbody></table></div>')
     nat = ['<div class="table-wrap"><table><thead><tr><th>Period</th><th>Tests conducted</th><th>Tests passed</th><th>Pass rate</th></tr></thead>', '<tbody>']

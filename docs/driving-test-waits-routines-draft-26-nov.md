@@ -6,10 +6,19 @@ nothing in the Orchestrator repo was edited from this worktree.
 ## Monthly check, from the second Wednesday (9 Dec 2026), every month after
 
 1. `python -I -B docs/release/fetch_driving_test_waits.py --status` in the data-site checkout. It makes ONE keyless GET of the gov.uk
-   content API (the same single read the plan, section 4.9, describes), saves nothing, and prints one JSON line:
+   content API (the same single read the plan, section 4.9, describes), saves nothing, and prints one JSON line. The dates it
+   reports are the gov.uk PAGE's: the page also changes for the theory-test files and other edits, so a later page date is NOT
+   by itself a new data release.
    - `up-to-date`: nothing to do.
-   - `newer-release` (DVSA's release date is later than the published vintage) or `updated-since` (same release, DVSA's gov.uk page
-     updated since): a new vintage is available. Tell Russell and ask for a typed go that names the vintage.
+   - `newer-release` (the release date derived from the page is later than the published vintage): the data files' own date has
+     to be read before anything is announced, and that needs the files. Ask Russell for the typed go to fetch the four public
+     files (about 4.5 MB), saying it is to check the files' own dates. After the fetch, `driving_test_waits_site.py --describe`
+     prints the DRT122F cover sheet; confirm its "Last updated" date is the new release and that the data now runs to the month
+     before it. Only then say a new vintage is ready to build and ask for the go that names it (the build is a separate go).
+   - `updated-since` (same release, the gov.uk page changed since the published vintage): a prompt to look, not news. Do not
+     treat it as a new data release. Ask for the same fetch go only if there is a reason to think DRT122F or DRT121G was
+     re-issued (the 13 Nov 2026 fix to the 11 Nov release is the example); otherwise record "page changed, data files not
+     checked" and do nothing.
    - `nothing-published`: the first vintage has not been published yet.
 2. `python -I -B docs/release/check_driving_test_freshness.py`: exit 0 means the published release is under 45 days old and the page
    states the same month and release as the files. Exit 3 (`stale`, `page-out-of-step`) is raised to Russell the same day.

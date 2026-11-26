@@ -237,6 +237,7 @@ class WaitRow:
     change3m: float | None = None
     change6m: float | None = None
     change12m: float | None = None
+    exact: dict[str, Decimal] = field(default_factory=dict)   # the changes before rounding to 2 dp, so a display rounds once
 
     @property
     def key(self) -> str:
@@ -401,4 +402,5 @@ def derive(rows: list[WaitRow]) -> None:
         for attr, months in (('change3m', 3), ('change6m', 6), ('change12m', 12)):
             before = lookup.get((row.key, month_minus(row.month, months)))
             if before is not None:
+                row.exact[attr] = now - before
                 setattr(row, attr, float((now - before).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)))

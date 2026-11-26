@@ -253,6 +253,15 @@ class Derive(unittest.TestCase):
         self.assertEqual(got[('a', '2026-10')].change3m, 0.3)                          # Decimal, not 0.30000000000000071
         self.assertEqual(Decimal(str(got[('a', '2026-10')].change3m)), Decimal('0.3'))
 
+    def test_the_unrounded_change_is_kept_so_a_display_is_rounded_once(self) -> None:
+        rows = [dtw.WaitRow(m, 'England', 'London', 'london.a', 'a', 'open', {'medianWaitWeeks': v})
+                for m, v in (('2026-10', 6.2457), ('2026-07', 6.0))]
+        dtw.derive(rows)
+        self.assertEqual(rows[0].change3m, 0.25)                               # stored to 2 dp, as published in the files
+        self.assertEqual(rows[0].exact['change3m'], dtw.Decimal('0.2457'))     # kept in full for the page (review D3)
+        self.assertNotIn('change6m', rows[0].exact)
+        self.assertEqual(rows[1].exact, {})
+
     def test_month_minus(self) -> None:
         self.assertEqual(dtw.month_minus('2026-02', 3), '2025-11')
         self.assertEqual(dtw.month_minus('2026-12', 12), '2025-12')

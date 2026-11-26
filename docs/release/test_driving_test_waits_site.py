@@ -270,6 +270,29 @@ class Publish(unittest.TestCase):
         self.assertEqual(site._change(-0.04), '0.0')                                       # never "-0.0"
         self.assertEqual(site._change(1.26), '+1.3')
 
+    def test_a_displayed_change_is_rounded_once_from_the_full_value(self) -> None:
+        row = dtw.WaitRow('2026-10', 'England', 'London', 'london.a', 'a', 'open', {'medianWaitWeeks': 6.2457}, change3m=0.25)
+        row.exact = {'change3m': dtw.Decimal('0.2457')}
+        self.assertEqual(site._shown_change(row, 'change3m'), '+0.2')           # not +0.3, which rounding 0.25 again would give
+        self.assertEqual(site._shown_change(row, 'change6m'), '&ndash;')
+        self.assertEqual(site._change(0.25), '+0.3')                             # the plain formatter is unchanged
+
+    def test_the_json_says_what_last_updated_means(self) -> None:
+        self.repo.incoming(good_files())
+        self.repo.run('--publish', '--first-publish')
+        for stem in site.DATASETS:
+            document = json.loads(self.repo.read(f'data/driving-test-waits/{stem}-latest.json'))
+            self.assertEqual(document['lastUpdated'], '2026-11-13')
+            self.assertIn('gov.uk', document['lastUpdatedMeans'])
+            self.assertIn('not the date of the data', document['lastUpdatedMeans'])
+
+    def test_llms_txt_carries_the_same_description_as_the_page(self) -> None:
+        line = next(x for x in (REAL / 'llms.txt').read_text(encoding='utf-8').splitlines() if '/driving-test-wait-index/' in x)
+        self.assertTrue(line.endswith(': ' + site.DESCRIPTION), line[-200:])
+        self.assertNotIn('Free monthly', line)
+        page = (REAL / site.PAGE).read_text(encoding='utf-8')
+        self.assertIn(f'<meta name="description" content="{site.DESCRIPTION}">', page)
+
     def test_great_britain_comes_first_in_the_regions_table(self) -> None:
         self.repo.incoming(good_files())
         self.repo.run('--publish', '--first-publish')
