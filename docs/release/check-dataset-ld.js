@@ -18,7 +18,7 @@ const LICENCES = new Set(["https://www.nationalarchives.gov.uk/doc/open-governme
 // Eurostat publishes a reuse notice, not a licence: the EU sample page carries exactly the line Russell approved (20 Nov 2026) and that notice.
 const EUROSTAT = { page: "eu-air-sea-traffic-sample/index.html", name: "reuse authorised provided the source is acknowledged", url: "https://ec.europa.eu/eurostat/web/main/help/copyright-notice" };
 const REQUIRED = ["shelf-price-index/index.html", "au-shelf-price-index/index.html", "shelf-price-index/categories/index.html", "data/v1/index.html",
-  "sold-prices/index.html", "sold-prices/history/index.html", "rental-yield/index.html", "council-tax/index.html", "christmas-basket/index.html",
+  "sold-prices/index.html", "sold-prices/history/index.html", "rental-yield/index.html", "driving-test-wait-index/index.html", "council-tax/index.html", "christmas-basket/index.html",
   "gender-pay-gap/index.html", "recalls-sample/index.html", "contracts-sample/index.html", "lei-sample/index.html", "fsa-sample/index.html", "sponsor-changes-sample/index.html", "cqc-sample/index.html", "au-contracts-sample/index.html", "eu-air-sea-traffic-sample/index.html", "360giving-grants-sample/index.html"];
 const CATALOGUE = "free-data/index.html";     // when it exists, it must carry a DataCatalog whose datasets and files are real
 const ALLOWED = new Set(["@context", "@type", "name", "description", "url", "license", "isAccessibleForFree", "dateModified", "creator", "keywords", "spatialCoverage",

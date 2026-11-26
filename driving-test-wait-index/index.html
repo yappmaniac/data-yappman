@@ -21,7 +21,193 @@
 <script defer src="https://cloud.umami.is/script.js" data-website-id="c00190ad-2f7f-4304-881a-34c7e1e2b0dc" data-domains="data.yappman.com" data-do-not-track="true"></script>
 <!-- driving-waits:jsonld -->
 <script type="application/ld+json">
-{}
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Driving test waits in Great Britain, by test centre",
+  "description": "Free driving test waits by test centre and region in Great Britain, from the DVSA figures published each month: median wait in weeks, the share of tests taken within 7 weeks, ranks and changes over 3, 6 and 12 months, as CSV and JSON under the Open Government Licence v3.0.",
+  "url": "https://data.yappman.com/driving-test-wait-index/",
+  "license": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+  "isAccessibleForFree": true,
+  "creator": {
+    "@type": "Organization",
+    "name": "Yappman Data",
+    "url": "https://data.yappman.com/",
+    "sameAs": [
+      "https://www.youtube.com/@yappmandata",
+      "https://bsky.app/profile/yappmandata.bsky.social"
+    ]
+  },
+  "isBasedOn": "https://www.gov.uk/government/statistical-data-sets/driving-test-and-theory-test-data-cars",
+  "citation": "Source: Driver and Vehicle Standards Agency (DVSA), Driving test and theory test data: cars, https://www.gov.uk/government/statistical-data-sets/driving-test-and-theory-test-data-cars.",
+  "keywords": [
+    "Great Britain",
+    "driving test",
+    "DVSA",
+    "test centre",
+    "waiting time",
+    "practical driving test"
+  ],
+  "spatialCoverage": "Great Britain",
+  "temporalCoverage": "2019-01-01/2026-10-31",
+  "dateModified": "2026-11-11",
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "name": "Centres, all months, CSV",
+      "encodingFormat": "text/csv",
+      "contentUrl": "https://data.yappman.com/data/driving-test-waits/driving-test-waits-latest.csv"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Centres, all months, JSON",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://data.yappman.com/data/driving-test-waits/driving-test-waits-latest.json"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Regions, CSV",
+      "encodingFormat": "text/csv",
+      "contentUrl": "https://data.yappman.com/data/driving-test-waits/driving-test-waits-regions-latest.csv"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Regions, JSON",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://data.yappman.com/data/driving-test-waits/driving-test-waits-regions-latest.json"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "National by quarter, CSV",
+      "encodingFormat": "text/csv",
+      "contentUrl": "https://data.yappman.com/data/driving-test-waits/driving-test-national-latest.csv"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "National by quarter, JSON",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://data.yappman.com/data/driving-test-waits/driving-test-national-latest.json"
+    }
+  ],
+  "variableMeasured": [
+    {
+      "@type": "PropertyValue",
+      "name": "month",
+      "description": "The month the figures are for (YYYY-MM)"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "country",
+      "description": "England, Scotland or Wales"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "region",
+      "description": "DVSA's region"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "centreKey",
+      "description": "A stable key from the region and the centre name: region.centre, lower case"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "centre",
+      "description": "The test centre's name as DVSA gives it, without the closed-centre prefix"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "centreStatus",
+      "description": "open, or closed when DVSA marks the centre closed"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "medianWaitWeeks",
+      "description": "DVSA's median wait for a test, in weeks"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "shareWithin7Weeks",
+      "description": "DVSA's percentage of tests taken within 7 weeks"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "share7to14",
+      "description": "DVSA's percentage taken between 7 and 14 weeks"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "share14to21",
+      "description": "DVSA's percentage taken between 14 and 21 weeks"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "shareOver21",
+      "description": "DVSA's percentage taken after more than 21 weeks"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "slotsOvertime",
+      "description": "Test slots provided through overtime"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "slotsInWindow",
+      "description": "Standard test slots DVSA offered in the next 24 weeks (18 weeks until May 2021), counted on the last Monday of the month"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "slotsBooked",
+      "description": "Of those, the number booked"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "slotsAvailable",
+      "description": "Of those, the number still available to book"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "slotsAvailablePct",
+      "description": "Of those, the percentage still available to book"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "weeksTo10pcAvailability",
+      "description": "Weeks until 10% or more of weekly test appointments are still available to book (the current week is week 1), as DVSA gives it"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "provisional",
+      "description": "true when DVSA publishes the month as provisional"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "suppressed",
+      "description": "DVSA redaction codes kept as field=code, separated by semicolons; blank when none"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "rank",
+      "description": "Rank of the centre in that month by median wait, 1 = longest, among open centres with a median wait"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "change3m",
+      "description": "medianWaitWeeks minus the same centre's 3 months earlier, in weeks; blank if either is missing"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "change6m",
+      "description": "The same over 6 months"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "change12m",
+      "description": "The same over 12 months"
+    }
+  ],
+  "measurementTechnique": "DVSA's published median waits and shares, with rank and changes in weeks as plain arithmetic."
+}
 </script>
 <!-- /driving-waits:jsonld -->
 </head>
@@ -47,17 +233,37 @@
   <h1>Driving test waits in Great Britain, by test centre</h1>
 </header>
 <!-- driving-waits:headline -->
+<p class="lead">In October 2026, among the 317 open test centres with a median wait, the longest was 31.5 weeks at Callander (Scotland). The shortest was 0.4 weeks at Carlisle LGV (Cars)<sup><a href="#note-lgv-cars">1</a></sup> (North West).</p>
 <!-- /driving-waits:headline -->
 <p>DVSA releases these figures monthly, on the second Wednesday; this page is refreshed after each release. It puts the Driver and Vehicle Standards Agency&rsquo;s own waiting-time figures for car practical driving tests into clean tables, by test centre and by region, from January 2019, with a rank for each centre and the change in its median wait over 3, 6 and 12 months.</p>
 <p>This page is not published by DVSA and carries no endorsement from it: the figures are DVSA&rsquo;s as published, and the only arithmetic here is the rank and the changes. It is not a booking tool: it cannot be used to find or book a test.</p>
 
 <h2>Download</h2>
 <!-- driving-waits:summary -->
+<p>Latest data: October 2026, from the DVSA release of 2026-11-11 (gov.uk page last updated 2026-11-13); 320 test centres that month and 30,449 centre-month rows since January 2019. Read from DVSA on 2026-11-26.</p>
 <!-- /driving-waits:summary -->
 <!-- driving-waits:downloads -->
+<div class="table-wrap"><table><thead><tr><th>File</th><th>Month</th><th>DVSA release</th><th>Size</th></tr></thead>
+<tbody>
+<tr><td><a href="/data/driving-test-waits/driving-test-waits-latest.csv">driving-test-waits-latest.csv</a> (latest)</td><td>2026-10</td><td>2026-11-11</td><td>7.0 MB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-waits-latest.json">driving-test-waits-latest.json</a> (latest)</td><td>2026-10</td><td>2026-11-11</td><td>4.5 MB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-waits-regions-latest.csv">driving-test-waits-regions-latest.csv</a> (latest)</td><td>2026-10</td><td>2026-11-11</td><td>0.3 MB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-waits-regions-latest.json">driving-test-waits-regions-latest.json</a> (latest)</td><td>2026-10</td><td>2026-11-11</td><td>0.8 MB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-national-latest.csv">driving-test-national-latest.csv</a> (latest)</td><td>2026-10</td><td>2026-11-11</td><td>10 KB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-national-latest.json">driving-test-national-latest.json</a> (latest)</td><td>2026-10</td><td>2026-11-11</td><td>24 KB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-waits-regions-2026-10-dvsa-2026-11-11.csv">driving-test-waits-regions-2026-10-dvsa-2026-11-11.csv</a></td><td>2026-10</td><td>2026-11-11</td><td>0.3 MB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-waits-regions-2026-10-dvsa-2026-11-11.json">driving-test-waits-regions-2026-10-dvsa-2026-11-11.json</a></td><td>2026-10</td><td>2026-11-11</td><td>0.8 MB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-waits-2026-10-dvsa-2026-11-11.csv">driving-test-waits-2026-10-dvsa-2026-11-11.csv</a></td><td>2026-10</td><td>2026-11-11</td><td>7.0 MB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-waits-2026-10-dvsa-2026-11-11.json">driving-test-waits-2026-10-dvsa-2026-11-11.json</a></td><td>2026-10</td><td>2026-11-11</td><td>4.5 MB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-national-2026-10-dvsa-2026-11-11.csv">driving-test-national-2026-10-dvsa-2026-11-11.csv</a></td><td>2026-10</td><td>2026-11-11</td><td>10 KB</td></tr>
+<tr><td><a href="/data/driving-test-waits/driving-test-national-2026-10-dvsa-2026-11-11.json">driving-test-national-2026-10-dvsa-2026-11-11.json</a></td><td>2026-10</td><td>2026-11-11</td><td>24 KB</td></tr>
+</tbody></table></div>
+<p><a href="/data/driving-test-waits/driving-test-waits.txt">driving-test-waits.txt</a> (text companion, 1 KB)</p>
 <!-- /driving-waits:downloads -->
 <p>The tables are offered under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>. Each dated file stays as it was first published.</p>
 <!-- driving-waits:attribution -->
+<p class="attribution">Contains public sector information licensed under the Open Government Licence v3.0.</p>
+<p class="attribution">Source: Driver and Vehicle Standards Agency (DVSA), Driving test and theory test data: cars, https://www.gov.uk/government/statistical-data-sets/driving-test-and-theory-test-data-cars.</p>
 <!-- /driving-waits:attribution -->
 
 <h2>How to read this</h2>
@@ -66,24 +272,425 @@
 <h2>Test centres, latest month</h2>
 <p>Longest median wait first. Every month since January 2019 is in the CSV.</p>
 <!-- driving-waits:centres -->
+<div class="table-wrap"><table><thead><tr><th>Rank</th><th>Test centre</th><th>Region</th><th>Median wait (weeks)</th><th>Taken within 7 weeks</th><th>Change over 12 months (weeks)</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Callander</td><td>Scotland</td><td>31.5 <span class="meta">(provisional)</span></td><td>40.0%</td><td>+18.8</td></tr>
+<tr><td>2</td><td>Arbroath</td><td>Scotland</td><td>27.4 <span class="meta">(provisional)</span></td><td>9.2%</td><td>+6.0</td></tr>
+<tr><td>3</td><td>Mallaig</td><td>Scotland</td><td>27.3 <span class="meta">(provisional)</span></td><td>0.0%</td><td>+13.3</td></tr>
+<tr><td>4</td><td>Kelso</td><td>Scotland</td><td>26.9 <span class="meta">(provisional)</span></td><td>10.0%</td><td>+11.2</td></tr>
+<tr><td>5</td><td>Aberfeldy</td><td>Scotland</td><td>26.1 <span class="meta">(provisional)</span></td><td>14.3%</td><td>+10.3</td></tr>
+<tr><td>6</td><td>Campbeltown</td><td>Scotland</td><td>25.6 <span class="meta">(provisional)</span></td><td>0.0%</td><td>+8.2</td></tr>
+<tr><td>7</td><td>Leighton Buzzard (Stanbridge Road)</td><td>East of England</td><td>25.1 <span class="meta">(provisional)</span></td><td>28.0%</td><td>+2.0</td></tr>
+<tr><td>7</td><td>Peebles</td><td>Scotland</td><td>25.1 <span class="meta">(provisional)</span></td><td>11.1%</td><td>+6.2</td></tr>
+<tr><td>9</td><td>Haddington</td><td>Scotland</td><td>24.0 <span class="meta">(provisional)</span></td><td>22.4%</td><td>+5.1</td></tr>
+<tr><td>10</td><td>Dunoon</td><td>Scotland</td><td>23.9 <span class="meta">(provisional)</span></td><td>0.0%</td><td>+3.8</td></tr>
+<tr><td>11</td><td>Forfar</td><td>Scotland</td><td>23.6 <span class="meta">(provisional)</span></td><td>6.4%</td><td>+6.5</td></tr>
+<tr><td>12</td><td>Grangemouth</td><td>Scotland</td><td>23.1 <span class="meta">(provisional)</span></td><td>15.2%</td><td>+2.6</td></tr>
+<tr><td>13</td><td>Edinburgh (Currie)</td><td>Scotland</td><td>23.0 <span class="meta">(provisional)</span></td><td>31.3%</td><td>+0.3</td></tr>
+<tr><td>13</td><td>Hawick</td><td>Scotland</td><td>23.0 <span class="meta">(provisional)</span></td><td>12.8%</td><td>+4.1</td></tr>
+<tr><td>15</td><td>Hornchurch (London)</td><td>London</td><td>22.9 <span class="meta">(provisional)</span></td><td>31.6%</td><td>+16.6</td></tr>
+<tr><td>16</td><td>Tolworth (London)</td><td>London</td><td>22.3 <span class="meta">(provisional)</span></td><td>31.3%</td><td>+9.6</td></tr>
+<tr><td>17</td><td>Ballater</td><td>Scotland</td><td>22.1 <span class="meta">(provisional)</span></td><td>15.4%</td><td>+4.8</td></tr>
+<tr><td>18</td><td>Rothesay</td><td>Scotland</td><td>21.9 <span class="meta">(provisional)</span></td><td>0.0%</td><td>&minus;0.9</td></tr>
+<tr><td>19</td><td>Thurso</td><td>Scotland</td><td>21.8 <span class="meta">(provisional)</span></td><td>16.7%</td><td>&minus;0.7</td></tr>
+<tr><td>20</td><td>Cumnock</td><td>Scotland</td><td>21.7 <span class="meta">(provisional)</span></td><td>20.3%</td><td>+4.0</td></tr>
+<tr><td>20</td><td>Islay Island</td><td>Scotland</td><td>21.7 <span class="meta">(provisional)</span></td><td>14.3%</td><td>&ndash;</td></tr>
+<tr><td>20</td><td>Oban</td><td>Scotland</td><td>21.7 <span class="meta">(provisional)</span></td><td>11.1%</td><td>+1.7</td></tr>
+<tr><td>23</td><td>Pinner (London)</td><td>London</td><td>21.4 <span class="meta">(provisional)</span></td><td>30.2%</td><td>&minus;0.5</td></tr>
+<tr><td>24</td><td>Goodmayes (London)</td><td>London</td><td>21.1 <span class="meta">(provisional)</span></td><td>38.5%</td><td>+11.7</td></tr>
+<tr><td>25</td><td>Hendon (London)</td><td>London</td><td>20.7 <span class="meta">(provisional)</span></td><td>31.3%</td><td>+1.3</td></tr>
+<tr><td>26</td><td>Melton Mowbray</td><td>East Midlands</td><td>20.6 <span class="meta">(provisional)</span></td><td>17.6%</td><td>+0.6</td></tr>
+<tr><td>27</td><td>Berwick-On-Tweed</td><td>North East</td><td>20.4 <span class="meta">(provisional)</span></td><td>7.9%</td><td>+6.1</td></tr>
+<tr><td>27</td><td>Bishopbriggs</td><td>Scotland</td><td>20.4 <span class="meta">(provisional)</span></td><td>21.5%</td><td>+3.6</td></tr>
+<tr><td>27</td><td>Lochgilphead</td><td>Scotland</td><td>20.4 <span class="meta">(provisional)</span></td><td>0.0%</td><td>+5.2</td></tr>
+<tr><td>30</td><td>Doncaster</td><td>Yorkshire and The Humber</td><td>20.3 <span class="meta">(provisional)</span></td><td>25.8%</td><td>&minus;2.8</td></tr>
+<tr><td>31</td><td>Gloucester</td><td>South West</td><td>20.0 <span class="meta">(provisional)</span></td><td>28.4%</td><td>+3.7</td></tr>
+<tr><td>32</td><td>Cambridge (Brookmount Court)</td><td>East of England</td><td>19.9 <span class="meta">(provisional)</span></td><td>32.9%</td><td>+5.5</td></tr>
+<tr><td>32</td><td>Isleworth (Fleming Way)</td><td>London</td><td>19.9 <span class="meta">(provisional)</span></td><td>41.1%</td><td>+0.8</td></tr>
+<tr><td>34</td><td>Duns</td><td>Scotland</td><td>19.7 <span class="meta">(provisional)</span></td><td>28.6%</td><td>+4.3</td></tr>
+<tr><td>35</td><td>Macclesfield</td><td>North West</td><td>19.6 <span class="meta">(provisional)</span></td><td>28.5%</td><td>0.0</td></tr>
+<tr><td>35</td><td>Norris Green (Liverpool)</td><td>North West</td><td>19.6 <span class="meta">(provisional)</span></td><td>29.0%</td><td>+8.3</td></tr>
+<tr><td>37</td><td>West Didsbury (Manchester)</td><td>North West</td><td>19.4 <span class="meta">(provisional)</span></td><td>31.4%</td><td>+6.1</td></tr>
+<tr><td>37</td><td>Castle Douglas</td><td>Scotland</td><td>19.4 <span class="meta">(provisional)</span></td><td>18.2%</td><td>+9.5</td></tr>
+<tr><td>37</td><td>Crieff</td><td>Scotland</td><td>19.4 <span class="meta">(provisional)</span></td><td>33.3%</td><td>&minus;4.2</td></tr>
+<tr><td>40</td><td>Chelmsford</td><td>East of England</td><td>19.2 <span class="meta">(provisional)</span></td><td>25.4%</td><td>+1.8</td></tr>
+<tr><td>40</td><td>Greenford (Horsenden Lane)</td><td>London</td><td>19.2 <span class="meta">(provisional)</span></td><td>38.4%</td><td>+8.8</td></tr>
+<tr><td>42</td><td>Montrose</td><td>Scotland</td><td>19.1 <span class="meta">(provisional)</span></td><td>0.0%</td><td>&minus;2.6</td></tr>
+<tr><td>42</td><td>Paisley</td><td>Scotland</td><td>19.1 <span class="meta">(provisional)</span></td><td>27.7%</td><td>+5.0</td></tr>
+<tr><td>44</td><td>Gosforth</td><td>North East</td><td>19.0 <span class="meta">(provisional)</span></td><td>29.9%</td><td>+4.7</td></tr>
+<tr><td>45</td><td>Loughton (London)</td><td>East of England</td><td>18.8 <span class="meta">(provisional)</span></td><td>35.0%</td><td>+7.7</td></tr>
+<tr><td>46</td><td>Buxton</td><td>East Midlands</td><td>18.7 <span class="meta">(provisional)</span></td><td>32.3%</td><td>+11.6</td></tr>
+<tr><td>46</td><td>Sidcup (London)</td><td>London</td><td>18.7 <span class="meta">(provisional)</span></td><td>28.4%</td><td>&minus;0.6</td></tr>
+<tr><td>48</td><td>Southport (Liverpool)</td><td>North West</td><td>18.6 <span class="meta">(provisional)</span></td><td>30.6%</td><td>+2.0</td></tr>
+<tr><td>49</td><td>Golspie</td><td>Scotland</td><td>18.5 <span class="meta">(provisional)</span></td><td>0.0%</td><td>&minus;9.2</td></tr>
+<tr><td>50</td><td>Newton Stewart</td><td>Scotland</td><td>18.4 <span class="meta">(provisional)</span></td><td>40.0%</td><td>+4.3</td></tr>
+<tr><td>51</td><td>Watford</td><td>East of England</td><td>18.3 <span class="meta">(provisional)</span></td><td>32.3%</td><td>+4.9</td></tr>
+<tr><td>51</td><td>Hexham</td><td>North East</td><td>18.3 <span class="meta">(provisional)</span></td><td>16.3%</td><td>+3.7</td></tr>
+<tr><td>51</td><td>Glasgow (Anniesland)</td><td>Scotland</td><td>18.3 <span class="meta">(provisional)</span></td><td>30.4%</td><td>&minus;4.8</td></tr>
+<tr><td>54</td><td>Barnet (London)</td><td>London</td><td>18.1 <span class="meta">(provisional)</span></td><td>32.7%</td><td>+1.7</td></tr>
+<tr><td>54</td><td>Inveraray</td><td>Scotland</td><td>18.1 <span class="meta">(provisional)</span></td><td>14.3%</td><td>&minus;0.3</td></tr>
+<tr><td>54</td><td>Farnborough</td><td>South East</td><td>18.1 <span class="meta">(provisional)</span></td><td>34.2%</td><td>+1.8</td></tr>
+<tr><td>54</td><td>Slough (London)</td><td>South East</td><td>18.1 <span class="meta">(provisional)</span></td><td>36.2%</td><td>+6.8</td></tr>
+<tr><td>54</td><td>Stoke-on-Trent (Newcastle-Under-Lyme)</td><td>West Midlands</td><td>18.1 <span class="meta">(provisional)</span></td><td>30.6%</td><td>&minus;1.5</td></tr>
+<tr><td>59</td><td>Nelson</td><td>North West</td><td>18.0 <span class="meta">(provisional)</span></td><td>33.3%</td><td>+12.8</td></tr>
+<tr><td>60</td><td>Birmingham (Shirley)</td><td>West Midlands</td><td>17.7 <span class="meta">(provisional)</span></td><td>39.0%</td><td>+3.4</td></tr>
+<tr><td>61</td><td>Borehamwood (London)</td><td>East of England</td><td>17.6 <span class="meta">(provisional)</span></td><td>32.0%</td><td>0.0</td></tr>
+<tr><td>61</td><td>Blackburn with Darwen</td><td>North West</td><td>17.6 <span class="meta">(provisional)</span></td><td>32.4%</td><td>+13.3</td></tr>
+<tr><td>63</td><td>Barra</td><td>Scotland</td><td>17.5 <span class="meta">(provisional)</span></td><td>0.0%</td><td>+11.2</td></tr>
+<tr><td>64</td><td>Kings Lynn</td><td>East of England</td><td>17.4 <span class="meta">(provisional)</span></td><td>33.9%</td><td>+6.6</td></tr>
+<tr><td>64</td><td>Glasgow (Shieldhall)</td><td>Scotland</td><td>17.4 <span class="meta">(provisional)</span></td><td>28.7%</td><td>+9.2</td></tr>
+<tr><td>64</td><td>Kirkcaldy</td><td>Scotland</td><td>17.4 <span class="meta">(provisional)</span></td><td>28.3%</td><td>+0.8</td></tr>
+<tr><td>67</td><td>Aberdeen North</td><td>Scotland</td><td>17.3 <span class="meta">(provisional)</span></td><td>24.8%</td><td>+7.0</td></tr>
+<tr><td>67</td><td>East Kilbride</td><td>Scotland</td><td>17.3 <span class="meta">(provisional)</span></td><td>28.6%</td><td>&minus;0.6</td></tr>
+<tr><td>67</td><td>Yeovil</td><td>South West</td><td>17.3 <span class="meta">(provisional)</span></td><td>38.0%</td><td>+5.6</td></tr>
+<tr><td>67</td><td>Dudley</td><td>West Midlands</td><td>17.3 <span class="meta">(provisional)</span></td><td>33.8%</td><td>&minus;0.8</td></tr>
+<tr><td>67</td><td>Halifax</td><td>Yorkshire and The Humber</td><td>17.3 <span class="meta">(provisional)</span></td><td>31.3%</td><td>+4.3</td></tr>
+<tr><td>72</td><td>Warrington</td><td>North West</td><td>17.1 <span class="meta">(provisional)</span></td><td>33.6%</td><td>+0.6</td></tr>
+<tr><td>73</td><td>Chingford (London)</td><td>London</td><td>17.0 <span class="meta">(provisional)</span></td><td>30.5%</td><td>+7.4</td></tr>
+<tr><td>74</td><td>Louth</td><td>East Midlands</td><td>16.9 <span class="meta">(provisional)</span></td><td>16.7%</td><td>&minus;0.1</td></tr>
+<tr><td>75</td><td>Dundee</td><td>Scotland</td><td>16.7 <span class="meta">(provisional)</span></td><td>30.8%</td><td>+1.5</td></tr>
+<tr><td>76</td><td>Lowestoft(Mobbs Way)</td><td>East of England</td><td>16.4 <span class="meta">(provisional)</span></td><td>27.1%</td><td>+10.8</td></tr>
+<tr><td>76</td><td>Fraserburgh</td><td>Scotland</td><td>16.4 <span class="meta">(provisional)</span></td><td>11.5%</td><td>+5.5</td></tr>
+<tr><td>76</td><td>Whitby</td><td>Yorkshire and The Humber</td><td>16.4 <span class="meta">(provisional)</span></td><td>30.6%</td><td>&minus;0.5</td></tr>
+<tr><td>79</td><td>Wick</td><td>Scotland</td><td>16.1 <span class="meta">(provisional)</span></td><td>5.6%</td><td>&minus;7.0</td></tr>
+<tr><td>79</td><td>Southampton (Maybush)</td><td>South East</td><td>16.1 <span class="meta">(provisional)</span></td><td>35.0%</td><td>+2.5</td></tr>
+<tr><td>81</td><td>Brodick (Isle of Arran)</td><td>Scotland</td><td>16.0 <span class="meta">(provisional)</span></td><td>14.3%</td><td>&minus;0.1</td></tr>
+<tr><td>81</td><td>Glasgow (Baillieston)</td><td>Scotland</td><td>16.0 <span class="meta">(provisional)</span></td><td>37.2%</td><td>+0.7</td></tr>
+<tr><td>81</td><td>Pitlochry</td><td>Scotland</td><td>16.0 <span class="meta">(provisional)</span></td><td>46.7%</td><td>&minus;4.7</td></tr>
+<tr><td>84</td><td>Ashfield</td><td>East Midlands</td><td>15.9 <span class="meta">(provisional)</span></td><td>34.8%</td><td>+6.5</td></tr>
+<tr><td>84</td><td>Wallasey</td><td>North West</td><td>15.9 <span class="meta">(provisional)</span></td><td>21.7%</td><td>&minus;2.5</td></tr>
+<tr><td>84</td><td>Fort William</td><td>Scotland</td><td>15.9 <span class="meta">(provisional)</span></td><td>22.5%</td><td>&minus;1.1</td></tr>
+<tr><td>84</td><td>Cheltenham</td><td>South West</td><td>15.9 <span class="meta">(provisional)</span></td><td>36.6%</td><td>&minus;2.2</td></tr>
+<tr><td>84</td><td>Northallerton</td><td>Yorkshire and The Humber</td><td>15.9 <span class="meta">(provisional)</span></td><td>16.9%</td><td>+5.6</td></tr>
+<tr><td>89</td><td>Stafford</td><td>West Midlands</td><td>15.7 <span class="meta">(provisional)</span></td><td>35.2%</td><td>&minus;0.4</td></tr>
+<tr><td>90</td><td>Portsmouth</td><td>South East</td><td>15.6 <span class="meta">(provisional)</span></td><td>34.1%</td><td>+0.5</td></tr>
+<tr><td>91</td><td>Uxbridge (London)</td><td>London</td><td>15.4 <span class="meta">(provisional)</span></td><td>42.2%</td><td>+5.1</td></tr>
+<tr><td>91</td><td>Alnwick</td><td>North East</td><td>15.4 <span class="meta">(provisional)</span></td><td>29.0%</td><td>+0.8</td></tr>
+<tr><td>91</td><td>Birmingham (Kingstanding)</td><td>West Midlands</td><td>15.4 <span class="meta">(provisional)</span></td><td>39.3%</td><td>&minus;7.6</td></tr>
+<tr><td>94</td><td>Mitcham (London)</td><td>London</td><td>15.3 <span class="meta">(provisional)</span></td><td>39.6%</td><td>+10.3</td></tr>
+<tr><td>94</td><td>Huddersfield</td><td>Yorkshire and The Humber</td><td>15.3 <span class="meta">(provisional)</span></td><td>33.0%</td><td>+1.4</td></tr>
+<tr><td>96</td><td>Grantham (Somerby)</td><td>East Midlands</td><td>15.1 <span class="meta">(provisional)</span></td><td>35.8%</td><td>&minus;6.8</td></tr>
+<tr><td>96</td><td>Southend-on-Sea</td><td>East of England</td><td>15.1 <span class="meta">(provisional)</span></td><td>35.6%</td><td>+5.1</td></tr>
+<tr><td>96</td><td>Grantown-On-Spey</td><td>Scotland</td><td>15.1 <span class="meta">(provisional)</span></td><td>25.0%</td><td>&minus;3.0</td></tr>
+<tr><td>99</td><td>Crewe</td><td>North West</td><td>15.0 <span class="meta">(provisional)</span></td><td>35.7%</td><td>&minus;1.6</td></tr>
+<tr><td>99</td><td>Huntly</td><td>Scotland</td><td>15.0 <span class="meta">(provisional)</span></td><td>10.7%</td><td>&minus;0.4</td></tr>
+<tr><td>99</td><td>Crawley</td><td>South East</td><td>15.0 <span class="meta">(provisional)</span></td><td>30.0%</td><td>+8.7</td></tr>
+<tr><td>99</td><td>Burton on Trent</td><td>West Midlands</td><td>15.0 <span class="meta">(provisional)</span></td><td>36.3%</td><td>&minus;1.6</td></tr>
+<tr><td>99</td><td>Coventry</td><td>West Midlands</td><td>15.0 <span class="meta">(provisional)</span></td><td>37.4%</td><td>+5.9</td></tr>
+<tr><td>104</td><td>Lanark</td><td>Scotland</td><td>14.9 <span class="meta">(provisional)</span></td><td>22.5%</td><td>+2.5</td></tr>
+<tr><td>105</td><td>Pwllheli</td><td>Wales</td><td>14.7 <span class="meta">(provisional)</span></td><td>18.4%</td><td>&minus;1.6</td></tr>
+<tr><td>106</td><td>Hartlepool</td><td>North East</td><td>14.6 <span class="meta">(provisional)</span></td><td>28.5%</td><td>&minus;6.4</td></tr>
+<tr><td>106</td><td>Newtown</td><td>Wales</td><td>14.6 <span class="meta">(provisional)</span></td><td>22.1%</td><td>+1.0</td></tr>
+<tr><td>108</td><td>Wanstead (London)</td><td>London</td><td>14.4 <span class="meta">(provisional)</span></td><td>43.7%</td><td>&minus;7.5</td></tr>
+<tr><td>108</td><td>Sale (Manchester)</td><td>North West</td><td>14.4 <span class="meta">(provisional)</span></td><td>35.8%</td><td>&minus;4.9</td></tr>
+<tr><td>108</td><td>Telford</td><td>West Midlands</td><td>14.4 <span class="meta">(provisional)</span></td><td>37.3%</td><td>&minus;5.6</td></tr>
+<tr><td>108</td><td>Bradford (Heaton)</td><td>Yorkshire and The Humber</td><td>14.4 <span class="meta">(provisional)</span></td><td>33.3%</td><td>+9.4</td></tr>
+<tr><td>108</td><td>Heckmondwike</td><td>Yorkshire and The Humber</td><td>14.4 <span class="meta">(provisional)</span></td><td>31.7%</td><td>+3.4</td></tr>
+<tr><td>113</td><td>Worksop</td><td>East Midlands</td><td>14.3 <span class="meta">(provisional)</span></td><td>35.8%</td><td>&minus;8.6</td></tr>
+<tr><td>113</td><td>Newport (Isle of Wight)</td><td>South East</td><td>14.3 <span class="meta">(provisional)</span></td><td>37.8%</td><td>+3.2</td></tr>
+<tr><td>115</td><td>York</td><td>Yorkshire and The Humber</td><td>14.1 <span class="meta">(provisional)</span></td><td>36.0%</td><td>+5.0</td></tr>
+<tr><td>116</td><td>Lee On The Solent</td><td>South East</td><td>14.0 <span class="meta">(provisional)</span></td><td>38.7%</td><td>&minus;6.3</td></tr>
+<tr><td>116</td><td>Malton</td><td>Yorkshire and The Humber</td><td>14.0 <span class="meta">(provisional)</span></td><td>37.7%</td><td>+3.0</td></tr>
+<tr><td>118</td><td>Skegness</td><td>East Midlands</td><td>13.9 <span class="meta">(provisional)</span></td><td>22.3%</td><td>&minus;1.1</td></tr>
+<tr><td>118</td><td>Blyth</td><td>North East</td><td>13.9 <span class="meta">(provisional)</span></td><td>37.3%</td><td>&minus;5.4</td></tr>
+<tr><td>118</td><td>Taunton</td><td>South West</td><td>13.9 <span class="meta">(provisional)</span></td><td>33.4%</td><td>+4.3</td></tr>
+<tr><td>121</td><td>Morden (London)</td><td>London</td><td>13.7 <span class="meta">(provisional)</span></td><td>44.3%</td><td>&minus;9.3</td></tr>
+<tr><td>121</td><td>Girvan</td><td>Scotland</td><td>13.7 <span class="meta">(provisional)</span></td><td>34.6%</td><td>+0.8</td></tr>
+<tr><td>123</td><td>Leicester (Wigston)</td><td>East Midlands</td><td>13.6 <span class="meta">(provisional)</span></td><td>34.0%</td><td>&minus;0.4</td></tr>
+<tr><td>123</td><td>Bury St Edmunds</td><td>East of England</td><td>13.6 <span class="meta">(provisional)</span></td><td>33.5%</td><td>+3.3</td></tr>
+<tr><td>123</td><td>Durham</td><td>North East</td><td>13.6 <span class="meta">(provisional)</span></td><td>35.4%</td><td>+4.3</td></tr>
+<tr><td>123</td><td>Worthing</td><td>South East</td><td>13.6 <span class="meta">(provisional)</span></td><td>36.7%</td><td>+3.1</td></tr>
+<tr><td>123</td><td>Swindon</td><td>South West</td><td>13.6 <span class="meta">(provisional)</span></td><td>37.8%</td><td>+2.9</td></tr>
+<tr><td>128</td><td>Sheffield (Middlewood Road)</td><td>Yorkshire and The Humber</td><td>13.4 <span class="meta">(provisional)</span></td><td>39.5%</td><td>&minus;7.7</td></tr>
+<tr><td>129</td><td>Guildford</td><td>South East</td><td>13.1 <span class="meta">(provisional)</span></td><td>39.8%</td><td>+2.7</td></tr>
+<tr><td>129</td><td>Wednesbury</td><td>West Midlands</td><td>13.1 <span class="meta">(provisional)</span></td><td>40.9%</td><td>+5.7</td></tr>
+<tr><td>129</td><td>Steeton</td><td>Yorkshire and The Humber</td><td>13.1 <span class="meta">(provisional)</span></td><td>33.2%</td><td>+8.1</td></tr>
+<tr><td>132</td><td>Middlesbrough</td><td>North East</td><td>13.0 <span class="meta">(provisional)</span></td><td>39.2%</td><td>&minus;4.0</td></tr>
+<tr><td>132</td><td>Bala</td><td>Wales</td><td>13.0 <span class="meta">(provisional)</span></td><td>23.5%</td><td>&minus;7.1</td></tr>
+<tr><td>134</td><td>Chadderton</td><td>North West</td><td>12.9 <span class="meta">(provisional)</span></td><td>38.8%</td><td>+4.3</td></tr>
+<tr><td>134</td><td>Heysham</td><td>North West</td><td>12.9 <span class="meta">(provisional)</span></td><td>39.0%</td><td>+3.0</td></tr>
+<tr><td>136</td><td>Stoke-On-Trent (Cobridge)</td><td>West Midlands</td><td>12.6 <span class="meta">(provisional)</span></td><td>40.6%</td><td>&minus;2.8</td></tr>
+<tr><td>137</td><td>Sunderland</td><td>North East</td><td>12.4 <span class="meta">(provisional)</span></td><td>37.8%</td><td>+2.4</td></tr>
+<tr><td>137</td><td>Edinburgh (Musselburgh)</td><td>Scotland</td><td>12.4 <span class="meta">(provisional)</span></td><td>41.7%</td><td>&minus;2.8</td></tr>
+<tr><td>137</td><td>Carmarthen</td><td>Wales</td><td>12.4 <span class="meta">(provisional)</span></td><td>33.1%</td><td>+8.0</td></tr>
+<tr><td>137</td><td>Wolverhampton</td><td>West Midlands</td><td>12.4 <span class="meta">(provisional)</span></td><td>42.6%</td><td>+0.3</td></tr>
+<tr><td>137</td><td>Leeds (Colton Mill)</td><td>Yorkshire and The Humber</td><td>12.4 <span class="meta">(provisional)</span></td><td>36.3%</td><td>+2.5</td></tr>
+<tr><td>142</td><td>Lerwick</td><td>Scotland</td><td>12.1 <span class="meta">(provisional)</span></td><td>39.5%</td><td>&minus;1.6</td></tr>
+<tr><td>143</td><td>Inverurie</td><td>Scotland</td><td>12.0 <span class="meta">(provisional)</span></td><td>32.5%</td><td>&minus;3.0</td></tr>
+<tr><td>143</td><td>Gillingham</td><td>South East</td><td>12.0 <span class="meta">(provisional)</span></td><td>40.2%</td><td>&minus;1.1</td></tr>
+<tr><td>143</td><td>Wakefield</td><td>Yorkshire and The Humber</td><td>12.0 <span class="meta">(provisional)</span></td><td>40.3%</td><td>+2.1</td></tr>
+<tr><td>146</td><td>Cheetham Hill (Manchester)</td><td>North West</td><td>11.9 <span class="meta">(provisional)</span></td><td>40.1%</td><td>&minus;0.9</td></tr>
+<tr><td>146</td><td>Benbecula Island</td><td>Scotland</td><td>11.9 <span class="meta">(provisional)</span></td><td>18.8%</td><td>+3.5</td></tr>
+<tr><td>148</td><td>Alness</td><td>Scotland</td><td>11.8 <span class="meta">(provisional)</span></td><td>13.3%</td><td>&minus;8.8</td></tr>
+<tr><td>149</td><td>Carlisle</td><td>North West</td><td>11.7 <span class="meta">(provisional)</span></td><td>35.9%</td><td>+3.5</td></tr>
+<tr><td>149</td><td>St Helens (Liverpool)</td><td>North West</td><td>11.7 <span class="meta">(provisional)</span></td><td>34.3%</td><td>+6.4</td></tr>
+<tr><td>149</td><td>Kyle of Lochalsh</td><td>Scotland</td><td>11.7 <span class="meta">(provisional)</span></td><td>0.0%</td><td>+9.7</td></tr>
+<tr><td>152</td><td>Wellingborough</td><td>East Midlands</td><td>11.4 <span class="meta">(provisional)</span></td><td>40.6%</td><td>&minus;8.9</td></tr>
+<tr><td>152</td><td>Wood Green (London)</td><td>London</td><td>11.4 <span class="meta">(provisional)</span></td><td>42.3%</td><td>+1.0</td></tr>
+<tr><td>152</td><td>Worcester</td><td>West Midlands</td><td>11.4 <span class="meta">(provisional)</span></td><td>43.7%</td><td>+1.3</td></tr>
+<tr><td>155</td><td>Birmingham (Garretts Green)</td><td>West Midlands</td><td>11.3 <span class="meta">(provisional)</span></td><td>39.0%</td><td>+5.0</td></tr>
+<tr><td>156</td><td>Irvine</td><td>Scotland</td><td>11.1 <span class="meta">(provisional)</span></td><td>44.5%</td><td>+0.2</td></tr>
+<tr><td>156</td><td>Livingston</td><td>Scotland</td><td>11.1 <span class="meta">(provisional)</span></td><td>42.6%</td><td>&minus;12.2</td></tr>
+<tr><td>156</td><td>Leeds (The Old Fire Station)</td><td>Yorkshire and The Humber</td><td>11.1 <span class="meta">(provisional)</span></td><td>41.4%</td><td>&ndash;</td></tr>
+<tr><td>159</td><td>Derby (Alvaston)</td><td>East Midlands</td><td>11.0 <span class="meta">(provisional)</span></td><td>41.0%</td><td>&minus;6.0</td></tr>
+<tr><td>159</td><td>Dunfermline (Vine)</td><td>Scotland</td><td>11.0 <span class="meta">(provisional)</span></td><td>43.8%</td><td>+1.7</td></tr>
+<tr><td>159</td><td>Merthyr Tydfil</td><td>Wales</td><td>11.0 <span class="meta">(provisional)</span></td><td>33.8%</td><td>&minus;0.3</td></tr>
+<tr><td>162</td><td>Norwich (Peachman Way)</td><td>East of England</td><td>10.9 <span class="meta">(provisional)</span></td><td>41.8%</td><td>&minus;3.8</td></tr>
+<tr><td>162</td><td>Redhill Aerodrome</td><td>South East</td><td>10.9 <span class="meta">(provisional)</span></td><td>42.4%</td><td>+5.9</td></tr>
+<tr><td>162</td><td>Newton Abbot</td><td>South West</td><td>10.9 <span class="meta">(provisional)</span></td><td>40.2%</td><td>&minus;0.8</td></tr>
+<tr><td>165</td><td>Horsforth</td><td>Yorkshire and The Humber</td><td>10.8 <span class="meta">(provisional)</span></td><td>43.4%</td><td>+0.1</td></tr>
+<tr><td>165</td><td>Pontefract</td><td>Yorkshire and The Humber</td><td>10.8 <span class="meta">(provisional)</span></td><td>40.8%</td><td>&minus;7.4</td></tr>
+<tr><td>165</td><td>Walton LGV</td><td>Yorkshire and The Humber</td><td>10.8 <span class="meta">(provisional)</span></td><td>38.0%</td><td>+1.8</td></tr>
+<tr><td>168</td><td>Hamilton</td><td>Scotland</td><td>10.7 <span class="meta">(provisional)</span></td><td>43.7%</td><td>&minus;5.2</td></tr>
+<tr><td>168</td><td>Sevenoaks</td><td>South East</td><td>10.7 <span class="meta">(provisional)</span></td><td>44.2%</td><td>&minus;0.2</td></tr>
+<tr><td>170</td><td>Penzance</td><td>South West</td><td>10.6 <span class="meta">(provisional)</span></td><td>40.4%</td><td>&minus;8.1</td></tr>
+<tr><td>170</td><td>Knaresborough</td><td>Yorkshire and The Humber</td><td>10.6 <span class="meta">(provisional)</span></td><td>38.9%</td><td>+1.2</td></tr>
+<tr><td>172</td><td>Atherton (Manchester)</td><td>North West</td><td>10.4 <span class="meta">(provisional)</span></td><td>42.8%</td><td>+3.1</td></tr>
+<tr><td>172</td><td>Gairloch</td><td>Scotland</td><td>10.4 <span class="meta">(provisional)</span></td><td>20.0%</td><td>+1.3</td></tr>
+<tr><td>172</td><td>Bristol (Avonmouth)</td><td>South West</td><td>10.4 <span class="meta">(provisional)</span></td><td>41.7%</td><td>&minus;11.3</td></tr>
+<tr><td>175</td><td>Bredbury (Manchester)</td><td>North West</td><td>10.3 <span class="meta">(provisional)</span></td><td>42.3%</td><td>+1.9</td></tr>
+<tr><td>176</td><td>Nottingham (Colwick)</td><td>East Midlands</td><td>10.1 <span class="meta">(provisional)</span></td><td>41.6%</td><td>&minus;7.2</td></tr>
+<tr><td>176</td><td>Trowbridge</td><td>South West</td><td>10.1 <span class="meta">(provisional)</span></td><td>40.6%</td><td>+0.2</td></tr>
+<tr><td>178</td><td>Pembroke Dock</td><td>Wales</td><td>10.0 <span class="meta">(provisional)</span></td><td>37.4%</td><td>&minus;0.1</td></tr>
+<tr><td>179</td><td>Aberdeen South (Cove)</td><td>Scotland</td><td>9.9 <span class="meta">(provisional)</span></td><td>44.2%</td><td>+1.3</td></tr>
+<tr><td>179</td><td>Hastings (Ore)</td><td>South East</td><td>9.9 <span class="meta">(provisional)</span></td><td>43.0%</td><td>&minus;11.8</td></tr>
+<tr><td>179</td><td>Cardigan</td><td>Wales</td><td>9.9 <span class="meta">(provisional)</span></td><td>42.9%</td><td>&minus;4.2</td></tr>
+<tr><td>182</td><td>Loughborough</td><td>East Midlands</td><td>9.7 <span class="meta">(provisional)</span></td><td>42.8%</td><td>&minus;2.7</td></tr>
+<tr><td>182</td><td>Preston</td><td>North West</td><td>9.7 <span class="meta">(provisional)</span></td><td>45.4%</td><td>&minus;11.7</td></tr>
+<tr><td>182</td><td>Orkney</td><td>Scotland</td><td>9.7 <span class="meta">(provisional)</span></td><td>34.3%</td><td>+2.7</td></tr>
+<tr><td>182</td><td>Winchester</td><td>South East</td><td>9.7 <span class="meta">(provisional)</span></td><td>43.4%</td><td>&minus;4.6</td></tr>
+<tr><td>186</td><td>Bolton (Manchester)</td><td>North West</td><td>9.6 <span class="meta">(provisional)</span></td><td>41.4%</td><td>0.0</td></tr>
+<tr><td>186</td><td>Banff</td><td>Scotland</td><td>9.6 <span class="meta">(provisional)</span></td><td>16.1%</td><td>+2.5</td></tr>
+<tr><td>188</td><td>Buckie</td><td>Scotland</td><td>9.5 <span class="meta">(provisional)</span></td><td>14.7%</td><td>+3.6</td></tr>
+<tr><td>189</td><td>Chertsey (London)</td><td>South East</td><td>9.4 <span class="meta">(provisional)</span></td><td>46.6%</td><td>&minus;9.9</td></tr>
+<tr><td>189</td><td>Aberystwyth (Park Avenue)</td><td>Wales</td><td>9.4 <span class="meta">(provisional)</span></td><td>42.1%</td><td>&minus;0.2</td></tr>
+<tr><td>191</td><td>Northampton</td><td>East Midlands</td><td>9.3 <span class="meta">(provisional)</span></td><td>44.0%</td><td>&minus;5.6</td></tr>
+<tr><td>191</td><td>Stranraer</td><td>Scotland</td><td>9.3 <span class="meta">(provisional)</span></td><td>26.3%</td><td>&minus;6.8</td></tr>
+<tr><td>191</td><td>Shrewsbury</td><td>West Midlands</td><td>9.3 <span class="meta">(provisional)</span></td><td>44.0%</td><td>+0.6</td></tr>
+<tr><td>194</td><td>Dumfries</td><td>Scotland</td><td>9.1 <span class="meta">(provisional)</span></td><td>40.0%</td><td>+1.2</td></tr>
+<tr><td>194</td><td>Folkestone</td><td>South East</td><td>9.1 <span class="meta">(provisional)</span></td><td>44.7%</td><td>+3.4</td></tr>
+<tr><td>194</td><td>Oxford (Cowley)</td><td>South East</td><td>9.1 <span class="meta">(provisional)</span></td><td>47.4%</td><td>&minus;6.9</td></tr>
+<tr><td>197</td><td>Birmingham (South Yardley)</td><td>West Midlands</td><td>9.0 <span class="meta">(provisional)</span></td><td>46.2%</td><td>+2.9</td></tr>
+<tr><td>197</td><td>Featherstone</td><td>West Midlands</td><td>9.0 <span class="meta">(provisional)</span></td><td>46.5%</td><td>&minus;2.0</td></tr>
+<tr><td>199</td><td>Tottenham</td><td>London</td><td>8.9 <span class="meta">(provisional)</span></td><td>43.1%</td><td>&minus;9.7</td></tr>
+<tr><td>199</td><td>Northwich</td><td>North West</td><td>8.9 <span class="meta">(provisional)</span></td><td>39.2%</td><td>&minus;10.5</td></tr>
+<tr><td>199</td><td>Bangor</td><td>Wales</td><td>8.9 <span class="meta">(provisional)</span></td><td>40.1%</td><td>&minus;1.0</td></tr>
+<tr><td>199</td><td>Bradford (Thornbury)</td><td>Yorkshire and The Humber</td><td>8.9 <span class="meta">(provisional)</span></td><td>42.5%</td><td>+4.3</td></tr>
+<tr><td>203</td><td>Herne Bay</td><td>South East</td><td>8.7 <span class="meta">(provisional)</span></td><td>47.9%</td><td>+1.4</td></tr>
+<tr><td>204</td><td>Newport (Gwent)</td><td>Wales</td><td>8.6 <span class="meta">(provisional)</span></td><td>46.3%</td><td>+2.3</td></tr>
+<tr><td>204</td><td>Birmingham (Kings Heath)</td><td>West Midlands</td><td>8.6 <span class="meta">(provisional)</span></td><td>47.2%</td><td>+2.2</td></tr>
+<tr><td>204</td><td>Rotherham</td><td>Yorkshire and The Humber</td><td>8.6 <span class="meta">(provisional)</span></td><td>47.7%</td><td>+1.6</td></tr>
+<tr><td>207</td><td>Maidstone</td><td>South East</td><td>8.4 <span class="meta">(provisional)</span></td><td>47.4%</td><td>+1.0</td></tr>
+<tr><td>207</td><td>Tunbridge Wells</td><td>South East</td><td>8.4 <span class="meta">(provisional)</span></td><td>45.3%</td><td>&minus;2.9</td></tr>
+<tr><td>207</td><td>Plymouth</td><td>South West</td><td>8.4 <span class="meta">(provisional)</span></td><td>47.2%</td><td>+3.4</td></tr>
+<tr><td>210</td><td>Darlington</td><td>North East</td><td>8.1 <span class="meta">(provisional)</span></td><td>47.5%</td><td>+1.2</td></tr>
+<tr><td>210</td><td>Greenham</td><td>South East</td><td>8.1 <span class="meta">(provisional)</span></td><td>49.1%</td><td>&minus;1.2</td></tr>
+<tr><td>210</td><td>Salisbury</td><td>South West</td><td>8.1 <span class="meta">(provisional)</span></td><td>47.6%</td><td>&minus;2.2</td></tr>
+<tr><td>210</td><td>Barry</td><td>Wales</td><td>8.1 <span class="meta">(provisional)</span></td><td>46.5%</td><td>&minus;1.9</td></tr>
+<tr><td>210</td><td>Bridgend</td><td>Wales</td><td>8.1 <span class="meta">(provisional)</span></td><td>37.2%</td><td>&minus;0.2</td></tr>
+<tr><td>210</td><td>Swansea</td><td>Wales</td><td>8.1 <span class="meta">(provisional)</span></td><td>36.2%</td><td>+3.1</td></tr>
+<tr><td>216</td><td>Colchester</td><td>East of England</td><td>8.0 <span class="meta">(provisional)</span></td><td>47.5%</td><td>&minus;6.8</td></tr>
+<tr><td>216</td><td>Speke (Liverpool)</td><td>North West</td><td>8.0 <span class="meta">(provisional)</span></td><td>47.8%</td><td>+1.1</td></tr>
+<tr><td>216</td><td>Greenock</td><td>Scotland</td><td>8.0 <span class="meta">(provisional)</span></td><td>47.4%</td><td>+1.9</td></tr>
+<tr><td>216</td><td>Brecon</td><td>Wales</td><td>8.0 <span class="meta">(provisional)</span></td><td>44.2%</td><td>&minus;3.6</td></tr>
+<tr><td>216</td><td>Warwick (Wedgenock House)</td><td>West Midlands</td><td>8.0 <span class="meta">(provisional)</span></td><td>47.8%</td><td>&minus;0.4</td></tr>
+<tr><td>221</td><td>Skipton</td><td>Yorkshire and The Humber</td><td>7.9 <span class="meta">(provisional)</span></td><td>48.0%</td><td>&minus;11.2</td></tr>
+<tr><td>222</td><td>Lincoln</td><td>East Midlands</td><td>7.7 <span class="meta">(provisional)</span></td><td>49.0%</td><td>&minus;9.9</td></tr>
+<tr><td>222</td><td>Workington</td><td>North West</td><td>7.7 <span class="meta">(provisional)</span></td><td>47.3%</td><td>&minus;1.3</td></tr>
+<tr><td>224</td><td>Hinckley</td><td>East Midlands</td><td>7.6 <span class="meta">(provisional)</span></td><td>49.0%</td><td>+1.6</td></tr>
+<tr><td>224</td><td>Peterborough</td><td>East of England</td><td>7.6 <span class="meta">(provisional)</span></td><td>48.9%</td><td>+0.9</td></tr>
+<tr><td>224</td><td>West Wickham (London)</td><td>London</td><td>7.6 <span class="meta">(provisional)</span></td><td>49.3%</td><td>&minus;2.4</td></tr>
+<tr><td>224</td><td>Burgess Hill</td><td>South East</td><td>7.6 <span class="meta">(provisional)</span></td><td>49.0%</td><td>&minus;3.4</td></tr>
+<tr><td>224</td><td>Lichfield</td><td>West Midlands</td><td>7.6 <span class="meta">(provisional)</span></td><td>49.8%</td><td>&minus;12.4</td></tr>
+<tr><td>229</td><td>Kingussie</td><td>Scotland</td><td>7.5 <span class="meta">(provisional)</span></td><td>50.0%</td><td>&minus;14.9</td></tr>
+<tr><td>230</td><td>Letchworth</td><td>East of England</td><td>7.4 <span class="meta">(provisional)</span></td><td>49.8%</td><td>&minus;0.7</td></tr>
+<tr><td>230</td><td>Ayr</td><td>Scotland</td><td>7.4 <span class="meta">(provisional)</span></td><td>49.2%</td><td>&minus;13.7</td></tr>
+<tr><td>230</td><td>Bridlington</td><td>Yorkshire and The Humber</td><td>7.4 <span class="meta">(provisional)</span></td><td>48.4%</td><td>&minus;3.1</td></tr>
+<tr><td>233</td><td>Leicester (Cannock Street)</td><td>East Midlands</td><td>7.2 <span class="meta">(provisional)</span></td><td>49.4%</td><td>+0.5</td></tr>
+<tr><td>234</td><td>Mill Hill (London)</td><td>London</td><td>7.1 <span class="meta">(provisional)</span></td><td>50.5%</td><td>&minus;8.3</td></tr>
+<tr><td>234</td><td>Basingstoke</td><td>South East</td><td>7.1 <span class="meta">(provisional)</span></td><td>49.9%</td><td>&minus;9.9</td></tr>
+<tr><td>234</td><td>Dorchester</td><td>South West</td><td>7.1 <span class="meta">(provisional)</span></td><td>48.9%</td><td>&minus;7.4</td></tr>
+<tr><td>234</td><td>Abergavenny</td><td>Wales</td><td>7.1 <span class="meta">(provisional)</span></td><td>50.1%</td><td>&minus;2.3</td></tr>
+<tr><td>234</td><td>Rhyl</td><td>Wales</td><td>7.1 <span class="meta">(provisional)</span></td><td>49.8%</td><td>&minus;1.8</td></tr>
+<tr><td>239</td><td>Rugby</td><td>West Midlands</td><td>7.0 <span class="meta">(provisional)</span></td><td>49.6%</td><td>&minus;0.4</td></tr>
+<tr><td>240</td><td>Blackpool</td><td>North West</td><td>6.9 <span class="meta">(provisional)</span></td><td>51.0%</td><td>&minus;1.2</td></tr>
+<tr><td>240</td><td>Upton</td><td>North West</td><td>6.9 <span class="meta">(provisional)</span></td><td>51.1%</td><td>&minus;6.5</td></tr>
+<tr><td>240</td><td>High Wycombe</td><td>South East</td><td>6.9 <span class="meta">(provisional)</span></td><td>50.7%</td><td>&minus;6.1</td></tr>
+<tr><td>240</td><td>Grimsby Coldwater</td><td>Yorkshire and The Humber</td><td>6.9 <span class="meta">(provisional)</span></td><td>50.5%</td><td>&minus;3.0</td></tr>
+<tr><td>244</td><td>Luton</td><td>East of England</td><td>6.7 <span class="meta">(provisional)</span></td><td>53.5%</td><td>&minus;6.3</td></tr>
+<tr><td>244</td><td>Widnes</td><td>North West</td><td>6.7 <span class="meta">(provisional)</span></td><td>51.1%</td><td>+0.6</td></tr>
+<tr><td>244</td><td>Airdrie</td><td>Scotland</td><td>6.7 <span class="meta">(provisional)</span></td><td>51.0%</td><td>&minus;10.3</td></tr>
+<tr><td>244</td><td>Peterhead</td><td>Scotland</td><td>6.7 <span class="meta">(provisional)</span></td><td>50.8%</td><td>+2.5</td></tr>
+<tr><td>244</td><td>Ludlow</td><td>West Midlands</td><td>6.7 <span class="meta">(provisional)</span></td><td>51.1%</td><td>&minus;2.3</td></tr>
+<tr><td>244</td><td>Oswestry</td><td>West Midlands</td><td>6.7 <span class="meta">(provisional)</span></td><td>52.1%</td><td>&minus;2.4</td></tr>
+<tr><td>250</td><td>Bishops Stortford</td><td>East of England</td><td>6.6 <span class="meta">(provisional)</span></td><td>52.6%</td><td>&minus;6.7</td></tr>
+<tr><td>250</td><td>Barnsley</td><td>Yorkshire and The Humber</td><td>6.6 <span class="meta">(provisional)</span></td><td>51.5%</td><td>&minus;5.5</td></tr>
+<tr><td>252</td><td>St Albans</td><td>East of England</td><td>6.4 <span class="meta">(provisional)</span></td><td>50.8%</td><td>&minus;4.6</td></tr>
+<tr><td>252</td><td>Perth (Arran Road)</td><td>Scotland</td><td>6.4 <span class="meta">(provisional)</span></td><td>50.9%</td><td>&minus;5.9</td></tr>
+<tr><td>252</td><td>Nuneaton</td><td>West Midlands</td><td>6.4 <span class="meta">(provisional)</span></td><td>51.0%</td><td>&minus;2.7</td></tr>
+<tr><td>255</td><td>Clacton-on-Sea</td><td>East of England</td><td>6.3 <span class="meta">(provisional)</span></td><td>51.2%</td><td>&minus;1.7</td></tr>
+<tr><td>256</td><td>Gateshead</td><td>North East</td><td>6.2 <span class="meta">(provisional)</span></td><td>52.0%</td><td>&minus;3.7</td></tr>
+<tr><td>257</td><td>Barrow In Furness</td><td>North West</td><td>6.1 <span class="meta">(provisional)</span></td><td>53.0%</td><td>&minus;7.8</td></tr>
+<tr><td>257</td><td>Chester</td><td>North West</td><td>6.1 <span class="meta">(provisional)</span></td><td>53.5%</td><td>&minus;4.9</td></tr>
+<tr><td>257</td><td>Isle of Skye (Portree)</td><td>Scotland</td><td>6.1 <span class="meta">(provisional)</span></td><td>70.6%</td><td>&ndash;</td></tr>
+<tr><td>257</td><td>Poole</td><td>South West</td><td>6.1 <span class="meta">(provisional)</span></td><td>52.8%</td><td>&minus;4.5</td></tr>
+<tr><td>261</td><td>Kettering</td><td>East Midlands</td><td>6.0 <span class="meta">(provisional)</span></td><td>52.1%</td><td>&minus;8.0</td></tr>
+<tr><td>261</td><td>Ashford (Kent)</td><td>South East</td><td>6.0 <span class="meta">(provisional)</span></td><td>55.0%</td><td>&minus;5.6</td></tr>
+<tr><td>261</td><td>Birmingham (Cocks Moors)</td><td>West Midlands</td><td>6.0 <span class="meta">(provisional)</span></td><td>62.1%</td><td>&ndash;</td></tr>
+<tr><td>264</td><td>Bromley (London)</td><td>London</td><td>5.9 <span class="meta">(provisional)</span></td><td>52.4%</td><td>&minus;12.5</td></tr>
+<tr><td>264</td><td>Barnstaple</td><td>South West</td><td>5.9 <span class="meta">(provisional)</span></td><td>54.1%</td><td>+0.9</td></tr>
+<tr><td>264</td><td>Chippenham</td><td>South West</td><td>5.9 <span class="meta">(provisional)</span></td><td>53.5%</td><td>&minus;4.0</td></tr>
+<tr><td>264</td><td>Cardiff (Llanishen)</td><td>Wales</td><td>5.9 <span class="meta">(provisional)</span></td><td>52.9%</td><td>&minus;3.1</td></tr>
+<tr><td>264</td><td>Llantrisant</td><td>Wales</td><td>5.9 <span class="meta">(provisional)</span></td><td>54.4%</td><td>&minus;0.8</td></tr>
+<tr><td>269</td><td>Wrexham</td><td>Wales</td><td>5.7 <span class="meta">(provisional)</span></td><td>52.7%</td><td>&minus;6.9</td></tr>
+<tr><td>270</td><td>Chichester</td><td>South East</td><td>5.6 <span class="meta">(provisional)</span></td><td>52.7%</td><td>&minus;10.7</td></tr>
+<tr><td>271</td><td>Launceston</td><td>South West</td><td>5.5 <span class="meta">(provisional)</span></td><td>56.5%</td><td>&minus;0.1</td></tr>
+<tr><td>272</td><td>Kendal (Oxenholme Road)</td><td>North West</td><td>5.4 <span class="meta">(provisional)</span></td><td>55.3%</td><td>&minus;7.2</td></tr>
+<tr><td>272</td><td>Dumbarton</td><td>Scotland</td><td>5.4 <span class="meta">(provisional)</span></td><td>55.8%</td><td>&minus;12.7</td></tr>
+<tr><td>272</td><td>Elgin</td><td>Scotland</td><td>5.4 <span class="meta">(provisional)</span></td><td>56.2%</td><td>+0.1</td></tr>
+<tr><td>272</td><td>Bletchley</td><td>South East</td><td>5.4 <span class="meta">(provisional)</span></td><td>53.3%</td><td>&minus;12.7</td></tr>
+<tr><td>272</td><td>Monmouth</td><td>Wales</td><td>5.4 <span class="meta">(provisional)</span></td><td>52.0%</td><td>&minus;5.6</td></tr>
+<tr><td>277</td><td>Bedford</td><td>East of England</td><td>5.3 <span class="meta">(provisional)</span></td><td>61.6%</td><td>&minus;16.0</td></tr>
+<tr><td>277</td><td>Bury (Manchester)</td><td>North West</td><td>5.3 <span class="meta">(provisional)</span></td><td>53.7%</td><td>&minus;3.3</td></tr>
+<tr><td>277</td><td>Sheffield (Handsworth)</td><td>Yorkshire and The Humber</td><td>5.3 <span class="meta">(provisional)</span></td><td>55.3%</td><td>&minus;4.7</td></tr>
+<tr><td>280</td><td>Erith (London)</td><td>London</td><td>5.2 <span class="meta">(provisional)</span></td><td>54.6%</td><td>&minus;1.6</td></tr>
+<tr><td>281</td><td>Brentwood (London)</td><td>East of England</td><td>5.1 <span class="meta">(provisional)</span></td><td>57.2%</td><td>&minus;5.0</td></tr>
+<tr><td>282</td><td>Llanelli</td><td>Wales</td><td>5.0 <span class="meta">(provisional)</span></td><td>68.7%</td><td>&minus;4.4</td></tr>
+<tr><td>283</td><td>Nottingham (Chilwell)</td><td>East Midlands</td><td>4.9 <span class="meta">(provisional)</span></td><td>56.2%</td><td>&minus;15.5</td></tr>
+<tr><td>283</td><td>Tilbury</td><td>East of England</td><td>4.9 <span class="meta">(provisional)</span></td><td>56.5%</td><td>+0.5</td></tr>
+<tr><td>283</td><td>Belvedere (London)</td><td>London</td><td>4.9 <span class="meta">(provisional)</span></td><td>62.7%</td><td>&minus;0.7</td></tr>
+<tr><td>283</td><td>Chorley</td><td>North West</td><td>4.9 <span class="meta">(provisional)</span></td><td>58.2%</td><td>&minus;3.5</td></tr>
+<tr><td>283</td><td>Aylesbury</td><td>South East</td><td>4.9 <span class="meta">(provisional)</span></td><td>60.1%</td><td>&minus;11.4</td></tr>
+<tr><td>283</td><td>Reading</td><td>South East</td><td>4.9 <span class="meta">(provisional)</span></td><td>55.6%</td><td>&minus;17.5</td></tr>
+<tr><td>283</td><td>Bristol (Kingswood)</td><td>South West</td><td>4.9 <span class="meta">(provisional)</span></td><td>57.2%</td><td>&minus;8.5</td></tr>
+<tr><td>290</td><td>Boston</td><td>East Midlands</td><td>4.7 <span class="meta">(provisional)</span></td><td>59.0%</td><td>&minus;5.3</td></tr>
+<tr><td>290</td><td>Eastbourne</td><td>South East</td><td>4.7 <span class="meta">(provisional)</span></td><td>55.2%</td><td>&minus;6.6</td></tr>
+<tr><td>290</td><td>Bodmin</td><td>South West</td><td>4.7 <span class="meta">(provisional)</span></td><td>59.7%</td><td>&minus;4.7</td></tr>
+<tr><td>293</td><td>Exeter</td><td>South West</td><td>4.6 <span class="meta">(provisional)</span></td><td>57.6%</td><td>&minus;5.7</td></tr>
+<tr><td>294</td><td>Redditch</td><td>West Midlands</td><td>4.5 <span class="meta">(provisional)</span></td><td>64.2%</td><td>&minus;2.2</td></tr>
+<tr><td>295</td><td>Ipswich</td><td>East of England</td><td>4.4 <span class="meta">(provisional)</span></td><td>57.2%</td><td>&minus;3.5</td></tr>
+<tr><td>295</td><td>Rochdale (Manchester)</td><td>North West</td><td>4.4 <span class="meta">(provisional)</span></td><td>59.5%</td><td>&minus;1.9</td></tr>
+<tr><td>295</td><td>Stirling</td><td>Scotland</td><td>4.4 <span class="meta">(provisional)</span></td><td>57.5%</td><td>&minus;10.2</td></tr>
+<tr><td>295</td><td>Weston-super-Mare</td><td>South West</td><td>4.4 <span class="meta">(provisional)</span></td><td>60.8%</td><td>&minus;11.6</td></tr>
+<tr><td>295</td><td>Hereford</td><td>West Midlands</td><td>4.4 <span class="meta">(provisional)</span></td><td>59.9%</td><td>&minus;11.2</td></tr>
+<tr><td>295</td><td>Scunthorpe</td><td>Yorkshire and The Humber</td><td>4.4 <span class="meta">(provisional)</span></td><td>60.2%</td><td>&minus;9.7</td></tr>
+<tr><td>301</td><td>Chesterfield</td><td>East Midlands</td><td>4.3 <span class="meta">(provisional)</span></td><td>60.0%</td><td>&minus;4.0</td></tr>
+<tr><td>301</td><td>Stevenage</td><td>East of England</td><td>4.3 <span class="meta">(provisional)</span></td><td>58.1%</td><td>&minus;18.4</td></tr>
+<tr><td>301</td><td>Banbury</td><td>South East</td><td>4.3 <span class="meta">(provisional)</span></td><td>61.5%</td><td>&minus;12.8</td></tr>
+<tr><td>301</td><td>Camborne</td><td>South West</td><td>4.3 <span class="meta">(provisional)</span></td><td>63.8%</td><td>&minus;1.3</td></tr>
+<tr><td>305</td><td>Inverness (Longman Drive)</td><td>Scotland</td><td>3.9 <span class="meta">(provisional)</span></td><td>63.7%</td><td>&minus;3.0</td></tr>
+<tr><td>305</td><td>Canterbury</td><td>South East</td><td>3.9 <span class="meta">(provisional)</span></td><td>61.6%</td><td>&minus;1.5</td></tr>
+<tr><td>307</td><td>Basildon</td><td>East of England</td><td>3.6 <span class="meta">(provisional)</span></td><td>60.5%</td><td>+0.5</td></tr>
+<tr><td>307</td><td>Southall (London)</td><td>London</td><td>3.6 <span class="meta">(provisional)</span></td><td>57.1%</td><td>&minus;1.5</td></tr>
+<tr><td>307</td><td>Galashiels</td><td>Scotland</td><td>3.6 <span class="meta">(provisional)</span></td><td>61.3%</td><td>&minus;9.0</td></tr>
+<tr><td>310</td><td>Hull</td><td>Yorkshire and The Humber</td><td>3.4 <span class="meta">(provisional)</span></td><td>72.5%</td><td>&minus;15.6</td></tr>
+<tr><td>311</td><td>Scarborough</td><td>Yorkshire and The Humber</td><td>3.1 <span class="meta">(provisional)</span></td><td>59.8%</td><td>&minus;5.8</td></tr>
+<tr><td>312</td><td>Yeading (London)</td><td>London</td><td>2.7 <span class="meta">(provisional)</span></td><td>72.0%</td><td>&minus;1.6</td></tr>
+<tr><td>313</td><td>Enfield (Brancroft Way)</td><td>London</td><td>2.6 <span class="meta">(provisional)</span></td><td>84.0%</td><td>&minus;0.9</td></tr>
+<tr><td>314</td><td>Medway Ambley Road</td><td>South East</td><td>2.4 <span class="meta">(provisional)</span></td><td>96.8%</td><td>&ndash;</td></tr>
+<tr><td>315</td><td>Enfield (Innova Business Park)</td><td>London</td><td>2.3 <span class="meta">(provisional)</span></td><td>72.4%</td><td>&minus;10.4</td></tr>
+<tr><td>316</td><td>Ullapool</td><td>Scotland</td><td>1.7 <span class="meta">(provisional)</span></td><td>80.0%</td><td>&minus;3.8</td></tr>
+<tr><td>317</td><td>Carlisle LGV (Cars)<sup><a href="#note-lgv-cars">1</a></sup></td><td>North West</td><td>0.4 <span class="meta">(provisional)</span></td><td>100.0%</td><td>&ndash;</td></tr>
+<tr><td>&ndash;</td><td>Isle of Mull</td><td>Scotland</td><td>&ndash; <span class="meta">(provisional)</span></td><td>&ndash;</td><td>&ndash;</td></tr>
+<tr><td>&ndash;</td><td>Isle of Tiree</td><td>Scotland</td><td>&ndash; <span class="meta">(provisional)</span></td><td>&ndash;</td><td>&ndash;</td></tr>
+<tr><td>&ndash;</td><td>Stornoway</td><td>Scotland</td><td>&ndash; <span class="meta">(provisional)</span></td><td>&ndash;</td><td>&ndash;</td></tr>
+</tbody></table></div>
+<p class="note" id="note-lgv-cars"><sup>1</sup> DVSA lists Carlisle LGV (Cars) separately from Carlisle, and its notes do not explain the name. It has a row in 47 of the 94 months in this table (the first is June 2019), and DVSA gives no slot figures for it in October 2026.</p>
 <!-- /driving-waits:centres -->
 
 <h2>Regions, latest month</h2>
 <!-- driving-waits:regions -->
+<div class="table-wrap"><table><thead><tr><th>Area</th><th>Country</th><th>Median wait (weeks)</th><th>Taken within 7 weeks</th><th>Change over 12 months (weeks)</th><th>Tests conducted</th><th>Pass rate</th></tr></thead>
+<tbody>
+<tr><td>Great Britain</td><td>Great Britain</td><td>10.3</td><td>43.4%</td><td>&minus;1.3</td><td>198,110</td><td>50.8%</td></tr>
+<tr><td>England</td><td>England</td><td>10.3</td><td>43.8%</td><td>&minus;1.3</td><td>175,420</td><td>50.7%</td></tr>
+<tr><td>Scotland</td><td>Scotland</td><td>13.6</td><td>37.0%</td><td>&minus;0.8</td><td>13,935</td><td>49.9%</td></tr>
+<tr><td>Wales</td><td>Wales</td><td>8.0</td><td>46.7%</td><td>&minus;0.6</td><td>8,755</td><td>53.4%</td></tr>
+<tr><td>East Midlands</td><td>England</td><td>9.9</td><td>43.9%</td><td>&minus;4.2</td><td>15,330</td><td>52.6%</td></tr>
+<tr><td>East of England</td><td>England</td><td>10.4</td><td>44.0%</td><td>&minus;1.2</td><td>19,862</td><td>52.3%</td></tr>
+<tr><td>London</td><td>England</td><td>12.0</td><td>43.6%</td><td>&minus;1.6</td><td>25,943</td><td>48.7%</td></tr>
+<tr><td>North East</td><td>England</td><td>12.7</td><td>37.8%</td><td>+1.4</td><td>7,762</td><td>50.0%</td></tr>
+<tr><td>North West</td><td>England</td><td>11.0</td><td>41.4%</td><td>+1.0</td><td>24,196</td><td>50.3%</td></tr>
+<tr><td>South East</td><td>England</td><td>9.6</td><td>45.5%</td><td>&minus;2.7</td><td>25,298</td><td>53.9%</td></tr>
+<tr><td>South West</td><td>England</td><td>7.9</td><td>48.1%</td><td>&minus;2.7</td><td>16,427</td><td>52.4%</td></tr>
+<tr><td>West Midlands</td><td>England</td><td>10.3</td><td>43.2%</td><td>&minus;1.4</td><td>22,496</td><td>45.8%</td></tr>
+<tr><td>Yorkshire and The Humber</td><td>England</td><td>10.0</td><td>43.7%</td><td>&minus;1.0</td><td>18,106</td><td>51.2%</td></tr>
+</tbody></table></div>
 <!-- /driving-waits:regions -->
 
 <h2>Tests conducted and passed, by quarter</h2>
 <!-- driving-waits:national -->
+<div class="table-wrap"><table><thead><tr><th>Period</th><th>Tests conducted</th><th>Tests passed</th><th>Pass rate</th></tr></thead>
+<tbody>
+<tr><td>2007 to 2008</td><td>1,762,148</td><td>779,207</td><td>44.2%</td></tr>
+<tr><td>2008 to 2009</td><td>1,738,992</td><td>787,618</td><td>45.3%</td></tr>
+<tr><td>2009 to 2010</td><td>1,533,738</td><td>703,859</td><td>45.9%</td></tr>
+<tr><td>2010 to 2011</td><td>1,605,599</td><td>744,058</td><td>46.3%</td></tr>
+<tr><td>2011 to 2012</td><td>1,569,069</td><td>736,158</td><td>46.9%</td></tr>
+<tr><td>2012 to 2013</td><td>1,436,481</td><td>677,255</td><td>47.1%</td></tr>
+<tr><td>2013 to 2014</td><td>1,477,585</td><td>695,580</td><td>47.1%</td></tr>
+<tr><td>2014 to 2015</td><td>1,532,504</td><td>718,712</td><td>46.9%</td></tr>
+<tr><td>2015 to 2016</td><td>1,537,735</td><td>723,444</td><td>47.0%</td></tr>
+<tr><td>2016 to 2017</td><td>1,730,936</td><td>815,168</td><td>47.1%</td></tr>
+<tr><td>2017 to 2018</td><td>1,718,519</td><td>795,892</td><td>46.3%</td></tr>
+<tr><td>2018 to 2019</td><td>1,664,219</td><td>761,972</td><td>45.8%</td></tr>
+<tr><td>2019 to 2020</td><td>1,599,566</td><td>734,600</td><td>45.9%</td></tr>
+<tr><td>2020 to 2021</td><td>437,352</td><td>217,807</td><td>49.8%</td></tr>
+<tr><td>2021 to 2022</td><td>1,538,314</td><td>751,914</td><td>48.9%</td></tr>
+<tr><td>2022 to 2023</td><td>1,688,955</td><td>816,775</td><td>48.4%</td></tr>
+<tr><td>2023 to 2024</td><td>1,945,225</td><td>931,494</td><td>47.9%</td></tr>
+<tr><td>2024 to 2025</td><td>1,839,817</td><td>895,368</td><td>48.7%</td></tr>
+<tr><td>2025 to 2026</td><td>1,998,621</td><td>1,000,043</td><td>50.0%</td></tr>
+<tr><td>2026 to 2027 (ytd)</td><td>543,773</td><td>278,836</td><td>51.3%</td></tr>
+<tr><td>2024 to 2025 Q2 July to September</td><td>448,687</td><td>219,516</td><td>48.9%</td></tr>
+<tr><td>2024 to 2025 Q3 October to December</td><td>454,657</td><td>221,792</td><td>48.8%</td></tr>
+<tr><td>2024 to 2025 Q4 January to March</td><td>466,527</td><td>228,185</td><td>48.9%</td></tr>
+<tr><td>2025 to 2026 Q1 April to June</td><td>449,874</td><td>225,595</td><td>50.1%</td></tr>
+<tr><td>2025 to 2026 Q2 July to September</td><td>485,114</td><td>243,579</td><td>50.2%</td></tr>
+<tr><td>2025 to 2026 Q3 October to December</td><td>515,022</td><td>255,701</td><td>49.6%</td></tr>
+<tr><td>2025 to 2026 Q4 January to March</td><td>548,611</td><td>275,168</td><td>50.2%</td></tr>
+<tr><td>2026 to 2027 Q1 April to June</td><td>543,773</td><td>278,836</td><td>51.3%</td></tr>
+</tbody></table></div>
 <!-- /driving-waits:national -->
 
 <h2>Method and source</h2>
 <p>Source: DVSA, <a href="https://www.gov.uk/government/statistical-data-sets/driving-test-and-theory-test-data-cars">Driving test and theory test data: cars</a> (tables DRT122F, DRT121G and DRT121A), published monthly on the second Wednesday, with the quarterly national table.</p>
 <!-- driving-waits:method -->
+<p class="method">The waits are the Driver and Vehicle Standards Agency (DVSA) figures for car practical driving tests, as DVSA publishes them each month: table DRT122F by test centre and table DRT121G by region. medianWaitWeeks is DVSA&#x27;s median wait in weeks; the share columns are DVSA&#x27;s percentages of tests taken within 7 weeks, between 7 and 14 weeks, between 14 and 21 weeks and after more than 21 weeks. The only arithmetic here is rank and change: rank orders the open centres that have a median wait in a month, longest wait first, and centres with the same median share a rank; change3m, change6m and change12m are the month&#x27;s median wait minus the same centre&#x27;s (or region&#x27;s) median wait 3, 6 and 12 months earlier, in weeks to two decimal places, and are blank when either month has no figure. DVSA&#x27;s shorthand ([n] no tests conducted, [r] redacted because of 10 or fewer, [x] not available, [z] not applicable, [rv] revised, [c] confidential, and N/A) is kept in suppressed and nothing is filled in. A centre DVSA shows as closed has centreStatus closed and no rank; a centre DVSA marks closed in some months and open in others keeps one key, and changes are not adjusted for this. provisional is true for months DVSA publishes as provisional (data since April 2025, at the date of this release). This page is not published by DVSA and carries no endorsement from it. It is not a booking tool: it cannot be used to find or book a test.</p>
 <!-- /driving-waits:method -->
 
 <h2>Columns</h2>
 <p>The CSV columns for the test-centre file, in this order; each JSON row has the same keys.</p>
 <!-- driving-waits:columns -->
+<div class="table-wrap"><table><thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>month</code></td><td>The month the figures are for (YYYY-MM)</td></tr>
+<tr><td><code>country</code></td><td>England, Scotland or Wales</td></tr>
+<tr><td><code>region</code></td><td>DVSA&#x27;s region</td></tr>
+<tr><td><code>centreKey</code></td><td>A stable key from the region and the centre name: region.centre, lower case</td></tr>
+<tr><td><code>centre</code></td><td>The test centre&#x27;s name as DVSA gives it, without the closed-centre prefix</td></tr>
+<tr><td><code>centreStatus</code></td><td>open, or closed when DVSA marks the centre closed</td></tr>
+<tr><td><code>medianWaitWeeks</code></td><td>DVSA&#x27;s median wait for a test, in weeks</td></tr>
+<tr><td><code>shareWithin7Weeks</code></td><td>DVSA&#x27;s percentage of tests taken within 7 weeks</td></tr>
+<tr><td><code>share7to14</code></td><td>DVSA&#x27;s percentage taken between 7 and 14 weeks</td></tr>
+<tr><td><code>share14to21</code></td><td>DVSA&#x27;s percentage taken between 14 and 21 weeks</td></tr>
+<tr><td><code>shareOver21</code></td><td>DVSA&#x27;s percentage taken after more than 21 weeks</td></tr>
+<tr><td><code>slotsOvertime</code></td><td>Test slots provided through overtime</td></tr>
+<tr><td><code>slotsInWindow</code></td><td>Standard test slots DVSA offered in the next 24 weeks (18 weeks until May 2021), counted on the last Monday of the month</td></tr>
+<tr><td><code>slotsBooked</code></td><td>Of those, the number booked</td></tr>
+<tr><td><code>slotsAvailable</code></td><td>Of those, the number still available to book</td></tr>
+<tr><td><code>slotsAvailablePct</code></td><td>Of those, the percentage still available to book</td></tr>
+<tr><td><code>weeksTo10pcAvailability</code></td><td>Weeks until 10% or more of weekly test appointments are still available to book (the current week is week 1), as DVSA gives it</td></tr>
+<tr><td><code>provisional</code></td><td>true when DVSA publishes the month as provisional</td></tr>
+<tr><td><code>suppressed</code></td><td>DVSA redaction codes kept as field=code, separated by semicolons; blank when none</td></tr>
+<tr><td><code>rank</code></td><td>Rank of the centre in that month by median wait, 1 = longest, among open centres with a median wait</td></tr>
+<tr><td><code>change3m</code></td><td>medianWaitWeeks minus the same centre&#x27;s 3 months earlier, in weeks; blank if either is missing</td></tr>
+<tr><td><code>change6m</code></td><td>The same over 6 months</td></tr>
+<tr><td><code>change12m</code></td><td>The same over 12 months</td></tr>
+<tr><td><code>source</code></td><td>DVSA table the row comes from</td></tr>
+<tr><td><code>licence</code></td><td>OGL v3.0</td></tr>
+<tr><td><code>vintage</code></td><td>The date of the DVSA monthly release the file was built from (YYYY-MM-DD)</td></tr>
+</tbody></table></div>
 <!-- /driving-waits:columns -->
 <p>Questions or corrections: <a href="mailto:info@yappman.com">info@yappman.com</a>. More from Yappman Data: <a href="/actors/">our Actors</a>.</p>
 </main>

@@ -1,0 +1,14 @@
+Driving test waits in Great Britain, by test centre
+https://data.yappman.com/driving-test-wait-index/
+
+Download: driving-test-waits-latest.csv and .json (test centres, all months in the CSV, the latest 24 months in the JSON),
+driving-test-waits-regions-latest.csv and .json (regions), driving-test-national-latest.csv and .json (quarterly, national).
+Latest data: October 2026, from the DVSA release of 2026-11-11.
+Rank and the 3, 6 and 12-month changes are our arithmetic on DVSA's own figures; DVSA's redaction codes are kept, not filled in.
+Not published by DVSA, and carrying no endorsement from it. It cannot be used to find or book a test.
+
+Licence: Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+Contains public sector information licensed under the Open Government Licence v3.0.
+Source: Driver and Vehicle Standards Agency (DVSA), Driving test and theory test data: cars, https://www.gov.uk/government/statistical-data-sets/driving-test-and-theory-test-data-cars.
+
+Cite: Yappman Data, Driving test waits in Great Britain, by test centre, data to 2026-10, https://data.yappman.com/driving-test-wait-index/, with the attribution above.
