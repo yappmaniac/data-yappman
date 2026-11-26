@@ -77,9 +77,11 @@ METHOD = (
     'between 14 and 21 weeks and after more than 21 weeks. The only arithmetic here is rank and change: rank orders the open '
     'centres that have a median wait in a month, longest wait first, and centres with the same median share a rank; change3m, '
     'change6m and change12m are the month\'s median wait minus the same centre\'s (or region\'s) median wait 3, 6 and 12 '
-    'months earlier, in weeks, and are blank when either month has no figure. DVSA\'s redaction codes ([x], [n], [r], [z], '
-    '[rv]) are kept in suppressed and nothing is filled in. A centre DVSA shows as closed has centreStatus closed and no rank. '
-    'provisional is true for months DVSA publishes as provisional. This is not an official statistic and is not published by '
+    'months earlier, in weeks to two decimal places, and are blank when either month has no figure. DVSA\'s shorthand ([n] no '
+    'tests conducted, [r] redacted because of 10 or fewer, [x] not available, [z] not applicable, [rv] revised, [c] '
+    'confidential, and N/A) is kept in suppressed and nothing is filled in. A centre DVSA shows as closed has centreStatus '
+    'closed and no rank. provisional is true for months DVSA publishes as provisional (data since April 2025, at the date of '
+    'this release). This is not an official statistic and is not published by '
     'DVSA. It does not show test slots and cannot be used to book or find one.'
 )
 # (column, meaning): one source for the page's Columns table and the JSON-LD
@@ -90,10 +92,11 @@ _FIGURES = (
     ('share14to21', 'DVSA\'s percentage taken between 14 and 21 weeks'),
     ('shareOver21', 'DVSA\'s percentage taken after more than 21 weeks'),
     ('slotsOvertime', 'Test slots provided through overtime'),
-    ('slotsInWindow', 'Standard tests made available within the booking window (24 weeks)'),
+    ('slotsInWindow', 'Standard test slots DVSA offered in the next 24 weeks (18 weeks until May 2021), counted on the last Monday of the month'),
     ('slotsBooked', 'Of those, the number booked'),
-    ('slotsAvailable', 'Of those, the number still available'),
-    ('weeksTo10pcAvailability', 'Weeks to 10% or more weekly appointment availability, as DVSA gives it'),
+    ('slotsAvailable', 'Of those, the number still available to book'),
+    ('slotsAvailablePct', 'Of those, the percentage still available to book'),
+    ('weeksTo10pcAvailability', 'Weeks until 10% or more of weekly test appointments are still available to book (the current week is week 1), as DVSA gives it'),
 )
 CENTRE_COLUMNS = (
     ('month', 'The month the figures are for (YYYY-MM)'),
@@ -113,9 +116,27 @@ CENTRE_COLUMNS = (
     ('licence', 'OGL v3.0'),
     ('vintage', 'The date of the DVSA monthly release the file was built from (YYYY-MM-DD)'),
 )
-REGION_COLUMNS = tuple(c for c in CENTRE_COLUMNS if c[0] not in ('centreKey', 'centre', 'centreStatus', 'rank'))
+REGION_COLUMNS = (
+    ('month', 'The month the figures are for (YYYY-MM)'),
+    ('level', 'Country or Region, as DVSA gives it'),
+    ('country', 'England, Scotland, Wales or Great Britain (a region carries its country)'),
+    ('region', 'The country or region the row is for: Great Britain, England, Scotland, Wales or one of DVSA\'s regions'),
+    ('testsConducted', 'Total tests conducted with an outcome'),
+    ('testsPassed', 'Tests passed'),
+    ('passRatePct', 'DVSA\'s pass rate in percent'),
+) + tuple(c for c in _FIGURES) + (
+    ('provisional', 'true when DVSA publishes the month as provisional'),
+    ('suppressed', 'DVSA shorthand kept as field=code, separated by semicolons; blank when none'),
+    ('change3m', 'medianWaitWeeks minus the same area\'s 3 months earlier, in weeks; blank if either is missing'),
+    ('change6m', 'The same over 6 months'),
+    ('change12m', 'The same over 12 months'),
+    ('source', 'DVSA table the row comes from'),
+    ('licence', 'OGL v3.0'),
+    ('vintage', 'The date of the DVSA monthly release the file was built from (YYYY-MM-DD)'),
+)
 NATIONAL_COLUMNS = (
-    ('period', 'The quarter, as DVSA writes it'),
+    ('interval', 'Financial Quarter or Financial Year, as DVSA gives it'),
+    ('period', 'The quarter or year as DVSA writes it, e.g. 2026 to 2027 Q1 April to June'),
     ('testsConducted', 'Tests conducted, as DVSA gives it'),
     ('testsPassed', 'Tests passed, as DVSA gives it'),
     ('passRatePct', 'DVSA\'s pass rate in percent'),
@@ -126,6 +147,7 @@ NATIONAL_COLUMNS = (
 )
 COLUMN_SETS = {'driving-test-waits': CENTRE_COLUMNS, 'driving-test-waits-regions': REGION_COLUMNS,
                'driving-test-national': NATIONAL_COLUMNS}
+NATIONAL_QUARTERS_SHOWN = 8       # the page lists every financial year and the latest 8 quarters; the files hold all
 JSON_MONTHS = 24                  # the centre JSON holds the latest 24 months only (served-tree size); the CSV holds all
 MIN_CENTRES, MAX_CENTRES = 150, 500   # open and closed centre rows in any month: far outside is a fault, not a change
 MONTH_ROW_CHANGE = 0.20
@@ -279,16 +301,22 @@ def centre_record(row: dtw.WaitRow, vintage: str) -> dict[str, Any]:
 
 
 def region_record(row: dtw.WaitRow, vintage: str) -> dict[str, Any]:
-    full = centre_record(row, vintage)
-    full['source'] = 'DRT121G'
-    return {name: full[name] if name in full else None for name, _ in REGION_COLUMNS} | {
-        'change3m': row.change3m, 'change6m': row.change6m, 'change12m': row.change12m}
+    v = row.values
+    return {
+        'month': row.month, 'level': row.level, 'country': row.country, 'region': row.region,
+        **{name: v[name] for name in ('testsConducted', 'testsPassed', 'passRatePct')},
+        **{name: v[name] for name, _ in _FIGURES},
+        'provisional': row.provisional, 'suppressed': _suppressed_text(row.suppressed, dtw.REGION_FIELDS) or None,
+        'change3m': row.change3m, 'change6m': row.change6m, 'change12m': row.change12m,
+        'source': 'DRT121G', 'licence': LICENCE_SHORT, 'vintage': vintage,
+    }
 
 
 def national_record(item: dict[str, Any], vintage: str) -> dict[str, Any]:
     order = ('testsConducted', 'testsPassed', 'passRatePct')
-    return {'period': item['period'], 'testsConducted': item['testsConducted'], 'testsPassed': item['testsPassed'],
-            'passRatePct': item['passRatePct'], 'suppressed': _suppressed_text(item['suppressed'], order) or None,
+    return {'interval': item['interval'], 'period': item['period'], 'testsConducted': item['testsConducted'],
+            'testsPassed': item['testsPassed'], 'passRatePct': item['passRatePct'],
+            'suppressed': _suppressed_text(item['suppressed'], order) or None,
             'source': 'DRT121A', 'licence': LICENCE_SHORT, 'vintage': vintage}
 
 
@@ -305,13 +333,16 @@ def _csv_bytes(columns: tuple[tuple[str, str], ...], records: list[dict[str, Any
 def _json_bytes(table_meta: dict[str, Any], columns: tuple[tuple[str, str], ...],
                 records: list[dict[str, Any]]) -> bytes:
     document = {**table_meta, 'columns': [n for n, _ in columns], 'rows': records}
-    return (json.dumps(document, ensure_ascii=False, indent=1) + '\n').encode('utf-8')
+    return (json.dumps(document, ensure_ascii=False, separators=(',', ':')) + '\n').encode('utf-8')
 
 
 def build_table(facts: dict[str, Any], files: dict[str, bytes]) -> Table:
     """Parse, derive and serialise. Raises dtw.LayoutError (exit 3) from the parsers."""
     centres = dtw.read_table(files['DRT122F'], dtw.parse_centres)
-    regions = dtw.read_table(files['DRT121G'], dtw.parse_regions)
+    region_country: dict[str, str] = {}
+    for row in centres:
+        region_country.setdefault(row.region, row.country)
+    regions = dtw.read_table(files['DRT121G'], dtw.parse_regions, region_country)
     national = dtw.read_table(files['DRT121A'], dtw.parse_national)
     dtw.derive(centres)
     dtw.derive(regions)
@@ -496,14 +527,19 @@ def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
     if closed:
         rows.append(f'<p class="note">{len(closed)} centre{"s" if len(closed) != 1 else ""} DVSA shows as closed this month '
                     f'{"are" if len(closed) != 1 else "is"} left out of the table and have no rank; {"they are" if len(closed) != 1 else "it is"} in the files.</p>')
-    reg = ['<div class="table-wrap"><table><thead><tr><th>Country</th><th>Region</th><th>Median wait (weeks)</th>'
-           '<th>Taken within 7 weeks</th><th>Change over 12 months (weeks)</th></tr></thead>', '<tbody>']
-    for r in sorted((r for r in table.regions if r.month == table.month), key=lambda r: (r.country, r.region)):
-        reg.append(f'<tr><td>{e(r.country)}</td><td>{e(r.region)}</td><td>{_weeks(r.values["medianWaitWeeks"])}</td>'
-                   f'<td>{_pct(r.values["shareWithin7Weeks"])}</td><td>{_change(r.change12m)}</td></tr>')
+    reg = ['<div class="table-wrap"><table><thead><tr><th>Area</th><th>Country</th><th>Median wait (weeks)</th>'
+           '<th>Taken within 7 weeks</th><th>Change over 12 months (weeks)</th><th>Tests conducted</th><th>Pass rate</th></tr></thead>',
+           '<tbody>']
+    for r in sorted((r for r in table.regions if r.month == table.month), key=lambda r: (r.level != 'Country', r.country, r.region)):
+        tests = r.values['testsConducted']
+        reg.append(f'<tr><td>{e(r.region)}</td><td>{e(r.country)}</td><td>{_weeks(r.values["medianWaitWeeks"])}</td>'
+                   f'<td>{_pct(r.values["shareWithin7Weeks"])}</td><td>{_change(r.change12m)}</td>'
+                   f'<td>{"&ndash;" if tests is None else format(tests, ",")}</td><td>{_pct(r.values["passRatePct"])}</td></tr>')
     reg.append('</tbody></table></div>')
-    nat = ['<div class="table-wrap"><table><thead><tr><th>Quarter</th><th>Tests conducted</th><th>Tests passed</th><th>Pass rate</th></tr></thead>', '<tbody>']
-    for n in table.national:
+    nat = ['<div class="table-wrap"><table><thead><tr><th>Period</th><th>Tests conducted</th><th>Tests passed</th><th>Pass rate</th></tr></thead>', '<tbody>']
+    quarters = [n for n in table.national if n['interval'] == 'Financial Quarter'][-NATIONAL_QUARTERS_SHOWN:]
+    years = [n for n in table.national if n['interval'] == 'Financial Year']
+    for n in years + quarters:
         nat.append(f'<tr><td>{e(n["period"])}</td><td>{"&ndash;" if n["testsConducted"] is None else format(n["testsConducted"], ",")}</td>'
                    f'<td>{"&ndash;" if n["testsPassed"] is None else format(n["testsPassed"], ",")}</td><td>{_pct(n["passRatePct"])}</td></tr>')
     nat.append('</tbody></table></div>')
@@ -518,7 +554,7 @@ def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
         'isBasedOn': SOURCE_PAGE,
         'citation': ATTRIBUTION[0],
         'keywords': ['Great Britain', 'driving test', 'DVSA', 'test centre', 'waiting time', 'practical driving test'],
-        'spatialCoverage': 'Great Britain', 'temporalCoverage': f'{dtw.FIRST_MONTH}/{table.month}', 'dateModified': table.vintage,
+        'spatialCoverage': 'Great Britain', 'temporalCoverage': f'{dtw.FIRST_MONTH}-01/{table.month}-01', 'dateModified': table.vintage,
         'distribution': [{'@type': 'DataDownload', 'name': f'{label}, {fmt.upper()}', 'encodingFormat': mime,
                           'contentUrl': f'https://data.yappman.com/data/driving-test-waits/{stem}-latest.{fmt}'}
                          for stem, label in (('driving-test-waits', 'Centres, all months'), ('driving-test-waits-regions', 'Regions'),

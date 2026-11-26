@@ -15,18 +15,20 @@ import driving_test_waits as dtw  # noqa: E402
 from dvsa_ods_fixture import Date, Num, make_ods  # noqa: E402
 
 CENTRE_HEAD = [t for _, t in dtw.CENTRE_HEADERS]
-REGION_HEAD = [t for _, t in dtw.REGION_HEADERS]
+REAL_STYLE_HEAD = [t.capitalize() + (f' [note {i}]' if i > 3 else '') for i, t in enumerate(CENTRE_HEAD)]
 
 
 def centre_row(country='England', region='London', centre='Alpha Town', month='2026-10', over=Num(120, '120'),
-               tenpc=3, median=6.5, shares=(60, 25, 10, 5), window=Num(1500, '1,500'), booked=1200, avail=300):
+               tenpc=3, median=6.5, shares=(60, 25, 10, 5), window=Num(1500, '1,500'), booked=1200, avail=300, pct=20.0,
+               marker='[z]'):
     return [country, region, centre, Date(f'{month}-01') if isinstance(month, str) and len(month) == 7 else month,
-            over, tenpc, median, *shares, window, booked, avail]
+            over, tenpc, median, *shares, window, booked, avail, pct, marker]
 
 
 def centre_file(rows, *, head=None, extra_sheets=None, after=()):
     sheets = {'Contents': [['Table', 'Description'], ['DRT122F', 'Waits']], 'Notes': [['Some notes']]}
-    sheets['DRT122F'] = [['DRT122F: invented title'], [], head or CENTRE_HEAD, *rows, *after]
+    sheets['DRT122F'] = [['Invented title [notes 1, 2]'], ['This worksheet contains one table.'], ['Some shorthand is used.'],
+                         head or CENTRE_HEAD, *rows, *after]
     sheets.update(extra_sheets or {})
     return make_ods(sheets)
 
@@ -67,6 +69,25 @@ class Centres(unittest.TestCase):
                                           'share14to21': 'rv', 'shareOver21': 'z'})
         self.assertIsNone(row.values['weeksTo10pcAvailability'])             # blank: no value, no code
         self.assertNotIn('weeksTo10pcAvailability', row.suppressed)
+
+    def test_the_number_and_code_forms_the_real_files_use(self) -> None:
+        row = parse([centre_row(median='68.599999999999994', shares=('8.5178875638841606E-1', '49.14821124361159', 30, 20),
+                                window='1,016', booked='6.8571428571428603'.replace('.8571428571428603', ''), pct='N/A')])[0]
+        self.assertEqual(row.values['medianWaitWeeks'], 68.6)                  # spreadsheet noise rounded at the 16th digit
+        self.assertEqual(row.values['shareWithin7Weeks'], 0.851788756388416)   # scientific notation text
+        self.assertEqual(row.values['slotsInWindow'], 1016)
+        self.assertIsNone(row.values['slotsAvailablePct'])
+        self.assertEqual(row.suppressed, {'slotsAvailablePct': 'N/A'})
+        self.assertEqual(dtw.parse_cell('6.8571428571428603', where='t')[0], dtw.Decimal('6.85714285714286'))
+        self.assertEqual(dtw.parse_cell('[c]', where='t'), (None, 'c'))         # DRT121A and B use [c] confidential
+
+    def test_the_notes_column_is_only_a_marker(self) -> None:
+        self.assertEqual(len(parse([centre_row(marker='[Z]'), centre_row(centre='Beta Road', marker='')])), 2)
+        with self.assertRaises(dtw.LayoutError):
+            parse([centre_row(marker='see the note')])
+
+    def test_real_style_headers_with_note_marks_and_capitals_match(self) -> None:
+        self.assertEqual(len(parse([centre_row()], head=REAL_STYLE_HEAD)), 1)
 
     def test_an_unknown_code_or_text_is_refused(self) -> None:
         for bad in ('[q]', 'n/a', '12 weeks', '[x', '1.2.3'):
@@ -135,27 +156,69 @@ class Centres(unittest.TestCase):
         self.assertIn('doctype-or-entity-refused', caught.exception.reason)
 
 
+REGION_HEAD = [t for _, t in dtw.REGION_HEADERS]
+REGION_COUNTRY = {'London': 'England', 'Yorkshire and The Humber': 'England', 'Scotland': 'Scotland', 'Wales': 'Wales'}
+
+
+def region_row(level='Region', area='London', month='2026-10', tests=Num(18106, '18,106'), passed=9263, rate=51.2,
+               shares=(43.7, 19.0, 18.9, 18.4), marker='[z]'):
+    return [level, area, Date(f'{month}-01'), tests, passed, rate, 3434, 17.5, 10, *shares, 60221, 47055, 13166, 21.9, marker]
+
+
+def region_file(rows):
+    return make_ods({'Cover_sheet': [['x']], 'DRT121G': [['Invented title'], ['one table'], ['shorthand'], REGION_HEAD, *rows]})
+
+
 class Regions(unittest.TestCase):
-    def test_region_table_and_great_britain_row(self) -> None:
-        head = REGION_HEAD
-        rows = [['England', 'London', Date('2026-10-01'), 100, 3, 7.0, 55, 25, 12, 8, 90_000, 70_000, 20_000],
-                ['Great Britain', 'Great Britain', Date('2026-10-01'), 300, 3, 7.5, 50, 30, 12, 8, 400_000, 300_000, 100_000]]
-        out = dtw.read_table(make_ods({'DRT121G': [head, *rows]}), dtw.parse_regions)
-        self.assertEqual([r.region for r in out], ['London', 'Great Britain'])
-        self.assertIsNone(out[0].centreKey)
-        with self.assertRaises(dtw.LayoutError):
-            dtw.read_table(make_ods({'DRT121G': [head, ['Mars', 'x', Date('2026-10-01')] + [1] * 10]}), dtw.parse_regions)
+    def test_country_and_region_rows_with_their_countries(self) -> None:
+        out = dtw.read_table(region_file([region_row('Country', 'Great Britain'), region_row('Country', 'England'),
+                                          region_row('Region', 'London'), region_row('Region', 'Scotland')]),
+                             dtw.parse_regions, REGION_COUNTRY)
+        self.assertEqual([(r.level, r.country, r.region) for r in out],
+                         [('Country', 'Great Britain', 'Great Britain'), ('Country', 'England', 'England'),
+                          ('Region', 'England', 'London'), ('Region', 'Scotland', 'Scotland')])
+        self.assertEqual(out[2].values['testsConducted'], 18106)               # text "18,106"
+        self.assertEqual(out[2].values['passRatePct'], 51.2)
+        self.assertEqual(len({r.key for r in out}), 4)                          # Country Scotland and Region Scotland differ
+
+    def test_the_two_spellings_of_yorkshire_are_one_region(self) -> None:
+        out = dtw.read_table(region_file([region_row(area='Yorkshire and the Humber', month='2026-09'),
+                                          region_row(area='Yorkshire and The Humber', month='2026-10')]),
+                             dtw.parse_regions, REGION_COUNTRY)
+        self.assertEqual({r.region for r in out}, {'Yorkshire and The Humber'})
+
+    def test_refusals(self) -> None:
+        for bad in (region_row('City', 'London'), region_row('Region', 'Mars'), region_row('Country', 'London'),
+                    region_row(passed=99999), region_row(marker='free text')):
+            with self.assertRaises(dtw.LayoutError, msg=str(bad)):
+                dtw.read_table(region_file([bad]), dtw.parse_regions, REGION_COUNTRY)
+        with self.assertRaises(dtw.LayoutError):                                # an area twice in a month
+            dtw.read_table(region_file([region_row(), region_row()]), dtw.parse_regions, REGION_COUNTRY)
+
+
+NATIONAL_HEAD = [t for _, t in dtw.NATIONAL_HEADERS]
+
+
+def national_file(rows):
+    return make_ods({'Cover_Sheet': [['x']], 'DRT121A': [['Invented title'], ['DRT121A'], ['one table'], ['In columns C and D'],
+                                                         ['shorthand'], NATIONAL_HEAD, *rows]})
 
 
 class National(unittest.TestCase):
-    def test_quarterly_rows(self) -> None:
-        head = [t for _, t in dtw.NATIONAL_HEADERS]
-        out = dtw.read_table(make_ods({'DRT121A': [head, ['Q1 2026', Num(500000, '500,000'), 250000, 50.0],
-                                                    ['Q2 2026', '[x]', '[x]', '[x]']]}), dtw.parse_national)
-        self.assertEqual(out[0]['testsConducted'], 500000)
-        self.assertEqual(out[1]['suppressed'], {'testsConducted': 'x', 'testsPassed': 'x', 'passRatePct': 'x'})
-        with self.assertRaises(dtw.LayoutError):
-            dtw.read_table(make_ods({'DRT121A': [head, ['Q1', 1, 1, 150]]}), dtw.parse_national)
+    def test_quarters_years_and_codes(self) -> None:
+        out = dtw.read_table(national_file([
+            ['Financial Quarter', '2007 to 2008 Q1 April to June', 413585, 183571, 44.385313779999997, '[z]'],
+            ['Financial Year', '2026 to 2027 (ytd)', Num(543773, '543,773'), 278836, 51.278014906955697, '[z]'],
+            ['Financial Quarter', '2020 to 2021 Q1 April to June', '[c]', '[c]', '[c]', '[z]']]), dtw.parse_national)
+        self.assertEqual((out[0]['interval'], out[0]['testsConducted'], out[0]['passRatePct']), ('Financial Quarter', 413585, 44.3853137800000))
+        self.assertEqual(out[1]['period'], '2026 to 2027 (ytd)')
+        self.assertEqual(out[2]['suppressed'], {'testsConducted': 'c', 'testsPassed': 'c', 'passRatePct': 'c'})
+
+    def test_refusals(self) -> None:
+        for bad in (['Month', 'x', 1, 1, 1.0, '[z]'], ['Financial Quarter', 'x', 1, 1, 150, '[z]'],
+                    ['Financial Quarter', 'x', 1, 5, 1.0, '[z]'], ['Financial Quarter', '', 1, 1, 1.0, '[z]']):
+            with self.assertRaises(dtw.LayoutError, msg=str(bad)):
+                dtw.read_table(national_file([bad]), dtw.parse_national)
 
 
 class Derive(unittest.TestCase):

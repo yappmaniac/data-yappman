@@ -27,8 +27,8 @@ REAL = site.REPO
 NOW = datetime(2026, 11, 26, 19, 5, tzinfo=UTC)
 CENTRES = [('England', 'London', 'Alpha Town'), ('England', 'London', 'Beta Road'), ('Scotland', 'Highlands', 'Gamma Glen'),
            ('Wales', 'Cymru', 'Delta Bay'), ('England', 'North West', 'Echo Park')]
-REGIONS = [('England', 'London'), ('England', 'North West'), ('Scotland', 'Highlands'), ('Wales', 'Cymru'),
-           ('Great Britain', 'Great Britain')]
+AREAS = [('Country', 'Great Britain'), ('Country', 'England'), ('Country', 'Scotland'), ('Country', 'Wales'),
+         ('Region', 'London'), ('Region', 'North West'), ('Region', 'Highlands'), ('Region', 'Cymru')]
 
 
 def months(first='2019-01', last='2026-10'):
@@ -40,7 +40,7 @@ def months(first='2019-01', last='2026-10'):
 
 def numbers(ci: int, mi: int, bump: float = 0.0):
     median = 4 + ci * 1.5 + (mi % 7) * 0.5 + bump
-    return [100 + mi, 3, median, 60, 25, 10, 5, 1500, 1200, 300]
+    return [100 + mi, 3, median, 60, 25, 10, 5, 1500, 1200, 300, 20.0]
 
 
 def centre_file(*, last='2026-10', skip=None, head=None, bump=0.0, closed_from='2026-01'):
@@ -50,18 +50,22 @@ def centre_file(*, last='2026-10', skip=None, head=None, bump=0.0, closed_from='
             continue
         for ci, (country, region, centre) in enumerate(CENTRES):
             name = f'[z] {centre}' if centre == 'Echo Park' and month >= closed_from else centre
-            rows.append([country, region, name, Date(f'{month}-01'), *numbers(ci, mi, bump)])
-    return make_ods({'Contents': [['x']], 'DRT122F': [['invented title'], head or [t for _, t in dtw.CENTRE_HEADERS], *rows]})
+            rows.append([country, region, name, Date(f'{month}-01'), *numbers(ci, mi, bump), '[z]'])
+    return make_ods({'Cover_sheet': [['x']], 'Notes': [['n']],
+                     'DRT122F': [['invented title'], ['one table'], ['shorthand'], head or [t for _, t in dtw.CENTRE_HEADERS], *rows]})
 
 
 def region_file(last='2026-10'):
-    rows = [[c, r, Date(f'{m}-01'), *numbers(ri, mi)] for mi, m in enumerate(months('2019-01', last)) for ri, (c, r) in enumerate(REGIONS)]
-    return make_ods({'DRT121G': [[t for _, t in dtw.REGION_HEADERS], *rows]})
+    rows = [[lv, ar, Date(f'{m}-01'), 1000 + mi, 500, 50.0, *numbers(ri, mi), '[z]']
+            for mi, m in enumerate(months('2019-01', last)) for ri, (lv, ar) in enumerate(AREAS)]
+    return make_ods({'DRT121G': [['invented title'], ['one table'], ['shorthand'], [t for _, t in dtw.REGION_HEADERS], *rows]})
 
 
 def national_file():
     head = [t for _, t in dtw.NATIONAL_HEADERS]
-    return make_ods({'DRT121A': [head, ['Q1 2026', 500000, 250000, 50.0], ['Q2 2026', 510000, 255000, 50.0]]})
+    return make_ods({'DRT121A': [['invented title'], ['DRT121A'], ['one table'], ['In columns C and D'], ['shorthand'], head,
+                                 ['Financial Quarter', '2026 to 2027 Q1 April to June', 500000, 250000, 50.0, '[z]'],
+                                 ['Financial Year', '2025 to 2026', 1998621, 1000043, 50.0, '[z]']]})
 
 
 def facts_for(files: dict[str, bytes], *, release='2026-11-11', updated='2026-11-13', read='2026-11-26T19:00:00Z') -> bytes:
@@ -171,7 +175,7 @@ class Publish(unittest.TestCase):
         self.assertEqual((ld['@type'], ld['license']), ('Dataset', 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'))
         self.assertEqual(ld['citation'], line)
         self.assertIn('https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/', page)   # the page's own statement
-        self.assertEqual(ld['temporalCoverage'], '2019-01/2026-10')
+        self.assertEqual(ld['temporalCoverage'], '2019-01-01/2026-10-01')
         self.assertIn('/data/driving-test-waits/driving-test-waits-latest.csv', {d['contentUrl'][len('https://data.yappman.com'):] for d in ld['distribution']})
 
     def test_page_text_title_headline_and_links(self) -> None:
@@ -319,8 +323,8 @@ class Refusals(unittest.TestCase):
         code, result = self.repo.run('--describe')
         self.assertEqual((code, result['status']), (0, 'described'))
         sheets = result['tables']['DRT122F']
-        self.assertEqual(set(sheets), {'Contents', 'DRT122F'})
-        self.assertEqual(sheets['DRT122F']['rows'], 2 + 94 * len(CENTRES))
+        self.assertEqual(set(sheets), {'Cover_sheet', 'Notes', 'DRT122F'})
+        self.assertEqual(sheets['DRT122F']['rows'], 4 + 94 * len(CENTRES))
         self.assertLessEqual(len(sheets['DRT122F']['firstRows']), 4)
 
 
