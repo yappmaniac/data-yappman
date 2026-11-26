@@ -28,13 +28,14 @@ from typing import Any
 from xml.parsers import expat
 
 MAX_ZIP_BYTES = 40_000_000          # the DVSA files are 0.01 to 9 MB; far more than this is not one of them
-MAX_XML_BYTES = 400_000_000         # content.xml, uncompressed (a 4 MB ODS of repeated rows is far below this)
+MAX_XML_BYTES = 150_000_000         # content.xml, uncompressed (the real DRT122F is 65 MB; a hostile file stops here)
 MAX_RATIO = 400                     # uncompressed / compressed; XML of repeated rows compresses well, a bomb far more
 MAX_SHEETS = 40
 MAX_ROWS = 250_000                  # per sheet, after trimming (DRT122F is about 33,000 rows)
 MAX_COLS = 80
 MAX_CELLS = 6_000_000               # per file, non-empty plus the empty cells inside a row's width
-MAX_TEXT = 2_000                    # one cell's text
+MAX_TEXT = 2_000                    # one cell's text, counted over EVERY piece: characters, spaces, tabs, line breaks, paragraphs, attributes
+MAX_PARAGRAPHS = 50                 # text:p elements in one cell
 CHUNK = 1 << 16
 
 NS_OFFICE = 'urn:oasis:names:tc:opendocument:xmlns:office:1.0'
@@ -111,6 +112,7 @@ class _Reader:
         self._p_depth = 0
         self._paras: list[str] = []
         self._buf: list[str] = []
+        self._cell_len = 0                  # characters held so far in the current cell, all pieces
         self._cells = 0
         self._depth = 0
         self._root_seen = False
@@ -142,18 +144,27 @@ class _Reader:
                 direct = attrs.get(A_BOOL)
             else:
                 direct = attrs.get(A_STRING) if kind == 'string' else None
+            if direct is not None and len(direct) > MAX_TEXT:
+                raise OdsError('cell-text-too-long')
             self._cell = {'repeat': repeat, 'direct': direct}
-            self._paras, self._buf, self._p_depth = [], [], 0
+            self._paras, self._buf, self._p_depth, self._cell_len = [], [], 0, 0
         elif self._cell is not None:
             if name == T_P and self._p_depth == 0:
+                if len(self._paras) >= MAX_PARAGRAPHS:
+                    raise OdsError('cell-text-too-long')
+                self._add(1 if self._paras else 0)           # the newline that will join it to the paragraph before
                 self._p_depth = 1
                 self._buf = []
             elif self._p_depth and name == T_TAB:
+                self._add(1)
                 self._buf.append('\t')
             elif self._p_depth and name == T_LB:
+                self._add(1)
                 self._buf.append('\n')
             elif self._p_depth and name == T_S:
-                self._buf.append(' ' * min(self._count(attrs.get(_q(NS_TEXT, 'c'))), 200))
+                spaces = self._count(attrs.get(_q(NS_TEXT, 'c')))
+                self._add(spaces)                              # checked BEFORE the string is built
+                self._buf.append(' ' * spaces)
             elif self._p_depth:
                 self._p_depth += 1          # a span or similar inside the paragraph
 
@@ -177,9 +188,14 @@ class _Reader:
 
     def chars(self, text: str) -> None:
         if self._cell is not None and self._p_depth:
+            self._add(len(text))
             self._buf.append(text)
-            if sum(map(len, self._buf)) > MAX_TEXT:
-                raise OdsError('cell-text-too-long')
+
+    def _add(self, count: int) -> None:
+        """Count text added to the current cell, whatever the element it came from; refuse past MAX_TEXT."""
+        self._cell_len += count
+        if self._cell_len > MAX_TEXT:
+            raise OdsError('cell-text-too-long')
 
     def refuse_declaration(self, *args: Any) -> None:
         raise OdsError('doctype-or-entity-refused')
@@ -198,6 +214,8 @@ class _Reader:
         assert cell is not None and self._row is not None
         text = cell['direct'] if cell['direct'] is not None else '\n'.join(self._paras)
         text = text.strip() if text is not None else ''
+        if len(text) > MAX_TEXT:                              # the final text, whatever built it
+            raise OdsError('cell-text-too-long')
         repeat = cell['repeat']
         if not text:
             self._gap += repeat             # remembered as a count; written only if a non-empty cell follows

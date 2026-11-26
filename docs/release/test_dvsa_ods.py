@@ -129,6 +129,37 @@ class Hostile(unittest.TestCase):
         bad = body.replace('<table:table-row>', '<table:table-row table:number-rows-repeated="99999999999">')
         self.assertEqual(self.code(make_ods({}, raw_content=bad.encode())), 'bad-repeat-count')
 
+    def cell_xml(self, inner: str, cell_attrs: str = 'office:value-type="string"') -> bytes:
+        return make_ods({}, raw_content=(
+            '<?xml version="1.0"?><office:document-content xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" '
+            'xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0">'
+            '<office:body><office:spreadsheet><table:table table:name="S"><table:table-row>'
+            f'<table:table-cell {cell_attrs}>{inner}</table:table-cell></table:table-row></table:table>'
+            '</office:spreadsheet></office:body></office:document-content>').encode())
+
+    def test_the_text_cap_holds_for_spaces_tabs_and_line_breaks(self) -> None:
+        # each of these adds text without a character-data event, so they were not counted before (review finding 2)
+        flood = '<text:p>' + '<text:s text:c="200"/>' * 30 + '</text:p>'               # 6,000 spaces
+        self.assertEqual(self.code(self.cell_xml(flood)), 'cell-text-too-long')
+        self.assertEqual(self.code(self.cell_xml('<text:p>' + '<text:tab/>' * (ods.MAX_TEXT + 1) + '</text:p>')), 'cell-text-too-long')
+        self.assertEqual(self.code(self.cell_xml('<text:p>' + '<text:line-break/>' * (ods.MAX_TEXT + 1) + '</text:p>')), 'cell-text-too-long')
+
+    def test_the_text_cap_holds_for_the_joined_text_of_many_paragraphs(self) -> None:
+        many = '<text:p>' + 'x' * 500 + '</text:p>'
+        self.assertEqual(self.code(self.cell_xml(many * 5)), 'cell-text-too-long')            # 2,500 chars in all
+        self.assertEqual(self.code(self.cell_xml('<text:p>a</text:p>' * (ods.MAX_PARAGRAPHS + 1))), 'cell-text-too-long')
+        self.assertEqual(ods.read_ods(self.cell_xml(many * 2))['S'], [['x' * 500 + '\n' + 'x' * 500]])   # under the cap is fine
+
+    def test_the_text_cap_holds_for_an_attribute_value(self) -> None:
+        long_value = 'y' * (ods.MAX_TEXT + 1)
+        self.assertEqual(self.code(self.cell_xml('', f'office:value-type="string" office:string-value="{long_value}"')), 'cell-text-too-long')
+        self.assertEqual(self.code(self.cell_xml('', f'office:value-type="float" office:value="{long_value}"')), 'cell-text-too-long')
+        ok = 'z' * ods.MAX_TEXT
+        self.assertEqual(ods.read_ods(self.cell_xml('', f'office:value-type="string" office:string-value="{ok}"'))['S'], [[ok]])
+
+    def test_the_xml_cap_is_a_margin_over_the_real_files_not_a_free_for_all(self) -> None:
+        self.assertLessEqual(ods.MAX_XML_BYTES, 150_000_000)                      # the real DRT122F content.xml is 65 MB
+
     def test_cell_text_cap(self) -> None:
         self.assertEqual(self.code(make_ods({'S': [['x' * (ods.MAX_TEXT + 10)]]})), 'cell-text-too-long')
 
