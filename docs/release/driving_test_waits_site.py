@@ -20,7 +20,7 @@ Pattern: docs/release/authority_yield_site.py (rental-yield), same exit codes an
 - builtAt is the fetch's read time (FACTS.json), not the build's clock, so a re-run on the same files changes nothing.
 
 Title (decision D3, 26 Nov 2026): no composite "index" and no median of medians: tables, ranks and changes only. The URL
-stays /driving-test-wait-index/. Not an official statistic, not DVSA. No slot checking or booking availability anywhere.
+stays /driving-test-wait-index/. Not published by DVSA. No slot checking or booking availability anywhere.
 Licence: Open Government Licence v3.0; attribution below, exact on the page, in the text companion and in the JSON-LD.
 The layout the parser expects is an ASSUMPTION until the first real file: see driving_test_waits.py.
 """
@@ -81,8 +81,8 @@ METHOD = (
     'tests conducted, [r] redacted because of 10 or fewer, [x] not available, [z] not applicable, [rv] revised, [c] '
     'confidential, and N/A) is kept in suppressed and nothing is filled in. A centre DVSA shows as closed has centreStatus '
     'closed and no rank. provisional is true for months DVSA publishes as provisional (data since April 2025, at the date of '
-    'this release). This is not an official statistic and is not published by '
-    'DVSA. It does not show test slots and cannot be used to book or find one.'
+    'this release). This page is not published by DVSA and carries no endorsement from it. It is not a booking tool: it '
+    'cannot be used to find or book a test.'
 )
 # (column, meaning): one source for the page's Columns table and the JSON-LD
 _FIGURES = (
@@ -147,6 +147,17 @@ NATIONAL_COLUMNS = (
 )
 COLUMN_SETS = {'driving-test-waits': CENTRE_COLUMNS, 'driving-test-waits-regions': REGION_COLUMNS,
                'driving-test-national': NATIONAL_COLUMNS}
+# A note shown beside a centre on the page, where the data alone could mislead. Only what the DVSA notes and the figures support;
+# anything else is marked as our reading. DVSA's Notes sheet says nothing about the LGV centres (read 26 Nov 2026).
+CENTRE_NOTES = {
+    'Carlisle LGV (Cars)': (
+        'note-lgv-cars',
+        'DVSA lists Carlisle LGV (Cars) as a separate row from Carlisle, and its notes do not explain the name. In the release of '
+        '11 November 2026 the '
+        'number of standard test slots it had in the booking window runs from 0 to 401 across the months it is given (and is not '
+        'given for the latest month), so its median wait rests on few tests. The name suggests a lorry (LGV) test centre that also '
+        'takes car tests; that is our reading, not DVSA\'s, and it is not verified.'),
+}
 NATIONAL_QUARTERS_SHOWN = 8       # the page lists every financial year and the latest 8 quarters; the files hold all
 JSON_MONTHS = 24                  # the centre JSON holds the latest 24 months only (served-tree size); the CSV holds all
 MIN_CENTRES, MAX_CENTRES = 150, 500   # open and closed centre rows in any month: far outside is a fault, not a change
@@ -475,6 +486,17 @@ def _change(value: Any) -> str:
     return '0' if value == 0 else f'{value:+g}'.replace('-', '&minus;')
 
 
+def _mark(centre: str | None) -> str:
+    """The footnote marker after a centre's name, when it has a note."""
+    note = CENTRE_NOTES.get(centre or '')
+    return '' if note is None else f'<sup><a href="#{note[0]}">{list(CENTRE_NOTES).index(centre) + 1}</a></sup>'
+
+
+def _footnotes(shown: set[str | None]) -> str:
+    return ''.join(f'<p class="note" id="{note[0]}"><sup>{i}</sup> {html.escape(note[1])}</p>\n'
+                   for i, (name, note) in enumerate(CENTRE_NOTES.items(), start=1) if name in shown)
+
+
 def headline(table: Table) -> str:
     """The two-sentence summary from the data: the longest and the shortest median wait among open centres."""
     rows = [r for r in table.centres if r.month == table.month and r.centreStatus == 'open' and r.values['medianWaitWeeks'] is not None]
@@ -486,7 +508,7 @@ def headline(table: Table) -> str:
     shortest = sorted((r for r in rows if r.values['medianWaitWeeks'] == bottom), key=lambda r: (r.region, r.centre))
 
     def who(group: list[dtw.WaitRow]) -> str:
-        first = f'{html.escape(group[0].centre or "")} ({html.escape(group[0].region)})'
+        first = f'{html.escape(group[0].centre or "")}{_mark(group[0].centre)} ({html.escape(group[0].region)})'
         return first if len(group) == 1 else f'{first} and {len(group) - 1} other centre{"s" if len(group) > 2 else ""} with the same median'
     return (f'<p class="lead">In {month_name(table.month)}, among the {len(rows):,} open test centres with a median wait, the longest was '
             f'{top:g} weeks at {who(longest)}. The shortest was {bottom:g} weeks at {who(shortest)}.</p>\n')
@@ -519,10 +541,11 @@ def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
             '<th>Taken within 7 weeks</th><th>Change over 12 months (weeks)</th></tr></thead>', '<tbody>']
     for r in centres:
         provisional = '' if not r.provisional else ' <span class="meta">(provisional)</span>'
-        rows.append(f'<tr><td>{r.rank if r.rank is not None else "&ndash;"}</td><td>{e(r.centre or "")}</td><td>{e(r.region)}</td>'
+        rows.append(f'<tr><td>{r.rank if r.rank is not None else "&ndash;"}</td><td>{e(r.centre or "")}{_mark(r.centre)}</td><td>{e(r.region)}</td>'
                     f'<td>{_weeks(r.values["medianWaitWeeks"])}{provisional}</td><td>{_pct(r.values["shareWithin7Weeks"])}</td>'
                     f'<td>{_change(r.change12m)}</td></tr>')
     rows.append('</tbody></table></div>')
+    rows.append(_footnotes({r.centre for r in centres}).rstrip('\n'))
     closed = [r for r in latest if r.centreStatus == 'closed']
     if closed:
         rows.append(f'<p class="note">{len(closed)} centre{"s" if len(closed) != 1 else ""} DVSA shows as closed this month '
@@ -580,7 +603,7 @@ def text_companion(table: Table) -> bytes:
         'driving-test-waits-regions-latest.csv and .json (regions), driving-test-national-latest.csv and .json (quarterly, national).',
         f'Latest data: {month_name(table.month)}, from the DVSA release of {table.vintage}.',
         'Rank and the 3, 6 and 12-month changes are our arithmetic on DVSA\'s own figures; DVSA\'s redaction codes are kept, not filled in.',
-        'Not an official statistic and not published by DVSA. It shows no test slots and cannot be used to book one.', '',
+        'Not published by DVSA, and carrying no endorsement from it. It cannot be used to find or book a test.', '',
         f'Licence: {LICENCE}, {LICENCE_URL}', *ATTRIBUTION, '',
         f'Cite: Yappman Data, {TITLE}, data to {table.month}, {PAGE_URL}, with the attribution above.', '',
     ]

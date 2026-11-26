@@ -184,7 +184,7 @@ class Publish(unittest.TestCase):
         page = self.repo.read('driving-test-wait-index/index.html')
         self.assertIn('<h1>Driving test waits in Great Britain, by test centre</h1>', page)
         self.assertIn('In October 2026, among the 4 open test centres', page)
-        self.assertIn('not an official statistic', page.lower())
+        self.assertIn('not published by DVSA', page)
         self.assertNotRegex(page.lower(), r'wait index|median of medians|weighted')           # decision D3
         for href in re.findall(r'href="([^"]*)"', page):
             self.assertNotIn('?', href.replace('?utm', '') if href.startswith('https://apify.com') else href, href)
@@ -192,6 +192,34 @@ class Publish(unittest.TestCase):
         self.assertIn('Echo Park', self.repo.read('data/driving-test-waits/driving-test-waits-latest.csv'))
         self.assertNotIn('Echo Park', page.split('Regions, latest month')[0].split('Test centres, latest month')[1])   # closed: left out
         self.assertIn('1 centre DVSA shows as closed', page)
+
+    def test_banned_words_are_nowhere_in_what_is_published(self) -> None:
+        self.repo.incoming(good_files())
+        self.repo.run('--publish', '--first-publish')
+        banned = re.compile(r'(audit|verdict|genuine|cheapest|best|save[sd]?|official|accurate|accuracy|guarantee[ds]?)', re.I)
+        text = [site.METHOD, site.DESCRIPTION, site.TITLE, *site.ATTRIBUTION, *(m for _, m in site.CENTRE_COLUMNS),
+                *(n[1] for n in site.CENTRE_NOTES.values())]
+        text.append(self.repo.read('driving-test-wait-index/index.html'))
+        text.append(self.repo.read('data/driving-test-waits/driving-test-waits.txt'))
+        for item in text:
+            self.assertIsNone(banned.search(re.sub(r'<[^>]+>', ' ', item)), banned.search(re.sub(r'<[^>]+>', ' ', item)))
+
+    def test_a_centre_with_a_note_gets_a_marker_in_the_headline_and_table_and_one_footnote(self) -> None:
+        self.repo.incoming(good_files())
+        with mock.patch.dict(site.CENTRE_NOTES, {'Delta Bay': ('note-delta', 'An invented note about Delta Bay.')}, clear=True):
+            self.repo.run('--publish', '--first-publish')
+        page = self.repo.read('driving-test-wait-index/index.html')
+        self.assertIn('Delta Bay<sup><a href="#note-delta">1</a></sup> (Cymru)', page)        # the headline (it has the longest wait)
+        self.assertEqual(page.count('id="note-delta"'), 1)
+        self.assertIn('<td>Delta Bay<sup><a href="#note-delta">1</a></sup></td>', page)       # and the table row
+        self.assertIn('An invented note about Delta Bay.', page)
+
+    def test_the_real_note_names_what_dvsa_says_and_marks_the_rest_unverified(self) -> None:
+        name, (anchor, text) = next(iter(site.CENTRE_NOTES.items()))
+        self.assertEqual((name, anchor), ('Carlisle LGV (Cars)', 'note-lgv-cars'))
+        self.assertIn('its notes do not explain the name', text)
+        self.assertIn('not verified', text)
+        self.assertIn('our reading, not DVSA', text)
 
     def test_check_writes_nothing(self) -> None:
         self.repo.incoming(good_files())
