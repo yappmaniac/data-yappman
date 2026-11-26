@@ -28,11 +28,13 @@ the build relies on (a change in any of it is exit 3, nothing written):
     carry thousands commas), codes in square brackets, one 'N/A' in the "still available (Percentage)" column (50 rows),
     and a few blank cells. Floating-point noise from the spreadsheet ('68.599999999999994') is rounded to 15 significant
     digits, which gives DVSA's intended figure (68.6) and changes nothing that was published;
-  - the four shares add to 100 within 0.1 in every row that has all four (they are percentages, not fractions);
+  - the four shares add to 100 within 0.1 in every real row that has all four (percentages, not fractions); the build allows a
+    difference of 1 before it stops;
   - "Data since April 2025 is provisional and will be refreshed on a quarterly basis" (note 1 of DRT122F and DRT121G);
   - the booking window is 24 weeks (18 weeks until May 2021) measured on the last Monday of each month (notes 10 to 12);
-  - DRT121G: 18 columns, level 'Country' (Great Britain, England, Scotland, Wales) or 'Region' (the 9 English regions,
-    Scotland, Wales), 'Yorkshire and The Humber' also written 'Yorkshire and the Humber' (mapped to one name);
+  - DRT121G: 18 columns, level 'Country' (Great Britain, England, Scotland, Wales) or 'Region' (the 9 English regions only;
+    Scotland and Wales appear at Country level), 'Yorkshire and The Humber' also written 'Yorkshire and the Humber' (mapped to
+    one name); the build also accepts a Region row named after a region of the centre table;
   - DRT121A: 'Date Interval' ('Financial Quarter' 77 rows, 'Financial Year' 20) and 'Date' text such as
     '2007 to 2008 Q1 April to June' or '2026 to 2027 (ytd)'.
 Rules kept from the feasibility note: codes are kept (never imputed) in `suppressed`; a closed centre is flagged; a stable

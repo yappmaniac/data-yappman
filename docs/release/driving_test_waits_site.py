@@ -22,12 +22,13 @@ Pattern: docs/release/authority_yield_site.py (rental-yield), same exit codes an
 Title (decision D3, 26 Nov 2026): no composite "index" and no median of medians: tables, ranks and changes only. The URL
 stays /driving-test-wait-index/. Not published by DVSA. No slot checking or booking availability anywhere.
 Licence: Open Government Licence v3.0; attribution below, exact on the page, in the text companion and in the JSON-LD.
-The layout the parser expects is an ASSUMPTION until the first real file: see driving_test_waits.py.
+The layout the parser expects was confirmed on the real 11 Nov 2026 files: see driving_test_waits.py.
 """
 
 from __future__ import annotations
 
 import argparse
+import calendar
 import csv
 import hashlib
 import html
@@ -39,6 +40,7 @@ import stat
 import sys
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 from typing import Any
 
@@ -67,8 +69,8 @@ ATTRIBUTION = (
     OGL_LINE,
     'Source: Driver and Vehicle Standards Agency (DVSA), Driving test and theory test data: cars, ' + SOURCE_PAGE + '.',
 )
-DESCRIPTION = ('Free monthly DVSA driving test waits by test centre and region in Great Britain: median wait in weeks, the '
-               'share of tests taken within 7 weeks, ranks and changes over 3, 6 and 12 months, as CSV and JSON under the '
+DESCRIPTION = ('Free driving test waits by test centre and region in Great Britain, from the DVSA figures published each month: median '
+               'wait in weeks, the share of tests taken within 7 weeks, ranks and changes over 3, 6 and 12 months, as CSV and JSON under the '
                'Open Government Licence v3.0.')
 METHOD = (
     'The waits are the Driver and Vehicle Standards Agency (DVSA) figures for car practical driving tests, as DVSA '
@@ -80,7 +82,8 @@ METHOD = (
     'months earlier, in weeks to two decimal places, and are blank when either month has no figure. DVSA\'s shorthand ([n] no '
     'tests conducted, [r] redacted because of 10 or fewer, [x] not available, [z] not applicable, [rv] revised, [c] '
     'confidential, and N/A) is kept in suppressed and nothing is filled in. A centre DVSA shows as closed has centreStatus '
-    'closed and no rank. provisional is true for months DVSA publishes as provisional (data since April 2025, at the date of '
+    'closed and no rank; a centre DVSA marks closed in some months and open in others keeps one key, and changes are not adjusted '
+    'for this. provisional is true for months DVSA publishes as provisional (data since April 2025, at the date of '
     'this release). This page is not published by DVSA and carries no endorsement from it. It is not a booking tool: it '
     'cannot be used to find or book a test.'
 )
@@ -147,17 +150,15 @@ NATIONAL_COLUMNS = (
 )
 COLUMN_SETS = {'driving-test-waits': CENTRE_COLUMNS, 'driving-test-waits-regions': REGION_COLUMNS,
                'driving-test-national': NATIONAL_COLUMNS}
-# A note shown beside a centre on the page, where the data alone could mislead. Only what the DVSA notes and the figures support;
-# anything else is marked as our reading. DVSA's Notes sheet says nothing about the LGV centres (read 26 Nov 2026).
+# A note shown beside a centre on the page, where the data alone could mislead: a fixed lead sentence of what DVSA says (its Notes
+# sheet says nothing about the LGV centres, read 26 Nov 2026), then figures computed from the rows at build time (note_text).
+# No guesses about what the centre is.
 CENTRE_NOTES = {
     'Carlisle LGV (Cars)': (
         'note-lgv-cars',
-        'DVSA lists Carlisle LGV (Cars) as a separate row from Carlisle, and its notes do not explain the name. In the release of '
-        '11 November 2026 the '
-        'number of standard test slots it had in the booking window runs from 0 to 401 across the months it is given (and is not '
-        'given for the latest month), so its median wait rests on few tests. The name suggests a lorry (LGV) test centre that also '
-        'takes car tests; that is our reading, not DVSA\'s, and it is not verified.'),
+        'DVSA lists Carlisle LGV (Cars) separately from Carlisle, and its notes do not explain the name.'),
 }
+NOT_MEASURED = ('source', 'licence', 'vintage')    # columns that describe the file, not what was measured (not in variableMeasured)
 NATIONAL_QUARTERS_SHOWN = 8       # the page lists every financial year and the latest 8 quarters; the files hold all
 JSON_MONTHS = 24                  # the centre JSON holds the latest 24 months only (served-tree size); the CSV holds all
 MIN_CENTRES, MAX_CENTRES = 150, 500   # open and closed centre rows in any month: far outside is a fault, not a change
@@ -468,22 +469,32 @@ def _region(text: str, name: str, content: str) -> str:
     return f'{head}{start}\n{content}{end}{tail}'
 
 
+def month_days(month: str) -> int:
+    return calendar.monthrange(int(month[:4]), int(month[5:7]))[1]
+
+
 def month_name(month: str) -> str:
     return f'{MONTH_NAMES[int(month[5:7]) - 1]} {month[:4]}'
 
 
+def _one_dp(value: Any) -> Decimal:
+    """DVSA's display precision: one decimal place, half up, from the value's shortest text (the files keep full values)."""
+    return Decimal(str(value)).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP)
+
+
 def _weeks(value: Any) -> str:
-    return '&ndash;' if value is None else f'{value:g}'
+    return '&ndash;' if value is None else f'{_one_dp(value)}'
 
 
 def _pct(value: Any) -> str:
-    return '&ndash;' if value is None else f'{value:g}%'
+    return '&ndash;' if value is None else f'{_one_dp(value)}%'
 
 
 def _change(value: Any) -> str:
     if value is None:
         return '&ndash;'
-    return '0' if value == 0 else f'{value:+g}'.replace('-', '&minus;')
+    shown = _one_dp(value)
+    return '0.0' if shown == 0 else f'{shown:+}'.replace('-', '&minus;')
 
 
 def _mark(centre: str | None) -> str:
@@ -492,8 +503,27 @@ def _mark(centre: str | None) -> str:
     return '' if note is None else f'<sup><a href="#{note[0]}">{list(CENTRE_NOTES).index(centre) + 1}</a></sup>'
 
 
-def _footnotes(shown: set[str | None]) -> str:
-    return ''.join(f'<p class="note" id="{note[0]}"><sup>{i}</sup> {html.escape(note[1])}</p>\n'
+def note_text(centres: list[dtw.WaitRow], month: str, name: str, lead: str) -> str:
+    """The note for one centre: its fixed lead sentence, then figures worked out from the rows (never typed in, so they cannot
+    go stale). Raises CheckFailed when the centre has no row at all, since the figures then cannot be computed."""
+    own = [r for r in centres if r.centre == name]
+    if not own:
+        raise CheckFailed(3, f'the note for {name} cannot be computed: the centre has no rows')
+    total = len({r.month for r in centres})
+    first = min(r.month for r in own)
+    sentence = f'It has a row in {len({r.month for r in own}):,} of the {total:,} months in this table (the first is {month_name(first)}), and DVSA '
+    latest = [r for r in own if r.month == month]
+    if not latest:
+        sentence += f'has no row for it in {month_name(month)}.'
+    elif latest[0].values.get('slotsInWindow') is None:
+        sentence += f'gives no slot figures for it in {month_name(month)}.'
+    else:
+        sentence += f'gives {latest[0].values["slotsInWindow"]:,} standard test slots in the booking window for it in {month_name(month)}.'
+    return f'{lead} {sentence}'
+
+
+def _footnotes(table: Table, shown: set[str | None]) -> str:
+    return ''.join(f'<p class="note" id="{note[0]}"><sup>{i}</sup> {html.escape(note_text(table.centres, table.month, name, note[1]))}</p>\n'
                    for i, (name, note) in enumerate(CENTRE_NOTES.items(), start=1) if name in shown)
 
 
@@ -511,13 +541,13 @@ def headline(table: Table) -> str:
         first = f'{html.escape(group[0].centre or "")}{_mark(group[0].centre)} ({html.escape(group[0].region)})'
         return first if len(group) == 1 else f'{first} and {len(group) - 1} other centre{"s" if len(group) > 2 else ""} with the same median'
     return (f'<p class="lead">In {month_name(table.month)}, among the {len(rows):,} open test centres with a median wait, the longest was '
-            f'{top:g} weeks at {who(longest)}. The shortest was {bottom:g} weeks at {who(shortest)}.</p>\n')
+            f'{_weeks(top)} weeks at {who(longest)}. The shortest was {_weeks(bottom)} weeks at {who(shortest)}.</p>\n')
 
 
 def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
     d, e = table.document, html.escape
     latest = [r for r in table.centres if r.month == table.month]
-    summary = (f'<p>Latest data: {e(month_name(table.month))}, from the DVSA release of {e(table.vintage)} (files last updated '
+    summary = (f'<p>Latest data: {e(month_name(table.month))}, from the DVSA release of {e(table.vintage)} (gov.uk page last updated '
                f'{e(table.facts["lastUpdated"])}); {len(latest):,} test centres that month and {table.rows_all:,} centre-month rows since '
                f'{e(month_name(dtw.FIRST_MONTH))}. Read from DVSA on {e(table.facts["readAt"][:10])}.</p>\n')
     lines = ['<div class="table-wrap"><table><thead><tr><th>File</th><th>Month</th><th>DVSA release</th><th>Size</th></tr></thead>', '<tbody>']
@@ -545,7 +575,7 @@ def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
                     f'<td>{_weeks(r.values["medianWaitWeeks"])}{provisional}</td><td>{_pct(r.values["shareWithin7Weeks"])}</td>'
                     f'<td>{_change(r.change12m)}</td></tr>')
     rows.append('</tbody></table></div>')
-    rows.append(_footnotes({r.centre for r in centres}).rstrip('\n'))
+    rows.append(_footnotes(table, {r.centre for r in centres}).rstrip('\n'))
     closed = [r for r in latest if r.centreStatus == 'closed']
     if closed:
         rows.append(f'<p class="note">{len(closed)} centre{"s" if len(closed) != 1 else ""} DVSA shows as closed this month '
@@ -553,7 +583,7 @@ def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
     reg = ['<div class="table-wrap"><table><thead><tr><th>Area</th><th>Country</th><th>Median wait (weeks)</th>'
            '<th>Taken within 7 weeks</th><th>Change over 12 months (weeks)</th><th>Tests conducted</th><th>Pass rate</th></tr></thead>',
            '<tbody>']
-    for r in sorted((r for r in table.regions if r.month == table.month), key=lambda r: (r.level != 'Country', r.country, r.region)):
+    for r in sorted((r for r in table.regions if r.month == table.month), key=lambda r: (r.level != 'Country', r.region != 'Great Britain', r.country, r.region)):
         tests = r.values['testsConducted']
         reg.append(f'<tr><td>{e(r.region)}</td><td>{e(r.country)}</td><td>{_weeks(r.values["medianWaitWeeks"])}</td>'
                    f'<td>{_pct(r.values["shareWithin7Weeks"])}</td><td>{_change(r.change12m)}</td>'
@@ -575,15 +605,15 @@ def render_regions(table: Table, sizes: dict[str, int]) -> dict[str, str]:
         'creator': {'@type': 'Organization', 'name': 'Yappman Data', 'url': 'https://data.yappman.com/',
                     'sameAs': ['https://www.youtube.com/@yappmandata', 'https://bsky.app/profile/yappmandata.bsky.social']},
         'isBasedOn': SOURCE_PAGE,
-        'citation': ATTRIBUTION[0],
+        'citation': ATTRIBUTION[1],
         'keywords': ['Great Britain', 'driving test', 'DVSA', 'test centre', 'waiting time', 'practical driving test'],
-        'spatialCoverage': 'Great Britain', 'temporalCoverage': f'{dtw.FIRST_MONTH}-01/{table.month}-01', 'dateModified': table.vintage,
+        'spatialCoverage': 'Great Britain', 'temporalCoverage': f'{dtw.FIRST_MONTH}-01/{table.month}-{month_days(table.month):02d}', 'dateModified': table.vintage,
         'distribution': [{'@type': 'DataDownload', 'name': f'{label}, {fmt.upper()}', 'encodingFormat': mime,
                           'contentUrl': f'https://data.yappman.com/data/driving-test-waits/{stem}-latest.{fmt}'}
                          for stem, label in (('driving-test-waits', 'Centres, all months'), ('driving-test-waits-regions', 'Regions'),
                                              ('driving-test-national', 'National by quarter'))
                          for fmt, mime in (('csv', 'text/csv'), ('json', 'application/json'))],
-        'variableMeasured': [{'@type': 'PropertyValue', 'name': n, 'description': m} for n, m in CENTRE_COLUMNS],
+        'variableMeasured': [{'@type': 'PropertyValue', 'name': n, 'description': m} for n, m in CENTRE_COLUMNS if n not in NOT_MEASURED],
         'measurementTechnique': 'DVSA\'s published median waits and shares, with rank and changes in weeks as plain arithmetic.',
     }
     ld_text = json.dumps(ld, ensure_ascii=False, indent=2).replace('<', '\\u003c')

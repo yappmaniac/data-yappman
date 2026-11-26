@@ -173,9 +173,9 @@ class Publish(unittest.TestCase):
         block = re.search(r'<!-- driving-waits:jsonld -->\s*<script type="application/ld\+json">\n(.*?)\n</script>', page, re.S)
         ld = json.loads(block.group(1))
         self.assertEqual((ld['@type'], ld['license']), ('Dataset', 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/'))
-        self.assertEqual(ld['citation'], line)
+        self.assertEqual(ld['citation'], site.ATTRIBUTION[1])
         self.assertIn('https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/', page)   # the page's own statement
-        self.assertEqual(ld['temporalCoverage'], '2019-01-01/2026-10-01')
+        self.assertEqual(ld['temporalCoverage'], '2019-01-01/2026-10-31')
         self.assertIn('/data/driving-test-waits/driving-test-waits-latest.csv', {d['contentUrl'][len('https://data.yappman.com'):] for d in ld['distribution']})
 
     def test_page_text_title_headline_and_links(self) -> None:
@@ -206,20 +206,87 @@ class Publish(unittest.TestCase):
 
     def test_a_centre_with_a_note_gets_a_marker_in_the_headline_and_table_and_one_footnote(self) -> None:
         self.repo.incoming(good_files())
-        with mock.patch.dict(site.CENTRE_NOTES, {'Delta Bay': ('note-delta', 'An invented note about Delta Bay.')}, clear=True):
+        with mock.patch.dict(site.CENTRE_NOTES, {'Delta Bay': ('note-delta', 'An invented lead sentence.')}, clear=True):
             self.repo.run('--publish', '--first-publish')
         page = self.repo.read('driving-test-wait-index/index.html')
         self.assertIn('Delta Bay<sup><a href="#note-delta">1</a></sup> (Cymru)', page)        # the headline (it has the longest wait)
         self.assertEqual(page.count('id="note-delta"'), 1)
         self.assertIn('<td>Delta Bay<sup><a href="#note-delta">1</a></sup></td>', page)       # and the table row
-        self.assertIn('An invented note about Delta Bay.', page)
+        # the figures in the note are computed from the data at build time (review finding 1)
+        self.assertIn('An invented lead sentence. It has a row in 94 of the 94 months in this table (the first is January 2019), '
+                      'and DVSA gives 1,500 standard test slots in the booking window for it in October 2026.', page)
 
-    def test_the_real_note_names_what_dvsa_says_and_marks_the_rest_unverified(self) -> None:
-        name, (anchor, text) = next(iter(site.CENTRE_NOTES.items()))
+    def test_the_note_figures_come_from_the_rows(self) -> None:
+        def row(month, slots):
+            return dtw.WaitRow(month, 'England', 'North West', 'north-west.x', 'X', 'open', {'slotsInWindow': slots})
+        other = dtw.WaitRow('2019-01', 'England', 'London', 'london.y', 'Y', 'open', {'slotsInWindow': 5})
+        rows = [other, row('2019-06', 3), row('2019-07', 0), row('2019-08', 401), row('2026-10', None)]
+        text = site.note_text(rows, '2026-10', 'X', 'Lead.')
+        self.assertEqual(text, 'Lead. It has a row in 4 of the 5 months in this table (the first is June 2019), '
+                               'and DVSA gives no slot figures for it in October 2026.')
+        rows[-1] = row('2026-10', 12)
+        self.assertIn('and DVSA gives 12 standard test slots in the booking window for it in October 2026.', site.note_text(rows, '2026-10', 'X', 'Lead.'))
+        rows = [other, row('2019-06', 3)]                                       # nothing for the latest month
+        self.assertIn('and DVSA has no row for it in October 2026.', site.note_text(rows, '2026-10', 'X', 'Lead.'))
+        with self.assertRaises(site.CheckFailed):                               # no rows at all: the figures cannot be computed
+            site.note_text([other], '2026-10', 'X', 'Lead.')
+
+    def test_the_real_note_says_only_what_dvsa_says_and_guesses_nothing(self) -> None:
+        name, (anchor, lead) = next(iter(site.CENTRE_NOTES.items()))
         self.assertEqual((name, anchor), ('Carlisle LGV (Cars)', 'note-lgv-cars'))
-        self.assertIn('its notes do not explain the name', text)
-        self.assertIn('not verified', text)
-        self.assertIn('our reading, not DVSA', text)
+        self.assertEqual(lead, 'DVSA lists Carlisle LGV (Cars) separately from Carlisle, and its notes do not explain the name.')
+        for guess in ('few tests', 'lorry', 'suggests', 'our reading', 'not verified'):
+            self.assertNotIn(guess, lead.lower())
+
+    def test_json_ld_details(self) -> None:
+        self.repo.incoming(good_files())
+        self.repo.run('--publish', '--first-publish')
+        page = self.repo.read('driving-test-wait-index/index.html')
+        ld = json.loads(re.search(r'<!-- driving-waits:jsonld -->\s*<script type="application/ld\+json">\n(.*?)\n</script>', page, re.S).group(1))
+        self.assertEqual(ld['temporalCoverage'], '2019-01-01/2026-10-31')                # the whole of October, as the site check needs a full date
+        self.assertEqual(ld['citation'], site.ATTRIBUTION[1])                              # the source, not the licence line
+        names = [v['name'] for v in ld['variableMeasured']]
+        self.assertNotIn('source', names)
+        self.assertNotIn('licence', names)
+        self.assertNotIn('vintage', names)
+        self.assertIn('medianWaitWeeks', names)
+        self.assertIn('Open Government Licence v3.0', ld['description'])
+
+    def test_display_precision_is_one_decimal_everywhere(self) -> None:
+        self.repo.incoming(good_files())
+        self.repo.run('--publish', '--first-publish')
+        page = self.repo.read('driving-test-wait-index/index.html')
+        centres = page.split('Test centres, latest month')[1].split('Regions, latest month')[0]
+        self.assertIn('<td>60.0%</td>', centres)
+        self.assertNotIn('<td>60%</td>', centres)
+        self.assertRegex(centres, r'<td>\d+\.\d</td>|<td>\d+\.\d <span')                   # medians at 1 dp
+        regions = page.split('Regions, latest month')[1].split('Tests conducted and passed')[0]
+        self.assertIn('50.0%', regions)
+        national = page.split('Tests conducted and passed, by quarter')[1].split('Method and source')[0]
+        self.assertIn('50.0%', national)
+        self.assertEqual(site._pct(44.2192), '44.2%')
+        self.assertEqual(site._weeks(31.45), '31.5')                                       # half up
+        self.assertEqual(site._weeks(0.04), '0.0')
+        self.assertEqual(site._change(-0.04), '0.0')                                       # never "-0.0"
+        self.assertEqual(site._change(1.26), '+1.3')
+
+    def test_great_britain_comes_first_in_the_regions_table(self) -> None:
+        self.repo.incoming(good_files())
+        self.repo.run('--publish', '--first-publish')
+        page = self.repo.read('driving-test-wait-index/index.html')
+        body = page.split('Regions, latest month')[1].split('<tbody>')[1]
+        rows = re.findall(r'<tr><td>([^<]*)</td>', body)
+        self.assertEqual(rows[:4], ['Great Britain', 'England', 'Scotland', 'Wales'])
+
+    def test_wording_about_the_update_cadence_and_the_gov_uk_date(self) -> None:
+        self.repo.incoming(good_files())
+        self.repo.run('--publish', '--first-publish')
+        page = self.repo.read('driving-test-wait-index/index.html')
+        self.assertIn('DVSA releases these figures monthly', page)
+        self.assertNotIn('Updated monthly', page)                                           # a promise this page cannot make by itself
+        self.assertIn('gov.uk page last updated 2026-11-13', page)
+        self.assertNotIn('files last updated', page)
+        self.assertIn('keeps one key, and changes are not adjusted for this', site.METHOD)   # a centre closed and reopened (finding 10)
 
     def test_check_writes_nothing(self) -> None:
         self.repo.incoming(good_files())

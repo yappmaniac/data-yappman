@@ -12,10 +12,11 @@ public, OGL). Downloading stays a gated act: each later monthly fetch is covered
 
 Rules (modelled on fetch_authority_yield.py, minus the token):
 - the only start is the content API  https://www.gov.uk/api/content/government/statistical-data-sets/driving-test-and-theory-test-data-cars
-  (keyless; the asset ids change with each upload, so the URLs are read from it each time). ASSUMED shape: the JSON holds,
-  somewhere, objects with a "url" ending .ods on assets.publishing.service.gov.uk and a "title" or file name containing the
-  table code; the tool finds them by walking the JSON and refuses an ambiguous or missing table. `public_updated_at` is
-  the date the files were last updated (ASSUMED key);
+  (keyless; the asset ids change with each upload, so the URLs are read from it each time). Shape (it worked on the real run of
+  26 Nov 2026): the JSON holds, somewhere, objects with a "url" ending .ods on assets.publishing.service.gov.uk and a "title" or
+  file name containing the table code; the tool finds them by walking the JSON and refuses an ambiguous or missing table.
+  `public_updated_at` is the gov.uk PAGE's last-updated time (any change to the page moves it, so it is shown on our page as
+  "gov.uk page last updated", not as the date of the files; the DRT122F cover sheet carries its own date);
 - hosts: only www.gov.uk and assets.publishing.service.gov.uk, HTTPS with a verified TLS context (1.2 or later, no key
   log, refused when SSL_CERT_FILE and friends are set), no proxy, NO redirect followed (a 3xx stops the run), a timeout,
   a size cap, a pause between requests, no query string or fragment in any URL;
