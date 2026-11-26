@@ -165,6 +165,8 @@ class Hostile(unittest.TestCase):
             cells = [['x' * 1999] for _ in range(6)]                                   # 11,994 characters in all
             self.assertEqual(self.code(make_ods({'S': cells})), 'file-text-too-long')
             self.assertEqual(self.code(make_ods({'S': [[Rep('y' * 1000, 12)]]})), 'file-text-too-long')   # a repeated cell counts every copy
+            self.assertEqual(self.code(make_ods({'S': [RepRow(['z' * 1000], 12)]})), 'file-text-too-long')   # so does a repeated row
+            self.assertEqual(ods.read_ods(make_ods({'S': [RepRow(['z' * 1000], 9)]}))['S'], [['z' * 1000]] * 9)   # 9,000: under the total
             self.assertEqual(ods.read_ods(make_ods({'S': cells[:4]}))['S'], cells[:4])   # 7,996: under the total, still read
         finally:
             ods.MAX_TOTAL_TEXT = old

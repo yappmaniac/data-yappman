@@ -243,6 +243,10 @@ class _Reader:
         else:
             if repeat > 1000:
                 raise OdsError('non-empty-row-repeated-too-often')
+            # every extra copy of a repeated row holds the same text again (final Opus read, finding 1): count it in the total
+            self._total += sum(map(len, row)) * (repeat - 1)
+            if self._total > MAX_TOTAL_TEXT:
+                raise OdsError('file-text-too-long')
         for _ in range(repeat):
             self._cells += len(row)
             if self._cells > MAX_CELLS or len(self._rows) >= MAX_ROWS:
