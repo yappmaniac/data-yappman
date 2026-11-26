@@ -178,6 +178,25 @@ class Fetch(unittest.TestCase):
         code, result, _ = self.run_main('--dry-run', answers={fetch.API_URL: json.dumps(body).encode()})
         self.assertEqual((code, result['code']), (3, 'last-updated-not-found'))
 
+    def publish_latest(self, month='2026-10', vintage='2026-11-11', updated='2026-11-13') -> None:
+        folder = self.dir / 'data/driving-test-waits'
+        folder.mkdir(parents=True, exist_ok=True)
+        (folder / 'driving-test-waits-latest.json').write_text(json.dumps({'month': month, 'vintage': vintage, 'lastUpdated': updated}))
+
+    def test_status_makes_one_request_and_compares_with_what_is_published(self) -> None:
+        code, result, opener = self.run_main('--status')
+        self.assertEqual((code, result['status'], result['requests']), (0, 'nothing-published', 1))
+        self.publish_latest()
+        code, result, opener = self.run_main('--status')
+        self.assertEqual((code, result['status'], opener.seen), (0, 'up-to-date', [fetch.API_URL]))
+        self.publish_latest(vintage='2026-10-14', updated='2026-10-14', month='2026-09')
+        self.assertEqual(self.run_main('--status')[1]['status'], 'newer-release')
+        self.publish_latest(updated='2026-11-11')
+        self.assertEqual(self.run_main('--status')[1]['status'], 'updated-since')
+        self.assertFalse((self.dir / '_incoming').exists())
+        (self.dir / 'data/driving-test-waits/driving-test-waits-latest.json').write_text('{}')
+        self.assertEqual(self.run_main('--status')[0], 3)
+
     def test_release_date_is_the_latest_second_wednesday_not_after_the_update(self) -> None:
         for updated, release in ((date(2026, 11, 13), '2026-11-11'), (date(2026, 11, 11), '2026-11-11'), (date(2026, 12, 3), '2026-11-11'),
                                  (date(2026, 12, 9), '2026-12-09'), (date(2027, 1, 5), '2026-12-09'), (date(2027, 1, 13), '2027-01-13')):

@@ -1,13 +1,14 @@
 """GB driving-test waits: fetch the four public DVSA ODS files from gov.uk. No credential, no login.
 
     python -I -B docs/release/fetch_driving_test_waits.py --dry-run   # ONE request: resolves the file URLs; saves nothing
+    python -I -B docs/release/fetch_driving_test_waits.py --status    # ONE request: has DVSA published something newer than what we published?
     python -I -B docs/release/fetch_driving_test_waits.py --fetch     # the four files, once each, into _incoming/driving-test/
 
 then the build (no network): python -I -B docs/release/driving_test_waits_site.py --describe | --check | --publish
 
-STATUS (26 Nov 2026): WRITTEN AND TESTED ON FAKE RESPONSES ONLY; NEVER RUN AGAINST THE REAL SITE. TODO(real-file step):
-downloading is a gated act. Russell's yes (the four files, about 4.5 MB, public, OGL) is needed from Russell himself in the
-session that runs this; a yes relayed by another agent is not enough. Nothing in this repo has fetched a real DVSA file.
+STATUS (26 Nov 2026): tested on fake responses. Run once for real by the Orchestrator on 26 Nov 2026 at 18:55 UTC (one
+--dry-run, then one --fetch: 5 requests), after Russell's typed yes in the Orchestrator chat for the four files (about 4.5 MB,
+public, OGL). Downloading stays a gated act: each later monthly fetch is covered only by a go that says so.
 
 Rules (modelled on fetch_authority_yield.py, minus the token):
 - the only start is the content API  https://www.gov.uk/api/content/government/statistical-data-sets/driving-test-and-theory-test-data-cars
@@ -228,8 +229,32 @@ def _write(root: Path, name: str, data: bytes) -> None:
     os.replace(temporary, target)
 
 
+def status(root: Path, resolved: dict[str, Any], requests: int) -> dict[str, Any]:
+    """Compare DVSA's release and last-updated dates with the published latest file (read only; nothing is saved)."""
+    facts = {'dvsaReleaseDate': resolved['releaseDate'], 'dvsaLastUpdated': resolved['lastUpdated'], 'requests': requests}
+    latest = root / 'data/driving-test-waits/driving-test-waits-latest.json'
+    if not latest.exists():
+        return {'status': 'nothing-published', **facts}
+    try:
+        document = json.loads(latest.read_bytes().decode('utf-8'))
+        ours = {'ourMonth': document['month'], 'ourVintage': document['vintage'], 'ourLastUpdated': document['lastUpdated']}
+        if not all(isinstance(v, str) for v in ours.values()):
+            raise ValueError
+    except (OSError, UnicodeDecodeError, ValueError, KeyError, TypeError):
+        raise FetchError('published-file-unreadable', exit_code=3) from None
+    if resolved['releaseDate'] > ours['ourVintage']:
+        state = 'newer-release'
+    elif resolved['lastUpdated'] > ours['ourLastUpdated']:
+        state = 'updated-since'
+    else:
+        state = 'up-to-date'
+    return {'status': state, **ours, **facts}
+
+
 def run(args: argparse.Namespace, transport: Transport, root: Path, now: datetime) -> dict[str, Any]:
     resolved = resolve(transport.get(API_URL, MAX_API_BYTES))
+    if args.status:
+        return status(root, resolved, transport.requests)
     if args.dry_run:
         return {'status': 'dry-run', 'tables': list(TABLES), 'lastUpdated': resolved['lastUpdated'],
                 'releaseDate': resolved['releaseDate'], 'requests': transport.requests}
@@ -266,6 +291,7 @@ def main(argv: list[str] | None = None, *, opener: Any = None, root: Path = REPO
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--dry-run', action='store_true', help='one request to the content API; prints what it found')
+    mode.add_argument('--status', action='store_true', help='one request to the content API; compares with what is published')
     mode.add_argument('--fetch', action='store_true', help='the four files, once each, into _incoming/driving-test/')
     args = parser.parse_args(argv)
     real = opener is None
