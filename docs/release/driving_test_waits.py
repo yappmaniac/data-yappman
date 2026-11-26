@@ -201,6 +201,11 @@ class WaitRow:
     change6m: float | None = None
     change12m: float | None = None
 
+    @property
+    def key(self) -> str:
+        """The series a change is measured along: the centre, or the region for a region row."""
+        return self.centreKey or f'{slug(self.country)}.{slug(self.region)}'
+
 
 def _check_name(text: str, what: str, row: int) -> str:
     if not NAME_RE.fullmatch(text):
@@ -327,20 +332,21 @@ def derive(rows: list[WaitRow]) -> None:
     lookup: dict[tuple[str, str], Decimal] = {}
     for row in rows:
         median = row.values.get('medianWaitWeeks')
-        if row.centreKey is not None and median is not None:
-            lookup[(row.centreKey, row.month)] = Decimal(str(median))
-            if row.centreStatus == 'open':
-                by_month.setdefault(row.month, []).append(row)
+        if median is None:
+            continue
+        lookup[(row.key, row.month)] = Decimal(str(median))
+        if row.centreKey is not None and row.centreStatus == 'open':
+            by_month.setdefault(row.month, []).append(row)
     for members in by_month.values():
         ordered = sorted(members, key=lambda r: -Decimal(str(r.values['medianWaitWeeks'])))
         first_at: dict[Any, int] = {}
         for position, row in enumerate(ordered, start=1):
             row.rank = first_at.setdefault(row.values['medianWaitWeeks'], position)
     for row in rows:
-        if row.centreKey is None or (row.centreKey, row.month) not in lookup:
+        if (row.key, row.month) not in lookup:
             continue
-        now = lookup[(row.centreKey, row.month)]
+        now = lookup[(row.key, row.month)]
         for attr, months in (('change3m', 3), ('change6m', 6), ('change12m', 12)):
-            before = lookup.get((row.centreKey, month_minus(row.month, months)))
+            before = lookup.get((row.key, month_minus(row.month, months)))
             if before is not None:
                 setattr(row, attr, float(now - before))
