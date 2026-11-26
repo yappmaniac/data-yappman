@@ -4,7 +4,7 @@ Reads what fetch_driving_test_waits.py saved in _incoming/driving-test/ (DRT122F
 FACTS.json), parses them with driving_test_waits.py (bounded ODS reader, schema guards), and writes the dataset files and
 the marked regions of the page. Run from anywhere (paths are anchored to this repo):
 
-    python -I -B docs/release/driving_test_waits_site.py --describe                  # sheet names + header rows only
+    python -I -B docs/release/driving_test_waits_site.py --describe                  # sheet names + the first 4 rows of each sheet (titles, headers)
     python -I -B docs/release/driving_test_waits_site.py --check [--first-publish]   # every check; writes nothing
     python -I -B docs/release/driving_test_waits_site.py --publish [--first-publish]
 
@@ -221,8 +221,12 @@ def load_facts(raw: bytes, files: dict[str, bytes]) -> dict[str, Any]:
     if not (isinstance(facts['readAt'], str) and BUILT_AT_RE.fullmatch(facts['readAt'])):
         raise CheckFailed(1, 'FACTS.readAt is malformed')
     listed = facts['files']
-    if not isinstance(listed, dict) or set(listed) != set(FILES):
-        raise CheckFailed(1, 'FACTS.files does not name the three tables')
+    if not isinstance(listed, dict) or set(listed) not in (set(FILES), set(FILES) | {'DRT121B'}):   # DRT121B is fetched, not read in v1
+        raise CheckFailed(1, 'FACTS.files does not name the tables')
+    for table, entry in listed.items():
+        if not (isinstance(entry, dict) and set(entry) == {'bytes', 'sha256'} and type(entry['bytes']) is int
+                and isinstance(entry['sha256'], str) and SHA_RE.fullmatch(entry['sha256'])):
+            raise CheckFailed(1, f'FACTS.files.{table} is malformed')
     for table, data in files.items():
         entry = listed[table]
         if not (isinstance(entry, dict) and set(entry) == {'bytes', 'sha256'} and type(entry['bytes']) is int
@@ -637,7 +641,7 @@ def read_incoming(root: Path) -> tuple[bytes, dict[str, bytes]]:
 
 
 def describe(files: dict[str, bytes]) -> dict[str, Any]:
-    """Sheet names, row counts and the first few non-empty rows that look like headers: no data rows are printed."""
+    """Sheet names, row counts and the first four non-empty rows of each sheet (titles and headers, at most a row of data)."""
     out: dict[str, Any] = {}
     for table, data in files.items():
         try:

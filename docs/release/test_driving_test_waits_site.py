@@ -314,7 +314,7 @@ class Refusals(unittest.TestCase):
         code, result = self.repo.run('--check', '--first-publish')
         self.assertEqual((code, result['code']), (3, 'template-broken'))
 
-    def test_describe_prints_sheet_names_and_headers_but_no_data_rows(self) -> None:
+    def test_describe_prints_sheet_names_and_only_the_first_four_rows(self) -> None:
         self.repo.incoming(good_files())
         code, result = self.repo.run('--describe')
         self.assertEqual((code, result['status']), (0, 'described'))
