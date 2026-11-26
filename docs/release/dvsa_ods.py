@@ -35,6 +35,7 @@ MAX_ROWS = 250_000                  # per sheet, after trimming (DRT122F is abou
 MAX_COLS = 80
 MAX_CELLS = 6_000_000               # per file, non-empty plus the empty cells inside a row's width
 MAX_TEXT = 2_000                    # one cell's text, counted over EVERY piece: characters, spaces, tabs, line breaks, paragraphs, attributes
+MAX_TOTAL_TEXT = 50_000_000            # text characters in the whole file, every cell and every copy of a repeated cell (the real DRT122F holds 4.3 million)
 MAX_PARAGRAPHS = 50                 # text:p elements in one cell
 CHUNK = 1 << 16
 
@@ -113,6 +114,7 @@ class _Reader:
         self._paras: list[str] = []
         self._buf: list[str] = []
         self._cell_len = 0                  # characters held so far in the current cell, all pieces
+        self._total = 0                     # characters held so far in the whole file
         self._cells = 0
         self._depth = 0
         self._root_seen = False
@@ -217,6 +219,9 @@ class _Reader:
         if len(text) > MAX_TEXT:                              # the final text, whatever built it
             raise OdsError('cell-text-too-long')
         repeat = cell['repeat']
+        self._total += len(text) * repeat
+        if self._total > MAX_TOTAL_TEXT:
+            raise OdsError('file-text-too-long')
         if not text:
             self._gap += repeat             # remembered as a count; written only if a non-empty cell follows
             return

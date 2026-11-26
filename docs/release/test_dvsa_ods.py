@@ -157,6 +157,19 @@ class Hostile(unittest.TestCase):
         ok = 'z' * ods.MAX_TEXT
         self.assertEqual(ods.read_ods(self.cell_xml('', f'office:value-type="string" office:string-value="{ok}"'))['S'], [[ok]])
 
+    def test_the_whole_file_has_a_total_text_cap(self) -> None:
+        # many cells that are each under the per-cell cap still add up (review D2): about 100 bytes of XML stores 2,000 characters
+        old = ods.MAX_TOTAL_TEXT
+        ods.MAX_TOTAL_TEXT = 10_000
+        try:
+            cells = [['x' * 1999] for _ in range(6)]                                   # 11,994 characters in all
+            self.assertEqual(self.code(make_ods({'S': cells})), 'file-text-too-long')
+            self.assertEqual(self.code(make_ods({'S': [[Rep('y' * 1000, 12)]]})), 'file-text-too-long')   # a repeated cell counts every copy
+            self.assertEqual(ods.read_ods(make_ods({'S': cells[:4]}))['S'], cells[:4])   # 7,996: under the total, still read
+        finally:
+            ods.MAX_TOTAL_TEXT = old
+        self.assertGreaterEqual(ods.MAX_TOTAL_TEXT, 10 * 4_300_000)                    # the real DRT122F holds about 4.3 million characters
+
     def test_the_xml_cap_is_a_margin_over_the_real_files_not_a_free_for_all(self) -> None:
         self.assertLessEqual(ods.MAX_XML_BYTES, 150_000_000)                      # the real DRT122F content.xml is 65 MB
 
